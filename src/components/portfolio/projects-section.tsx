@@ -21,7 +21,7 @@ export default function ProjectsSection() {
                   src={project.image}
                   alt={`Screenshot of the ${project.name} project`}
                   fill
-                  className="object-cover"
+                  className="object-fill"
                   data-ai-hint={project.imageHint}
                 />
               </div>
