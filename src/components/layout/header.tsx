@@ -34,8 +34,7 @@ export default function Header() {
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary">
-          <BotMessageSquare className="h-6 w-6" />
-          <span>Aetherfolio</span>
+          <span>Sheraz Hussain</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
