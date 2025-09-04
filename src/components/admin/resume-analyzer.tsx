@@ -11,8 +11,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, CheckCircle2, ThumbsUp, ThumbsDown, Sparkles } from 'lucide-react';
+import { AlertCircle, CheckCircle2, ThumbsUp, ThumbsDown, Sparkles, ClipboardCopy } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   resumeContent: z.string().min(100, 'Resume content must be at least 100 characters.'),
@@ -25,6 +26,7 @@ export default function ResumeAnalyzer() {
   const [result, setResult] = useState<AnalyzeResumeAndProvideFeedbackOutput | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -59,6 +61,14 @@ export default function ResumeAnalyzer() {
         return <br key={index} />;
       }
       return <p key={index}>{part}</p>;
+    });
+  };
+
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: 'Copied to clipboard!',
+      description: 'The updated resume has been copied to your clipboard.',
     });
   };
 
@@ -115,42 +125,69 @@ export default function ResumeAnalyzer() {
              <Skeleton className="h-8 w-1/4" />
              <Skeleton className="h-4 w-1/2" />
              <Skeleton className="h-20 w-full" />
+             <Skeleton className="h-40 w-full mt-4" />
           </div>
         )}
         
         {error && <p className="text-destructive pt-4">{error}</p>}
 
         {result && (
-          <Card className="mt-6 bg-background/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                {result.matchPercentage >= 75 ? (
-                  <ThumbsUp className="text-green-500" />
-                ) : (
-                  <ThumbsDown className="text-yellow-500" />
-                )}
-                Analysis Result
-              </CardTitle>
-              <div className="flex items-center gap-4 pt-2">
-                <Progress value={result.matchPercentage} className="w-[60%]" />
-                <span className="font-bold text-primary">{result.matchPercentage}% Match</span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className={cn(
-                "rounded-md p-4 text-lg font-bold text-center",
-                result.matchPercentage >= 75 
-                  ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
-                  : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-              )}>
-                {result.feedback.startsWith("Tell me to apply!") ? "Tell me to apply!" : "Don't apply yet!"}
-              </div>
-              
-              <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-                {renderFeedback(result.feedback.substring(result.feedback.indexOf('\n') + 1))}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <Card className="bg-background/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  {result.matchPercentage >= 75 ? (
+                    <ThumbsUp className="text-green-500" />
+                  ) : (
+                    <ThumbsDown className="text-yellow-500" />
+                  )}
+                  Analysis Result
+                </CardTitle>
+                <div className="flex items-center gap-4 pt-2">
+                  <Progress value={result.matchPercentage} className="w-[60%]" />
+                  <span className="font-bold text-primary">{result.matchPercentage}% Match</span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className={cn(
+                  "rounded-md p-4 text-lg font-bold text-center",
+                  result.matchPercentage >= 75 
+                    ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
+                    : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
+                )}>
+                  {result.feedback.startsWith("Tell me to apply!") ? "Tell me to apply!" : "Don't apply yet!"}
+                </div>
+                
+                <div className="mt-4 space-y-2 text-sm text-muted-foreground">
+                  {renderFeedback(result.feedback.substring(result.feedback.indexOf('\n') + 1))}
+                </div>
+              </CardContent>
+            </Card>>
+
+             <Card className="bg-background/50">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="text-primary" />
+                    Updated Resume
+                  </CardTitle>
+                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(result.updatedResume)}>
+                    <ClipboardCopy className="h-5 w-5" />
+                  </Button>
+                </div>
+                <CardDescription>
+                  Here is an optimized version of your resume for this job application.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Textarea
+                  readOnly
+                  value={result.updatedResume}
+                  className="h-96 text-xs bg-muted/20"
+                />
+              </CardContent>
+            </Card>
+          </div>
         )}
       </CardContent>
     </Card>

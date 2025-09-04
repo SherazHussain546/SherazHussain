@@ -23,6 +23,7 @@ const AnalyzeResumeAndProvideFeedbackOutputSchema = z.object({
     .number()
     .describe('The percentage match between the resume and the job description.'),
   feedback: z.string().describe('Actionable feedback on how to improve the resume.'),
+  updatedResume: z.string().describe('The full, updated resume content, rewritten to better match the job description.')
 });
 export type AnalyzeResumeAndProvideFeedbackOutput = z.infer<typeof AnalyzeResumeAndProvideFeedbackOutputSchema>;
 
@@ -43,10 +44,12 @@ const analyzeResumeAndProvideFeedbackPrompt = ai.definePrompt({
 \nBased on the score, generate an output that provides actionable feedback on how to improve the resume:
 \n- If the score is 75% or higher: Display a prominent, celebratory message that says, "Tell me to apply!"
 \n- If the score is below 75%: Display a clear message that says, "Don't apply yet!". Tell me EXACTLY what skills are missing or weak on my resume. Then, give me step-by-step instructions on how to fix it: Should I add new bullet points? If so, tell me what those bullet points should say, using keywords from the job description. Should I rewrite existing bullet points? If so, tell me exactly which ones to rewrite and give me the improved versions.
-\nOutput the matchPercentage (as a number) and feedback (as a string) in the following JSON format:
+\nFinally, rewrite the entire resume to incorporate the feedback and optimize it for the job description.
+\nOutput the matchPercentage (as a number), feedback (as a string), and the updatedResume (as a string) in the following JSON format:
 \n{
   "matchPercentage": number,
-  "feedback": string
+  "feedback": string,
+  "updatedResume": string
 }`,
 });
 
