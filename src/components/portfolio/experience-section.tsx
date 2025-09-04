@@ -9,25 +9,22 @@ export default function ExperienceSection() {
           Work <span className="text-primary">Experience</span>
         </h2>
         <div className="relative">
-          <div className="absolute left-1/2 top-0 h-full w-0.5 -translate-x-1/2 bg-border"></div>
+          <div className="absolute left-0 top-0 h-full w-0.5 bg-border md:left-1/2 md:-translate-x-1/2"></div>
           {experiences.map((exp, index) => (
             <div
               key={exp.role}
-              className={`relative mb-12 flex w-full items-center ${
-                index % 2 === 0 ? 'justify-start' : 'justify-end'
+              className={`relative mb-12 flex w-full items-center md:justify-start ${
+                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
               }`}
             >
               <div
-                className={`w-1/2 ${
-                  index % 2 === 0 ? 'pr-8' : 'pl-8'
-                }`}
+                className="w-full pl-8 md:w-1/2 md:pl-8 md:pr-8"
+                style={index % 2 !== 0 ? { marginLeft: 'auto' } : {}}
               >
                 <div
-                  className={`relative rounded-lg border bg-card p-6 shadow-md transition-shadow hover:shadow-lg hover:shadow-primary/20 ${
-                    index % 2 === 0 ? 'text-left' : 'text-left'
-                  }`}
+                  className="relative rounded-lg border bg-card p-6 shadow-md transition-shadow hover:shadow-lg hover:shadow-primary/20"
                 >
-                  <div className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-primary ring-4 ring-background" style={index % 2 === 0 ? { right: '-2.05rem' } : { left: '-2.05rem' }}></div>
+                  <div className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-primary ring-4 ring-background -left-1.5 md:left-auto" style={index % 2 === 0 ? { right: '-2.05rem' } : { left: '-2.05rem' }}></div>
                   <p className="text-xs text-muted-foreground">{exp.period}</p>
                   <h3 className="text-xl font-bold text-primary">{exp.role}</h3>
                   <p className="mb-4 font-semibold">{exp.company}</p>
