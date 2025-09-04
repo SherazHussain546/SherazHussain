@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ExternalLink, Github } from 'lucide-react';
+import { Github } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ProjectsSection() {
