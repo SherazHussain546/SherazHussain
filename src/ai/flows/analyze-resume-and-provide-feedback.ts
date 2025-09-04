@@ -42,11 +42,7 @@ const analyzeResumeAndProvideFeedbackPrompt = ai.definePrompt({
 \nCalculate a match percentage or score based on the comparison. Consider that the same skill can be expressed in different words, and keywords may not be named the same thing in both texts.
 \nBased on the score, generate an output that provides actionable feedback on how to improve the resume:
 \n- If the score is 75% or higher: Display a prominent, celebratory message that says, "Tell me to apply!"
-\n- If the score is below 75%: Display a clear message that says, "Don't apply yet!" followed by a detailed, actionable plan. This plan must:
-  - Explicitly list the exact skills that are missing or weak on the resume, using keywords from the job description.
-  - Provide step-by-step instructions on how to fix the resume.
-  - If new bullet points are needed, provide the exact wording for them, incorporating keywords from the job description.
-  - If existing bullet points should be rewritten, identify the specific bullet points to change and provide the improved, keyword-optimized versions.
+\n- If the score is below 75%: Display a clear message that says, "Don't apply yet!". Tell me EXACTLY what skills are missing or weak on my resume. Then, give me step-by-step instructions on how to fix it: Should I add new bullet points? If so, tell me what those bullet points should say, using keywords from the job description. Should I rewrite existing bullet points? If so, tell me exactly which ones to rewrite and give me the improved versions.
 \nOutput the matchPercentage (as a number) and feedback (as a string) in the following JSON format:
 \n{
   "matchPercentage": number,
