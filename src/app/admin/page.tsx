@@ -8,7 +8,7 @@ export default function AdminPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-card">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="font-bold text-lg text-primary">
-            Aetherfolio Admin
+            Sheraz's Admin Portal
           </Link>
         </div>
       </header>
