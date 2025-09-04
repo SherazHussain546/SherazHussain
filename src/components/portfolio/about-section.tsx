@@ -19,7 +19,7 @@ export default function AboutSection() {
             Full-Stack Software Engineer & AI/Cloud Developer
           </h1>
           <p className="text-lg text-foreground/80 md:text-xl">
-            I am a passionate developer with expertise in building scalable, cloud-native applications and integrating cutting-edge AI technologies. With a strong foundation in both front-end and back-end development, I thrive on solving complex problems and creating elegant, efficient solutions.
+            Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach (Angular, React, Node.js). Expertise in DevSecOps practices, AWS, and Kubernetes, ensuring scalable and secure systems. Eager to contribute technical expertise and a collaborative spirit to a dynamic team.
           </p>
         </div>
       </div>

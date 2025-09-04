@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Aetherfolio',
-  description: 'Personal portfolio of a Full-Stack Software Engineer & AI/Cloud Developer.',
+  title: 'Sheraz Hussain | Portfolio',
+  description: 'Personal portfolio of Sheraz Hussain, a Full-Stack Software Engineer & AI/Cloud Developer.',
 };
 
 export default function RootLayout({

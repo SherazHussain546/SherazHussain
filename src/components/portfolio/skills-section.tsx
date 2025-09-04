@@ -6,16 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { LucideIcon } from 'lucide-react';
 
 type Category = keyof typeof skills | 'All';
 
+const typedSkills = skills as Record<string, { icon: LucideIcon; items: string[] }>;
+
 export default function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
-  const categories: Category[] = ['All', ...Object.keys(skills) as (keyof typeof skills)[]];
-
-  const filteredSkills = activeCategory === 'All'
-    ? Object.values(skills).flatMap(cat => cat.items)
-    : skills[activeCategory as keyof typeof skills].items;
+  const categories: Category[] = ['All', ...Object.keys(typedSkills) as (keyof typeof skills)[]];
 
   return (
     <section id="skills" className="bg-card py-20 md:py-32">
@@ -36,7 +35,7 @@ export default function SkillsSection() {
           ))}
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {(activeCategory === 'All' ? Object.entries(skills) : [[activeCategory, skills[activeCategory as keyof typeof skills]]]).map(([categoryName, categoryData]) => (
+          {(activeCategory === 'All' ? Object.entries(typedSkills) : [[activeCategory, typedSkills[activeCategory as keyof typeof skills]]]).map(([categoryName, categoryData]) => (
             <Card key={categoryName} className="flex flex-col bg-background/50 transition-all hover:shadow-primary/20 hover:shadow-lg">
               <CardHeader className="flex-row items-center gap-4">
                 <categoryData.icon className="h-8 w-8 text-primary" />
