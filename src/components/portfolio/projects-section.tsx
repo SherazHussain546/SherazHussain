@@ -19,7 +19,7 @@ export default function ProjectsSection() {
               <div className="relative h-48 w-full">
                 <Image
                   src={project.image}
-                  alt={project.name}
+                  alt={`Screenshot of the ${project.name} project`}
                   fill
                   className="object-cover"
                   data-ai-hint={project.imageHint}

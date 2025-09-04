@@ -7,7 +7,7 @@ export default function AboutSection() {
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-lg md:h-64 md:w-64">
           <Image
             src="https://picsum.photos/300/300"
-            alt="Profile Picture"
+            alt="Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer"
             width={300}
             height={300}
             className="object-cover"
