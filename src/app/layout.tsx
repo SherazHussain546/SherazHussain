@@ -7,8 +7,28 @@ import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Sheraz Hussain | Portfolio',
-  description: 'Personal portfolio of Sheraz Hussain, a Full-Stack Software Engineer & AI/Cloud Developer.',
+  title: 'Sheraz Hussain | Full-Stack Software Engineer & AI/Cloud Developer',
+  description: 'Sheraz Hussain is a professional Full-Stack Software Engineer and AI/Cloud Developer based in Dublin, Ireland. Explore the portfolio of Sheraz Hussain (sherazhussain546) to see projects in Next.js, React, Python, AI, and Cloud Computing.',
+  keywords: [
+    'Sheraz Hussain',
+    'Sheraz',
+    'sherazhussain',
+    'SherazHussain',
+    'sherazhussain546',
+    'Full-Stack Developer',
+    'Software Engineer',
+    'AI Developer',
+    'Cloud Developer',
+    'Portfolio',
+    'Next.js',
+    'React',
+    'Python',
+    'TypeScript',
+    'AWS',
+    'GCP',
+    'Dublin',
+    'Ireland',
+  ],
 };
 
 export default function RootLayout({
