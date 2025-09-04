@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
 import { LogOut } from 'lucide-react';
+import AnalyticsDashboard from './analytics/analytics-dashboard';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const auth = getAuth(app);
 
@@ -36,7 +38,18 @@ export default function Dashboard() {
           Logout
         </Button>
       </div>
-      <ResumeAnalyzer />
+      <Tabs defaultValue="analytics">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="resume">Resume Analyzer</TabsTrigger>
+        </TabsList>
+        <TabsContent value="analytics">
+          <AnalyticsDashboard />
+        </TabsContent>
+        <TabsContent value="resume">
+          <ResumeAnalyzer />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
