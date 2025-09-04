@@ -1,4 +1,4 @@
-import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone } from 'lucide-react';
+import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award as Certificate } from 'lucide-react';
 
 export const skills = {
   'Languages': {
@@ -11,7 +11,7 @@ export const skills = {
   },
   'Cloud & DevOps': {
     icon: Cloud,
-    items: ['AWS (EC2, S3, Lambda, IAM)', 'GCP', 'Azure', 'Kubernetes', 'Docker', 'CI/CD', 'DevSecOps', 'GitHub Actions', 'Terraform'],
+    items: ['AWS (EC2, S3, Lambda, IAM)', 'Google Cloud Platform (GCP)', 'Azure', 'Kubernetes', 'Docker', 'CI/CD', 'DevSecOps', 'GitHub Actions', 'Terraform'],
   },
   'AI/ML': {
     icon: BrainCircuit,
@@ -75,32 +75,32 @@ export const experiences = [
 
 export const projects = [
   {
-    name: 'Market Genius',
-    description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies.',
+    name: 'Market Genius – An AI-Powered Financial Signal Platform',
+    description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/600/400?random=1',
     imageHint: 'financial chart stock',
   },
   {
-    name: 'Job4You',
-    description: 'Created an automated job-application assistant with Python and GPT-4, which successfully processed over 100 simulated job applications.',
+    name: 'Job4You – Your Personal AI Recruiter',
+    description: 'Created an automated job-application assistant with Python and GPT-4, which successfully processed over 100 simulated job applications. Used scikit-learn for end-to-end resume, cover letter, and email generation, demonstrating expertise in AI development.',
     stack: ['Angular', 'Firebase', 'GPT-4', 'scikit-learn'],
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/600/400?random=2',
     imageHint: 'resume job application',
   },
   {
-    name: 'ChattyAI',
-    description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic.',
+    name: 'ChattyAI – A Conversational AI Assistant',
+    description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic. Deployed the bot as a university study aid that facilitated over 200 daily interactions with sub-second response times.',
     stack: ['Firebase', 'TypeScript', 'Tailwind', 'SQLite'],
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/600/400?random=3',
     imageHint: 'robot conversation',
   },
   {
-    name: 'GoExploree',
-    description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth for a simulated property management system.',
+    name: 'GoExploree – Real Estate Mobile App',
+    description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth. Simulated a property management system that enabled 30+ prospective tenants to browse and schedule viewings.',
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/600/400?random=4',
@@ -114,3 +114,35 @@ export const education = {
   graduationDate: 'Sept 2021 – April 2025',
   awards: ['Peer-Mentor Leadership Award', 'Graduate Work Readiness Badges: Gold, Silver, Bronze'],
 };
+
+export const certifications = [
+  {
+    title: 'Electronic Arts (EA) Software Engineering Virtual Experience Program',
+    icon: Certificate,
+    points: [
+      'Built a class diagram and created a header file in C++ for each object.',
+      'Patched a bugfix and optimized the codebase by implementing an improved data structure.',
+    ],
+  },
+  {
+    title: 'Mastercard Cybersecurity Virtual Experience Program',
+    icon: Certificate,
+    points: [
+      'Served as an analyst on Mastercard’s Security Awareness Team.',
+      'Helped identify and report security threats such as phishing.',
+    ],
+  },
+  {
+    title: 'Deloitte Australia Cyber, Data Analytics & Technology Job Simulations',
+    icon: Certificate,
+    points: [
+      'Completed job simulations involving reading web activity logs and developing code.',
+      'Created a data dashboard using Tableau and used Excel to classify data.',
+    ],
+  },
+];
+
+export const otherCertificates = [
+  'Duolingo English Test',
+  'Introduction to Virtual, Augmented & Mixed Reality | FutureLearn',
+];

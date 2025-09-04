@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { BotMessageSquare } from 'lucide-react';
 
 const navLinks = [
   { name: 'About', href: '#about' },
@@ -12,6 +11,7 @@ const navLinks = [
   { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
+  { name: 'Certifications', href: '#certifications'},
 ];
 
 export default function Header() {
