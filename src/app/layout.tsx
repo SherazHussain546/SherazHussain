@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     'SherazHussian546',
     'Best tech in Ireland',
   ],
+  verification: {
+    google: '-2YVuqfnqiY5zPpoHylxys5gnIrFexTBklppdeVE4Qw',
+  },
 };
 
 export default function RootLayout({
