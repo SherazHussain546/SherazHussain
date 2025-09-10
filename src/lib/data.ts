@@ -32,7 +32,7 @@ export const skills = {
 };
 
 export const experiences = [
-  {
+    {
     role: 'Founder & Director',
     company: 'SYNC TECH',
     period: 'August 2024 - Present',
