@@ -33,6 +33,18 @@ export const skills = {
 
 export const experiences = [
   {
+    role: 'Founder & Director',
+    company: 'SYNC TECH',
+    period: 'August 2024 - Present',
+    description: 'Founded and directed an IT solutions company specializing in Web Development, AI Automation, Cloud Hosting, and Cybersecurity.',
+    points: [
+      'Architected, developed, and delivered bespoke digital solutions for clients, driving their business growth and digital transformation.',
+      'Managed the end-to-end client lifecycle, from initial consultation and proposal creation to project delivery and ongoing support.',
+      'Spearheaded the company\'s digital marketing and SEO strategies, successfully building the online presence and generating leads.',
+      'Key Skills: Entrepreneurship, Business Development, Project Management, Full-Stack Development, AI/ML Engineering, Cloud Architecture, Cybersecurity, and Client Relationship Management.'
+    ],
+  },
+  {
     role: 'Web Developer & Consultant',
     company: 'Stylish Marble Art',
     period: 'May 2024 – Present',
@@ -79,7 +91,7 @@ export const projects = [
     description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
-    image: '/marketgenius.png',
+    image: 'https://picsum.photos/seed/market-genius/600/400',
     imageHint: 'financial chart stock',
   },
   {
@@ -87,7 +99,7 @@ export const projects = [
     description: 'Created an automated job-application assistant with Python and GPT-4, which successfully processed over 100 simulated job applications. Used scikit-learn for end-to-end resume, cover letter, and email generation, demonstrating expertise in AI development.',
     stack: ['Angular', 'Firebase', 'GPT-4', 'scikit-learn'],
     link: 'https://github.com/SherazHussain546',
-    image: '/job4you.png',
+    image: 'https://picsum.photos/seed/job4you/600/400',
     imageHint: 'resume job application',
   },
   {
@@ -95,7 +107,7 @@ export const projects = [
     description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic. Deployed the bot as a university study aid that facilitated over 200 daily interactions with sub-second response times.',
     stack: ['Firebase', 'TypeScript', 'Tailwind', 'SQLite'],
     link: 'https://github.com/SherazHussain546',
-    image: '/chattyai.jpg',
+    image: 'https://picsum.photos/seed/chattyai/600/400',
     imageHint: 'robot conversation',
   },
   {
@@ -103,7 +115,7 @@ export const projects = [
     description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth. Simulated a property management system that enabled 30+ prospective tenants to browse and schedule viewings.',
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
-    image: '/goexploree.jpg',
+    image: 'https://picsum.photos/seed/goexploree/600/400',
     imageHint: 'real estate mobile',
   },
 ];
