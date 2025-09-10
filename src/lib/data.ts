@@ -35,6 +35,7 @@ export const experiences = [
     {
     role: 'Founder & Director',
     company: 'SYNC TECH',
+    link: 'https://www.synctech.ie',
     period: 'August 2024 - Present',
     description: 'Founded and directed an IT solutions company specializing in Web Development, AI Automation, Cloud Hosting, and Cybersecurity.',
     points: [
@@ -47,6 +48,7 @@ export const experiences = [
   {
     role: 'Web Developer & Consultant',
     company: 'Stylish Marble Art',
+    link: 'https://www.stylishmarbleart.com',
     period: 'May 2024 – Present',
     description: 'Developed and maintain a responsive e-commerce website for a marble art and services business, leveraging WordPress, WooCommerce, and custom HTML/CSS.',
     points: [

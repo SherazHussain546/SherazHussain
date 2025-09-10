@@ -1,5 +1,6 @@
 import { experiences } from '@/lib/data';
 import { CheckCircle2 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ExperienceSection() {
   return (
@@ -27,7 +28,15 @@ export default function ExperienceSection() {
                   <div className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-primary ring-4 ring-background -left-1.5 md:left-auto" style={index % 2 === 0 ? { right: '-2.05rem' } : { left: '-2.05rem' }}></div>
                   <p className="text-xs text-muted-foreground">{exp.period}</p>
                   <h3 className="text-xl font-bold text-primary">{exp.role}</h3>
-                  <p className="mb-4 font-semibold">{exp.company}</p>
+                  <p className="mb-4 font-semibold">
+                    {exp.link ? (
+                      <Link href={exp.link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        {exp.company}
+                      </Link>
+                    ) : (
+                      exp.company
+                    )}
+                  </p>
                   <p className="mb-4 text-sm text-muted-foreground">{exp.description}</p>
                   <ul className="space-y-2 text-sm">
                     {exp.points.map((point) => (
