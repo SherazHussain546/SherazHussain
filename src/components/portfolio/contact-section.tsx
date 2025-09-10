@@ -22,18 +22,19 @@ export default function ContactSection() {
           method="POST" 
           data-netlify="true" 
           className="mx-auto mt-12 max-w-xl space-y-6"
-          action="/?success=true"
+          action="/?success=true#contact"
         >
           <input type="hidden" name="form-name" value="contact" />
           
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" type="text" placeholder="Your Name" required />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" placeholder="Your Email" required />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" name="name" type="text" placeholder="Your Name" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" name="email" type="email" placeholder="Your Email" required />
+            </div>
           </div>
           
           <div className="space-y-2">
@@ -42,7 +43,7 @@ export default function ContactSection() {
           </div>
           
           <div className="text-center">
-            <Button type="submit" size="lg">
+            <Button type="submit" size="lg" className="w-full sm:w-auto">
               <Mail className="mr-2 h-5 w-5" />
               Send Message
             </Button>
