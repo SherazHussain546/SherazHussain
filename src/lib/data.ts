@@ -72,7 +72,7 @@ export const experiences = [
     role: 'Freelance Web Developer (via SYNC TECH)',
     company: 'blogify.blog',
     link: 'https://www.blogify.blog',
-    period: 'June 2024 - Present',
+    period: 'September 2024 - Present',
     description: 'Delivered freelance web solutions for a platform that enables businesses to publish and promote their blog content to a wider audience.',
     points: [
       'Built and customized features for the content management system to improve the authoring experience.',
