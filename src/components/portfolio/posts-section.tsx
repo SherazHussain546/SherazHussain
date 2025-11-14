@@ -65,8 +65,9 @@ export default function PostsSection() {
           Featured <span className="text-primary">Posts</span>
         </h2>
         {loading ? (
-            <div className="w-full max-w-4xl mx-auto grid md:grid-cols-2 gap-4">
+            <div className="mx-auto grid w-full max-w-6xl gap-4 md:grid-cols-3">
                 <Skeleton className="h-[450px] w-full" />
+                <Skeleton className="h-[450px] w-full hidden md:block" />
                 <Skeleton className="h-[450px] w-full hidden md:block" />
             </div>
         ) : posts.length === 0 ? (
@@ -75,15 +76,15 @@ export default function PostsSection() {
           <Carousel
             opts={{
               align: "start",
-              loop: posts.length > 1,
+              loop: posts.length > 3,
             }}
-            className="w-full max-w-4xl mx-auto"
+            className="w-full max-w-6xl mx-auto"
           >
             <CarouselContent>
               {posts.map((post) => {
                 const Icon = platformIcons[post.platform] || Rss;
                 return (
-                  <CarouselItem key={post.id} className="md:basis-1/2">
+                  <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1">
                       <Card className="flex h-full flex-col overflow-hidden bg-card transition-all hover:shadow-primary/20 hover:shadow-lg">
                         {post.image && (
@@ -122,7 +123,7 @@ export default function PostsSection() {
                 );
               })}
             </CarouselContent>
-            {posts.length > 2 && (
+            {posts.length > 3 && (
               <>
                 <CarouselPrevious />
                 <CarouselNext />
