@@ -55,7 +55,8 @@ service cloud.firestore {
      */
     match /posts/{postId} {
       allow read: if true;
-      allow write: if isSignedIn() && isPostDataValid();
+      allow create, update: if isSignedIn() && isPostDataValid();
+      allow delete: if isSignedIn();
     }
     
     /**
