@@ -17,7 +17,7 @@ export const posts = [
     title: 'Announcing My New Portfolio!',
     description: 'A deep dive into the tech stack and features behind my new personal portfolio, built with Next.js, Genkit, and Firebase.',
     link: 'https://www.linkedin.com/in/sherazhussain546/',
-    image: 'https://picsum.photos/seed/1/600/400',
+    image: '/new-portfolio.png',
     imageHint: 'portfolio announcement'
   },
   {
@@ -25,7 +25,7 @@ export const posts = [
     title: 'The Power of AI in Modern Web Development',
     description: 'Exploring how I integrated Google\'s Gemini AI to create a powerful resume analyzer feature.',
     link: 'https://www.linkedin.com/in/sherazhussain546/',
-    image: 'https://picsum.photos/seed/2/600/400',
+    image: '/ai-web-dev.png',
     imageHint: 'AI development'
   }
 ];
@@ -148,7 +148,7 @@ export const projects = [
     description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
-    image: 'https://picsum.photos/seed/3/600/400',
+    image: '/market-genius.png',
     imageHint: 'AI financial platform'
   },
   {
@@ -156,7 +156,7 @@ export const projects = [
     description: 'Created an automated job-application assistant with Python and GPT-4, which successfully processed over 100 simulated job applications. Used scikit-learn for end-to-end resume, cover letter, and email generation, demonstrating expertise in AI development.',
     stack: ['Angular', 'Firebase', 'GPT-4', 'scikit-learn'],
     link: 'https://github.com/SherazHussain546',
-    image: 'https://picsum.photos/seed/4/600/400',
+    image: '/job4you.png',
     imageHint: 'AI job recruiter'
   },
   {
@@ -164,7 +164,7 @@ export const projects = [
     description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic. Deployed the bot as a university study aid that facilitated over 200 daily interactions with sub-second response times.',
     stack: ['Firebase', 'TypeScript', 'Tailwind', 'SQLite'],
     link: 'https://github.com/SherazHussain546',
-    image: 'https://picsum.photos/seed/5/600/400',
+    image: '/chatty-ai.png',
     imageHint: 'AI chatbot conversation'
   },
   {
@@ -172,7 +172,7 @@ export const projects = [
     description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth. Simulated a property management system that enabled 30+ prospective tenants to browse and schedule viewings.',
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
-    image: 'https://picsum.photos/seed/6/600/400',
+    image: '/goexploree.png',
     imageHint: 'real estate mobile'
   },
 ];
