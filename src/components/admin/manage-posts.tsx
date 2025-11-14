@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { collection, addDoc, onSnapshot, serverTimestamp, query, orderBy, Timestamp } from 'firebase/firestore';
-import { useFirestore, addDocumentNonBlocking } from '@/firebase';
+import { collection, onSnapshot, serverTimestamp, query, orderBy, Timestamp } from 'firebase/firestore';
+import { useFirestore, addDocumentNonBlocking, useMemoFirebase } from '@/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -50,10 +50,15 @@ export default function ManagePosts() {
     },
   });
 
+  const postsQuery = useMemoFirebase(() => {
+    if (!db) return null;
+    return query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+  }, [db]);
+
   useEffect(() => {
-    if (!db) return;
-    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    if (!postsQuery) return;
+    
+    const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
       const fetchedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post));
       setPosts(fetchedPosts);
     }, (err) => {
@@ -62,28 +67,25 @@ export default function ManagePosts() {
     });
 
     return () => unsubscribe();
-  }, [db]);
+  }, [postsQuery]);
 
   const onSubmit = async (data: PostFormValues) => {
     if(!db) return;
     setLoading(true);
     setError(null);
-    try {
-      addDocumentNonBlocking(collection(db, 'posts'), {
-        ...data,
-        createdAt: serverTimestamp(),
-      });
-      toast({
-        title: 'Post Added!',
-        description: 'Your new featured post has been saved.',
-      });
-      form.reset();
-    } catch (e) {
-      setError('An error occurred while saving the post. Please try again.');
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    
+    addDocumentNonBlocking(collection(db, 'posts'), {
+      ...data,
+      createdAt: serverTimestamp(),
+    });
+    
+    toast({
+      title: 'Post Added!',
+      description: 'Your new featured post has been saved.',
+    });
+    
+    form.reset();
+    setLoading(false);
   };
 
   return (
