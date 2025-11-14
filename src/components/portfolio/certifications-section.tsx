@@ -46,13 +46,6 @@ export default function CertificationsSection() {
                         {cert.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
                       </div>
                     )}
-                    {cert.credentialId && (
-                        <Button variant="link" asChild className="p-0 h-auto justify-start">
-                            <Link href={`https://www.credly.com/acclaim-credentials/${cert.credentialId}`} target="_blank" rel="noopener noreferrer">
-                                Show Credential
-                            </Link>
-                        </Button>
-                    )}
                    </div>
                 </AccordionContent>
               </AccordionItem>
