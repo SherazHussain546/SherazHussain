@@ -23,9 +23,10 @@ export default function PostsSection() {
                   className="object-cover"
                   data-ai-hint={post.imageHint}
                 />
-                 <div className="absolute top-4 right-4 flex items-center gap-2 rounded-full bg-background/80 px-3 py-1 text-sm font-medium">
-                    <Linkedin className="h-4 w-4 text-[#0077B5]" />
-                    <span>{post.platform}</span>
+                 <div className="absolute top-4 right-4">
+                    <Link href={post.link} target="_blank" rel="noopener noreferrer" aria-label="Read on LinkedIn">
+                      <Linkedin className="h-6 w-6 text-white bg-[#0077B5] rounded-full p-1 transition-transform hover:scale-110" />
+                    </Link>
                 </div>
               </div>
               <CardHeader>
