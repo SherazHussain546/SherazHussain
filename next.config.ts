@@ -66,6 +66,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'scontent-dub4-1.xx.fbcdn.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async headers() {
