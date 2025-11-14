@@ -60,6 +60,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.linkedin.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async headers() {
