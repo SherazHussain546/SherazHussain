@@ -63,7 +63,7 @@ export const skills = {
 };
 
 export const experiences = [
-    {
+  {
     role: 'Founder & Director',
     company: 'SYNC TECH',
     link: 'https://www.synctech.ie',

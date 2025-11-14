@@ -7,6 +7,7 @@ import ResumeAnalyzer from './resume-analyzer';
 import { LogOut } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ManagePosts from './manage-posts';
 
 const auth = getAuth(app);
 
@@ -38,16 +39,20 @@ export default function Dashboard() {
           Logout
         </Button>
       </div>
-      <Tabs defaultValue="analytics">
-        <TabsList className="grid w-full grid-cols-2">
+      <Tabs defaultValue="analytics" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="resume">Resume Analyzer</TabsTrigger>
+          <TabsTrigger value="posts">Manage Posts</TabsTrigger>
         </TabsList>
         <TabsContent value="analytics">
           <AnalyticsDashboard />
         </TabsContent>
         <TabsContent value="resume">
           <ResumeAnalyzer />
+        </TabsContent>
+        <TabsContent value="posts">
+          <ManagePosts />
         </TabsContent>
       </Tabs>
     </div>
