@@ -61,6 +61,19 @@ service cloud.firestore {
     function isExistingOwner(userId) {
       return isOwner(userId) && resource != null;
     }
+
+    /**
+     * @description Rules for the posts collection. Posts are publicly readable.
+     * Only authenticated users (admins) can create, update, or delete posts.
+     * @path /posts/{postId}
+     * @allow (get, list) - Anyone can read posts.
+     * @allow (write) - Only signed-in users can write.
+     * @principle Public read access for portfolio content, secure writes for admin.
+     */
+    match /posts/{postId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
     
     /**
      * @description Rules for the projects subcollection under a specific user.

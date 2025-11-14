@@ -11,26 +11,6 @@ type CertificateType = {
   points?: string[];
 };
 
-export const posts = [
-  {
-    platform: 'LinkedIn',
-    title: 'Thrilled to announce I have graduated from Dublin Business School (DBS) with a First Class Honours BSc (Hons) in Computing!',
-    description: 'This degree was about more than just theory; it was about building. Over the past year, I have had the chance to develop a diverse portfolio of projects that turn concepts into code. Find out more at my LinkedIn',
-    link: 'https://www.linkedin.com/posts/sherazhussain546_firstclasshonours-computing-dbsgrad-activity-7391398822662533121-Pa3L?utm_source=share&utm_medium=member_desktop&rcm=ACoAADGRPkgB3JmkWaKTzPiAPXGTsDPR25yJBEM',
-    image: 'https://media.licdn.com/dms/image/v2/D4E22AQGi3k8nTkkYvg/feedshare-shrink_800/B4EZpK0jmkGcAg-/0/1762191884252?e=1764806400&v=beta&t=joKj1LvuZ6GuZYf0vgxnDiWVttNHnosuQjtgO91yK6Q',
-    imageHint: 'Finally Graduated from DBS'
-  },
-  {
-    platform: 'LinkedIn',
-    title: 'The Power of AI in Modern Web Development',
-    description: 'Exploring how I integrated Google\'s Gemini AI to create a powerful resume analyzer feature.',
-    link: 'https://www.linkedin.com/in/sherazhussain546/',
-    image: '/ai-web-dev.png',
-    imageHint: 'AI development'
-  }
-];
-
-
 export const skills = {
   'Languages': {
     icon: Code,

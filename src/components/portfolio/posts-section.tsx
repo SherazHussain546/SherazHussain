@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, orderBy, Timestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { useFirestore, useMemoFirebase } from '@/firebase';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -25,10 +25,21 @@ export interface Post {
 export default function PostsSection() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const db = useFirestore();
+
+  const postsQuery = useMemoFirebase(() => {
+    if (!db) return null;
+    return query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+  }, [db]);
+
 
   useEffect(() => {
-    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    if (!postsQuery) {
+      setLoading(!db);
+      return;
+    };
+
+    const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
       const fetchedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post));
       setPosts(fetchedPosts);
       setLoading(false);
@@ -38,7 +49,7 @@ export default function PostsSection() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [postsQuery, db]);
 
   return (
     <section id="posts" className="py-20 md:py-32">

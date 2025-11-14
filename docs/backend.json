@@ -1,5 +1,42 @@
 {
   "entities": {
+    "Post": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Post",
+      "type": "object",
+      "description": "Represents a featured post in the portfolio.",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "The social media platform the post is from (e.g., LinkedIn, Instagram).",
+          "enum": ["LinkedIn", "Instagram", "Facebook", "Other"]
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the post."
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description or summary of the post."
+        },
+        "link": {
+          "type": "string",
+          "description": "A URL to the original post.",
+          "format": "uri"
+        },
+        "image": {
+          "type": "string",
+          "description": "A URL to an image for the post.",
+          "format": "uri"
+        },
+        "createdAt": {
+            "type": "string",
+            "description": "The timestamp when the post was created.",
+            "format": "date-time"
+        }
+      },
+      "required": ["platform", "title", "description", "link", "createdAt"]
+    },
     "Project": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Project",
@@ -154,88 +191,35 @@
     ]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/users/{userId}/projects/{projectId}",
-        "definition": {
-          "entityName": "Project",
-          "schema": {
-            "$ref": "#/backend/entities/Project"
-          },
-          "description": "Stores project data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            },
-            {
-              "name": "projectId",
-              "description": "The unique identifier of the project."
-            }
-          ]
-        }
+    "/posts/{postId}": {
+      "schema": {
+        "$ref": "#/entities/Post"
       },
-      {
-        "path": "/users/{userId}/experience/{experienceId}",
-        "definition": {
-          "entityName": "Experience",
-          "schema": {
-            "$ref": "#/backend/entities/Experience"
-          },
-          "description": "Stores experience data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            },
-            {
-              "name": "experienceId",
-              "description": "The unique identifier of the experience."
-            }
-          ]
-        }
+      "description": "Stores featured post data. Publicly readable, but only writable by authenticated admins."
+    },
+    "/users/{userId}/projects/{projectId}": {
+      "schema": {
+        "$ref": "#/entities/Project"
       },
-      {
-        "path": "/users/{userId}/skills/{skillId}",
-        "definition": {
-          "entityName": "Skill",
-          "schema": {
-            "$ref": "#/backend/entities/Skill"
-          },
-          "description": "Stores skill data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            },
-            {
-              "name": "skillId",
-              "description": "The unique identifier of the skill."
-            }
-          ]
-        }
+      "description": "Stores project data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
+    },
+    "/users/{userId}/experience/{experienceId}": {
+      "schema": {
+        "$ref": "#/entities/Experience"
       },
-      {
-        "path": "/users/{userId}/education/{educationId}",
-        "definition": {
-          "entityName": "Education",
-          "schema": {
-            "$ref": "#/backend/entities/Education"
-          },
-          "description": "Stores education data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            },
-            {
-              "name": "educationId",
-              "description": "The unique identifier of the education."
-            }
-          ]
-        }
-      }
-    ],
-    "reasoning": "The Firestore data structure is designed to support a portfolio application with a secure admin portal. It prioritizes Authorization Independence by avoiding hierarchical authorization dependencies, ensuring atomic operations and simplified security rules.  Data is segregated into collections based on entity type (Projects, Experience, Skills, Education) to maintain a homogeneous security posture.  Path-based ownership is used where applicable.  Since there are no collaborative entities, membership maps are not needed. QAPs (rules are not filters) are supported through structural segregation. Each collection stores a specific entity type and therefore list operations can be secured by simply allowing read access to authenticated users."
+      "description": "Stores experience data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
+    },
+    "/users/{userId}/skills/{skillId}": {
+      "schema": {
+        "$ref": "#/entities/Skill"
+      },
+      "description": "Stores skill data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
+    },
+    "/users/{userId}/education/{educationId}": {
+      "schema": {
+        "$ref": "#/entities/Education"
+      },
+      "description": "Stores education data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
+    }
   }
 }

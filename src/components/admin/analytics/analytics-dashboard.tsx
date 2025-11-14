@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where, Timestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { useFirestore } from '@/firebase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Eye, Globe, Clock, Smartphone, Computer, BarChart2 } from 'lucide-react';
 import { VisitsOverTimeChart } from './visits-over-time-chart';
@@ -25,8 +25,10 @@ interface AnalyticsData {
 export default function AnalyticsDashboard() {
   const [data, setData] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
+  const db = useFirestore();
 
   useEffect(() => {
+    if (!db) return;
     const thirtyDaysAgo = subDays(new Date(), 30);
     const q = query(
       collection(db, 'analytics'),
@@ -43,7 +45,7 @@ export default function AnalyticsDashboard() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [db]);
 
   const totalPageViews = data.length;
   const totalUniqueVisits = new Set(data.map(d => d.userId)).size;
