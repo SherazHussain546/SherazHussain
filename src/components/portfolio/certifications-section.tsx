@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CheckCircle2, Star } from 'lucide-react';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export default function CertificationsSection() {
   return (
@@ -16,20 +18,42 @@ export default function CertificationsSection() {
             {certifications.map((cert, index) => (
               <AccordionItem key={cert.title} value={`item-${index}`}>
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
-                  <div className="flex items-center gap-3">
-                    <cert.icon className="h-6 w-6 text-primary" />
-                    <span>{cert.title}</span>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-3 text-left">
+                      <cert.icon className="h-6 w-6 flex-shrink-0 text-primary" />
+                      <span>{cert.title}</span>
+                    </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="pl-12">
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    {cert.points.map((point) => (
-                      <li key={point} className="flex items-start gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
+                   <div className="flex flex-col space-y-4">
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <p className="font-semibold">{cert.issuer}</p>
+                        <p>{cert.date}</p>
+                    </div>
+                    {cert.points && (
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        {cert.points.map((point) => (
+                          <li key={point} className="flex items-start gap-2">
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {cert.skills && (
+                      <div className="flex flex-wrap gap-2">
+                        {cert.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
+                      </div>
+                    )}
+                    {cert.credentialId && (
+                        <Button variant="link" asChild className="p-0 h-auto justify-start">
+                            <Link href={`https://www.credly.com/acclaim-credentials/${cert.credentialId}`} target="_blank" rel="noopener noreferrer">
+                                Show Credential
+                            </Link>
+                        </Button>
+                    )}
+                   </div>
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -39,15 +63,19 @@ export default function CertificationsSection() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-xl">
                 <Star className="text-primary" />
-                Other Certificates
+                Other Certificates & Achievements
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-wrap gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {otherCertificates.map((cert) => (
-                  <Badge key={cert} variant="secondary" className="text-base">
-                    {cert}
-                  </Badge>
+                  <div key={cert.title} className="flex items-center gap-3 rounded-md border p-3">
+                     <cert.icon className="h-6 w-6 flex-shrink-0 text-primary" />
+                     <div className='flex flex-col'>
+                        <p className='font-semibold'>{cert.title}</p>
+                        <p className='text-xs text-muted-foreground'>{cert.issuer} - {cert.date}</p>
+                     </div>
+                  </div>
                 ))}
               </div>
             </CardContent>

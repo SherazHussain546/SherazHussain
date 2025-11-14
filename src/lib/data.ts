@@ -1,4 +1,15 @@
-import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award as Certificate } from 'lucide-react';
+import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon } from 'lucide-react';
+
+type CertificateType = {
+  title: string;
+  issuer: string;
+  date?: string;
+  credentialId?: string;
+  credentialUrl?: string;
+  icon: LucideIcon;
+  skills?: string[];
+  points?: string[];
+};
 
 export const skills = {
   'Languages': {
@@ -129,10 +140,14 @@ export const education = {
   awards: ['Peer-Mentor Leadership Award', 'Graduate Work Readiness Badges: Gold, Silver, Bronze'],
 };
 
-export const certifications = [
+export const certifications: CertificateType[] = [
   {
-    title: 'Electronic Arts (EA) Software Engineering Virtual Experience Program',
-    icon: Certificate,
+    title: 'Electronic Arts (EA) Software Engineering Virtual Experience',
+    issuer: 'Forage',
+    date: 'Issued Aug 2025',
+    credentialId: 'RhcwgiXcxFS6oSNyY',
+    icon: Award,
+    skills: ['Communication', 'Object-Oriented Programming (OOP)'],
     points: [
       'Built a class diagram and created a header file in C++ for each object.',
       'Patched a bugfix and optimized the codebase by implementing an improved data structure.',
@@ -140,23 +155,51 @@ export const certifications = [
   },
   {
     title: 'Mastercard Cybersecurity Virtual Experience Program',
-    icon: Certificate,
+    issuer: 'Forage',
+    date: 'Issued Feb 2025',
+    credentialId: '2tPnnhF5JNy65YhvK',
+    icon: ShieldCheck,
+    skills: ['Problem Solving', 'Time Management', 'Attention to Detail', 'Test and Learn Agile Methodology'],
     points: [
       'Served as an analyst on Mastercard’s Security Awareness Team.',
       'Helped identify and report security threats such as phishing.',
     ],
   },
   {
-    title: 'Deloitte Australia Cyber, Data Analytics & Technology Job Simulations',
-    icon: Certificate,
+    title: 'Deloitte Australia - Technology Job Simulation',
+    issuer: 'Forage',
+    date: 'Issued Aug 2025',
+    credentialId: 'o8nD9KWXc6iKB4igL',
+    icon: Code,
+    skills: ['Python (Programming Language)'],
     points: [
       'Completed job simulations involving reading web activity logs and developing code.',
       'Created a data dashboard using Tableau and used Excel to classify data.',
     ],
   },
+   {
+    title: 'Student Leader Awards 2023 Peer Mentor (with Distinction)',
+    issuer: 'Dublin Business School',
+    date: 'Issued Jun 2023',
+    icon: Award,
+    skills: ['Problem Solving', 'Time Management', 'Attention to Detail', 'Teamwork', 'Leadership', 'Communication'],
+  },
+  {
+    title: 'Graduate Work Readiness (Bronze, Silver and Gold)',
+    issuer: 'Dublin Business School',
+    date: 'Issued May 2023',
+    icon: School,
+    skills: ['Problem Solving', 'Time Management', 'Attention to Detail', 'Teamwork', 'Leadership', 'Communication'],
+  },
 ];
 
-export const otherCertificates = [
-  'Duolingo English Test',
-  'Introduction to Virtual, Augmented & Mixed Reality | FutureLearn',
+export const otherCertificates: CertificateType[] = [
+    { title: 'Deloitte Australia - Cyber Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: ShieldCheck },
+    { title: 'Deloitte Australia - Data Analytics Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: Database },
+    { title: 'Google Ads AI-Powered Performance Certification', issuer: 'Google', date: 'Jun 2023', icon: BrainCircuit },
+    { title: 'Introduction to Virtual, Augmented & Mixed Reality', issuer: 'FutureLearn', date: 'Jul 2020', icon: Smartphone },
+    { title: 'Sophomore Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Award },
+    { title: 'Junior Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Award },
+    { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Award },
+    { title: 'Duolingo English Test', issuer: 'Duolingo', date: '', icon: Award },
 ];
