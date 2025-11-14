@@ -20,7 +20,8 @@ export default function ContactSection() {
         <form 
           name="contact" 
           method="POST" 
-          data-netlify="true" 
+          data-netlify="true"
+          action="/form-success"
           className="mx-auto mt-12 max-w-xl space-y-6"
         >
           <input type="hidden" name="form-name" value="contact" />

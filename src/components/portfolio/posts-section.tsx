@@ -32,12 +32,17 @@ const platformIcons: { [key: string]: React.ElementType } = {
 export default function PostsSection() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
   const db = useFirestore();
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const postsQuery = useMemoFirebase(() => {
-    if (!db) return null;
+    if (!db || !isClient) return null;
     return query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-  }, [db]);
+  }, [db, isClient]);
 
 
   useEffect(() => {
@@ -57,6 +62,23 @@ export default function PostsSection() {
 
     return () => unsubscribe();
   }, [postsQuery, db]);
+
+  if (!isClient) {
+    return (
+      <section id="posts" className="py-20 md:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Featured <span className="text-primary">Posts</span>
+          </h2>
+          <div className="mx-auto grid w-full max-w-6xl gap-4 md:grid-cols-3">
+              <Skeleton className="h-[450px] w-full" />
+              <Skeleton className="h-[450px] w-full hidden md:block" />
+              <Skeleton className="h-[450px] w-full hidden md:block" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="posts" className="py-20 md:py-32">
