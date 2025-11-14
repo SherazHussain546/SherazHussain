@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { collection, onSnapshot, serverTimestamp, query, orderBy, Timestamp } from 'firebase/firestore';
-import { useFirestore, addDocumentNonBlocking, useMemoFirebase } from '@/firebase';
+import { collection, onSnapshot, serverTimestamp, query, orderBy, Timestamp, doc } from 'firebase/firestore';
+import { useFirestore, addDocumentNonBlocking, useMemoFirebase, updateDocumentNonBlocking, deleteDocumentNonBlocking } from '@/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -13,9 +13,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { ExternalLink, Loader2, Image as ImageIcon, Linkedin, Rss } from 'lucide-react';
+import { ExternalLink, Loader2, Linkedin, Rss, Edit, Trash2 } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+
 
 const postSchema = z.object({
   platform: z.enum(['LinkedIn', 'Instagram', 'Facebook', 'Other']),
@@ -36,6 +38,7 @@ export default function ManagePosts() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
   const { toast } = useToast();
   const db = useFirestore();
 
@@ -49,6 +52,20 @@ export default function ManagePosts() {
       image: '',
     },
   });
+
+  useEffect(() => {
+    if (editingPost) {
+      form.reset(editingPost);
+    } else {
+      form.reset({
+        platform: 'LinkedIn',
+        title: '',
+        description: '',
+        link: '',
+        image: '',
+      });
+    }
+  }, [editingPost, form]);
 
   const postsQuery = useMemoFirebase(() => {
     if (!db) return null;
@@ -68,21 +85,47 @@ export default function ManagePosts() {
 
     return () => unsubscribe();
   }, [postsQuery]);
+  
+  const handleEditClick = (post: Post) => {
+    setEditingPost(post);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPost(null);
+  };
+
+  const handleDelete = (postId: string) => {
+    if(!db) return;
+    deleteDocumentNonBlocking(doc(db, 'posts', postId));
+    toast({
+      title: 'Post Deleted',
+      description: 'The post has been successfully removed.',
+    });
+  };
 
   const onSubmit = async (data: PostFormValues) => {
     if(!db) return;
     setLoading(true);
     setError(null);
     
-    addDocumentNonBlocking(collection(db, 'posts'), {
-      ...data,
-      createdAt: serverTimestamp(),
-    });
-    
-    toast({
-      title: 'Post Added!',
-      description: 'Your new featured post has been saved.',
-    });
+    if (editingPost) {
+      const postRef = doc(db, 'posts', editingPost.id);
+      updateDocumentNonBlocking(postRef, data);
+      toast({
+        title: 'Post Updated!',
+        description: 'Your featured post has been updated.',
+      });
+      setEditingPost(null);
+    } else {
+      addDocumentNonBlocking(collection(db, 'posts'), {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
+      toast({
+        title: 'Post Added!',
+        description: 'Your new featured post has been saved.',
+      });
+    }
     
     form.reset();
     setLoading(false);
@@ -93,8 +136,8 @@ export default function ManagePosts() {
       <div className="lg:col-span-1">
         <Card>
           <CardHeader>
-            <CardTitle>Add New Post</CardTitle>
-            <CardDescription>Fill out the form to add a new featured post.</CardDescription>
+            <CardTitle>{editingPost ? 'Edit Post' : 'Add New Post'}</CardTitle>
+            <CardDescription>{editingPost ? 'Update the details for this post.' : 'Fill out the form to add a new featured post.'}</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -105,7 +148,7 @@ export default function ManagePosts() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Platform</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select a platform" />
@@ -174,10 +217,16 @@ export default function ManagePosts() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Add Post
-                </Button>
+                <div className="flex gap-2">
+                  <Button type="submit" disabled={loading} className="flex-1">
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : (editingPost ? 'Update Post' : 'Add Post')}
+                  </Button>
+                  {editingPost && (
+                    <Button type="button" variant="outline" onClick={handleCancelEdit}>
+                      Cancel
+                    </Button>
+                  )}
+                </div>
                 {error && <p className="text-sm text-destructive">{error}</p>}
               </form>
             </Form>
@@ -212,12 +261,37 @@ export default function ManagePosts() {
                                     </TableCell>
                                     <TableCell className="font-medium">{post.title}</TableCell>
                                     <TableCell>{post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="text-right space-x-1">
                                         <Button asChild variant="ghost" size="icon">
                                             <Link href={post.link} target="_blank" rel="noopener noreferrer">
                                                 <ExternalLink className="h-4 w-4"/>
                                             </Link>
                                         </Button>
+                                        <Button variant="ghost" size="icon" onClick={() => handleEditClick(post)}>
+                                            <Edit className="h-4 w-4" />
+                                        </Button>
+                                        <AlertDialog>
+                                          <AlertDialogTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                          </AlertDialogTrigger>
+                                          <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                              <AlertDialogDescription>
+                                                This action cannot be undone. This will permanently delete the post
+                                                from your database.
+                                              </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                              <AlertDialogAction onClick={() => handleDelete(post.id)} className="bg-destructive hover:bg-destructive/90">
+                                                Delete
+                                              </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                          </AlertDialogContent>
+                                        </AlertDialog>
                                     </TableCell>
                                 </TableRow>
                             ))
