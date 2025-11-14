@@ -25,7 +25,7 @@ export default function PostsSection() {
                 />
                  <div className="absolute top-4 right-4">
                     <Link href={post.link} target="_blank" rel="noopener noreferrer" aria-label="Read on LinkedIn">
-                      <Linkedin className="h-6 w-6 text-white bg-[#0077B5] rounded-full p-1 transition-transform hover:scale-110" />
+                      <Linkedin className="h-6 w-6 text-white drop-shadow-md transition-transform hover:scale-110" />
                     </Link>
                 </div>
               </div>
