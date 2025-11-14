@@ -1,0 +1,133 @@
+/**
+ * @fileoverview Firestore Security Rules for the portfolio application.
+ *
+ * Core Philosophy:
+ * This ruleset enforces a strict user-ownership model for all data,
+ * ensuring that only the authenticated user who owns a particular piece of data
+ * can create, read, update, or delete it. This model applies to projects,
+ * experience, skills, and education data.
+ *
+ * Data Structure:
+ * All data is nested under /users/{userId}, with subcollections for
+ * projects, experience, skills, and education. This structure enforces
+ * clear ownership and simplifies security rules. Each document within these
+ * subcollections represents a specific entity (e.g., a project, a work
+ * experience).
+ *
+ * Key Security Decisions:
+ * - User listing is disallowed.
+ * - All write operations require authentication.
+ * - Data consistency between the path and document data is enforced on create and update.
+ * - No public data access is allowed. All data is private to the user.
+ *
+ * Denormalization for Authorization:
+ * The 'userId' is denormalized (copied) into each document to simplify authorization checks.
+ * This avoids the need for complex queries or joins in the security rules,
+ * improving performance and reducing costs.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Checks if the user is signed in.
+     * @path N/A
+     * @allow N/A
+     * @deny N/A
+     * @principle Verifies user authentication.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * @description Checks if the authenticated user ID matches the provided user ID.
+     * @path N/A
+     * @allow N/A
+     * @deny N/A
+     * @principle Enforces user ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * @description Checks if the authenticated user is the owner of the existing document.
+     * @path N/A
+     * @allow N/A
+     * @deny N/A
+     * @principle Verifies existing document ownership for updates and deletes.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+    
+    /**
+     * @description Rules for the projects subcollection under a specific user.
+     * @path /users/{userId}/projects/{projectId}
+     * @allow (create) - User 'user123' can create a project with data { id: 'user123', name: 'My Project' }
+     * @allow (get) - User 'user123' can retrieve their project.
+     * @deny (create) - User 'user456' cannot create a project under 'user123'.
+     * @deny (update) - User 'user456' cannot update a project under 'user123'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId}/projects/{projectId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Rules for the experience subcollection under a specific user.
+     * @path /users/{userId}/experience/{experienceId}
+     * @allow (create) - User 'user123' can create an experience entry with data { id: 'user123', title: 'Software Engineer' }
+     * @allow (get) - User 'user123' can retrieve their experience entry.
+     * @deny (create) - User 'user456' cannot create an experience entry under 'user123'.
+     * @deny (update) - User 'user456' cannot update an experience entry under 'user123'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId}/experience/{experienceId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Rules for the skills subcollection under a specific user.
+     * @path /users/{userId}/skills/{skillId}
+     * @allow (create) - User 'user123' can create a skill entry with data { id: 'user123', name: 'JavaScript' }
+     * @allow (get) - User 'user123' can retrieve their skill entry.
+     * @deny (create) - User 'user456' cannot create a skill entry under 'user123'.
+     * @deny (update) - User 'user456' cannot update a skill entry under 'user123'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId}/skills/{skillId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Rules for the education subcollection under a specific user.
+     * @path /users/{userId}/education/{educationId}
+     * @allow (create) - User 'user123' can create an education entry with data { id: 'user123', degree: 'BSc Computer Science' }
+     * @allow (get) - User 'user123' can retrieve their education entry.
+     * @deny (create) - User 'user456' cannot create an education entry under 'user123'.
+     * @deny (update) - User 'user456' cannot update an education entry under 'user123'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId}/education/{educationId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}

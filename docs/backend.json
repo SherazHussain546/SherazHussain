@@ -1,0 +1,241 @@
+{
+  "entities": {
+    "Project": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Project",
+      "type": "object",
+      "description": "Represents a project in the portfolio.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the project entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the project."
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description of the project."
+        },
+        "techStack": {
+          "type": "array",
+          "description": "An array of strings representing the technologies used in the project.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "githubLink": {
+          "type": "string",
+          "description": "Link to the GitHub repository of the project.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "techStack",
+        "githubLink"
+      ]
+    },
+    "Experience": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Experience",
+      "type": "object",
+      "description": "Represents a work experience entry in the portfolio.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the experience entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "The job title of the experience."
+        },
+        "company": {
+          "type": "string",
+          "description": "The name of the company where the experience was gained."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the experience.",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the experience. Can be null if it's the current job.",
+          "format": "date-time"
+        },
+        "descriptionPoints": {
+          "type": "array",
+          "description": "An array of strings representing the key bullet points for the role.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "company",
+        "startDate",
+        "descriptionPoints"
+      ]
+    },
+    "Skill": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Skill",
+      "type": "object",
+      "description": "Represents a technical skill.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the skill entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the skill (e.g., Angular, React, Python)."
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the skill (e.g., Languages, Frameworks, Cloud)."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "category"
+      ]
+    },
+    "Education": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Education",
+      "type": "object",
+      "description": "Represents an educational achievement.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the education entity."
+        },
+        "degree": {
+          "type": "string",
+          "description": "The name of the degree (e.g., Bachelor of Science)."
+        },
+        "university": {
+          "type": "string",
+          "description": "The name of the university."
+        },
+        "graduationDate": {
+          "type": "string",
+          "description": "The graduation date.",
+          "format": "date-time"
+        },
+        "awards": {
+          "type": "array",
+          "description": "An array of strings representing any notable awards or certifications.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "degree",
+        "university",
+        "graduationDate"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}/projects/{projectId}",
+        "definition": {
+          "entityName": "Project",
+          "schema": {
+            "$ref": "#/backend/entities/Project"
+          },
+          "description": "Stores project data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "projectId",
+              "description": "The unique identifier of the project."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/experience/{experienceId}",
+        "definition": {
+          "entityName": "Experience",
+          "schema": {
+            "$ref": "#/backend/entities/Experience"
+          },
+          "description": "Stores experience data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "experienceId",
+              "description": "The unique identifier of the experience."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/skills/{skillId}",
+        "definition": {
+          "entityName": "Skill",
+          "schema": {
+            "$ref": "#/backend/entities/Skill"
+          },
+          "description": "Stores skill data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "skillId",
+              "description": "The unique identifier of the skill."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/education/{educationId}",
+        "definition": {
+          "entityName": "Education",
+          "schema": {
+            "$ref": "#/backend/entities/Education"
+          },
+          "description": "Stores education data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "educationId",
+              "description": "The unique identifier of the education."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support a portfolio application with a secure admin portal. It prioritizes Authorization Independence by avoiding hierarchical authorization dependencies, ensuring atomic operations and simplified security rules.  Data is segregated into collections based on entity type (Projects, Experience, Skills, Education) to maintain a homogeneous security posture.  Path-based ownership is used where applicable.  Since there are no collaborative entities, membership maps are not needed. QAPs (rules are not filters) are supported through structural segregation. Each collection stores a specific entity type and therefore list operations can be secured by simply allowing read access to authenticated users."
+  }
+}
