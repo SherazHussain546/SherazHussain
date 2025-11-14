@@ -14,11 +14,11 @@ type CertificateType = {
 export const posts = [
   {
     platform: 'LinkedIn',
-    title: 'Announcing My New Portfolio!',
-    description: 'A deep dive into the tech stack and features behind my new personal portfolio, built with Next.js, Genkit, and Firebase.',
-    link: 'https://www.linkedin.com/in/sherazhussain546/',
+    title: 'Thrilled to announce I have graduated from Dublin Business School (DBS) with a First Class Honours BSc (Hons) in Computing!',
+    description: 'This degree was about more than just theory; it was about building. Over the past year, I have had the chance to develop a diverse portfolio of projects that turn concepts into code. Find out more at my LinkedIn',
+    link: 'https://www.linkedin.com/posts/sherazhussain546_firstclasshonours-computing-dbsgrad-activity-7391398822662533121-Pa3L?utm_source=share&utm_medium=member_desktop&rcm=ACoAADGRPkgB3JmkWaKTzPiAPXGTsDPR25yJBEM',
     image: '/new-portfolio.png',
-    imageHint: 'portfolio announcement'
+    imageHint: 'Finally Graduated from DBS'
   },
   {
     platform: 'LinkedIn',
@@ -148,7 +148,7 @@ export const projects = [
     description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
-    image: '/market-genius.png',
+    image: '/marketgenius.png',
     imageHint: 'AI financial platform'
   },
   {
@@ -164,7 +164,7 @@ export const projects = [
     description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic. Deployed the bot as a university study aid that facilitated over 200 daily interactions with sub-second response times.',
     stack: ['Firebase', 'TypeScript', 'Tailwind', 'SQLite'],
     link: 'https://github.com/SherazHussain546',
-    image: '/chatty-ai.png',
+    image: '/chattyai.jpg',
     imageHint: 'AI chatbot conversation'
   },
   {
@@ -172,7 +172,7 @@ export const projects = [
     description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth. Simulated a property management system that enabled 30+ prospective tenants to browse and schedule viewings.',
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
-    image: '/goexploree.png',
+    image: '/goexploree.jpg',
     imageHint: 'real estate mobile'
   },
 ];
