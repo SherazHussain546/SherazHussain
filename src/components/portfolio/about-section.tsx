@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export default function AboutSection() {
   return (
@@ -21,6 +23,17 @@ export default function AboutSection() {
           <p className="text-lg text-foreground/80 md:text-xl">
             Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach (Angular, React, Node.js). Expertise in DevSecOps practices, AWS, and Kubernetes, ensuring scalable and secure systems. Eager to contribute technical expertise and a collaborative spirit to a dynamic team.
           </p>
+          <div className="flex justify-center gap-6 pt-4 md:justify-start">
+            <Link href="mailto:sherazhussainofficial1@gmail.com" aria-label="Email">
+              <Mail className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
+            </Link>
+            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <Github className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
+            </Link>
+            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <Linkedin className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
