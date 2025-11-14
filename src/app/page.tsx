@@ -7,6 +7,7 @@ import ProjectsSection from '@/components/portfolio/projects-section';
 import EducationSection from '@/components/portfolio/education-section';
 import CertificationsSection from '@/components/portfolio/certifications-section';
 import ContactSection from '@/components/portfolio/contact-section';
+import PostsSection from '@/components/portfolio/posts-section';
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <ProjectsSection />
         <EducationSection />
         <CertificationsSection />
+        <PostsSection />
         <ContactSection />
       </main>
       <Footer />
