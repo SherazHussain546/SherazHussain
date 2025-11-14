@@ -47,7 +47,7 @@ export default function PostsSection() {
 
   useEffect(() => {
     if (!postsQuery) {
-      setLoading(!db);
+      setLoading(!db || !isClient);
       return;
     };
 
@@ -61,7 +61,7 @@ export default function PostsSection() {
     });
 
     return () => unsubscribe();
-  }, [postsQuery, db]);
+  }, [postsQuery, db, isClient]);
 
   if (!isClient) {
     return (
