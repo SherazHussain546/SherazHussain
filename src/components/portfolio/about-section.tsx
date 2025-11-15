@@ -12,8 +12,7 @@ export default function AboutSection() {
           <Image
             src={aboutImage.src}
             alt={aboutImage.alt}
-            width={aboutImage.width}
-            height={aboutImage.height}
+            fill
             className="object-cover"
             data-ai-hint={aboutImage.hint}
           />
