@@ -218,12 +218,12 @@ export const certifications: CertificateType[] = [
 ];
 
 export const otherCertificates: CertificateType[] = [
-    { title: 'Deloitte Australia - Cyber Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: ShieldCheck },
-    { title: 'Deloitte Australia - Data Analytics Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: Database },
-    { title: 'Google Ads AI-Powered Performance Certification', issuer: 'Google', date: 'Jun 2023', icon: BrainCircuit },
-    { title: 'Introduction to Virtual, Augmented & Mixed Reality', issuer: 'FutureLearn', date: 'Jul 2020', icon: Smartphone },
-    { title: 'Sophomore Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
-    { title: 'Junior Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
-    { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
-    { title: 'Duolingo English Test', issuer: 'Duolingo', date: '', icon: Award },
+  { title: 'Deloitte Australia - Cyber Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: ShieldCheck },
+  { title: 'Deloitte Australia - Data Analytics Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: Database },
+  { title: 'Google Ads AI-Powered Performance Certification', issuer: 'Google', date: 'Jun 2023', icon: BrainCircuit },
+  { title: 'Introduction to Virtual, Augmented & Mixed Reality', issuer: 'FutureLearn', date: 'Jul 2020', icon: Smartphone },
+  { title: 'Sophomore Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
+  { title: 'Junior Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
+  { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
+  { title: 'Duolingo English Test', issuer: 'Duolingo', date: '', icon: Award },
 ];
