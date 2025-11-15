@@ -1,33 +1,33 @@
 {
   "about": {
-    "src": "/founder.jpg",
+    "src": "https://picsum.photos/seed/sheraz/400/400",
     "alt": "Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer",
     "hint": "professional portrait"
   },
   "projects": {
     "marketGenius": {
-      "src": "/marketgenius.png",
+      "src": "https://picsum.photos/seed/market/600/400",
       "alt": "Screenshot of the Market Genius project",
       "width": 600,
       "height": 400,
       "hint": "AI financial platform"
     },
     "job4you": {
-      "src": "/job4you.png",
+      "src": "https://picsum.photos/seed/job/600/400",
       "alt": "Screenshot of the Job4You project",
       "width": 600,
       "height": 400,
       "hint": "AI job recruiter"
     },
     "chattyAi": {
-      "src": "/chattyai.jpg",
+      "src": "https://picsum.photos/seed/chat/600/400",
       "alt": "Screenshot of the ChattyAI project",
       "width": 600,
       "height": 400,
       "hint": "AI chatbot conversation"
     },
     "goExploree": {
-      "src": "/goexploree.jpg",
+      "src": "https://picsum.photos/seed/estate/600/400",
       "alt": "Screenshot of the GoExploree project",
       "width": 600,
       "height": 400,
