@@ -128,32 +128,28 @@ export const projects = [
     description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
-    image: '/images/marketgenius.png',
-    imageHint: 'AI financial platform'
+    imageKey: 'marketGenius',
   },
   {
     name: 'Job4You – Your Personal AI Recruiter',
     description: 'Created an automated job-application assistant with Python and GPT-4, which successfully processed over 100 simulated job applications. Used scikit-learn for end-to-end resume, cover letter, and email generation, demonstrating expertise in AI development.',
     stack: ['Angular', 'Firebase', 'GPT-4', 'scikit-learn'],
     link: 'https://github.com/SherazHussain546',
-    image: '/images/job4you.png',
-    imageHint: 'AI job recruiter'
+    imageKey: 'job4you',
   },
   {
     name: 'ChattyAI – A Conversational AI Assistant',
     description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic. Deployed the bot as a university study aid that facilitated over 200 daily interactions with sub-second response times.',
     stack: ['Firebase', 'TypeScript', 'Tailwind', 'SQLite'],
     link: 'https://github.com/SherazHussain546',
-    image: '/images/chattyai.jpg',
-    imageHint: 'AI chatbot conversation'
+    imageKey: 'chattyAi',
   },
   {
     name: 'GoExploree – Real Estate Mobile App',
     description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth. Simulated a property management system that enabled 30+ prospective tenants to browse and schedule viewings.',
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
-    image: '/images/goexploree.jpg',
-    imageHint: 'real estate mobile'
+    imageKey: 'goExploree',
   },
 ];
 
