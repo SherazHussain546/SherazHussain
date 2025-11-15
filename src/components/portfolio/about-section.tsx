@@ -8,10 +8,11 @@ export default function AboutSection() {
       <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-3 md:px-6">
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-lg md:h-64 md:w-64">
           <Image
-            src="/founder.jpg"
+            src="https://picsum.photos/seed/founder/300/300"
             alt="Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer"
             fill
             className="object-cover"
+            data-ai-hint="portrait man"
           />
         </div>
         <div className="space-y-4 text-center md:col-span-2 md:text-left">

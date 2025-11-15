@@ -23,6 +23,7 @@ export default function ProjectsSection() {
                     alt={`Screenshot of the ${project.name} project`}
                     fill
                     className="object-cover"
+                    data-ai-hint={project.imageHint}
                   />
                 )}
               </div>
