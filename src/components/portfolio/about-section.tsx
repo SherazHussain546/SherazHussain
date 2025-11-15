@@ -1,20 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
-import images from '@/lib/placeholder-images.json';
 
 export default function AboutSection() {
-  const aboutImage = images.about;
   return (
     <section id="about" className="py-20 md:py-32">
       <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-3 md:px-6">
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-lg md:h-64 md:w-64">
           <Image
-            src={aboutImage.src}
-            alt={aboutImage.alt}
+            src="/founder.jpg"
+            alt="Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer"
             fill
             className="object-cover"
-            data-ai-hint={aboutImage.hint}
           />
         </div>
         <div className="space-y-4 text-center md:col-span-2 md:text-left">
