@@ -1,4 +1,4 @@
-import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon } from 'lucide-react';
+import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon, Bitcoin } from 'lucide-react';
 
 type CertificateType = {
   title: string;
@@ -222,8 +222,8 @@ export const otherCertificates: CertificateType[] = [
     { title: 'Deloitte Australia - Data Analytics Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: Database },
     { title: 'Google Ads AI-Powered Performance Certification', issuer: 'Google', date: 'Jun 2023', icon: BrainCircuit },
     { title: 'Introduction to Virtual, Augmented & Mixed Reality', issuer: 'FutureLearn', date: 'Jul 2020', icon: Smartphone },
-    { title: 'Sophomore Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Award },
-    { title: 'Junior Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Award },
-    { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Award },
+    { title: 'Sophomore Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
+    { title: 'Junior Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
+    { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
     { title: 'Duolingo English Test', issuer: 'Duolingo', date: '', icon: Award },
 ];
