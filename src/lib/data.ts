@@ -128,7 +128,7 @@ export const projects = [
     description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
-    imageKey: 'marketGenius',
+    image: '/marketgenius.png',
   },
   {
     name: 'Job4You – Your Personal AI Recruiter',
