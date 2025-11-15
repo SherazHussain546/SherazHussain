@@ -8,21 +8,29 @@
     "marketGenius": {
       "src": "/marketgenius.png",
       "alt": "Screenshot of the Market Genius project",
+      "width": 600,
+      "height": 400,
       "hint": "AI financial platform"
     },
     "job4you": {
       "src": "/job4you.png",
       "alt": "Screenshot of the Job4You project",
+      "width": 600,
+      "height": 400,
       "hint": "AI job recruiter"
     },
     "chattyAi": {
       "src": "/chattyai.jpg",
       "alt": "Screenshot of the ChattyAI project",
+      "width": 600,
+      "height": 400,
       "hint": "AI chatbot conversation"
     },
     "goExploree": {
       "src": "/goExploree.png",
       "alt": "Screenshot of the GoExploree project",
+      "width": 600,
+      "height": 400,
       "hint": "real estate mobile"
     }
   }
