@@ -227,3 +227,5 @@ export const otherCertificates: CertificateType[] = [
     { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
     { title: 'Duolingo English Test', issuer: 'Duolingo', date: '', icon: Award },
 ];
+
+    
