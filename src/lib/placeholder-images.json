@@ -22,7 +22,7 @@
       "hint": "AI job recruiter"
     },
     "chattyAi": {
-      "src": "https://picsum.photos/seed/chattyai/600/400",
+      "src": "/chattyai.jpg",
       "alt": "Screenshot of the ChattyAI project",
       "width": 600,
       "height": 400,
