@@ -8,7 +8,7 @@ export default function AboutSection() {
       <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-3 md:px-6">
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-lg md:h-64 md:w-64">
           <Image
-            src="https://picsum.photos/seed/founder/300/300"
+            src="/founder.jpg"
             alt="Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer"
             fill
             className="object-cover"
