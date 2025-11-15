@@ -7,7 +7,7 @@ export default function EducationSection() {
     <section id="education" className="py-20 md:py-32">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-          <span className="text-primary">Education</span> & Certifications
+          <span className="text-primary">Education</span>
         </h2>
         <Card className="mx-auto max-w-2xl bg-card shadow-lg">
           <CardHeader>
