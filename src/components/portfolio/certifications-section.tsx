@@ -3,8 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CheckCircle2, Star } from 'lucide-react';
-import { Button } from '../ui/button';
-import Link from 'next/link';
 
 export default function CertificationsSection() {
   return (
