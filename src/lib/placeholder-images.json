@@ -8,7 +8,7 @@
   },
   "projects": {
     "marketGenius": {
-      "src": "https://picsum.photos/seed/2/600/400",
+      "src": "/marketgenius.png",
       "alt": "Screenshot of the Market Genius project",
       "width": 600,
       "height": 400,
