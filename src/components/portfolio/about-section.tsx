@@ -13,7 +13,7 @@ export default function AboutSection() {
             src={aboutImage.src}
             alt={aboutImage.alt}
             fill
-            className="object-cover"
+            className="object-contain"
             data-ai-hint={aboutImage.hint}
           />
         </div>

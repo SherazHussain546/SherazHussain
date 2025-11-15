@@ -38,7 +38,7 @@ export default function ProjectsSection() {
                       src={image.src}
                       alt={image.alt}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       data-ai-hint={image.hint}
                     />
                   )}
