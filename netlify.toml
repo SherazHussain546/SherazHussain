@@ -1,2 +1,2 @@
 [[plugins]]
-package = "@netlify/plugin-nextjs@4"
+package = "@netlify/plugin-nextjs"
