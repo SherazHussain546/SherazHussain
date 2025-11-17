@@ -75,6 +75,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'synctech.ie',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
   async headers() {
