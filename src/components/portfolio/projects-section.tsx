@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Github } from 'lucide-react';
+import { Github, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ProjectsSection() {
@@ -40,13 +40,21 @@ export default function ProjectsSection() {
                   ))}
                 </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="gap-2">
                 <Button asChild variant="ghost" size="sm">
                   <Link href={project.link} target="_blank" rel="noopener noreferrer">
                     <Github className="mr-2 h-4 w-4" />
                     View on GitHub
                   </Link>
                 </Button>
+                {project.liveLink && (
+                  <Button asChild variant="default" size="sm">
+                    <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      Live Demo
+                    </Link>
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}

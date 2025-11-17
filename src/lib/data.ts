@@ -128,6 +128,7 @@ export const projects = [
     description: 'Developed a real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights for stocks and cryptocurrencies. Integrated Alpha Vantage and Crypto.com APIs and Firebase push notifications for seamless, real-time access.',
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
+    liveLink: 'https://marketgenius546.netlify.app',
     image: '/marketgenius.png',
     imageHint: 'finance analytics'
   },
@@ -152,6 +153,7 @@ export const projects = [
     description: 'Developed a cross-platform mobile app using Ionic Angular, Capacitor, and Firebase Auth. Simulated a property management system that enabled 30+ prospective tenants to browse and schedule viewings.',
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
+    liveLink: 'https://GoExploree.netlify.app',
     image: '/goexploree.jpg',
     imageHint: 'real estate'
   },
