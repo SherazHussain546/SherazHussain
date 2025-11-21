@@ -17,7 +17,8 @@ const AnalyzeResumeAndProvideFeedbackInputSchema = z.object({
 export type AnalyzeResumeAndProvideFeedbackInput = z.infer<typeof AnalyzeResumeAndProvideFeedbackInputSchema>;
 
 const AnalyzeResumeAndProvideFeedbackOutputSchema = z.object({
-  updatedResume: z.string().describe('The full, updated resume content, rewritten to better match the job description.')
+  updatedResume: z.string().describe('The full, updated resume content, rewritten to better match the job description.'),
+  error: z.string().optional().describe('An error message if the analysis failed.'),
 });
 export type AnalyzeResumeAndProvideFeedbackOutput = z.infer<typeof AnalyzeResumeAndProvideFeedbackOutputSchema>;
 
@@ -33,11 +34,12 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     inputSchema: AnalyzeResumeAndProvideFeedbackInputSchema,
     outputSchema: AnalyzeResumeAndProvideFeedbackOutputSchema,
   },
-  async input => {
-    const resumeContent = getPortfolioContent();
-    const {output} = await ai.generate({
-      model: 'gemini-pro',
-      prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description with the best keywords from teh job description added and also make it high ATS-scored.
+  async (input) => {
+    try {
+      const resumeContent = getPortfolioContent();
+      const {output} = await ai.generate({
+        model: 'gemini-pro',
+        prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description with the best keywords from teh job description added and also make it high ATS-scored.
 
     You must follow these rules strictly:
     1.  **Source of Truth**: The provided resume content is the ONLY source of facts about the candidate's skills, experience, and qualifications. You are forbidden from inventing, exaggerating, or fabricating any information. Every skill and experience in the output must have a direct basis in the source resume content.
@@ -57,14 +59,25 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
 
     Now, generate the full, updated, and tailored resume.
     `,
-      output: {
-        schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
+        output: {
+          schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
+        }
+      });
+      
+      if (!output) {
+        return {
+            updatedResume: '',
+            error: "The AI model failed to return a valid response. Please try again."
+        }
       }
-    });
-    
-    if (!output) {
-      throw new Error("AI failed to generate a valid response.");
+      return output;
+    } catch (e: any) {
+        console.error(e);
+        // Return a structured error to be displayed in the UI
+        return {
+            updatedResume: '',
+            error: "The AI model could not be reached. This is likely an environment configuration issue. Please verify your API keys and model availability."
+        }
     }
-    return output;
   }
 );

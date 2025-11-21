@@ -10,8 +10,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sparkles, ClipboardCopy, FileText } from 'lucide-react';
+import { Sparkles, ClipboardCopy, FileText, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const formSchema = z.object({
   jobDescription: z.string().min(100, 'Job description must be at least 100 characters.'),
@@ -22,7 +23,6 @@ type FormValues = z.infer<typeof formSchema>;
 export default function ResumeAnalyzer() {
   const [result, setResult] = useState<AnalyzeResumeAndProvideFeedbackOutput | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
   const form = useForm<FormValues>({
@@ -34,14 +34,16 @@ export default function ResumeAnalyzer() {
 
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
-    setError(null);
     setResult(null);
     try {
       const response = await analyzeResumeAndProvideFeedback(data);
       setResult(response);
     } catch (e) {
-      setError('An error occurred during analysis. Please try again.');
       console.error(e);
+      setResult({
+        updatedResume: '',
+        error: 'An unexpected error occurred during analysis. Please try again.'
+      });
     } finally {
       setLoading(false);
     }
@@ -96,9 +98,15 @@ export default function ResumeAnalyzer() {
           </div>
         )}
         
-        {error && <p className="text-destructive pt-4">{error}</p>}
+        {result?.error && (
+           <Alert variant="destructive" className="mt-6">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Analysis Failed</AlertTitle>
+            <AlertDescription>{result.error}</AlertDescription>
+          </Alert>
+        )}
 
-        {result && (
+        {result && !result.error && result.updatedResume && (
            <Card className="bg-background/50 mt-6">
             <CardHeader>
               <div className="flex justify-between items-center">
