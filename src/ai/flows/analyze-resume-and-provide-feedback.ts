@@ -64,10 +64,17 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   },
   async input => {
     const resumeContent = getPortfolioContent();
-    const {output} = await analyzeResumeAndProvideFeedbackPrompt({
-        ...input,
-        resumeContent,
+    const response = await analyzeResumeAndProvideFeedbackPrompt.generate({
+        input: {
+            ...input,
+            resumeContent,
+        }
     });
-    return output!;
+    
+    const output = response.output();
+    if (!output) {
+      throw new Error("AI failed to generate a valid response.");
+    }
+    return output;
   }
 );
