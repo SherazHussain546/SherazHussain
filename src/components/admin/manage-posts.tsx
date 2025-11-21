@@ -58,6 +58,15 @@ export default function ManagePosts() {
   
   const editForm = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
+    defaultValues: {
+      platform: 'LinkedIn',
+      title: '',
+      description: '',
+      link: '',
+      image: '',
+      imageHint: '',
+      hashtags: '',
+    },
   });
 
   const onSubmit: SubmitHandler<PostFormValues> = async (data) => {
@@ -127,7 +136,12 @@ export default function ManagePosts() {
   
   const openEditDialog = (post: Post) => {
     setEditingPost(post);
-    editForm.reset(post);
+    editForm.reset({
+        ...post,
+        image: post.image || '',
+        imageHint: post.imageHint || '',
+        hashtags: post.hashtags || '',
+    });
     setIsEditDialogOpen(true);
   }
 
