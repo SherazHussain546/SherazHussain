@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp, FirebaseOptions } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,13 +14,5 @@ const firebaseConfig: FirebaseOptions = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 const firestore = getFirestore(app);
-
-if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-    // Point to the emulators running on localhost.
-    // Make sure you're running the emulators with `firebase emulators:start`
-    connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
-    connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
-}
-
 
 export { app, auth, firestore };
