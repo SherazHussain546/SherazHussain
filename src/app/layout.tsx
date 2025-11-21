@@ -49,14 +49,14 @@ export default function RootLayout({
       <body className={cn('font-sans antialiased', inter.variable)}>
           <Script
             async
-            src="https://www.googletagmanager.com/gtag/js?id=G-153KM76X2S"
+            src="https://www.googletagmanager.com/gtag/js?id=G-CX3V7SF35L"
           />
           <Script id="google-analytics">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-153KM76X2S');
+              gtag('config', 'G-CX3V7SF35L');
             `}
           </Script>
           <AuthProvider>
