@@ -11,6 +11,7 @@ import { Skeleton } from '../ui/skeleton';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '@/firebase/client';
+import { Timestamp } from 'firebase/firestore';
 
 export interface Post {
     id: string;
@@ -20,6 +21,7 @@ export interface Post {
     link: string;
     image?: string;
     imageHint?: string;
+    createdAt: Timestamp;
 }
 
 const platformIcons: { [key: string]: React.ElementType } = {
