@@ -10,7 +10,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getPortfolioContent } from '@/lib/portfolio-content';
-import { googleAI } from '@genkit-ai/googleai';
+import { googleAI } from '@genkit-ai/google-genai';
 
 const AnalyzeResumeAndProvideFeedbackInputSchema = z.object({
   jobDescription: z.string().describe('The job description to compare the resume against.'),
@@ -37,7 +37,6 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   async input => {
     const resumeContent = getPortfolioContent();
     const {output} = await ai.generate({
-      model: 'gemini-1.5-flash-latest',
       prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description with the best keywords from teh job description added and also make it high ATS-scored.
 
 You must follow these rules strictly:
