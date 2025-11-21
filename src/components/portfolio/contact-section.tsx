@@ -20,11 +20,17 @@ export default function ContactSection() {
         <form 
           name="contact" 
           method="POST" 
-          data-netlify="false"
           action="/form-success"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
           className="mx-auto mt-12 max-w-xl space-y-6"
         >
           <input type="hidden" name="form-name" value="contact" />
+           <p className="hidden">
+            <label>
+              Don’t fill this out if you’re human: <input name="bot-field" />
+            </label>
+          </p>
           
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="space-y-2">
