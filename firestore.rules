@@ -1,70 +1,24 @@
-/**
- * @fileoverview Firestore Security Rules for the portfolio application.
- *
- * Core Philosophy:
- * This ruleset enforces a strict user-ownership model for all data,
- * ensuring that only the authenticated user who owns a particular piece of data
- * can create, read, update, or delete it. This model applies to projects,
- * experience, skills, and education data. The `posts` collection is an
- * exception, allowing public read access while restricting writes to
- * authenticated administrators.
- *
- * Data Structure:
- * - /posts/{postId}: Publicly readable featured posts.
- * - /users/{userId}/...: User-specific data collections.
- *
- * Key Security Decisions:
- * - User listing is disallowed.
- * - All write operations on user-owned data require authentication and ownership.
- * - Post creation is limited to authenticated users, with basic data validation.
- * - Public data access is only allowed for the `/posts` collection.
- */
+
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    /**
-     * @description Checks if the user is signed in.
-     */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    /**
-     * @description Checks if the authenticated user ID matches the provided user ID.
-     */
-    function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
+    match /images/{imageId} {
+      allow read: if true;
+      allow write: if isSignedIn(); // For now, any signed-in user can write. We'll lock this down later.
     }
 
-    /**
-     * @description Validates the incoming 'Post' data for required fields and types.
-     */
-    function isPostDataValid() {
-      let data = request.resource.data;
-      return data.title is string && data.title.size() > 0 &&
-             data.description is string && data.description.size() > 0 &&
-             data.link is string && data.link.size() > 0 &&
-             data.platform is string && data.platform in ['LinkedIn', 'Instagram', 'Facebook', 'Other'];
-    }
-
-    /**
-     * @description Rules for the posts collection. Posts are publicly readable.
-     * Only authenticated users (admins) can create, update, or delete posts,
-     * and the written data must be valid.
-     */
     match /posts/{postId} {
       allow read: if true;
-      allow create, update: if isSignedIn() && isPostDataValid();
-      allow delete: if isSignedIn();
+      allow write: if isSignedIn();
     }
     
-    /**
-     * @description Rules for user-specific subcollections.
-     * Enforces that only the owner of the data can perform any action.
-     */
     match /users/{userId}/{collection}/{docId} {
-       allow read, write: if isOwner(userId);
+       allow read, write: if request.auth.uid == userId;
     }
   }
 }

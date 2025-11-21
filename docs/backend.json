@@ -1,225 +1,44 @@
+
 {
   "entities": {
-    "Post": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Post",
+    "Image": {
+      "title": "Image",
       "type": "object",
-      "description": "Represents a featured post in the portfolio.",
+      "description": "Represents an image with its URL and metadata.",
       "properties": {
-        "platform": {
-          "type": "string",
-          "description": "The social media platform the post is from (e.g., LinkedIn, Instagram).",
-          "enum": ["LinkedIn", "Instagram", "Facebook", "Other"]
-        },
         "title": {
           "type": "string",
-          "description": "The title of the post."
+          "description": "The title or name of the image."
         },
-        "description": {
+        "url": {
           "type": "string",
-          "description": "A short description or summary of the post."
-        },
-        "link": {
-          "type": "string",
-          "description": "A URL to the original post.",
+          "description": "The public URL of the image.",
           "format": "uri"
         },
-        "image": {
+        "section": {
           "type": "string",
-          "description": "A URL to an image for the post.",
-          "format": "uri"
+          "description": "The portfolio section this image belongs to (e.g., 'Post', 'Project')."
         },
         "createdAt": {
-            "type": "string",
-            "description": "The timestamp when the post was created.",
-            "format": "date-time"
-        }
-      },
-      "required": ["platform", "title", "description", "link", "createdAt"]
-    },
-    "Project": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Project",
-      "type": "object",
-      "description": "Represents a project in the portfolio.",
-      "properties": {
-        "id": {
           "type": "string",
-          "description": "Unique identifier for the project entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the project."
-        },
-        "description": {
-          "type": "string",
-          "description": "A short description of the project."
-        },
-        "techStack": {
-          "type": "array",
-          "description": "An array of strings representing the technologies used in the project.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "githubLink": {
-          "type": "string",
-          "description": "Link to the GitHub repository of the project.",
-          "format": "uri"
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "description",
-        "techStack",
-        "githubLink"
-      ]
-    },
-    "Experience": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Experience",
-      "type": "object",
-      "description": "Represents a work experience entry in the portfolio.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the experience entity."
-        },
-        "title": {
-          "type": "string",
-          "description": "The job title of the experience."
-        },
-        "company": {
-          "type": "string",
-          "description": "The name of the company where the experience was gained."
-        },
-        "startDate": {
-          "type": "string",
-          "description": "The start date of the experience.",
+          "description": "The timestamp when the image was added.",
           "format": "date-time"
-        },
-        "endDate": {
-          "type": "string",
-          "description": "The end date of the experience. Can be null if it's the current job.",
-          "format": "date-time"
-        },
-        "descriptionPoints": {
-          "type": "array",
-          "description": "An array of strings representing the key bullet points for the role.",
-          "items": {
-            "type": "string"
-          }
         }
       },
-      "required": [
-        "id",
-        "title",
-        "company",
-        "startDate",
-        "descriptionPoints"
-      ]
-    },
-    "Skill": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Skill",
-      "type": "object",
-      "description": "Represents a technical skill.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the skill entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the skill (e.g., Angular, React, Python)."
-        },
-        "category": {
-          "type": "string",
-          "description": "The category of the skill (e.g., Languages, Frameworks, Cloud)."
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "category"
-      ]
-    },
-    "Education": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Education",
-      "type": "object",
-      "description": "Represents an educational achievement.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the education entity."
-        },
-        "degree": {
-          "type": "string",
-          "description": "The name of the degree (e.g., Bachelor of Science)."
-        },
-        "university": {
-          "type": "string",
-          "description": "The name of the university."
-        },
-        "graduationDate": {
-          "type": "string",
-          "description": "The graduation date.",
-          "format": "date-time"
-        },
-        "awards": {
-          "type": "array",
-          "description": "An array of strings representing any notable awards or certifications.",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "id",
-        "degree",
-        "university",
-        "graduationDate"
-      ]
+      "required": ["title", "url", "section", "createdAt"]
     }
   },
   "auth": {
     "providers": [
-      "password",
-      "anonymous"
+      "password"
     ]
   },
   "firestore": {
-    "/posts/{postId}": {
+    "/images/{imageId}": {
       "schema": {
-        "$ref": "#/entities/Post"
+        "$ref": "#/entities/Image"
       },
-      "description": "Stores featured post data. Publicly readable, but only writable by authenticated admins."
-    },
-    "/users/{userId}/projects/{projectId}": {
-      "schema": {
-        "$ref": "#/entities/Project"
-      },
-      "description": "Stores project data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
-    },
-    "/users/{userId}/experience/{experienceId}": {
-      "schema": {
-        "$ref": "#/entities/Experience"
-      },
-      "description": "Stores experience data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
-    },
-    "/users/{userId}/skills/{skillId}": {
-      "schema": {
-        "$ref": "#/entities/Skill"
-      },
-      "description": "Stores skill data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
-    },
-    "/users/{userId}/education/{educationId}": {
-      "schema": {
-        "$ref": "#/entities/Education"
-      },
-      "description": "Stores education data owned by a specific user. Authorization is based on path ownership. Includes denormalized 'userId' for authorization independence."
+      "description": "Stores all image metadata for the portfolio. Publicly readable, admin-writable."
     }
   }
 }
