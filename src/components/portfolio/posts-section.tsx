@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, onSnapshot, query, orderBy, Timestamp } from 'firebase/firestore';
-import { useFirestore, useMemoFirebase } from '@/firebase';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -19,7 +17,6 @@ export interface Post {
     link: string;
     image?: string;
     imageHint?: string;
-    createdAt: Timestamp;
 }
 
 const platformIcons: { [key: string]: React.ElementType } = {
@@ -29,39 +26,59 @@ const platformIcons: { [key: string]: React.ElementType } = {
   Other: Rss,
 };
 
+// Mock data, as we are removing firebase
+const mockPosts: Post[] = [
+    {
+        id: '1',
+        platform: 'LinkedIn',
+        title: 'Excited to Join the Tech Industry!',
+        description: 'Just landed my first role as a Junior Developer. A deep dive into my journey, the challenges, and what I learned along the way.',
+        link: 'https://www.linkedin.com/in/sherazhussain546/',
+        image: 'https://picsum.photos/seed/post1/600/400',
+        imageHint: 'celebration office',
+    },
+    {
+        id: '2',
+        platform: 'Other',
+        title: 'My First Open Source Contribution',
+        description: 'I finally contributed to an open-source project! Here’s a breakdown of the process and why you should do it too.',
+        link: 'https://github.com/SherazHussain546',
+        image: 'https://picsum.photos/seed/post2/600/400',
+        imageHint: 'code collaboration',
+    },
+    {
+        id: '3',
+        platform: 'Instagram',
+        title: 'New Portfolio Site is LIVE!',
+        description: 'After weeks of coding, my new personal portfolio is up and running. Built with Next.js and Tailwind CSS. Check it out!',
+        link: '#',
+        image: 'https://picsum.photos/seed/post3/600/400',
+        imageHint: 'website design',
+    },
+    {
+        id: '4',
+        platform: 'LinkedIn',
+        title: 'The Power of AI in Modern Development',
+        description: 'Exploring how AI tools like Genkit are changing the landscape for developers. Are you using AI in your workflow?',
+        link: 'https://www.linkedin.com/in/sherazhussain546/',
+        image: 'https://picsum.photos/seed/post4/600/400',
+        imageHint: 'artificial intelligence',
+    }
+]
+
 export default function PostsSection() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
-  const db = useFirestore();
 
   useEffect(() => {
     setIsClient(true);
+    // Simulate fetching data
+    setTimeout(() => {
+        setPosts(mockPosts);
+        setLoading(false);
+    }, 1000);
   }, []);
-
-  const postsQuery = useMemoFirebase(() => {
-    if (!db || !isClient) return null;
-    return query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-  }, [db, isClient]);
-
-
-  useEffect(() => {
-    if (!postsQuery) {
-      setLoading(!db || !isClient);
-      return;
-    };
-
-    const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
-      const fetchedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post));
-      setPosts(fetchedPosts);
-      setLoading(false);
-    }, (error) => {
-      console.error("Error fetching posts: ", error);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, [postsQuery, db, isClient]);
 
   if (!isClient) {
     return (

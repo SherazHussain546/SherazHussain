@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
-import { FirebaseClientProvider } from '@/firebase';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -47,7 +46,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={cn('font-sans antialiased', inter.variable)}>
-        <FirebaseClientProvider>
           <Script
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-153KM76X2S"
@@ -62,7 +60,6 @@ export default function RootLayout({
           </Script>
           {children}
           <Toaster />
-        </FirebaseClientProvider>
       </body>
     </html>
   );

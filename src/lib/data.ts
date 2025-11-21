@@ -129,18 +129,24 @@ export const projects = [
     stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
     link: 'https://github.com/SherazHussain546',
     liveLink: 'https://marketgenius546.netlify.app',
+    image: '/public/marketgenius.png',
+    imageHint: 'finance analytics',
   },
   {
     name: 'Job4You – Your Personal AI Recruiter',
     description: 'Created an automated job-application assistant with Python and GPT-4, which successfully processed over 100 simulated job applications. Used scikit-learn for end-to-end resume, cover letter, and email generation, demonstrating expertise in AI development.',
     stack: ['Angular', 'Firebase', 'GPT-4', 'scikit-learn'],
     link: 'https://github.com/SherazHussain546',
+    image: '/public/job4you.png',
+    imageHint: 'recruitment dashboard',
   },
   {
     name: 'ChattyAI – A Conversational AI Assistant',
     description: 'Architected and built a cross-platform AI chatbot using the Gemini API, Angular, and Ionic. Deployed the bot as a university study aid that facilitated over 200 daily interactions with sub-second response times.',
     stack: ['Firebase', 'TypeScript', 'Tailwind', 'SQLite'],
     link: 'https://github.com/SherazHussain546',
+    image: '/public/chattyai.jpg',
+    imageHint: 'chatbot interface',
   },
   {
     name: 'GoExploree – Real Estate Mobile App',
@@ -148,6 +154,8 @@ export const projects = [
     stack: ['Ionic', 'Angular', 'Capacitor', 'Firebase', 'PostgreSQL', 'Google Maps API'],
     link: 'https://github.com/SherazHussain546',
     liveLink: 'https://GoExploree.netlify.app',
+    image: '/public/goexploree.jpg',
+    imageHint: 'real estate',
   },
 ];
 

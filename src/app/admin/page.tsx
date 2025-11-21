@@ -1,6 +1,5 @@
-import AuthGate from '@/components/admin/auth-gate';
-import Dashboard from '@/components/admin/dashboard';
 import Link from 'next/link';
+import ResumeAnalyzer from '@/components/admin/resume-analyzer';
 
 export default function AdminPage() {
   return (
@@ -13,9 +12,7 @@ export default function AdminPage() {
         </div>
       </header>
       <main className="container mx-auto px-4 py-8 md:px-6">
-        <AuthGate>
-          <Dashboard />
-        </AuthGate>
+        <ResumeAnalyzer />
       </main>
     </div>
   );
