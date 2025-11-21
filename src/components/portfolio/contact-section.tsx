@@ -1,8 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Mail } from 'lucide-react';
+import { Mail, Linkedin } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ContactSection() {
   return (
@@ -13,48 +11,24 @@ export default function ContactSection() {
             Get In <span className="text-primary">Touch</span>
           </h2>
           <p className="text-muted-foreground md:text-lg">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. If you'd like to get in touch, please fill out the form below.
+            I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Feel free to reach out to me via email or connect with me on LinkedIn.
           </p>
         </div>
         
-        <form 
-          name="contact" 
-          method="POST" 
-          action="/form-success"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          className="mx-auto mt-12 max-w-xl space-y-6"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-           <p className="hidden">
-            <label>
-              Don’t fill this out if you’re human: <input name="bot-field" />
-            </label>
-          </p>
-          
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" type="text" placeholder="Your Name" required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="Your Email" required />
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
-            <Textarea id="message" name="message" placeholder="Your message..." rows={5} required />
-          </div>
-          
-          <div className="text-center">
-            <Button type="submit" size="lg" className="w-full sm:w-auto">
+        <div className="mx-auto mt-12 flex max-w-xl flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <Button asChild size="lg" className="w-full sm:w-auto">
+            <Link href="mailto:sherazhussainofficial1@gmail.com">
               <Mail className="mr-2 h-5 w-5" />
-              Send Message
-            </Button>
-          </div>
-        </form>
+              Send an Email
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer">
+              <Linkedin className="mr-2 h-5 w-5" />
+              Connect on LinkedIn
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
   );
