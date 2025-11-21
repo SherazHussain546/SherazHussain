@@ -1,7 +1,13 @@
+'use server';
 import {genkit} from 'genkit';
-import {googleAI, gemini15Flash} from '@genkit-ai/googleai';
+import {googleAI} from '@genkit-ai/googleai';
 
 export const ai = genkit({
-  plugins: [googleAI()],
-  model: gemini15Flash,
+  plugins: [
+    googleAI({
+      apiVersion: 'v1',
+    }),
+  ],
+  // Optional. Specify a default model.
+  model: 'gemini-1.5-flash',
 });
