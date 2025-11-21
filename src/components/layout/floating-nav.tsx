@@ -3,53 +3,73 @@
 import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
-const navItems = [
+type NavItemProps = {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  target?: string;
+  bgColor: string;
+};
+
+const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => {
+  return (
+    <Link
+      href={href}
+      target={target}
+      rel={target === '_blank' ? 'noopener noreferrer' : ''}
+      aria-label={label}
+      className={cn(
+        'group flex items-center gap-4 h-12 w-12 justify-center rounded-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden hover:w-48',
+        bgColor
+      )}
+    >
+      <Icon className="h-6 w-6 flex-shrink-0 text-white" />
+      <span className="text-sm font-medium text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {label}
+      </span>
+    </Link>
+  );
+};
+
+const navItems: NavItemProps[] = [
   {
     href: 'mailto:sherazhussainofficial1@gmail.com',
-    label: 'Email',
+    label: 'Email Us',
     icon: Mail,
     target: '_self',
+    bgColor: 'bg-gray-500 hover:bg-gray-600',
   },
   {
     href: 'https://github.com/SherazHussain546',
-    label: 'GitHub',
+    label: 'Follow on GitHub',
     icon: Github,
     target: '_blank',
+    bgColor: 'bg-teal-600 hover:bg-teal-700',
   },
   {
     href: 'https://linkedin.com/in/sherazhussain546/',
-    label: 'LinkedIn',
+    label: 'Connect on LinkedIn',
     icon: Linkedin,
     target: '_blank',
+    bgColor: 'bg-blue-600 hover:bg-blue-700',
   },
 ];
 
 export default function FloatingNav() {
   const pathname = usePathname();
-  
+
   // Hide the floating nav on admin pages
   if (pathname.startsWith('/admin')) {
     return null;
   }
 
   return (
-    <div className="group fixed top-1/2 left-4 z-50 -translate-y-1/2 hidden md:flex">
-      <div className="flex flex-col items-start gap-2 rounded-full border bg-card/50 p-2 shadow-lg backdrop-blur-md transition-all duration-300 ease-in-out hover:w-36 hover:p-4 hover:items-stretch">
+    <div className="fixed top-1/2 left-4 z-50 -translate-y-1/2 hidden md:flex">
+      <div className="flex flex-col items-start gap-3">
         {navItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            target={item.target}
-            rel={item.target === '_blank' ? 'noopener noreferrer' : ''}
-            aria-label={item.label}
-            className="flex items-center gap-4 rounded-full text-muted-foreground transition-colors hover:text-primary"
-          >
-            <item.icon className="h-6 w-6 flex-shrink-0" />
-            <span className="w-0 overflow-hidden text-sm font-medium opacity-0 transition-all duration-300 group-hover:w-full group-hover:opacity-100">
-              {item.label}
-            </span>
-          </Link>
+          <NavItem key={item.label} {...item} />
         ))}
       </div>
     </div>
