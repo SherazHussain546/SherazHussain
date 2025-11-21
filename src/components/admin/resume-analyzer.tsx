@@ -11,12 +11,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, CheckCircle2, ThumbsUp, ThumbsDown, Sparkles, ClipboardCopy } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Sparkles, ClipboardCopy, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
-  resumeContent: z.string().min(100, 'Resume content must be at least 100 characters.'),
   jobDescription: z.string().min(100, 'Job description must be at least 100 characters.'),
 });
 
@@ -31,7 +30,6 @@ export default function ResumeAnalyzer() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      resumeContent: '',
       jobDescription: '',
     },
   });
@@ -80,40 +78,25 @@ export default function ResumeAnalyzer() {
           AI Resume Analyzer
         </CardTitle>
         <CardDescription>
-          Paste a resume and job description below to get an AI-powered match analysis and improvement suggestions.
+          Your portfolio content is automatically used as your resume. Paste a job description below to get an AI-powered match analysis and improvement suggestions.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="resumeContent"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Resume Content</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Paste the full text of your resume here..." {...field} rows={15} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="jobDescription"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Job Description</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Paste the full job description here..." {...field} rows={15} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="jobDescription"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Paste the full job description here..." {...field} rows={15} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit" disabled={loading}>
               {loading ? 'Analyzing...' : 'Analyze'}
             </Button>
@@ -162,13 +145,13 @@ export default function ResumeAnalyzer() {
                   {renderFeedback(result.feedback.substring(result.feedback.indexOf('\n') + 1))}
                 </div>
               </CardContent>
-            </Card>>
+            </Card>
 
              <Card className="bg-background/50">
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="text-primary" />
+                    <FileText className="text-primary" />
                     Updated Resume
                   </CardTitle>
                   <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(result.updatedResume)}>
@@ -176,7 +159,7 @@ export default function ResumeAnalyzer() {
                   </Button>
                 </div>
                 <CardDescription>
-                  Here is an optimized version of your resume for this job application.
+                  Here is an AI-optimized version of your portfolio content tailored for this job application.
                 </CardDescription>
               </CardHeader>
               <CardContent>

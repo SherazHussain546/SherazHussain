@@ -9,11 +9,9 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { getPortfolioContent } from '@/lib/portfolio-content';
 
 const AnalyzeResumeAndProvideFeedbackInputSchema = z.object({
-  resumeContent: z
-    .string()
-    .describe('The content of the resume to be analyzed.'),
   jobDescription: z.string().describe('The job description to compare the resume against.'),
 });
 export type AnalyzeResumeAndProvideFeedbackInput = z.infer<typeof AnalyzeResumeAndProvideFeedbackInputSchema>;
@@ -35,7 +33,10 @@ export async function analyzeResumeAndProvideFeedback(
 
 const analyzeResumeAndProvideFeedbackPrompt = ai.definePrompt({
   name: 'analyzeResumeAndProvideFeedbackPrompt',
-  input: {schema: AnalyzeResumeAndProvideFeedbackInputSchema},
+  input: {schema: z.object({
+    resumeContent: z.string(),
+    jobDescription: z.string(),
+  })},
   output: {schema: AnalyzeResumeAndProvideFeedbackOutputSchema},
   prompt: `You are a resume expert. Compare the skills and keywords from the following resume with those in the job description.
 \nResume Content: {{{resumeContent}}}
@@ -60,7 +61,11 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     outputSchema: AnalyzeResumeAndProvideFeedbackOutputSchema,
   },
   async input => {
-    const {output} = await analyzeResumeAndProvideFeedbackPrompt(input);
+    const resumeContent = getPortfolioContent();
+    const {output} = await analyzeResumeAndProvideFeedbackPrompt({
+        ...input,
+        resumeContent,
+    });
     return output!;
   }
 );
