@@ -8,6 +8,9 @@ import Image from 'next/image';
 import { Linkedin, ArrowRight, Rss, Instagram, Facebook } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Skeleton } from '../ui/skeleton';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { firestore } from '@/firebase/client';
 
 export interface Post {
     id: string;
@@ -26,60 +29,18 @@ const platformIcons: { [key: string]: React.ElementType } = {
   Other: Rss,
 };
 
-// Mock data, as we are removing firebase
-const mockPosts: Post[] = [
-    {
-        id: '1',
-        platform: 'LinkedIn',
-        title: 'Excited to Join the Tech Industry!',
-        description: 'Just landed my first role as a Junior Developer. A deep dive into my journey, the challenges, and what I learned along the way.',
-        link: 'https://www.linkedin.com/in/sherazhussain546/',
-        image: 'https://picsum.photos/seed/post1/600/400',
-        imageHint: 'celebration office',
-    },
-    {
-        id: '2',
-        platform: 'Other',
-        title: 'My First Open Source Contribution',
-        description: 'I finally contributed to an open-source project! Here’s a breakdown of the process and why you should do it too.',
-        link: 'https://github.com/SherazHussain546',
-        image: 'https://picsum.photos/seed/post2/600/400',
-        imageHint: 'code collaboration',
-    },
-    {
-        id: '3',
-        platform: 'Instagram',
-        title: 'New Portfolio Site is LIVE!',
-        description: 'After weeks of coding, my new personal portfolio is up and running. Built with Next.js and Tailwind CSS. Check it out!',
-        link: '#',
-        image: 'https://picsum.photos/seed/post3/600/400',
-        imageHint: 'website design',
-    },
-    {
-        id: '4',
-        platform: 'LinkedIn',
-        title: 'The Power of AI in Modern Development',
-        description: 'Exploring how AI tools like Genkit are changing the landscape for developers. Are you using AI in your workflow?',
-        link: 'https://www.linkedin.com/in/sherazhussain546/',
-        image: 'https://picsum.photos/seed/post4/600/400',
-        imageHint: 'artificial intelligence',
-    }
-]
-
 export default function PostsSection() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  const postsCollection = collection(firestore, 'posts');
+  const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
+  const [postsSnapshot, loading, error] = useCollection(postsQuery);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-    // Simulate fetching data
-    setTimeout(() => {
-        setPosts(mockPosts);
-        setLoading(false);
-    }, 1000);
   }, []);
 
+  const posts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
+  
   if (!isClient) {
     return (
       <section id="posts" className="py-20 md:py-32">
@@ -103,13 +64,17 @@ export default function PostsSection() {
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
           Featured <span className="text-primary">Posts</span>
         </h2>
-        {loading ? (
+        {loading && (
             <div className="mx-auto grid w-full max-w-6xl gap-4 md:grid-cols-3">
                 <Skeleton className="h-[450px] w-full" />
                 <Skeleton className="h-[450px] w-full hidden md:block" />
                 <Skeleton className="h-[450px] w-full hidden md:block" />
             </div>
-        ) : posts.length === 0 ? (
+        )}
+        {error && (
+            <p className="text-center text-destructive">Failed to load posts. Please try again later.</p>
+        )}
+        {!loading && !error && posts.length === 0 ? (
             <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
         ) : (
           <Carousel
