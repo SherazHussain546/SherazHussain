@@ -37,8 +37,8 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   async input => {
     const resumeContent = getPortfolioContent();
     const {output} = await ai.generate({
-      model: 'gemini-pro',
-      prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description.
+      model: 'gemini-1.5-flash-latest',
+      prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description with the best keywords from teh job description added and also make it high ATS-scored.
 
 You must follow these rules strictly:
 1.  **Source of Truth**: The provided resume content is the ONLY source of facts about the candidate's skills, experience, and qualifications. You are forbidden from inventing, exaggerating, or fabricating any information. Every skill and experience in the output must have a direct basis in the source resume content.
