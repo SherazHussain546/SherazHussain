@@ -36,6 +36,7 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   async input => {
     const resumeContent = getPortfolioContent();
     const {output} = await ai.generate({
+      model: 'gemini-pro',
       prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description with the best keywords from teh job description added and also make it high ATS-scored.
 
 You must follow these rules strictly:
