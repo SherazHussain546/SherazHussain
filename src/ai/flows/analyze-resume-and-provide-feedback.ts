@@ -10,7 +10,6 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getPortfolioContent } from '@/lib/portfolio-content';
-import { googleAI } from '@genkit-ai/google-genai';
 
 const AnalyzeResumeAndProvideFeedbackInputSchema = z.object({
   jobDescription: z.string().describe('The job description to compare the resume against.'),
