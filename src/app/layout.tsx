@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { AuthProvider } from '@/hooks/use-auth';
 import AnalyticsTracker from '@/components/admin/analytics/analytics-tracker';
+import FloatingNav from '@/components/layout/floating-nav';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -60,6 +61,7 @@ export default function RootLayout({
             `}
           </Script>
           <AuthProvider>
+            <FloatingNav />
             <AnalyticsTracker />
             {children}
           </AuthProvider>
