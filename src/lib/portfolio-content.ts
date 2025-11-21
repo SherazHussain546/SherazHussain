@@ -1,7 +1,7 @@
 import { skills, experiences, projects, education, certifications } from '@/lib/data';
 
 /**
- * Aggregates all portfolio content from the data files into a single string.
+ * Aggregates all portfolio content (excluding posts) from the data files into a single string.
  * This is used by the AI Resume Analyzer as the source "resume" content.
  * @returns A string containing all portfolio content.
  */
