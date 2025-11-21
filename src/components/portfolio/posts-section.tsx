@@ -12,6 +12,7 @@ import { collection, query, orderBy } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '@/firebase/client';
 import { Timestamp } from 'firebase/firestore';
+import { Badge } from '../ui/badge';
 
 export interface Post {
     id: string;
@@ -21,6 +22,7 @@ export interface Post {
     link: string;
     image?: string;
     imageHint?: string;
+    hashtags?: string;
     createdAt: Timestamp;
 }
 
@@ -89,6 +91,7 @@ export default function PostsSection() {
             <CarouselContent>
               {posts.map((post) => {
                 const Icon = platformIcons[post.platform] || Rss;
+                const hashtags = post.hashtags?.split(',').map(tag => tag.trim()).filter(tag => tag);
                 return (
                   <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1">
@@ -111,6 +114,13 @@ export default function PostsSection() {
                         )}
                         <CardHeader>
                           <CardTitle>{post.title}</CardTitle>
+                           {hashtags && hashtags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 pt-2">
+                                {hashtags.map((tag) => (
+                                <Badge key={tag} variant="secondary">{tag}</Badge>
+                                ))}
+                            </div>
+                           )}
                         </CardHeader>
                         <CardContent className="flex-1">
                           <p className="text-sm text-muted-foreground">{post.description}</p>

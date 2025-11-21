@@ -31,6 +31,10 @@
           "type": "string",
           "description": "A hint for AI image generation tools, describing the image content."
         },
+        "hashtags": {
+          "type": "string",
+          "description": "Comma-separated hashtags for the post (e.g., #tech, #AI)."
+        },
         "createdAt": {
           "type": "string",
           "format": "date-time",

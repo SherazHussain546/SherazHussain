@@ -28,6 +28,7 @@ const postSchema = z.object({
   link: z.string().url('Please enter a valid URL.'),
   image: z.string().url('Please enter a valid image URL.').optional().or(z.literal('')),
   imageHint: z.string().optional(),
+  hashtags: z.string().optional(),
 });
 
 type PostFormValues = z.infer<typeof postSchema>;
@@ -51,6 +52,7 @@ export default function ManagePosts() {
       link: '',
       image: '',
       imageHint: '',
+      hashtags: '',
     },
   });
   
@@ -233,7 +235,19 @@ export default function ManagePosts() {
                   </FormItem>
                 )}
               />
-
+               <FormField
+                control={form.control}
+                name="hashtags"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hashtags (Optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="#tech, #AI, #dev" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button type="submit" disabled={loading}>
                 {loading ? 'Adding Post...' : 'Add Post'}
               </Button>
@@ -389,6 +403,19 @@ export default function ManagePosts() {
                     <FormLabel>Image AI Hint (Optional)</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. 'code office'" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={editForm.control}
+                name="hashtags"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hashtags (Optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="#tech, #AI, #dev" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
