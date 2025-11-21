@@ -1,10 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Github, Linkedin, Mail, Shield } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { useAuth } from '@/hooks/use-auth';
 
 const navItems = [
   {
@@ -29,14 +27,11 @@ const navItems = [
 
 export default function FloatingNav() {
   const pathname = usePathname();
-  const { user } = useAuth();
   
   // Hide the floating nav on admin pages
   if (pathname.startsWith('/admin')) {
     return null;
   }
-
-  const adminHref = user ? '/admin' : '/admin/login';
 
   return (
     <div className="group fixed top-1/2 left-4 z-50 -translate-y-1/2 hidden md:flex">
@@ -56,17 +51,6 @@ export default function FloatingNav() {
             </span>
           </Link>
         ))}
-         <div className="my-1 h-px w-full bg-border transition-all duration-300 group-hover:w-full" />
-         <Link
-            href={adminHref}
-            aria-label="Admin"
-            className="flex items-center gap-4 rounded-full text-muted-foreground transition-colors hover:text-primary"
-          >
-            <Shield className="h-6 w-6 flex-shrink-0" />
-            <span className="w-0 overflow-hidden text-sm font-medium opacity-0 transition-all duration-300 group-hover:w-full group-hover:opacity-100">
-              Admin
-            </span>
-          </Link>
       </div>
     </div>
   );
