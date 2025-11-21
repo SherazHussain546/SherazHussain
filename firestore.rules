@@ -18,5 +18,11 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isSignedIn();
     }
+
+    // Analytics events can be created by anyone, but only read by an admin.
+    match /analyticsEvents/{eventId} {
+      allow create: if true;
+      allow read, write: if isSignedIn();
+    }
   }
 }

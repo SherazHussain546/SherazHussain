@@ -5,6 +5,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { AuthProvider } from '@/hooks/use-auth';
+import AnalyticsTracker from '@/components/admin/analytics/analytics-tracker';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -47,19 +48,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={cn('font-sans antialiased', inter.variable)}>
-          <Script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-CX3V7SF35L"
-          />
+          {/* Google tag (gtag.js) */}
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-CX3V7SF35L"></Script>
           <Script id="google-analytics">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+
               gtag('config', 'G-CX3V7SF35L');
             `}
           </Script>
           <AuthProvider>
+            <AnalyticsTracker />
             {children}
           </AuthProvider>
           <Toaster />

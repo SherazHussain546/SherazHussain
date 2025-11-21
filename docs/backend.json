@@ -50,6 +50,30 @@
           "description": "The URL for the founder's profile image."
         }
       }
+    },
+    "AnalyticsEvent": {
+      "title": "Analytics Event",
+      "description": "Represents a single analytics event, like a page view.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["page_view"]
+        },
+        "path": {
+          "type": "string",
+          "description": "The path of the page that was viewed."
+        },
+        "sessionId": {
+          "type": "string",
+          "description": "A unique identifier for the user's session."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["type", "path", "sessionId", "timestamp"]
     }
   },
   "auth": {
@@ -67,6 +91,12 @@
         "$ref": "#/docs/entities/SiteConfig"
       },
       "description": "Stores global site configuration settings."
+    },
+    "/analyticsEvents/{eventId}": {
+       "schema": {
+        "$ref": "#/docs/entities/AnalyticsEvent"
+      },
+      "description": "Stores analytics events, like page views."
     }
   }
 }
