@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Posts can be read by anyone, but only created, updated,
+    // or deleted by an authenticated user.
+    match /posts/{postId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+  }
+}

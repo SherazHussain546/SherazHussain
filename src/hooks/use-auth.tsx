@@ -2,10 +2,10 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { firebaseApp } from '@/firebase/client';
+import { app } from '@/firebase/client';
 import { useRouter } from 'next/navigation';
 
-const auth = getAuth(firebaseApp);
+const auth = getAuth(app);
 
 interface AuthContextType {
   user: User | null;

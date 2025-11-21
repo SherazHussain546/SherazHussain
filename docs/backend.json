@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "Represents a blog post or a featured post on the portfolio.",
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "The platform where the post was originally published (e.g., LinkedIn, Instagram)."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the post."
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description or excerpt of the post."
+        },
+        "link": {
+          "type": "string",
+          "format": "uri",
+          "description": "The direct URL to the full post."
+        },
+        "image": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL for the post's cover image."
+        },
+        "imageHint": {
+          "type": "string",
+          "description": "A hint for AI image generation tools, describing the image content."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the post was created."
+        }
+      },
+      "required": ["platform", "title", "description", "link"]
+    }
+  },
+  "auth": {
+    "providers": ["email"]
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": {
+        "$ref": "#/docs/entities/Post"
+      },
+      "description": "Stores all the featured posts for the portfolio."
+    }
+  }
+}
