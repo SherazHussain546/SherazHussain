@@ -12,5 +12,11 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isSignedIn();
     }
+
+    // Site config can be read by anyone, but only written by an admin.
+    match /siteConfig/{configId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
   }
 }

@@ -38,6 +38,18 @@
         }
       },
       "required": ["platform", "title", "description", "link"]
+    },
+    "SiteConfig": {
+      "title": "Site Configuration",
+      "description": "Stores global configuration settings for the website.",
+      "type": "object",
+      "properties": {
+        "founderImageUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL for the founder's profile image."
+        }
+      }
     }
   },
   "auth": {
@@ -49,6 +61,12 @@
         "$ref": "#/docs/entities/Post"
       },
       "description": "Stores all the featured posts for the portfolio."
+    },
+    "/siteConfig/{configId}": {
+      "schema": {
+        "$ref": "#/docs/entities/SiteConfig"
+      },
+      "description": "Stores global site configuration settings."
     }
   }
 }
