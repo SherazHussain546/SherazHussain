@@ -34,7 +34,6 @@ export async function analyzeResumeAndProvideFeedback(
 
 const analyzeResumeAndProvideFeedbackPrompt = ai.definePrompt({
   name: 'analyzeResumeAndProvideFeedbackPrompt',
-  model: googleAI('gemini-pro'),
   input: {schema: z.object({
     resumeContent: z.string(),
     jobDescription: z.string(),
@@ -64,14 +63,11 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   },
   async input => {
     const resumeContent = getPortfolioContent();
-    const response = await analyzeResumeAndProvideFeedbackPrompt.generate({
-        input: {
-            ...input,
-            resumeContent,
-        }
+    const {output} = await analyzeResumeAndProvideFeedbackPrompt({
+      ...input,
+      resumeContent,
     });
     
-    const output = response.output();
     if (!output) {
       throw new Error("AI failed to generate a valid response.");
     }
