@@ -1,15 +1,62 @@
-
+/**
+ * Core Philosophy: This ruleset establishes a public-read, admin-write security model.
+ * It is designed for a public image gallery where all visitors can view the images,
+ * but only an administrator (a role to be implemented later) can add, modify, or
+ * remove them. This provides a secure-by-default posture while allowing for easy
+ * public consumption of the data.
+ *
+ * Data Structure: All image metadata is stored in a single, top-level collection named 'images'.
+ * There are no user-specific subcollections, simplifying the rules required.
+ *
+ * Key Security Decisions:
+ * - Public Read Access: The entire `/images` collection is readable by anyone, including
+ *   unauthenticated users, to support the public-facing website.
+ * - Default-Deny for Writes: All write operations (create, update, delete) are explicitly
+ *   denied. This is the most secure approach until an administrative role or user
+ *   ownership model is defined in the application logic and reflected in the rules.
+ * - No Schema Validation: In line with the prototyping philosophy, these rules do not
+ *   validate the shape or data types of the image documents, focusing solely on access control.
+ *
+ * Denormalization for Authorization: This principle is not currently applied as there are
+ * no user roles or ownership data to denormalize. To enable writes, an admin system
+ * would likely involve checking a custom claim on the user's auth token, which requires
+ * no denormalization.
+ *
+ * Structural Segregation: Not applicable, as all data is public. If private images were
+ * introduced, they would be best stored in a separate, secured collection.
+ */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Helper Functions
+
+    /**
+     * Checks if a user is authenticated.
+     */
     function isSignedIn() {
       return request.auth != null;
     }
 
+    /**
+     * @description Provides public read access to all images. Writes are disabled
+     *              pending implementation of an admin or ownership role.
+     * @path        /images/{imageId}
+     * @allow       An unauthenticated user reads an image: `(get) /images/abc`
+     * @deny        Any user, authenticated or not, tries to create a new image: `(create) /images/xyz`
+     * @principle   Public Read-Only: Data is visible to everyone, but modifications are locked down
+     *              until a secure authorization mechanism (e.g., admin roles) is implemented.
+     */
     match /images/{imageId} {
-      allow read: if true;
-      allow write: if isSignedIn(); // For now, any signed-in user can write. We'll lock this down later.
+      // Allow anyone to read image data for the public gallery.
+      allow get: if true;
+      allow list: if true;
+
+      // Deny all writes. To enable, add an ownership field to the 'Image'
+      // entity or implement an admin role check (e.g., using custom claims).
+      allow create: if false; // TODO: Implement admin-only creation rule.
+      allow update: if false; // TODO: Implement admin-only update rule.
+      allow delete: if false; // TODO: Implement admin-only deletion rule.
     }
 
     match /posts/{postId} {
