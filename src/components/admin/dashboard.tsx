@@ -1,6 +1,6 @@
 'use client';
 import { getAuth, signOut } from 'firebase/auth';
-import { useAuth } from '@/firebase';
+import { firebaseApp } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
@@ -9,8 +9,9 @@ import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
 
+const auth = getAuth(firebaseApp);
+
 export default function Dashboard() {
-  const auth = useAuth();
   const { toast } = useToast();
   
   const handleLogout = async () => {
