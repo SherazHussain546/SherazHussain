@@ -1,3 +1,5 @@
+'use client';
+
 import { experiences } from '@/lib/data';
 import { CheckCircle2, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
@@ -11,29 +13,35 @@ export default function ExperienceSection() {
           Work <span className="text-primary">Experience</span>
         </h2>
         <div className="relative">
-          <div className="absolute left-0 top-0 hidden h-full w-0.5 bg-border md:block md:left-1/2 md:-translate-x-1/2"></div>
+          {/* The vertical line in the middle (for desktop) */}
+          <div className="absolute left-0 top-0 hidden h-full w-0.5 bg-border md:left-1/2 md:-translate-x-1/2"></div>
+          
           {experiences.map((exp, index) => (
             <div
               key={exp.role}
-              className={`relative mb-8 flex w-full items-start md:mb-12 ${
+              className={`group relative mb-8 flex w-full items-start md:mb-12 ${
                 index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
               }`}
             >
-              <div className="absolute top-5 h-3 w-3 rounded-full bg-primary ring-4 ring-background -left-1.5 md:left-1/2 md:-translate-x-1/2" style={index % 2 === 0 ? { transform: 'translateX(-50%)' } : { transform: 'translateX(-50%)' }}></div>
-              <div className="w-full pl-8 md:w-1/2 md:pl-8 md:pr-8"
-                style={index % 2 !== 0 ? { marginLeft: 'auto' } : {}}
+              {/* Timeline Dot */}
+              <div className="absolute top-5 -left-1.5 h-3 w-3 rounded-full bg-primary ring-4 ring-background md:left-1/2 md:-translate-x-1/2"></div>
+              
+              <div
+                className={`w-full pl-8 md:w-1/2 ${
+                  index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
+                }`}
               >
                 <div
-                  className="relative rounded-lg border bg-card p-6 shadow-md transition-shadow hover:shadow-lg hover:shadow-primary/20"
+                  className="relative rounded-lg border bg-card p-6 shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/20"
                 >
-                  <p className="text-xs text-muted-foreground">{exp.period}</p>
-                  <div className="flex items-center justify-between mt-1">
+                  <p className="mb-1 text-xs text-muted-foreground">{exp.period}</p>
+                  <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <h3 className="text-xl font-bold text-primary">{exp.role}</h3>
                       <p className="font-semibold">{exp.company}</p>
                     </div>
                     {exp.link && (
-                       <Button asChild variant="outline" size="sm">
+                       <Button asChild variant="outline" size="sm" className="mt-2 sm:mt-0">
                         <Link href={exp.link} target="_blank" rel="noopener noreferrer">
                           Visit Site
                           <ExternalLink className="ml-2 h-4 w-4" />
