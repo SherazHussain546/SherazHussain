@@ -21,12 +21,14 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
       rel={target === '_blank' ? 'noopener noreferrer' : ''}
       aria-label={label}
       className={cn(
-        'group flex items-center gap-4 h-12 w-12 justify-center rounded-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden hover:w-48',
+        'group relative flex h-12 w-12 items-center justify-center rounded-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden hover:w-48',
         bgColor
       )}
     >
-      <Icon className="h-6 w-6 flex-shrink-0 text-white" />
-      <span className="text-sm font-medium text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="absolute left-0 flex h-full w-12 items-center justify-center">
+        <Icon className="h-6 w-6 flex-shrink-0 text-white" />
+      </div>
+      <span className="pl-12 text-sm font-medium text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         {label}
       </span>
     </Link>
