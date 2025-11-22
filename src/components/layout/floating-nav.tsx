@@ -26,10 +26,10 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
         bgColor
       )}
     >
-      <div className="absolute right-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:-translate-x-[calc(12rem-3rem)]">
+      <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:translate-x-[calc(12rem-3rem)]">
         <Icon className="h-6 w-6 flex-shrink-0 text-white" />
       </div>
-      <span className="absolute right-14 whitespace-nowrap pl-4 text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <span className="absolute left-14 whitespace-nowrap pr-4 text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         {label}
       </span>
     </Link>
@@ -42,21 +42,21 @@ const navItems: NavItemProps[] = [
     label: 'Email Us',
     icon: Mail,
     target: '_self',
-    bgColor: 'bg-gray-500/20 hover:bg-gray-600/40',
+    bgColor: 'bg-gray-500/30 hover:bg-gray-600/50',
   },
   {
     href: 'https://github.com/SherazHussain546',
     label: 'Follow on GitHub',
     icon: Github,
     target: '_blank',
-    bgColor: 'bg-teal-600/20 hover:bg-teal-700/40',
+    bgColor: 'bg-teal-600/30 hover:bg-teal-700/50',
   },
   {
     href: 'https://linkedin.com/in/sherazhussain546/',
     label: 'Connect on LinkedIn',
     icon: Linkedin,
     target: '_blank',
-    bgColor: 'bg-blue-600/20 hover:bg-blue-700/40',
+    bgColor: 'bg-blue-600/30 hover:bg-blue-700/50',
   },
 ];
 
@@ -97,8 +97,8 @@ export default function FloatingNav() {
   }
 
   return (
-    <div className="fixed top-1/2 right-4 z-50 -translate-y-1/2 hidden md:flex">
-      <div className="flex flex-col items-end gap-3">
+    <div className="fixed top-1/2 left-4 z-50 -translate-y-1/2 hidden md:flex">
+      <div className="flex flex-col items-start gap-3">
         {navItems.map((item) => (
           <NavItem key={item.label} {...item} />
         ))}
