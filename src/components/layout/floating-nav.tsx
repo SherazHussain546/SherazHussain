@@ -41,21 +41,21 @@ const navItems: NavItemProps[] = [
     label: 'Email Us',
     icon: Mail,
     target: '_self',
-    bgColor: 'bg-gray-500 hover:bg-gray-600',
+    bgColor: 'bg-gray-500/80 hover:bg-gray-600/90',
   },
   {
     href: 'https://github.com/SherazHussain546',
     label: 'Follow on GitHub',
     icon: Github,
     target: '_blank',
-    bgColor: 'bg-teal-600 hover:bg-teal-700',
+    bgColor: 'bg-teal-600/80 hover:bg-teal-700/90',
   },
   {
     href: 'https://linkedin.com/in/sherazhussain546/',
     label: 'Connect on LinkedIn',
     icon: Linkedin,
     target: '_blank',
-    bgColor: 'bg-blue-600 hover:bg-blue-700',
+    bgColor: 'bg-blue-600/80 hover:bg-blue-700/90',
   },
 ];
 
