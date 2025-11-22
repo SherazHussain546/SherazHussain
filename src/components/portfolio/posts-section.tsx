@@ -78,7 +78,7 @@ export default function PostsSection() {
            <Carousel
                 opts={{
                     align: 'start',
-                    loop: true,
+                    loop: posts.length > 3,
                 }}
                 className="w-full"
             >
@@ -100,7 +100,6 @@ export default function PostsSection() {
                                 />
                                 <div className="absolute top-2 right-2 flex items-center gap-2 rounded-full bg-background/80 px-3 py-1 text-xs font-semibold">
                                     <Icon className="h-4 w-4 text-primary" />
-                                    <span>{post.platform}</span>
                                 </div>
                             </div>
                         </CardHeader>
