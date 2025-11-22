@@ -29,7 +29,7 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
       <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:translate-x-36">
         <Icon className="h-6 w-6 flex-shrink-0 text-white" />
       </div>
-      <span className="absolute left-14 whitespace-nowrap pr-4 text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-left w-full">
+      <span className="absolute left-14 whitespace-nowrap text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-left w-full">
         {label}
       </span>
     </Link>
