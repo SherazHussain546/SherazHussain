@@ -1,18 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Linkedin, ArrowRight, Rss, Instagram, Facebook } from 'lucide-react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Skeleton } from '../ui/skeleton';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '@/firebase/client';
 import { Timestamp } from 'firebase/firestore';
-import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import styles from './posts-slider.module.css';
+import { cn } from '@/lib/utils';
 
 export interface Post {
     id: string;
@@ -37,25 +36,25 @@ export default function PostsSection() {
   const postsCollection = collection(firestore, 'posts');
   const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
   const [postsSnapshot, loading, error] = useCollection(postsQuery);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const posts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      setActiveIndex(Math.floor(posts.length / 2));
+    }
+  }, [posts.length]);
   
-  if (!isClient) {
+  if (loading) {
     return (
-      <section id="posts" className="py-20 md:py-32">
+      <section id="posts" className="bg-card py-20 md:py-32">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
             Featured <span className="text-primary">Posts</span>
           </h2>
-          <div className="mx-auto grid w-full max-w-6xl gap-4 md:grid-cols-3">
-              <Skeleton className="h-[450px] w-full" />
-              <Skeleton className="h-[450px] w-full hidden md:block" />
-              <Skeleton className="h-[450px] w-full hidden md:block" />
+          <div className="flex justify-center items-center h-[400px]">
+            <Skeleton className="h-[280px] w-[280px]" />
           </div>
         </div>
       </section>
@@ -63,90 +62,74 @@ export default function PostsSection() {
   }
 
   return (
-    <section id="posts" className="py-20 md:py-32">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="posts" className="bg-card py-20 md:py-32">
+      <div className="container mx-auto flex flex-col items-center justify-center px-4 md:px-6">
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
           Featured <span className="text-primary">Posts</span>
         </h2>
-        {loading && (
-            <div className="mx-auto grid w-full max-w-6xl gap-4 md:grid-cols-3">
-                <Skeleton className="h-[450px] w-full" />
-                <Skeleton className="h-[450px] w-full hidden md:block" />
-                <Skeleton className="h-[450px] w-full hidden md:block" />
-            </div>
-        )}
+        
         {error && (
             <p className="text-center text-destructive">Failed to load posts. Please try again later.</p>
         )}
+
         {!loading && !error && posts.length === 0 ? (
             <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
         ) : (
-          <Carousel
-            opts={{
-              align: "start",
-              loop: posts.length > 3,
-            }}
-            className="w-full max-w-6xl mx-auto"
-          >
-            <CarouselContent>
-              {posts.map((post) => {
-                const Icon = platformIcons[post.platform] || Rss;
-                const hashtags = post.hashtags?.split(',').map(tag => tag.trim()).filter(tag => tag);
-                return (
-                  <CarouselItem key={post.id} className="md:basis-1/3">
-                    <div className="p-1">
-                      <Card className="flex h-full flex-col overflow-hidden bg-card transition-all hover:shadow-primary/20 hover:shadow-lg">
-                        {post.image && (
-                          <div className="relative h-56 w-full">
-                            <Image
-                              src={post.image}
-                              alt={`Cover image for the post titled ${post.title}`}
-                              fill
-                              className="object-cover"
-                              data-ai-hint={post.imageHint}
-                            />
-                            <div className="absolute top-4 right-4">
-                              <Link href={post.link} target="_blank" rel="noopener noreferrer" aria-label={`Read on ${post.platform}`}>
-                                <Icon className="h-6 w-6 text-white drop-shadow-md transition-transform hover:scale-110" />
-                              </Link>
-                            </div>
+          <div className={styles.container}>
+            <div className={styles.wghSlider}>
+              {posts.map((post, index) => (
+                <input
+                  key={post.id}
+                  className={styles.wghSliderTarget}
+                  type="radio"
+                  id={`slide-${post.id}`}
+                  name="slider"
+                  checked={activeIndex === index}
+                  onChange={() => setActiveIndex(index)}
+                />
+              ))}
+
+              <div className={styles.wghSliderViewport}>
+                <div className={styles.wghSliderViewbox}>
+                  <div className={styles.wghSliderContainer}>
+                    {posts.map((post, index) => {
+                      const Icon = platformIcons[post.platform] || Rss;
+                      const isActive = index === activeIndex;
+                      return (
+                        <div key={post.id} className={cn(styles.wghSliderItem, isActive && 'active-slide')} style={{'--i': index, '--total': posts.length, '--active': activeIndex} as React.CSSProperties}>
+                          <div className={styles.wghSliderItemInner}>
+                            <figure className={styles.wghSliderItemFigure}>
+                              <Image
+                                className={styles.wghSliderItemFigureImage}
+                                src={post.image || 'https://picsum.photos/seed/1/480/480'}
+                                alt={post.title}
+                                width={480}
+                                height={480}
+                                data-ai-hint={post.imageHint}
+                              />
+                              <figcaption className={styles.wghSliderItemFigureCaption}>
+                                <Link href={post.link} target="_blank" rel="noopener noreferrer">
+                                  {post.title}
+                                </Link>
+                                <span>{post.platform}</span>
+                              </figcaption>
+                            </figure>
+                            <label
+                              className={styles.wghSliderItemTrigger}
+                              htmlFor={`slide-${post.id}`}
+                              title={`Show post ${index + 1}`}
+                            ></label>
                           </div>
-                        )}
-                        <CardHeader>
-                          <CardTitle>{post.title}</CardTitle>
-                           {hashtags && hashtags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 pt-2">
-                                {hashtags.map((tag) => (
-                                <Badge key={tag} variant="secondary">{tag}</Badge>
-                                ))}
-                            </div>
-                           )}
-                        </CardHeader>
-                        <CardContent className="flex-1">
-                          <p className="text-sm text-muted-foreground">{post.description}</p>
-                        </CardContent>
-                        <CardFooter>
-                          <Button asChild variant="default">
-                            <Link href={post.link} target="_blank" rel="noopener noreferrer">
-                              Read on {post.platform}
-                              <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        </CardFooter>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-            {posts.length > 3 && (
-              <>
-                <CarouselPrevious />
-                <CarouselNext />
-              </>
-            )}
-          </Carousel>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
+
         <div className="mt-12 text-center">
           <Button asChild size="lg">
             <Link href="https://www.linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer">
