@@ -60,6 +60,8 @@ export default function RootLayout({
               gtag('config', 'G-CX3V7SF35L');
             `}
           </Script>
+          {/* LinkedIn Profile Badge Script */}
+          <Script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></Script>
           <AuthProvider>
             <FloatingNav />
             <AnalyticsTracker />
