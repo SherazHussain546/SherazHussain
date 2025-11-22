@@ -26,10 +26,10 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
         bgColor
       )}
     >
-      <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:translate-x-36">
+      <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:-translate-x-full">
         <Icon className="h-6 w-6 flex-shrink-0 text-white" />
       </div>
-      <span className="absolute left-14 whitespace-nowrap text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-left w-full">
+      <span className="absolute left-0 pl-4 pr-4 whitespace-nowrap text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 translate-x-full w-full text-left">
         {label}
       </span>
     </Link>
