@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -28,7 +29,7 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
       <div className="absolute right-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:-translate-x-[calc(12rem-3rem)]">
         <Icon className="h-6 w-6 flex-shrink-0 text-white" />
       </div>
-      <span className="absolute right-4 whitespace-nowrap pl-16 text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <span className="absolute right-14 whitespace-nowrap pl-4 text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         {label}
       </span>
     </Link>
@@ -61,9 +62,37 @@ const navItems: NavItemProps[] = [
 
 export default function FloatingNav() {
   const pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Hide the floating nav on admin pages
-  if (pathname.startsWith('/admin')) {
+  useEffect(() => {
+    // Return early if we are on an admin page
+    if (pathname.startsWith('/admin')) return;
+
+    const skillsSection = document.getElementById('skills');
+    if (!skillsSection) {
+      // If for some reason the skills section isn't on the page, default to not showing the nav
+      setIsVisible(false);
+      return;
+    }
+
+    const handleScroll = () => {
+      // Get the position of the skills section relative to the viewport
+      const { top } = skillsSection.getBoundingClientRect();
+      
+      // Show the nav if the top of the skills section is at or above the top of the viewport
+      setIsVisible(top <= 0);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Run on mount to check initial position
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
+
+  // Hide the floating nav on admin pages or if not visible
+  if (pathname.startsWith('/admin') || !isVisible) {
     return null;
   }
 
