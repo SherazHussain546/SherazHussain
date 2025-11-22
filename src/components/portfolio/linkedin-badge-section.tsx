@@ -9,9 +9,9 @@ export default function LinkedInBadgeSection() {
         <div 
           className="badge-base LI-profile-badge" 
           data-locale="en_US" 
-          data-size="medium" 
+          data-size="large" 
           data-theme="dark" 
-          data-type="VERTICAL" 
+          data-type="HORIZONTAL" 
           data-vanity="sherazhussain546" 
           data-version="v1"
         >
