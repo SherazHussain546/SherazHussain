@@ -93,7 +93,7 @@ export default function PostsSection() {
                 const Icon = platformIcons[post.platform] || Rss;
                 const hashtags = post.hashtags?.split(',').map(tag => tag.trim()).filter(tag => tag);
                 return (
-                  <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={post.id} className="md:basis-1/3">
                     <div className="p-1">
                       <Card className="flex h-full flex-col overflow-hidden bg-card transition-all hover:shadow-primary/20 hover:shadow-lg">
                         {post.image && (
