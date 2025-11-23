@@ -84,7 +84,7 @@ export const experiences = [
     role: 'Web Developer & Consultant',
     company: 'Stylish Marble Art',
     link: 'https://www.stylishmarbleart.com',
-    period: 'May 2024 – Present',
+    period: 'May 2025 – Present',
     description: 'Developed and maintain a responsive e-commerce website for a marble art and services business, leveraging WordPress, WooCommerce, and custom HTML/CSS.',
     points: [
       'Implemented site-wide SEO strategies and integrated contact forms to generate and manage sales leads.',
