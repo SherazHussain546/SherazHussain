@@ -5,6 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes = [
     '',
+    '/survey',
     '/#about',
     '/#skills',
     '/#experience',

@@ -8,14 +8,15 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Menu } from 'lucide-react';
 
 const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Education', href: '#education' },
-  { name: 'Certifications', href: '#certifications'},
+  { name: 'About', href: '/#about' },
+  { name: 'Skills', href: '/#skills' },
+  { name: 'Experience', href: '/#experience' },
+  { name: 'Projects', href: '/#projects' },
+  { name: 'Education', href: '/#education' },
+  { name: 'Certifications', href: '/#certifications'},
   { name: 'Posts', href: '#posts' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Contact', href: '/#contact' },
+  { name: 'Feedback', href: '/survey' },
 ];
 
 export default function Header() {
@@ -42,13 +43,13 @@ export default function Header() {
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
               href={link.href}
               className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
             >
               {link.name}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="md:hidden">
@@ -65,13 +66,13 @@ export default function Header() {
               </SheetHeader>
               <nav className="flex flex-col gap-4 pt-8">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
                     href={link.href}
                     className="text-lg font-medium text-foreground/80 transition-colors hover:text-primary"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </SheetContent>
