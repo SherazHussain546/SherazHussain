@@ -10,7 +10,7 @@ export default function Footer() {
           <p className="text-xs text-muted-foreground">Full-Stack & AI Developer</p>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="mailto:sherazhussainofficial1@gmail.com" aria-label="Email">
+          <Link href="mailto:sheraz@synctech.ie" aria-label="Email">
             <Mail className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
           </Link>
           <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="GitHub">

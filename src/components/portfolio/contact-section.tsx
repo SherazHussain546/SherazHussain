@@ -17,7 +17,7 @@ export default function ContactSection() {
         
         <div className="mx-auto mt-12 flex max-w-xl flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <Button asChild size="lg" className="w-full sm:w-auto">
-            <Link href="mailto:sherazhussainofficial1@gmail.com">
+            <Link href="mailto:sheraz@synctech.ie">
               <Mail className="mr-2 h-5 w-5" />
               Send an Email
             </Link>

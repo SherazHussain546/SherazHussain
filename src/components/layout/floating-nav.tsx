@@ -38,7 +38,7 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
 
 const navItems: NavItemProps[] = [
   {
-    href: 'mailto:sherazhussainofficial1@gmail.com',
+    href: 'mailto:sheraz@synctech.ie',
     label: 'Get in Touch',
     icon: Mail,
     target: '_self',
