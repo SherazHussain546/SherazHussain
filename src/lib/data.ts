@@ -47,7 +47,7 @@ export const experiences = [
     role: 'Founder & Director',
     company: 'SYNC TECH',
     link: 'https://www.synctech.ie',
-    period: 'August 2024 - Present',
+    period: 'August 2025 - Present',
     description: 'Founded and directed an IT solutions company specializing in Web Development, AI Automation, Cloud Hosting, and Cybersecurity.',
     points: [
       'Architected, developed, and delivered bespoke digital solutions for clients, driving their business growth and digital transformation.',
