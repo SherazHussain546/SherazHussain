@@ -72,34 +72,38 @@ export default function FloatingNav() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Return early if we are on an admin page
-    if (pathname.startsWith('/admin')) return;
+    // Hide on admin pages
+    if (pathname.startsWith('/admin')) {
+      setIsVisible(false);
+      return;
+    }
 
+    // Always show on the survey page
+    if (pathname.startsWith('/survey')) {
+      setIsVisible(true);
+      return;
+    }
+
+    // Logic for the main page (scrolling)
     const skillsSection = document.getElementById('skills');
     if (!skillsSection) {
-      // If for some reason the skills section isn't on the page, default to not showing the nav
       setIsVisible(false);
       return;
     }
 
     const handleScroll = () => {
-      // Get the position of the skills section relative to the viewport
       const { top } = skillsSection.getBoundingClientRect();
-      
-      // Show the nav if the top of the skills section is at or above the top of the viewport
       setIsVisible(top <= 0);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Run on mount to check initial position
-    handleScroll();
+    handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  // Hide the floating nav on admin pages or if not visible
-  if (pathname.startsWith('/admin') || !isVisible) {
+  if (!isVisible) {
     return null;
   }
 
