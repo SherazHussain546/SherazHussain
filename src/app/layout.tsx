@@ -17,9 +17,12 @@ export const metadata: Metadata = {
   keywords: [
     'Sheraz Hussain',
     'Sheraz',
+    'Hussain',
     'sherazhussain',
     'SherazHussain',
     'sherazhussain546',
+    'SherazHussain546',
+    'sherazhu546',
     'Founder of SYNC TECH',
     'Founder of synctech.ie',
     'SYNC TECH',
@@ -33,9 +36,10 @@ export const metadata: Metadata = {
     'React Developer',
     'Python Developer',
     'EA Sports',
-    'sherazhu546',
-    'SherazHussian546',
+    'SherazHussian546', // Common misspelling
     'Best tech in Ireland',
+    'Portfolio',
+    'Developer Portfolio'
   ],
   verification: {
     google: '-2YVuqfnqiY5zPpoHylxys5gnIrFexTBklppdeVE4Qw',
