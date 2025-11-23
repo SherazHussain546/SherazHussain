@@ -1,4 +1,4 @@
-import { skills, experiences, projects, education, certifications } from '@/lib/data';
+import { skills, experiences, projects, education, allCertificates } from '@/lib/data';
 
 /**
  * Aggregates all portfolio content (excluding posts) from the data files into a single string.
@@ -47,7 +47,7 @@ export function getPortfolioContent(): string {
 
   // --- Certifications ---
   content += '== CERTIFICATIONS & PROGRAMS ==\n';
-  certifications.forEach(cert => {
+  allCertificates.forEach(cert => {
     content += `${cert.title} - ${cert.issuer} (${cert.date})\n`;
     if(cert.points && cert.points.length > 0) {
         cert.points.forEach(point => {
