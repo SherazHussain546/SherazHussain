@@ -166,7 +166,7 @@ export const education = {
   awards: ['Peer-Mentor Leadership Award', 'Graduate Work Readiness Badges: Gold, Silver, Bronze'],
 };
 
-export const certifications: CertificateType[] = [
+export const allCertificates: CertificateType[] = [
   {
     title: 'Electronic Arts (EA) Software Engineering Virtual Experience',
     issuer: 'Forage',
@@ -217,9 +217,6 @@ export const certifications: CertificateType[] = [
     icon: School,
     skills: ['Problem Solving', 'Time Management', 'Attention to Detail', 'Teamwork', 'Leadership', 'Communication'],
   },
-];
-
-export const otherCertificates: CertificateType[] = [
   { title: 'Deloitte Australia - Cyber Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: ShieldCheck },
   { title: 'Deloitte Australia - Data Analytics Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: Database },
   { title: 'Google Ads AI-Powered Performance Certification', issuer: 'Google', date: 'Jun 2023', icon: BrainCircuit },
@@ -228,10 +225,4 @@ export const otherCertificates: CertificateType[] = [
   { title: 'Junior Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
   { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
   { title: 'Duolingo English Test', issuer: 'Duolingo', date: 'N/A', icon: Award },
-];
-
-
-export const allCertificates: CertificateType[] = [
-  ...certifications,
-  ...otherCertificates
 ];
