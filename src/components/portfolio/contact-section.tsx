@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Mail, Linkedin } from 'lucide-react';
+import { Mail, Linkedin, Github } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ContactSection() {
@@ -20,6 +20,12 @@ export default function ContactSection() {
             <Link href="mailto:sheraz@synctech.ie">
               <Mail className="mr-2 h-5 w-5" />
               Send an Email
+            </Link>
+          </Button>
+           <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer">
+              <Github className="mr-2 h-5 w-5" />
+              Follow on GitHub
             </Link>
           </Button>
           <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
