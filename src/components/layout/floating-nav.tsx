@@ -38,13 +38,6 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
 
 const navItems: NavItemProps[] = [
   {
-    href: '/survey',
-    label: 'Give Feedback',
-    icon: MessageSquareQuote,
-    target: '_self',
-    bgColor: 'bg-purple-600/30 hover:bg-purple-700/50',
-  },
-  {
     href: 'mailto:sheraz@synctech.ie',
     label: 'Get in Touch',
     icon: Mail,
@@ -64,6 +57,13 @@ const navItems: NavItemProps[] = [
     icon: Linkedin,
     target: '_blank',
     bgColor: 'bg-blue-600/30 hover:bg-blue-700/50',
+  },
+  {
+    href: '/survey',
+    label: 'Give Feedback',
+    icon: MessageSquareQuote,
+    target: '_self',
+    bgColor: 'bg-purple-600/30 hover:bg-purple-700/50',
   },
 ];
 
