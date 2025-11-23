@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Mail, MessageSquareQuote } from 'lucide-react';
+import { Github, Linkedin, Mail, Pencil } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -61,7 +61,7 @@ const navItems: NavItemProps[] = [
   {
     href: '/survey',
     label: 'Give Feedback',
-    icon: MessageSquareQuote,
+    icon: Pencil,
     target: '_self',
     bgColor: 'bg-purple-600/30 hover:bg-purple-700/50',
   },
