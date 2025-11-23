@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, MessageSquareQuote } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -37,6 +37,13 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
 };
 
 const navItems: NavItemProps[] = [
+  {
+    href: '/survey',
+    label: 'Give Feedback',
+    icon: MessageSquareQuote,
+    target: '_self',
+    bgColor: 'bg-purple-600/30 hover:bg-purple-700/50',
+  },
   {
     href: 'mailto:sheraz@synctech.ie',
     label: 'Get in Touch',
