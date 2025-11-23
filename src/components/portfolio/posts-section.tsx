@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/carousel';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Linkedin, ArrowRight, Rss, Instagram, Facebook } from 'lucide-react';
+import { Linkedin, ArrowRight, Rss, Instagram, Facebook, Github } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -34,6 +34,7 @@ const platformIcons: { [key: string]: React.ElementType } = {
   LinkedIn: Linkedin,
   Instagram: Instagram,
   Facebook: Facebook,
+  GitHub: Github,
   Other: Rss,
 };
 
@@ -144,3 +145,5 @@ export default function PostsSection() {
     </section>
   );
 }
+
+    

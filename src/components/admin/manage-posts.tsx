@@ -22,7 +22,7 @@ import { Trash2, Pencil } from 'lucide-react';
 import { Post } from '@/components/portfolio/posts-section';
 
 const postSchema = z.object({
-  platform: z.enum(['LinkedIn', 'Instagram', 'Facebook', 'Other']),
+  platform: z.enum(['LinkedIn', 'Instagram', 'Facebook', 'GitHub', 'Other']),
   title: z.string().min(1, 'Title is required.'),
   description: z.string().min(1, 'Description is required.'),
   link: z.string().url('Please enter a valid URL.'),
@@ -173,6 +173,7 @@ export default function ManagePosts() {
                         <SelectItem value="LinkedIn">LinkedIn</SelectItem>
                         <SelectItem value="Instagram">Instagram</SelectItem>
                         <SelectItem value="Facebook">Facebook</SelectItem>
+                        <SelectItem value="GitHub">GitHub</SelectItem>
                         <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
@@ -350,6 +351,7 @@ export default function ManagePosts() {
                         <SelectItem value="LinkedIn">LinkedIn</SelectItem>
                         <SelectItem value="Instagram">Instagram</SelectItem>
                         <SelectItem value="Facebook">Facebook</SelectItem>
+                        <SelectItem value="GitHub">GitHub</SelectItem>
                         <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
@@ -450,3 +452,5 @@ export default function ManagePosts() {
     </div>
   );
 }
+
+    
