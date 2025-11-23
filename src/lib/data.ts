@@ -221,7 +221,18 @@ export const otherCertificates: CertificateType[] = [
     icon: School,
     skills: ['Problem Solving', 'Time Management', 'Attention to Detail', 'Teamwork', 'Leadership', 'Communication'],
   },
-  { title: 'Deloitte Australia - Cyber Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: ShieldCheck },
+  { 
+    title: 'Deloitte Australia - Cyber Job Simulation', 
+    issuer: 'Forage', 
+    date: 'Aug 2025', 
+    icon: ShieldCheck,
+    points: [
+        'Completed a job simulation involving reading web activity logs',
+        'Supported a client in a cyber security breach',
+        'Answered questions to identify suspicious user activity'
+    ],
+    skills: ['Computer Networking', 'Log Analysis', 'Web Security']
+  },
   { 
     title: 'Deloitte Australia - Data Analytics Job Simulation', 
     issuer: 'Forage', 
