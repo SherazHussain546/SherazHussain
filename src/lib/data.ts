@@ -57,7 +57,7 @@ export const experiences = [
     ],
   },
   {
-    role: 'Freelance Consultant (via SYNC TECH)',
+    role: 'Freelance Consultant',
     company: 'APTLY DRESSED',
     link: 'https://www.aptlydressed.com',
     period: 'September 2025 - Present',
@@ -69,7 +69,7 @@ export const experiences = [
     ],
   },
   {
-    role: 'Freelance Web Developer (via SYNC TECH)',
+    role: 'Freelance Web Developer',
     company: 'blogify.blog',
     link: 'https://www.blogify.blog',
     period: 'September 2025 - Present',
