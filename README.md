@@ -2,7 +2,7 @@ dd # Sheraz Hussain - Full-Stack & AI Developer Portfolio
 
 This is the repository for the personal portfolio of Sheraz Hussain, a Full-Stack Software Engineer and AI/Cloud Developer. This project is designed to showcase his skills, experience, and projects in a modern and interactive web application.
 
-**Live Site:** [www.sherazhussain.synctech.ie](https://www.sherazhussain.synctech.ie)
+**Live Site:** [sheraz.synctech.ie](https://sheraz.synctech.ie)
 
 ## Features
 

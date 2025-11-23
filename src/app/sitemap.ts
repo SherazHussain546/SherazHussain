@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.sherazhussain.synctech.ie';
+  const baseUrl = 'https://sheraz.synctech.ie';
 
   const staticRoutes = [
     '',
