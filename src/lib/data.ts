@@ -1,3 +1,4 @@
+
 import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon, Bitcoin } from 'lucide-react';
 
 type CertificateType = {
@@ -155,7 +156,7 @@ export const projects = [
     link: 'https://github.com/SherazHussain546',
     liveLink: 'https://GoExploree.netlify.app',
     image: '/public/goexploree.jpg',
-    imageHint: 'real estate',
+    imageHint: 'real estate mobile',
   },
 ];
 
@@ -221,7 +222,17 @@ export const otherCertificates: CertificateType[] = [
     skills: ['Problem Solving', 'Time Management', 'Attention to Detail', 'Teamwork', 'Leadership', 'Communication'],
   },
   { title: 'Deloitte Australia - Cyber Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: ShieldCheck },
-  { title: 'Deloitte Australia - Data Analytics Job Simulation', issuer: 'Forage', date: 'Aug 2025', icon: Database },
+  { 
+    title: 'Deloitte Australia - Data Analytics Job Simulation', 
+    issuer: 'Forage', 
+    date: 'Aug 2025', 
+    icon: Database,
+    points: [
+        'Completed a Deloitte job simulation involving data analysis and forensic technology',
+        'Created a data dashboard using Tableau',
+        'Used Excel to classify data and draw business conclusions'
+    ]
+  },
   { title: 'Google Ads AI-Powered Performance Certification', issuer: 'Google', date: 'Jun 2023', icon: BrainCircuit },
   { title: 'Introduction to Virtual, Augmented & Mixed Reality', issuer: 'FutureLearn', date: 'Jul 2020', icon: Smartphone },
   { title: 'Sophomore Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
