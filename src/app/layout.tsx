@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { AuthProvider } from '@/hooks/use-auth';
 import AnalyticsTracker from '@/components/admin/analytics/analytics-tracker';
 import FloatingNav from '@/components/layout/floating-nav';
+import FeedbackPopup from '@/components/layout/feedback-popup';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -64,6 +65,7 @@ export default function RootLayout({
             <FloatingNav />
             <AnalyticsTracker />
             {children}
+            <FeedbackPopup />
           </AuthProvider>
           <Toaster />
       </body>
