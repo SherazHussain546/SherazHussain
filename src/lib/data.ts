@@ -166,7 +166,7 @@ export const education = {
   awards: ['Peer-Mentor Leadership Award', 'Graduate Work Readiness Badges: Gold, Silver, Bronze'],
 };
 
-export const allCertificates: CertificateType[] = [
+export const mainCertificates: CertificateType[] = [
   {
     title: 'Electronic Arts (EA) Software Engineering Virtual Experience',
     issuer: 'Forage',
@@ -203,6 +203,9 @@ export const allCertificates: CertificateType[] = [
       'Created a data dashboard using Tableau and used Excel to classify data.',
     ],
   },
+];
+
+export const otherCertificates: CertificateType[] = [
    {
     title: 'Student Leader Awards 2023 Peer Mentor (with Distinction)',
     issuer: 'Dublin Business School',
@@ -226,3 +229,5 @@ export const allCertificates: CertificateType[] = [
   { title: 'Freshman Trader', issuer: 'Crypto.com', date: 'Jan 2024', icon: Bitcoin },
   { title: 'Duolingo English Test', issuer: 'Duolingo', date: 'N/A', icon: Award },
 ];
+
+export const allCertificates: CertificateType[] = [...mainCertificates, ...otherCertificates];
