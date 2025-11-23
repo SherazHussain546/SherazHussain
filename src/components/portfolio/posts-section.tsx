@@ -89,7 +89,7 @@ export default function PostsSection() {
                 return (
                   <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1">
-                      <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-primary/20 hover:shadow-lg">
+                      <Card className="group flex h-full flex-col overflow-hidden transition-all hover:shadow-primary/20 hover:shadow-lg">
                         <CardHeader>
                             <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
                                 <Image
@@ -99,8 +99,8 @@ export default function PostsSection() {
                                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                                     data-ai-hint={post.imageHint}
                                 />
-                                <div className="absolute top-2 right-2 flex items-center gap-2 rounded-full bg-background/80 px-3 py-1 text-xs font-semibold">
-                                    <Icon className="h-4 w-4 text-primary" />
+                                <div className="absolute top-2 right-2">
+                                    <Icon className="h-6 w-6 text-white" />
                                 </div>
                             </div>
                         </CardHeader>
