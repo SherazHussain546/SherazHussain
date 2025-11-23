@@ -60,7 +60,7 @@ export const experiences = [
     role: 'Freelance Consultant (via SYNC TECH)',
     company: 'APTLY DRESSED',
     link: 'https://www.aptlydressed.com',
-    period: 'September 2024 - Present',
+    period: 'September 2025 - Present',
     description: 'Provided web development and affiliate integration services for an affiliate marketing agency that partners with world-leading brands.',
     points: [
       'Developed and maintained the core platform, ensuring high performance and scalability.',
@@ -72,7 +72,7 @@ export const experiences = [
     role: 'Freelance Web Developer (via SYNC TECH)',
     company: 'blogify.blog',
     link: 'https://www.blogify.blog',
-    period: 'September 2024 - Present',
+    period: 'September 2025 - Present',
     description: 'Delivered freelance web solutions for a platform that enables businesses to publish and promote their blog content to a wider audience.',
     points: [
       'Built and customized features for the content management system to improve the authoring experience.',
