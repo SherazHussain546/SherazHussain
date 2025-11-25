@@ -33,7 +33,7 @@ export default function AboutSection() {
         <div className="space-y-4 text-center md:col-span-2 md:text-left">
           <TypeAnimation
             sequence={[
-              'I am Sheraz Hussain', 1500,
+              'Hi, I am Sheraz Hussain', 1500,
               'I am a Full-Stack Software Engineer', 1500,
               'I am an AI/Cloud Developer', 1500,
               'I am a Cyber Security Specialist', 1500,
