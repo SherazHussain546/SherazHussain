@@ -6,7 +6,7 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { doc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { Skeleton } from '../ui/skeleton';
-
+import { TypeAnimation } from 'react-type-animation';
 
 export default function AboutSection() {
     const settingsRef = doc(firestore, 'siteConfig', 'main');
@@ -31,9 +31,22 @@ export default function AboutSection() {
            )}
         </div>
         <div className="space-y-4 text-center md:col-span-2 md:text-left">
-          <h1 className="text-4xl font-bold tracking-tight text-primary md:text-5xl">
-            Full-Stack Software Engineer & AI/Cloud Developer
-          </h1>
+          <TypeAnimation
+            sequence={[
+              'I am Sheraz Hussain', 1500,
+              'I am a Full-Stack Software Engineer', 1500,
+              'I am an AI/Cloud Developer', 1500,
+              'I am a Cyber Security Specialist', 1500,
+              'I am a Mobile Application Developer', 1500,
+              'I am an ECommerce Specialist', 1500,
+              'I am Open to New Projects', 1500,
+              'I am Open to New Opportunities', 1500
+            ]}
+            wrapper="h1"
+            speed={50}
+            className="text-4xl font-bold tracking-tight text-primary md:text-5xl"
+            repeat={Infinity}
+          />
           <p className="text-lg text-foreground/80 md:text-xl">
             Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach (Angular, React, Node.js). Expertise in DevSecOps practices, AWS, and Kubernetes, ensuring scalable and secure systems. Eager to contribute technical expertise and a collaborative spirit to a dynamic team.
           </p>
