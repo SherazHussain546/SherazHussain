@@ -85,14 +85,14 @@ export default function FloatingNav() {
     }
 
     // Logic for the main page (scrolling)
-    const skillsSection = document.getElementById('skills');
-    if (!skillsSection) {
+    const certifiedBySection = document.getElementById('certified-by');
+    if (!certifiedBySection) {
       setIsVisible(false);
       return;
     }
 
     const handleScroll = () => {
-      const { top } = skillsSection.getBoundingClientRect();
+      const { top } = certifiedBySection.getBoundingClientRect();
       setIsVisible(top <= 0);
     };
 
