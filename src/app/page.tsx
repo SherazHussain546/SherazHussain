@@ -8,6 +8,7 @@ import EducationSection from '@/components/portfolio/education-section';
 import CertificationsSection from '@/components/portfolio/certifications-section';
 import ContactSection from '@/components/portfolio/contact-section';
 import PostsSection from '@/components/portfolio/posts-section';
+import NewSection from '@/components/portfolio/new-section';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <AboutSection />
+        <NewSection />
         <SkillsSection />
         <ExperienceSection />
         <ProjectsSection />
