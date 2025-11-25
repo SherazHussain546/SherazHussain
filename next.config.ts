@@ -92,6 +92,12 @@ const nextConfig: NextConfig = {
         hostname: 'external-content.duckduckgo.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'logos-world.net',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
