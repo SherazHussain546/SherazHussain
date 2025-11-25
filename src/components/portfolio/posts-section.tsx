@@ -11,10 +11,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Linkedin, ArrowRight, Rss, Instagram, Facebook, Github } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
-import { collection, query, orderBy } from 'firebase/firestore';
+import { collection, query, orderBy, Timestamp } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '@/firebase/client';
-import { Timestamp } from 'firebase/firestore';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { Badge } from '../ui/badge';
 
@@ -43,7 +42,22 @@ export default function PostsSection() {
   const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
   const [postsSnapshot, loading, error] = useCollection(postsQuery);
 
-  const posts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
+  const firestorePosts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
+
+  const githubPost: Post = {
+    id: 'static-github-post',
+    platform: 'GitHub',
+    title: 'Explore My Code on GitHub!',
+    description: 'Curious about how I build things? Dive into my GitHub profile to see my latest projects, contributions to open-source, and the code behind my portfolio. Follow me for updates!',
+    link: 'https://github.com/SherazHussain546',
+    image: 'https://picsum.photos/seed/github-post/600/400',
+    imageHint: 'github code',
+    hashtags: '#OpenSource, #Developer, #Coding, #Portfolio, #NextJS, #React',
+    createdAt: Timestamp.now(),
+  };
+
+  const posts = [githubPost, ...firestorePosts];
+
 
   if (loading) {
     return (
@@ -145,5 +159,3 @@ export default function PostsSection() {
     </section>
   );
 }
-
-    
