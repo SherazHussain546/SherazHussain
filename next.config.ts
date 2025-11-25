@@ -86,6 +86,12 @@ const nextConfig: NextConfig = {
         hostname: 'synctech.ie',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'external-content.duckduckgo.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
