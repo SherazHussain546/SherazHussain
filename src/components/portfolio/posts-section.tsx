@@ -96,7 +96,7 @@ export default function PostsSection() {
                                     src={post.image || 'https://picsum.photos/seed/1/600/400'}
                                     alt={post.title}
                                     fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                    className="object-contain transition-transform duration-300"
                                     data-ai-hint={post.imageHint}
                                 />
                                 <div className="absolute top-2 right-2">
