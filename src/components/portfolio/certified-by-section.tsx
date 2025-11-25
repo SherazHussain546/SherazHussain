@@ -17,7 +17,7 @@ const duplicatedLogos = [...logos, ...logos];
 
 export default function CertifiedBySection() {
   return (
-    <section id="certified-by" className="py-16 md:py-24 bg-background/50">
+    <section id="certified-by" className="py-16 md:py-24 bg-neutral-200 dark:bg-neutral-800">
         <style jsx>{`
             @keyframes scroll {
                 0% { transform: translateX(0); }
