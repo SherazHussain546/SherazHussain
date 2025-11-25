@@ -35,7 +35,7 @@ export default function CertifiedBySection() {
           <div className="relative w-full overflow-hidden mask-gradient">
             <div className="flex w-[200%] scrolling-logos hover:pause">
               {duplicatedLogos.map((logo, index) => (
-                <div key={`${logo.name}-${index}`} className="mx-8 flex h-12 w-32 flex-shrink-0 items-center justify-center transition-all duration-300 md:mx-12">
+                <div key={`${logo.name}-${index}`} className="mx-8 flex h-16 w-36 flex-shrink-0 items-center justify-center transition-all duration-300 md:mx-12">
                    <div className="relative h-full w-full">
                         <Image
                             src={logo.src}
