@@ -11,9 +11,47 @@ import FeedbackPopup from '@/components/layout/feedback-popup';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-export const metadata: Metadata = {
-  title: 'Sheraz Hussain | Full-Stack Software Engineer & AI/Cloud Developer',
+const siteConfig = {
+  name: 'Sheraz Hussain | Full-Stack Software Engineer & AI/Cloud Developer',
+  url: 'https://sheraz.synctech.ie',
   description: 'Sheraz Hussain, founder of SYNC TECH, is a top-tier Full-Stack Software Engineer, AI/Cloud Developer, and Technology Expert in Dublin, Ireland. Explore the portfolio of Sheraz Hussain (sherazhussain546) to see expert-level projects in Next.js, React, Python, AI, and Cloud Computing.',
+  author: 'Sheraz Hussain',
+  ogImage: 'https://sheraz.synctech.ie/og-image.png',
+  links: {
+    github: 'https://github.com/SherazHussain546',
+    linkedin: 'https://linkedin.com/in/sherazhussain546/',
+  },
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  authors: [{
+    name: siteConfig.author,
+    url: siteConfig.url,
+  }],
+  creator: siteConfig.author,
+  publisher: siteConfig.author,
+  openGraph: {
+    type: 'website',
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    siteName: siteConfig.name,
+    locale: 'en_US'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: `@${siteConfig.author}`,
+  },
   keywords: [
     'Sheraz Hussain',
     'Sheraz',
@@ -39,11 +77,37 @@ export const metadata: Metadata = {
     'SherazHussian546', // Common misspelling
     'Best tech in Ireland',
     'Portfolio',
-    'Developer Portfolio'
+    'Developer Portfolio',
+    'Web Developer',
+    'AI Engineer',
+    'Cloud Engineer',
+    'DevOps',
+    'Cybersecurity',
+    'Mobile App Developer',
+    'ECommerce Specialist',
+    'Freelance Developer',
+    'IT Consultant',
+    'Dublin',
+    'Ireland',
+    'Tech Portfolio'
   ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    }
+  },
   verification: {
     google: '-2YVuqfnqiY5zPpoHylxys5gnIrFexTBklppdeVE4Qw',
   },
+  alternates: {
+    canonical: siteConfig.url,
+  }
 };
 
 export default function RootLayout({
@@ -51,6 +115,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      'name': 'Sheraz Hussain',
+      'url': siteConfig.url,
+      'sameAs': [
+        siteConfig.links.github,
+        siteConfig.links.linkedin
+      ],
+      'jobTitle': 'Full-Stack Software Engineer & AI/Cloud Developer',
+      'worksFor': {
+        '@type': 'Organization',
+        'name': 'SYNC TECH'
+      },
+       "image": siteConfig.ogImage,
+       "description": siteConfig.description,
+       "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dublin",
+        "addressCountry": "IE"
+      }
+  };
+
   return (
     <html lang="en" className="dark">
       <body className={cn('font-sans antialiased', inter.variable)}>
@@ -65,6 +152,11 @@ export default function RootLayout({
               gtag('config', 'G-CX3V7SF35L');
             `}
           </Script>
+           <Script
+            id="json-ld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
           <AuthProvider>
             <FloatingNav />
             <AnalyticsTracker />
