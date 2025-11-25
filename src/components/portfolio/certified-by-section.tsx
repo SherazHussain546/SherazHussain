@@ -17,7 +17,7 @@ const duplicatedLogos = [...logos, ...logos];
 
 export default function CertifiedBySection() {
   return (
-    <section id="certified-by" className="py-16 md:py-24 bg-card">
+    <section id="certified-by" className="py-16 md:py-24 bg-white">
         <style jsx>{`
             @keyframes scroll {
                 0% { transform: translateX(0); }
@@ -28,7 +28,7 @@ export default function CertifiedBySection() {
             }
         `}</style>
       <div className="container mx-auto px-4 md:px-6">
-        <h3 className="mb-8 text-center text-lg font-medium text-muted-foreground">
+        <h3 className="mb-8 text-center text-lg font-medium text-black">
           I am certified by:
         </h3>
         <Link href="/#certifications" scroll={true} aria-label="View my certifications">
