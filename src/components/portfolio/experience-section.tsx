@@ -18,7 +18,7 @@ export default function ExperienceSection() {
           
           {experiences.map((exp, index) => (
             <div
-              key={exp.role}
+              key={`${exp.role}-${exp.company}`}
               className={`group relative mb-8 flex w-full items-start md:mb-12 ${
                 index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
               }`}
