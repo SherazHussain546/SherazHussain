@@ -45,7 +45,7 @@ export const skills = {
 
 export const experiences = [
   {
-    role: 'Founder & Director',
+    role: 'Freelance Web Developer',
     company: 'SYNC TECH',
     link: 'https://www.synctech.ie',
     period: 'August 2025 - Present',
