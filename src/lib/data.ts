@@ -49,12 +49,12 @@ export const experiences = [
     company: 'SYNC TECH',
     link: 'https://www.synctech.ie',
     period: 'August 2025 - Present',
-    description: 'Founded and directed an IT solutions company specializing in Web Development, AI Automation, Cloud Hosting, and Cybersecurity.',
+    description: 'Provided freelance web development, AI automation, and cloud solutions for a diverse range of clients to elevate their digital presence.',
     points: [
-      'Architected, developed, and delivered bespoke digital solutions for clients, driving their business growth and digital transformation.',
-      'Managed the end-to-end client lifecycle, from initial consultation and proposal creation to project delivery and ongoing support.',
-      'Spearheaded the company\'s digital marketing and SEO strategies, successfully building the online presence and generating leads.',
-      'Key Skills: Entrepreneurship, Business Development, Project Management, Full-Stack Development, AI/ML Engineering, Cloud Architecture, Cybersecurity, and Client Relationship Management.'
+      'Engineered and delivered custom full-stack web applications tailored to client specifications, resulting in improved user engagement and business performance.',
+      'Specialized in creating responsive, high-performance websites using modern frameworks like Next.js, React, and Angular.',
+      'Collaborated directly with clients to understand their needs, provide technical consultations, and deliver solutions that meet their goals.',
+      'Key Skills: Full-Stack Development, AI/ML Engineering, Cloud Architecture, Cybersecurity, and Client Relationship Management.'
     ],
   },
   {
