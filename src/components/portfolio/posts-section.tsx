@@ -56,7 +56,8 @@ export default function PostsSection() {
     createdAt: Timestamp.now(),
   };
 
-  const posts = [githubPost, ...firestorePosts];
+  const allPosts = [githubPost, ...firestorePosts];
+  allPosts.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
 
 
   if (loading) {
@@ -87,18 +88,18 @@ export default function PostsSection() {
             <p className="text-center text-destructive">Failed to load posts. Please try again later.</p>
         )}
 
-        {!loading && !error && posts.length === 0 ? (
+        {!loading && !error && allPosts.length === 0 ? (
             <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
         ) : (
            <Carousel
                 opts={{
                     align: 'start',
-                    loop: posts.length > 3,
+                    loop: allPosts.length > 3,
                 }}
                 className="w-full"
             >
             <CarouselContent>
-              {posts.map((post) => {
+              {allPosts.map((post) => {
                 const Icon = platformIcons[post.platform] || Rss;
                 return (
                   <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
@@ -146,7 +147,7 @@ export default function PostsSection() {
                 );
               })}
             </CarouselContent>
-             {posts.length > 3 && (
+             {allPosts.length > 3 && (
                 <>
                     <CarouselPrevious className="hidden lg:flex" />
                     <CarouselNext className="hidden lg:flex" />
