@@ -98,6 +98,12 @@ const nextConfig: NextConfig = {
         hostname: 'logos-world.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'job4yo.netlify.app',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
