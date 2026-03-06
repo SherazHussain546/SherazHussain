@@ -3,6 +3,7 @@ import { Config, Context } from "@netlify/functions";
 
 /**
  * Netlify Scheduled Function to trigger the LinkedIn post generation daily.
+ * This is the "code" version of your n8n workflow logic.
  */
 export default async (req: Request, context: Context) => {
   // The URL of your deployed site's cron endpoint
@@ -36,8 +37,8 @@ export default async (req: Request, context: Context) => {
 };
 
 /**
- * Configure the function to run daily at 9:00 AM UTC.
+ * Configure the function to run daily at 7:00 AM UTC (matching your n8n JSON).
  */
 export const config: Config = {
-  schedule: "0 9 * * *",
+  schedule: "0 7 * * *",
 };
