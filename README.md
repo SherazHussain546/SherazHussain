@@ -41,7 +41,12 @@ If you want to try running the server on your Android phone for testing:
 3.  Clone your repository: `git clone <your-repo-url>`.
 4.  Enter the folder and run: `npm install` then `npm run dev`.
 5.  Access your site at `http://localhost:9002` in your phone's browser.
-*Note: For the daily automation to work, your phone must stay awake and connected to the internet at 7:00 AM UTC.*
+
+**⚠️ Important Note on Lock Screens:**
+Android's power management will likely "kill" the Termux process when the screen is locked to save battery. To run this reliably on a phone:
+*   You must enable a **"Wakelock"** from the Termux notification drawer.
+*   You must go to Android Settings > Apps > Termux and set Battery to **"Unrestricted"**.
+*   Even with these settings, a cloud host like Netlify is significantly more reliable for 24/7 automation.
 
 ## Features
 - **AI LinkedIn Post Generator**: Automated social media content creation via Google Genkit.
