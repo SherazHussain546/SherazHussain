@@ -15,11 +15,11 @@ Netlify runs "Scheduled Functions," which are pieces of code that execute on a t
 2.  **Deploy to Netlify**:
     *   Log in to Netlify and click **"Add new site"** > **"Import an existing project"**.
     *   Connect your GitHub and select the repository.
-    *   **Production Branch**: Select `main` (this is the branch that will run your automation).
+    *   **Production Branch**: Select `main`.
 3.  **Environment Variables**:
     *   In Netlify UI, go to **Site configuration** > **Environment variables**.
     *   Add `GOOGLE_GENAI_API_KEY` (your Gemini key).
-    *   Add your Firebase keys from your `.env` file (e.g., `NEXT_PUBLIC_FIREBASE_API_KEY`).
+    *   Add your Firebase keys from your `.env` file.
 4.  **Automatic Trigger**: Netlify will detect `netlify/functions/daily-post.ts` and run it every day at **7:00 AM UTC** (matching your original n8n workflow).
 
 ### ☁️ Hosting on Google Cloud (Free Tier)
@@ -32,6 +32,16 @@ You can host the app on **Firebase App Hosting** and automate it using **Cloud S
     *   Create a job with frequency `0 7 * * *`.
     *   Target: HTTP POST to `https://your-app-url.web.app/api/cron/linkedin`.
 3.  **Logic**: Just like Netlify, Google Cloud will trigger the internal API I built for you.
+
+### 📱 Local Testing on Android (Advanced)
+
+If you want to try running the server on your Android phone for testing:
+1.  Install **Termux** (available on F-Droid).
+2.  Open Termux and run: `pkg install nodejs git`.
+3.  Clone your repository: `git clone <your-repo-url>`.
+4.  Enter the folder and run: `npm install` then `npm run dev`.
+5.  Access your site at `http://localhost:9002` in your phone's browser.
+*Note: For the daily automation to work, your phone must stay awake and connected to the internet at 7:00 AM UTC.*
 
 ## Features
 - **AI LinkedIn Post Generator**: Automated social media content creation via Google Genkit.
