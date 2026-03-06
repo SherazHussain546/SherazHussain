@@ -2,23 +2,21 @@ name: Daily LinkedIn Post Automation
 
 on:
   schedule:
-    # This runs at 7:00 AM UTC every day (matching your original n8n logic)
+    # This runs at 7:00 AM UTC every day
     - cron: '0 7 * * *'
   workflow_dispatch:
-    # This allows you to trigger it manually from the "Actions" tab in GitHub
+    # Allows manual trigger from GitHub Actions tab
 
 jobs:
   trigger-post:
-    # Updated to use your self-hosted runner
+    # Running on your local Windows machine
     runs-on: self-hosted
     steps:
       - name: Trigger AI Workflow
         run: |
-          curl -X POST "https://your-deployed-app-url.com/api/cron/linkedin" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "postDescription": "Daily Tech Update: Exploring the latest in AI and Cloud.",
-            "instructions": "Write a professional LinkedIn post sharing an insight about AI or Cloud computing. Include 3 bullet points and a call to action."
-          }'
+          curl -X POST "https://your-deployed-app-url.com/api/cron/linkedin" `
+          -H "Content-Type: application/json" `
+          -d '{\"postDescription\": \"Daily Tech Update: Exploring the latest in AI and Cloud.\", \"instructions\": \"Write a professional LinkedIn post sharing an insight about AI or Cloud computing. Include 3 bullet points and a call to action.\"}'
           
-# NOTE: Replace "https://your-deployed-app-url.com" with your actual live URL (Netlify or Firebase).
+# NOTE: Replace "https://your-deployed-app-url.com" with your actual live Netlify URL.
+# The backticks (`) and backslashes (\) are for PowerShell compatibility on Windows.
