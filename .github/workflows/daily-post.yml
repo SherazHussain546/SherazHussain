@@ -9,7 +9,8 @@ on:
 
 jobs:
   trigger-post:
-    runs-on: ubuntu-latest
+    # Updated to use your self-hosted runner
+    runs-on: self-hosted
     steps:
       - name: Trigger AI Workflow
         run: |

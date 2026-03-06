@@ -7,14 +7,26 @@ This is the repository for the personal portfolio of Sheraz Hussain.
 
 This app includes a **Genkit-powered LinkedIn Post Generator** that replaces the need for a separate n8n instance. The logic from your `linkedinpost.json` has been translated into code for easier hosting.
 
-### 🛠️ How to Automate on GitHub (Recommended & Free)
+### 🛠️ How to Automate with GitHub Actions (Self-Hosted)
 
-GitHub Actions can trigger your workflow automatically without you needing to touch a server.
+You can run your daily automation on your own machine using a GitHub Self-Hosted Runner.
 
-1.  **Push to GitHub**: Upload this code to a GitHub repository.
-2.  **Edit Workflow**: Open `.github/workflows/daily-post.yml`.
-3.  **Update URL**: Replace `https://your-deployed-app-url.com` with your live Netlify or Firebase URL.
-4.  **Automatic Trigger**: GitHub will now "ping" your site every day at **7:00 AM UTC** to generate a post.
+1.  **Setup Runner**: Run these commands on your host machine (Windows):
+    ```powershell
+    # Create a folder
+    mkdir actions-runner; cd actions-runner
+    # Download the latest runner package
+    Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.332.0/actions-runner-win-x64-2.332.0.zip -OutFile actions-runner-win-x64-2.332.0.zip
+    # Extract the installer
+    Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.332.0.zip", "$PWD")
+    # Configure the runner (Use the token from your GitHub Repo Settings)
+    ./config.cmd --url https://github.com/SherazHussain546/SherazHussain --token YOUR_TOKEN_HERE
+    # Start the runner
+    ./run.cmd
+    ```
+2.  **Workflow Config**: The file `.github/workflows/daily-post.yml` is already configured with `runs-on: self-hosted`.
+3.  **Update URL**: Replace `https://your-deployed-app-url.com` in the workflow file with your live URL.
+4.  **Automatic Trigger**: Your self-hosted machine will now execute the "ping" to your site every day at **7:00 AM UTC**.
 
 ### ☁️ Hosting on Netlify (Free)
 
