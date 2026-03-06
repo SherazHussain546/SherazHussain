@@ -11,10 +11,16 @@ This app includes a **Genkit-powered LinkedIn Post Generator** that replaces the
 
 Netlify runs "Scheduled Functions," which are pieces of code that execute on a timer.
 
-1.  **Deploy to Netlify**: Connect this GitHub repo to Netlify.
-2.  **Environment Variables**: In Netlify UI, add `GOOGLE_GENAI_API_KEY` (your Gemini key).
-3.  **Automatic Trigger**: Netlify will detect `netlify/functions/daily-post.ts` and run it every day at **7:00 AM UTC**.
-4.  **Why no JSON?**: Netlify doesn't execute `.json` files. I have converted your JSON workflow into the `daily-post.ts` function so Netlify knows exactly what to do.
+1.  **Push to GitHub**: Upload this code to a GitHub repository.
+2.  **Deploy to Netlify**:
+    *   Log in to Netlify and click **"Add new site"** > **"Import an existing project"**.
+    *   Connect your GitHub and select the repository.
+    *   **Production Branch**: Select `main` (this is the branch that will run your automation).
+3.  **Environment Variables**:
+    *   In Netlify UI, go to **Site configuration** > **Environment variables**.
+    *   Add `GOOGLE_GENAI_API_KEY` (your Gemini key).
+    *   Add your Firebase keys from your `.env` file (e.g., `NEXT_PUBLIC_FIREBASE_API_KEY`).
+4.  **Automatic Trigger**: Netlify will detect `netlify/functions/daily-post.ts` and run it every day at **7:00 AM UTC** (matching your original n8n workflow).
 
 ### ☁️ Hosting on Google Cloud (Free Tier)
 
