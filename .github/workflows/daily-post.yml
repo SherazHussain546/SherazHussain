@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Trigger AI Workflow
         run: |
-          curl -X POST "https://your-deployed-app-url.com/api/cron/linkedin" `
+          curl -X POST "https://sheraz.synctecb.ie/api/cron/linkedin" `
           -H "Content-Type: application/json" `
           -d '{\"postDescription\": \"Daily Tech Update: Exploring the latest in AI and Cloud.\", \"instructions\": \"Write a professional LinkedIn post sharing an insight about AI or Cloud computing. Include 3 bullet points and a call to action.\"}'
           
