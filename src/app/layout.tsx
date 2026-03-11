@@ -139,7 +139,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body className={cn('font-sans antialiased', inter.variable)}>
           <Script async src="https://www.googletagmanager.com/gtag/js?id=G-CX3V7SF35L"></Script>
           <Script id="google-analytics">
