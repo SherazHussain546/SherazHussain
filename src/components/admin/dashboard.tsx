@@ -4,12 +4,11 @@ import { app } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
-import { LogOut, LayoutDashboard, FileText, Send, Settings, LineChart } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, Settings, LineChart } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
 import SiteSettings from './site-settings';
-import LinkedInPostGenerator from './linkedin-post-generator';
 
 const auth = getAuth(app);
 
@@ -46,7 +45,7 @@ export default function Dashboard() {
       </div>
 
       <Tabs defaultValue="analytics" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50 border">
+        <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-muted/50 border">
           <TabsTrigger value="analytics" className="flex items-center gap-2 py-2">
             <LineChart className="h-4 w-4" />
             <span className="hidden sm:inline">Analytics</span>
@@ -54,10 +53,6 @@ export default function Dashboard() {
           <TabsTrigger value="resume" className="flex items-center gap-2 py-2">
             <FileText className="h-4 w-4" />
             <span className="hidden sm:inline">Resume</span>
-          </TabsTrigger>
-          <TabsTrigger value="linkedin" className="flex items-center gap-2 py-2">
-            <Send className="h-4 w-4" />
-            <span className="hidden sm:inline">LinkedIn</span>
           </TabsTrigger>
           <TabsTrigger value="posts" className="flex items-center gap-2 py-2">
             <LayoutDashboard className="h-4 w-4" />
@@ -74,9 +69,6 @@ export default function Dashboard() {
           </TabsContent>
           <TabsContent value="resume">
             <ResumeAnalyzer />
-          </TabsContent>
-          <TabsContent value="linkedin">
-            <LinkedInPostGenerator />
           </TabsContent>
           <TabsContent value="posts">
             <ManagePosts />
