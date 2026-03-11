@@ -1,17 +1,15 @@
-
 'use client';
 import { getAuth, signOut } from 'firebase/auth';
 import { app } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
-import { LogOut, LayoutDashboard, FileText, Send, Settings, LineChart, Briefcase } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, Send, Settings, LineChart } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
 import SiteSettings from './site-settings';
 import LinkedInPostGenerator from './linkedin-post-generator';
-import ManageWorkflows from './manage-workflows';
 
 const auth = getAuth(app);
 
@@ -47,12 +45,8 @@ export default function Dashboard() {
         </Button>
       </div>
 
-      <Tabs defaultValue="workplace" className="w-full">
-        <TabsList className="grid w-full grid-cols-6 h-auto p-1 bg-muted/50 border">
-          <TabsTrigger value="workplace" className="flex items-center gap-2 py-2">
-            <Briefcase className="h-4 w-4" />
-            <span className="hidden sm:inline">Workplace</span>
-          </TabsTrigger>
+      <Tabs defaultValue="analytics" className="w-full">
+        <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50 border">
           <TabsTrigger value="analytics" className="flex items-center gap-2 py-2">
             <LineChart className="h-4 w-4" />
             <span className="hidden sm:inline">Analytics</span>
@@ -75,9 +69,6 @@ export default function Dashboard() {
           </TabsTrigger>
         </TabsList>
         <div className="mt-6">
-          <TabsContent value="workplace">
-            <ManageWorkflows />
-          </TabsContent>
           <TabsContent value="analytics">
             <AnalyticsDashboard />
           </TabsContent>

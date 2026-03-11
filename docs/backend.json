@@ -1,4 +1,3 @@
-
 {
   "entities": {
     "Post": {
@@ -53,6 +52,7 @@
           "type": "string",
           "format": "uri",
           "description": "The URL for the founder's profile image."
+"description": "The URL for the founder's profile image."
         }
       }
     },
@@ -79,19 +79,6 @@
         }
       },
       "required": ["type", "path", "sessionId", "timestamp"]
-    },
-    "Workflow": {
-      "title": "AI Workflow",
-      "description": "Stores n8n-compatible workflow JSON and metadata.",
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "description": { "type": "string" },
-        "json": { "type": "string", "description": "The raw n8n JSON string." },
-        "createdAt": { "type": "string", "format": "date-time" },
-        "isActive": { "type": "boolean" }
-      },
-      "required": ["name", "json"]
     }
   },
   "auth": {
@@ -115,12 +102,6 @@
         "$ref": "#/docs/entities/AnalyticsEvent"
       },
       "description": "Stores analytics events, like page views."
-    },
-    "/workflows/{workflowId}": {
-      "schema": {
-        "$ref": "#/docs/entities/Workflow"
-      },
-      "description": "Stores AI workflows imported from n8n JSON."
     }
   }
 }
