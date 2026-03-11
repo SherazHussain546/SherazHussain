@@ -6,14 +6,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     '',
     '/survey',
-    '/#about',
-    '/#skills',
-    '/#experience',
-    '/#projects',
-    '/#education',
-    '/#certifications',
-    '/#posts',
-    '/#contact'
   ];
 
   const sitemapEntries = staticRoutes.map((route) => ({
