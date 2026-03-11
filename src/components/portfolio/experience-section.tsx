@@ -1,67 +1,76 @@
 'use client';
 
 import { experiences } from '@/lib/data';
-import { CheckCircle2, ExternalLink } from 'lucide-react';
+import { CheckCircle2, ExternalLink, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-20 md:py-32">
+    <section id="experience" className="py-20 md:py-32 bg-slate-50/50">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-          Work <span className="text-primary">Experience</span>
-        </h2>
-        <div className="relative">
-          {/* The vertical line in the middle (for desktop) */}
-          <div className="absolute left-0 top-0 hidden h-full w-0.5 bg-border md:left-1/2 md:-translate-x-1/2"></div>
-          
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+            Work <span className="text-primary">Experience</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+            A journey through my professional career, focusing on software engineering, leadership, and technical consulting.
+          </p>
+        </div>
+        
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {experiences.map((exp, index) => (
-            <div
-              key={`${exp.role}-${exp.company}`}
-              className={`group relative mb-8 flex w-full items-start md:mb-12 ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              }`}
+            <Card
+              key={`${exp.role}-${exp.company}-${index}`}
+              className="group flex flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/20"
             >
-              {/* Timeline Dot */}
-              <div className="absolute top-5 -left-1.5 h-3 w-3 rounded-full bg-primary ring-4 ring-background md:left-1/2 md:-translate-x-1/2"></div>
-              
-              <div
-                className={`w-full pl-8 md:w-1/2 ${
-                  index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
-                }`}
-              >
-                <div
-                  className="relative rounded-lg border bg-card p-6 shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/20"
-                >
-                  <p className="mb-1 text-xs text-muted-foreground">{exp.period}</p>
-                  <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-primary">{exp.role}</h3>
-                      <p className="font-semibold">{exp.company}</p>
-                    </div>
-                    {exp.link && (
-                       <Button asChild variant="outline" size="sm" className="mt-2 sm:mt-0">
-                        <Link href={exp.link} target="_blank" rel="noopener noreferrer">
-                          Visit Site
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    )}
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <Briefcase className="h-6 w-6" />
                   </div>
-
-                  <p className="my-4 text-sm text-muted-foreground">{exp.description}</p>
+                  <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest border-primary/20 text-primary">
+                    {exp.period}
+                  </Badge>
+                </div>
+                <div className="mt-6">
+                  <CardTitle className="text-xl font-bold">{exp.role}</CardTitle>
+                  <p className="font-medium text-primary/80">{exp.company}</p>
+                </div>
+              </CardHeader>
+              <CardContent className="flex-1 space-y-4 pt-2">
+                <p className="text-sm leading-relaxed text-muted-foreground italic">
+                  "{exp.description}"
+                </p>
+                <div className="space-y-3">
+                   <p className="text-xs font-bold uppercase text-muted-foreground/70 tracking-tight">Key Contributions:</p>
                   <ul className="space-y-2 text-sm">
-                    {exp.points.map((point) => (
-                      <li key={point} className="flex items-start gap-2">
+                    {exp.points.slice(0, 3).map((point, pIndex) => (
+                      <li key={pIndex} className="flex items-start gap-2">
                         <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                        <span>{point}</span>
+                        <span className="line-clamp-2 text-foreground/80">{point}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+              <CardFooter className="pt-4 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
+                {exp.link ? (
+                  <Button asChild variant="ghost" size="sm" className="w-full justify-between hover:bg-primary hover:text-primary-foreground">
+                    <Link href={exp.link} target="_blank" rel="noopener noreferrer">
+                      Visit Project
+                      <ExternalLink className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                ) : (
+                  <div className="h-9 w-full flex items-center justify-center text-xs text-muted-foreground font-medium uppercase tracking-widest">
+                    Corporate Role
+                  </div>
+                )}
+              </CardFooter>
+            </Card>
           ))}
         </div>
       </div>
