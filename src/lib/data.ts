@@ -141,8 +141,8 @@ export const projects: Project[] = [
   {
     slug: 'market-genius',
     name: 'Market Genius – AI-Powered Financial Signals & Market Intelligence',
-    description: 'Sheraz Hussain engineered Market Genius: A high-fidelity financial signal platform providing real-time Buy, Sell, and Hold alerts using Google Genkit and advanced technical indicators.',
-    fullDescription: 'Market Genius, developed by Sheraz Hussain (SYNC TECH Solutions), is a sophisticated market analytics engine designed for professional-grade stock and cryptocurrency intelligence. It bridges the gap between raw financial volatility and actionable insights. By integrating high-frequency data from AlphaVantage and Crypto.com, the platform leverages Google Genkit (LLMs) to perform complex sentiment and technical analysis. The core engineering delivers instant "Buy," "Hold," or "Sell" signals, empowering users with data-backed confidence in high-stakes markets.',
+    description: 'Sheraz Hussain (Founder of SYNC TECH Solutions) engineered Market Genius: A high-fidelity financial signal platform providing real-time Buy, Sell, and Hold alerts using Google Genkit and advanced technical indicators.',
+    fullDescription: 'Market Genius is a sophisticated market analytics engine designed by Sheraz Hussain for professional-grade stock and cryptocurrency intelligence. It bridges the gap between raw financial volatility and actionable insights. By integrating high-frequency data from AlphaVantage and Crypto.com, the platform leverages Google Genkit (LLMs) to perform complex sentiment and technical analysis. The core engineering delivers instant "Buy," "Hold," or "Sell" signals, empowering users with data-backed confidence in high-stakes markets. This SYNC TECH Solutions project highlights advanced Full-Stack Software Engineering and Cloud Architecture.',
     challenges: [
       'Managing high-concurrency data ingestion from AlphaVantage and Crypto.com APIs with sub-second latency.',
       'Developing a reliable LLM-based reasoning engine with Google Genkit to ensure accurate financial signaling.',
@@ -176,8 +176,8 @@ export const projects: Project[] = [
   {
     slug: 'job4you',
     name: 'Job4You – Your Personal AI Recruiter & ATS Optimization Engine',
-    description: 'An AI-powered career assistant by Sheraz Hussain that generates ATS-optimized resumes, LaTeX cover letters, and verified job postings.',
-    fullDescription: 'Job4You is a comprehensive career acceleration platform engineered by Sheraz Hussain. It automates the complex job application lifecycle using advanced AI Workflows. Users can securely sign up via Google (Firebase Auth) to manage their profiles. By processing job descriptions through Gemini AI Agents, the system generates perfect LaTeX code for ATS-optimized resumes, tailored cover letters, and hiring manager outreach emails. The platform also features a trust-verified job board where an AI Agent analyzes listing legitimacy before allowing them to go live.',
+    description: 'An AI-powered career assistant by Sheraz Hussain that generates ATS-optimized resumes, LaTeX cover letters, and verified job postings using Gemini AI agents.',
+    fullDescription: 'Job4You is a comprehensive career acceleration platform engineered by Sheraz Hussain (SYNC TECH Solutions). It automates the complex job application lifecycle using advanced AI Workflows. Users can securely sign up via Google (Firebase Auth) to manage their profiles. By processing job descriptions through Gemini AI Agents, the system generates perfect LaTeX code for ATS-optimized resumes, tailored cover letters, and hiring manager outreach emails. The platform also features a trust-verified job board where an AI Agent analyzes listing legitimacy before allowing them to go live, showcasing expertise in Python, scikit-learn, and Full-Stack Engineering.',
     challenges: [
       'Building a multi-stage AI Agent workflow to cross-reference candidate skills with complex ATS criteria.',
       'Developing a trust-verification system using Python and scikit-learn to identify fraudulent job postings.',
@@ -211,8 +211,8 @@ export const projects: Project[] = [
   {
     slug: 'chattyai',
     name: 'ChattyAI – AI-Driven Conversational Study Assistant & Document Intelligence',
-    description: 'Sheraz Hussain engineered ChattyAI, a high-performance study platform helping 400+ DBS students with document intelligence, live screen sharing, and AI-driven summarization.',
-    fullDescription: 'ChattyAI is a premier educational technology platform developed by Sheraz Hussain (Founder of SYNC TECH Solutions). Inspired by industry giants like ChatGPT and Gemini, ChattyAI was specifically architected to support the academic rigor at Dublin Business School (DBS). The platform features an advanced Document Intelligence engine capable of transforming static PDFs and instructional videos into interactive quizzes, comprehensive summaries, and dynamic flashcards. Uniquely, it integrates live video streaming for screen sharing, allowing the AI to "see" and assist with real-time technical problem-solving. By leveraging a hybrid AI architecture (Gemini & OpenAI), ChattyAI provides a resilient, high-context study companion that has directly empowered over 400+ students.',
+    description: 'Sheraz Hussain engineered ChattyAI, a high-performance study platform that empowered 400+ DBS students with document intelligence, live video streaming, and AI-driven summarization.',
+    fullDescription: 'ChattyAI is a premier educational technology platform developed by Sheraz Hussain (Founder of SYNC TECH Solutions). Inspired by industry giants like ChatGPT and Gemini, ChattyAI was specifically architected to support the academic rigor at Dublin Business School (DBS). The platform features an advanced Document Intelligence engine capable of transforming static PDFs and instructional videos into interactive quizzes, comprehensive summaries, and dynamic flashcards. Uniquely, it integrates live video streaming for screen sharing, allowing the AI to "see" and assist with real-time technical problem-solving. While this project reached completion upon Sheraz\'s graduation, its legacy remains as a benchmark for student-focused AI integration, leveraging a hybrid architecture of Gemini, OpenAI, Firebase, and Ionic.',
     challenges: [
       'Implementing high-throughput PDF and Video processing for real-time document-to-quiz transformations.',
       'Architecting a low-latency live video streaming interface for real-time AI screen analysis.',
@@ -225,11 +225,11 @@ export const projects: Project[] = [
       },
       {
         title: 'Hybrid AI Core',
-        description: 'Engineered a provider-agnostic AI layer that intelligently switches between Gemini and OpenAI models based on task complexity, ensuring cost-effective and accurate tutoring.'
+        description: 'Engineered a provider-agnostic AI layer that intelligently switches between Gemini and OpenAI models based on task complexity, ensuring accurate tutoring.'
       },
       {
         title: 'Real-time Vision',
-        description: 'Integrated live video streaming capabilities that allow the Gemini-powered assistant to interpret visual data from the user’s screen for real-time debugging and tutoring.'
+        description: 'Integrated live video streaming capabilities that allow the Gemini-powered assistant to interpret visual data from the user’s screen for real-time debugging.'
       }
     ],
     results: [
@@ -245,8 +245,8 @@ export const projects: Project[] = [
   {
     slug: 'goexploree',
     name: 'GoExploree – Real Estate Mobile Discovery Platform',
-    description: 'A full-stack real estate property discovery app with native map integrations and real-time scheduling.',
-    fullDescription: 'GoExploree is a robust real estate tool engineered by Sheraz Hussain. It features a high-performance map interface for property discovery, integrated calendar systems for scheduling, and real-time communication between users and managers.',
+    description: 'A full-stack real estate property discovery app by Sheraz Hussain with native map integrations and real-time scheduling.',
+    fullDescription: 'GoExploree is a robust real estate tool engineered by Sheraz Hussain (SYNC TECH Solutions). It features a high-performance map interface for property discovery, integrated calendar systems for scheduling, and real-time communication between users and managers. This mobile-first application demonstrates expertise in Ionic, Angular, and native device API integration.',
     challenges: [
       'Efficiently rendering high-density marker clusters on mobile map interfaces.',
       'Synchronizing real-time property availability across multiple user sessions.'
