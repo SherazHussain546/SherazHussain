@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const siteConfig = {
   name: 'Sheraz Hussain | Full-Stack Software Engineer & AI/Cloud Developer',
   url: 'https://sheraz.synctech.ie',
-  description: 'Sheraz Hussain, founder of SYNC TECH Solutions, is a top-tier Full-Stack Software Engineer, AI/Cloud Developer, and Technology Expert based in Dublin, Ireland. Explore the personal portfolio of Sheraz Hussain (sherazhussain546) featuring expert projects in Next.js, React, Python, AI, and Cloud Architecture.',
+  description: 'Sheraz Hussain, a Freelancer working with SYNC TECH Solutions, is a top-tier Full-Stack Software Engineer, AI/Cloud Developer, and Technology Expert based in Dublin, Ireland. Explore the personal portfolio of Sheraz Hussain (sherazhussain546) featuring expert projects in Next.js, React, Python, AI, and Cloud Architecture.',
   author: 'Sheraz Hussain',
   ogImage: 'https://sheraz.synctech.ie/og-image.png',
   links: {
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     'SherazHussain',
     'sherazhussain546',
     'SherazHussain546',
-    'Founder of SYNC TECH',
-    'Founder of SYNC TECH Solutions',
+    'Freelancer working with SYNC TECH',
+    'Freelancer working with SYNC TECH Solutions',
     'SYNC TECH',
     'SYNC TECH Solutions',
     'Full-Stack Developer Ireland',

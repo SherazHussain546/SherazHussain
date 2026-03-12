@@ -17,7 +17,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-primary">Sheraz Hussain</h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              First-Class Honors Software Engineer specializing in AI, Cloud, and Full-Stack development. Founder of SYNC TECH, delivering innovative tech solutions.
+              First-Class Honors Software Engineer specializing in AI, Cloud, and Full-Stack development. Freelancer working with SYNC TECH Solutions, delivering innovative tech solutions.
             </p>
             <div className="flex items-center gap-4 pt-2">
               <Link 
@@ -91,14 +91,14 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Sheraz Hussain. All rights reserved.
           </p>
           <p className="mt-4 text-xs text-muted-foreground md:mt-0">
-            Powered by{' '}
+            Freelancer working with{' '}
             <Link
               href="https://www.synctech.ie"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-foreground/80 hover:text-primary hover:underline transition-all"
             >
-              SYNC TECH
+              SYNC TECH Solutions
             </Link>
           </p>
         </div>

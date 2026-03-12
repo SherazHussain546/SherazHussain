@@ -10,13 +10,13 @@ import { Skeleton } from '../ui/skeleton';
 import { TypeAnimation } from 'react-type-animation';
 
 const summaries = [
-  "Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach.",
+  "Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach as a Freelancer working with SYNC TECH Solutions.",
   "Expert in building scalable, responsive web applications using modern frameworks like React, Angular, and Node.js, ensuring high performance and seamless user experiences across all devices.",
   "Specializing in Generative AI with Google Genkit and Gemini, and architecting resilient, scalable cloud systems on AWS and Google Cloud Platform for mission-critical applications.",
   "Dedicated to securing digital assets through penetration testing, implementing Zero Trust architectures, and integrating DevSecOps best practices into automated CI/CD pipelines.",
   "Crafting high-performance cross-platform mobile applications using Ionic and Capacitor, bringing native-quality experiences to both iOS and Android users from a single codebase.",
   "Empowering businesses to scale with high-performance E-Commerce solutions, custom marketing funnels on WordPress/WooCommerce, and data-driven digital growth strategies.",
-  "Available for freelance collaborations and technical consultations. I help businesses turn complex technical challenges into robust, scalable, and secure digital products.",
+  "Available for freelance collaborations and technical consultations as a Freelancer working with SYNC TECH Solutions. I help businesses turn complex technical challenges into robust, scalable, and secure digital products.",
   "Eager to contribute technical expertise and a collaborative spirit to a dynamic, forward-thinking engineering team. Seeking roles that push the boundaries of AI and Web development."
 ];
 

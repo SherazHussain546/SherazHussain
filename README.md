@@ -1,6 +1,6 @@
 # Sheraz Hussain - Full-Stack & AI Developer Portfolio
 
-This is the repository for the personal portfolio of Sheraz Hussain.
+This is the repository for the personal portfolio of Sheraz Hussain, a Freelancer working with SYNC TECH Solutions.
 
 ## Features
 - **AI Resume Analyzer**: Tailors your portfolio content to specific job descriptions using Gemini 1.5 Flash.
