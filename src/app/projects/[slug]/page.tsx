@@ -1,15 +1,16 @@
 'use client';
 
-import { use } from 'react';
+import { use, useState } from 'react';
 import { projects } from '@/lib/data';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, PanelLeftClose, PanelLeftOpen, ExternalLink, Github } from 'lucide-react';
 import { Syne, DM_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const syne = Syne({
   subsets: ['latin'],
@@ -27,10 +28,19 @@ const dmSans = DM_Sans({
 export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const project = projects.find((p) => p.slug === slug);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
   if (!project) {
     notFound();
   }
+
+  const tocItems = [
+    { label: 'Background', id: 'background', num: '01' },
+    { label: 'Challenge', id: 'challenge', num: '02' },
+    { label: 'Solution', id: 'solution', num: '03' },
+    { label: 'Technology', id: 'technology', num: '04' },
+    { label: 'Results', id: 'results', num: '05' }
+  ];
 
   const stats = [
     { num: '100%', desc: 'Custom Engineering' },
@@ -102,41 +112,77 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
           ))}
         </section>
 
-        {/* CONTENT GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] border-b border-[#CDD5DB]">
+        {/* CONTENT AREA WITH SIDEBAR */}
+        <div className="flex border-b border-[#CDD5DB]">
           
-          {/* SIDEBAR NAVIGATION */}
-          <aside className="border-r border-[#CDD5DB] p-8 lg:p-12 hidden lg:block sticky top-32 h-fit max-h-[calc(100vh-128px)] overflow-y-auto">
-            <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382] mb-6">Contents</div>
-            <nav className="flex flex-col gap-3">
-              {[
-                { label: 'Background', id: 'background' },
-                { label: 'Challenge', id: 'challenge' },
-                { label: 'Solution', id: 'solution' },
-                { label: 'Technology', id: 'technology' },
-                { label: 'Results', id: 'results' }
-              ].map((item, idx) => (
-                <a 
-                  key={item.id}
-                  href={`#${item.id}`} 
-                  className="text-[0.75rem] font-bold tracking-widest text-[#4B6382] hover:text-[#071739] border-l-2 border-transparent hover:border-[#A68858] pl-3 transition-all uppercase block"
-                >
-                  0{idx + 1} · {item.label}
-                </a>
-              ))}
-            </nav>
+          {/* EXPANDABLE SIDEBAR */}
+          <motion.aside 
+            initial={false}
+            animate={{ width: isSidebarExpanded ? 260 : 80 }}
+            className="border-r border-[#CDD5DB] bg-white hidden lg:flex flex-col sticky top-32 h-[calc(100vh-128px)] overflow-hidden transition-all duration-300 ease-in-out"
+          >
+            <div className="p-8 flex flex-col h-full relative">
+              {/* Toggle Trigger */}
+              <button 
+                onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
+                className="absolute top-4 right-4 p-1.5 hover:bg-[#071739]/5 rounded-md text-[#4B6382] transition-colors"
+                aria-label={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+              >
+                {isSidebarExpanded ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
+              </button>
 
-            <div className="mt-12 space-y-4">
-              <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382]">Published by</div>
-              <div>
-                <div className="font-syne font-bold text-xs text-[#071739]">SYNC TECH SOLUTIONS</div>
-                <div className="text-[0.7rem] text-[#A68858] font-medium mt-1">synctech.ie</div>
+              <div className={cn(
+                "text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382] mb-10 transition-opacity duration-300",
+                isSidebarExpanded ? "opacity-100" : "opacity-0"
+              )}>
+                Contents
               </div>
+              
+              <nav className="flex flex-col gap-8">
+                {tocItems.map((item) => (
+                  <a 
+                    key={item.id}
+                    href={`#${item.id}`} 
+                    className="group flex items-center gap-4 text-[0.75rem] font-bold tracking-widest text-[#4B6382] hover:text-[#071739] transition-all uppercase"
+                  >
+                    <span className="text-[#A68858] font-syne text-xs min-w-[20px] text-center">{item.num}</span>
+                    <AnimatePresence>
+                      {isSidebarExpanded && (
+                        <motion.span 
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -10 }}
+                          className="border-l border-transparent group-hover:border-[#A68858] pl-3 whitespace-nowrap"
+                        >
+                          {item.label}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </a>
+                ))}
+              </nav>
+
+              <AnimatePresence>
+                {isSidebarExpanded && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="mt-auto space-y-4 pt-12"
+                  >
+                    <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382]">Published by</div>
+                    <div>
+                      <div className="font-syne font-bold text-xs text-[#071739]">SYNC TECH SOLUTIONS</div>
+                      <div className="text-[0.7rem] text-[#A68858] font-medium mt-1">synctech.ie</div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </aside>
+          </motion.aside>
 
           {/* MAIN CONTENT AREA */}
-          <div className="p-6 md:p-16 max-w-5xl">
+          <div className="flex-1 p-6 md:p-16 max-w-5xl">
             
             {/* 01 BACKGROUND */}
             <section id="background" className="mb-16 md:mb-24 scroll-mt-40">
