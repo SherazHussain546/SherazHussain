@@ -34,6 +34,7 @@ const epilogue = Epilogue({
 
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
+  weight: ['400', '600'],
   variable: '--font-mono',
 });
 
@@ -166,17 +167,17 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
           />
 
           <div className="relative z-10 max-w-5xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[#A68858]">
-                <span className="text-[0.5rem]">▶</span>
-                SYNC TECH DOCUMENT — {project.slug.toUpperCase()}
-              </div>
-              <Button asChild variant="ghost" size="sm" className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground hover:text-[#A68858]">
+            <div className="flex flex-col gap-6 mb-8">
+              <Button asChild variant="ghost" size="sm" className="w-fit font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground hover:text-[#A68858] p-0 h-auto hover:bg-transparent">
                 <Link href="/projects" className="flex items-center gap-2">
                   <ArrowLeft size={12} />
                   Back to Portfolio
                 </Link>
               </Button>
+              <div className="flex items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[#A68858]">
+                <span className="text-[0.5rem]">▶</span>
+                SYNC TECH DOCUMENT — {project.slug.toUpperCase()}
+              </div>
             </div>
             
             <h1 className="font-bebas text-[clamp(3rem,8vw,6rem)] leading-[0.9] tracking-[0.02em] mb-8">
