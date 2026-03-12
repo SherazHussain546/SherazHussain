@@ -71,7 +71,8 @@ export default function SupportPage() {
       description: 'Support using decentralized finance via my Unstoppable Domain. Secure and borderless.',
       icon: Coins,
       value: 'sherazhussain.unstoppable',
-      actionLabel: 'Copy Web3 Domain',
+      actionLabel: 'Pay via Web3 Profile',
+      link: 'https://ud.me/sherazhussain.unstoppable',
       color: 'bg-blue-500/10 text-blue-600',
       isWeb3: true,
       badgeUrl: 'https://ipfs.io/ipfs/QmXuoUmUstZbRv1LFKp3XgUiemzMJ2VmtZnMGv9xcNjj5c'
@@ -364,12 +365,24 @@ export default function SupportPage() {
                   </div>
                   <div className="font-mono text-[10px] mb-3 opacity-40 uppercase tracking-[0.3em]">Universal Handle</div>
                   <div className="text-xl font-bold text-primary break-all leading-snug">sherazhussain.unstoppable</div>
-                  <Button 
-                    className="mt-10 w-full h-14 rounded-2xl bg-white text-[#071739] hover:bg-primary hover:text-white font-bold transition-all"
-                    onClick={() => copyToClipboard('sherazhussain.unstoppable', 'Domain')}
-                  >
-                    Copy Handle
-                  </Button>
+                  <div className="mt-10 flex flex-col gap-3">
+                    <Button 
+                        asChild
+                        className="w-full h-14 rounded-2xl bg-white text-[#071739] hover:bg-primary hover:text-white font-bold transition-all"
+                    >
+                        <Link href="https://ud.me/sherazhussain.unstoppable" target="_blank">
+                           View Web3 Profile
+                           <ExternalLink className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
+                    <Button 
+                        variant="ghost"
+                        className="w-full h-12 rounded-2xl border border-white/20 text-white hover:bg-white/10 font-bold transition-all"
+                        onClick={() => copyToClipboard('sherazhussain.unstoppable', 'Domain')}
+                    >
+                        Copy Handle
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
