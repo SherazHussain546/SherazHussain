@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { experiences } from '@/lib/data';
 import { CheckCircle2, ExternalLink, Briefcase } from 'lucide-react';
 import Link from 'next/link';
@@ -12,9 +13,22 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from '@/components/ui/carousel';
 
 export default function ExperienceSection() {
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
     <section id="experience" className="py-20 md:py-32 bg-secondary/5">
       <div className="container mx-auto px-4 md:px-6">
@@ -27,20 +41,21 @@ export default function ExperienceSection() {
           </p>
         </div>
         
-        <div className="mx-auto max-w-5xl px-12">
+        <div className="mx-auto max-w-3xl">
           <Carousel
+            setApi={setApi}
             opts={{
               align: 'start',
               loop: true,
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-4">
+            <CarouselContent>
               {experiences.map((exp, index) => (
-                <CarouselItem key={`${exp.role}-${exp.company}-${index}`} className="pl-4 md:basis-1/2 lg:basis-1/2">
-                  <div className="h-full p-1">
+                <CarouselItem key={`${exp.role}-${exp.company}-${index}`} className="basis-full">
+                  <div className="p-1">
                     <Card
-                      className="group flex h-full flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/20"
+                      className="group flex flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20"
                     >
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between">
@@ -52,36 +67,36 @@ export default function ExperienceSection() {
                           </Badge>
                         </div>
                         <div className="mt-6">
-                          <CardTitle className="text-xl font-bold">{exp.role}</CardTitle>
-                          <p className="font-medium text-primary/80">{exp.company}</p>
+                          <CardTitle className="text-2xl font-bold">{exp.role}</CardTitle>
+                          <p className="text-lg font-medium text-primary/80">{exp.company}</p>
                         </div>
                       </CardHeader>
-                      <CardContent className="flex-1 space-y-4 pt-2">
-                        <p className="text-sm leading-relaxed text-muted-foreground italic">
+                      <CardContent className="flex-1 space-y-6 pt-2">
+                        <p className="text-base leading-relaxed text-muted-foreground italic">
                           "{exp.description}"
                         </p>
-                        <div className="space-y-3">
-                           <p className="text-xs font-bold uppercase text-muted-foreground/70 tracking-tight">Key Contributions:</p>
-                          <ul className="space-y-2 text-sm">
-                            {exp.points.slice(0, 3).map((point, pIndex) => (
-                              <li key={pIndex} className="flex items-start gap-2">
-                                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                                <span className="line-clamp-2 text-foreground/80">{point}</span>
+                        <div className="space-y-4">
+                           <p className="text-sm font-bold uppercase text-muted-foreground/70 tracking-wider">Key Contributions:</p>
+                          <ul className="space-y-3 text-sm md:text-base">
+                            {exp.points.map((point, pIndex) => (
+                              <li key={pIndex} className="flex items-start gap-3">
+                                <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-primary" />
+                                <span className="text-foreground/80">{point}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                       </CardContent>
-                      <CardFooter className="pt-4 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
+                      <CardFooter className="pt-6 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
                         {exp.link ? (
-                          <Button asChild variant="ghost" size="sm" className="w-full justify-between hover:bg-primary hover:text-primary-foreground">
+                          <Button asChild variant="ghost" size="lg" className="w-full justify-between hover:bg-primary hover:text-primary-foreground">
                             <Link href={exp.link} target="_blank" rel="noopener noreferrer">
-                              Visit Project
-                              <ExternalLink className="h-4 w-4" />
+                              Visit Project Website
+                              <ExternalLink className="h-5 w-5" />
                             </Link>
                           </Button>
                         ) : (
-                          <div className="h-9 w-full flex items-center justify-center text-xs text-muted-foreground font-medium uppercase tracking-widest">
+                          <div className="h-11 w-full flex items-center justify-center text-sm text-muted-foreground font-medium uppercase tracking-widest">
                             Corporate Role
                           </div>
                         )}
@@ -91,8 +106,8 @@ export default function ExperienceSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex -left-12 border-primary/20 hover:bg-primary/10" />
-            <CarouselNext className="hidden md:flex -right-12 border-primary/20 hover:bg-primary/10" />
+            <CarouselPrevious className="hidden md:flex -left-16 border-primary/20 hover:bg-primary/10" />
+            <CarouselNext className="hidden md:flex -right-16 border-primary/20 hover:bg-primary/10" />
           </Carousel>
         </div>
       </div>
