@@ -78,6 +78,74 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
 
       <main className="relative flex flex-col md:flex-row min-h-screen">
         
+        {/* SIDEBAR TABLE OF CONTENTS (Desktop) */}
+        <aside 
+          className={cn(
+            "hidden md:block sticky top-16 h-[calc(100vh-64px)] border-r border-[#A68858]/10 bg-white transition-all duration-300 ease-in-out z-40",
+            isTocExpanded ? "w-80" : "w-16"
+          )}
+        >
+          <div className="flex flex-col h-full relative">
+            {/* Toggle Button */}
+            <button 
+              onClick={() => setIsTocExpanded(!isTocExpanded)}
+              className="absolute -right-4 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[#A68858]/10 bg-white text-[#A68858] shadow-sm hover:bg-[#A68858] hover:text-white transition-all z-50"
+            >
+              {isTocExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+            </button>
+
+            <div className="p-8 overflow-hidden flex flex-col h-full">
+              <div className={cn("flex items-center gap-4 mb-10 transition-opacity", !isTocExpanded && "opacity-0 pointer-events-none")}>
+                <Hash size={18} className="text-[#A68858]" />
+                <span className="font-mono text-[0.65rem] uppercase tracking-widest font-bold">Document Navigator</span>
+              </div>
+
+              <div className="space-y-2 flex-1">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={cn(
+                      "flex items-center gap-4 w-full p-3 rounded-md transition-all group relative",
+                      activeTab === tab.id 
+                        ? "bg-[#A68858]/10 text-[#A68858]" 
+                        : "text-muted-foreground hover:bg-[#A68858]/5 hover:text-[#071739]"
+                    )}
+                  >
+                    <div className={cn(
+                      "flex h-8 w-8 min-w-[32px] items-center justify-center rounded font-mono text-[0.65rem] border",
+                      activeTab === tab.id 
+                        ? "border-[#A68858] bg-[#A68858] text-white" 
+                        : "border-[#A68858]/10 text-muted-foreground group-hover:border-[#A68858]/30"
+                    )}>
+                      {tab.num}
+                    </div>
+                    <span className={cn(
+                      "font-mono text-[0.65rem] uppercase tracking-widest text-left transition-all duration-300",
+                      isTocExpanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
+                    )}>
+                      {tab.label}
+                    </span>
+                    
+                    {/* Tooltip for collapsed state */}
+                    {!isTocExpanded && (
+                      <div className="absolute left-full ml-4 bg-[#071739] text-white px-3 py-1.5 rounded text-[0.6rem] uppercase tracking-widest font-mono opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl">
+                        {tab.label}
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className={cn("mt-auto pt-8 border-t border-[#A68858]/10 transition-opacity", !isTocExpanded && "opacity-0")}>
+                <div className="font-mono text-[0.55rem] text-muted-foreground uppercase tracking-[0.2em] mb-2">Technical Lead</div>
+                <div className="font-bebas text-lg">Sheraz Hussain</div>
+                <div className="font-mono text-[0.5rem] text-[#A68858] mt-1">SYNC TECH · 2024.1</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
         {/* MAIN CONTENT AREA */}
         <div className="flex-1">
           {/* HERO SECTION */}
@@ -319,73 +387,6 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
           </div>
         </div>
 
-        {/* SIDEBAR TABLE OF CONTENTS (Desktop) */}
-        <aside 
-          className={cn(
-            "hidden md:block sticky top-16 h-[calc(100vh-64px)] border-l border-[#A68858]/10 bg-white transition-all duration-300 ease-in-out z-40",
-            isTocExpanded ? "w-80" : "w-16"
-          )}
-        >
-          <div className="flex flex-col h-full relative">
-            {/* Toggle Button */}
-            <button 
-              onClick={() => setIsTocExpanded(!isTocExpanded)}
-              className="absolute -left-4 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[#A68858]/10 bg-white text-[#A68858] shadow-sm hover:bg-[#A68858] hover:text-white transition-all z-50"
-            >
-              {isTocExpanded ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            </button>
-
-            <div className="p-8 overflow-hidden flex flex-col h-full">
-              <div className={cn("flex items-center gap-4 mb-10 transition-opacity", !isTocExpanded && "opacity-0 pointer-events-none")}>
-                <Hash size={18} className="text-[#A68858]" />
-                <span className="font-mono text-[0.65rem] uppercase tracking-widest font-bold">Document Navigator</span>
-              </div>
-
-              <div className="space-y-2 flex-1">
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={cn(
-                      "flex items-center gap-4 w-full p-3 rounded-md transition-all group relative",
-                      activeTab === tab.id 
-                        ? "bg-[#A68858]/10 text-[#A68858]" 
-                        : "text-muted-foreground hover:bg-[#A68858]/5 hover:text-[#071739]"
-                    )}
-                  >
-                    <div className={cn(
-                      "flex h-8 w-8 min-w-[32px] items-center justify-center rounded font-mono text-[0.65rem] border",
-                      activeTab === tab.id 
-                        ? "border-[#A68858] bg-[#A68858] text-white" 
-                        : "border-[#A68858]/10 text-muted-foreground group-hover:border-[#A68858]/30"
-                    )}>
-                      {tab.num}
-                    </div>
-                    <span className={cn(
-                      "font-mono text-[0.65rem] uppercase tracking-widest text-left transition-all duration-300",
-                      isTocExpanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
-                    )}>
-                      {tab.label}
-                    </span>
-                    
-                    {/* Tooltip for collapsed state */}
-                    {!isTocExpanded && (
-                      <div className="absolute left-16 bg-[#071739] text-white px-3 py-1.5 rounded text-[0.6rem] uppercase tracking-widest font-mono opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl">
-                        {tab.label}
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              <div className={cn("mt-auto pt-8 border-t border-[#A68858]/10 transition-opacity", !isTocExpanded && "opacity-0")}>
-                <div className="font-mono text-[0.55rem] text-muted-foreground uppercase tracking-[0.2em] mb-2">Technical Lead</div>
-                <div className="font-bebas text-lg">Sheraz Hussain</div>
-                <div className="font-mono text-[0.5rem] text-[#A68858] mt-1">SYNC TECH · 2024.1</div>
-              </div>
-            </div>
-          </div>
-        </aside>
       </main>
 
       {/* CALL TO ACTION */}
