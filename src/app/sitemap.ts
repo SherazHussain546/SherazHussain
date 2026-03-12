@@ -16,10 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '',
     '/projects',
     '/survey',
-    '/surveys',
     '/forms',
     '/support',
     '/complaints',
+    '/ai-architect',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({

@@ -110,7 +110,8 @@ export default function RootLayout({
       'jobTitle': 'Full-Stack Software Engineer & AI/Cloud Developer',
       'worksFor': {
         '@type': 'Organization',
-        'name': 'SYNC TECH Solutions'
+        'name': 'SYNC TECH Solutions',
+        'url': 'https://www.synctech.ie'
       },
        "image": siteConfig.ogImage,
        "description": siteConfig.description,
@@ -118,6 +119,10 @@ export default function RootLayout({
         "@type": "PostalAddress",
         "addressLocality": "Dublin",
         "addressCountry": "IE"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Dublin Business School"
       }
   };
 
