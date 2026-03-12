@@ -7,6 +7,13 @@
     "hint": "professional portrait"
   },
   "projects": {
+    "syncTech": {
+      "src": "https://picsum.photos/seed/synctech-solutions/800/600",
+      "alt": "Strategic AI & Cloud Transformation Case Study",
+      "width": 800,
+      "height": 600,
+      "hint": "enterprise cloud architecture"
+    },
     "marketGenius": {
       "src": "/marketgenius.png",
       "alt": "Screenshot of the Market Genius project",

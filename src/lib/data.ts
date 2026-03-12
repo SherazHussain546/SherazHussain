@@ -139,6 +139,40 @@ export const experiences = [
 
 export const projects: Project[] = [
   {
+    slug: 'sync-tech-solutions',
+    name: 'SYNC TECH Solutions – Strategic AI & Cloud Infrastructure Transformation',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) architected and deployed high-performance AI-driven enterprise systems for global clients.',
+    fullDescription: 'As a Lead Freelancer at SYNC TECH Solutions, Sheraz Hussain specializes in the strategic digital transformation of enterprise-level systems. This case study highlights the development of several bespoke full-stack applications that integrate Google Cloud, Firebase, and Gemini-based AI agents to automate complex business workflows. By implementing high-concurrency cloud architectures and technical SEO optimization, these projects delivered measurable growth in both operational efficiency and organic reach for international partners.',
+    challenges: [
+      'Orchestrating multi-cloud environments (AWS & GCP) for high-availability enterprise services.',
+      'Integrating custom Generative AI agents into legacy business processes for automated lead generation.',
+      'Maintaining zero-downtime during the technical migration of high-traffic content platforms.'
+    ],
+    solutions: [
+      {
+        title: 'Enterprise AI Integration',
+        description: 'Developed custom Gemini-powered agents for automated client interaction and document analysis, increasing workflow velocity.'
+      },
+      {
+        title: 'Scalable Cloud Architecture',
+        description: 'Implemented serverless cloud functions and edge-side rendering to handle sudden traffic spikes without performance degradation.'
+      },
+      {
+        title: 'Technical SEO & Performance',
+        description: 'Conducted deep-level technical audits and performance tuning, achieving 95+ Core Web Vitals scores across all client platforms.'
+      }
+    ],
+    results: [
+      'Boosted client operational efficiency by an average of 40%.',
+      'Increased organic search visibility by over 150% for e-commerce partners.',
+      'Successfully deployed 10+ professional-grade digital solutions globally.'
+    ],
+    stack: ['Next.js', 'React', 'Google Genkit', 'Firebase', 'AWS', 'GCP', 'TypeScript', 'Tailwind CSS', 'Technical SEO', 'Cloud Architecture'],
+    link: 'https://www.synctech.ie',
+    image: 'https://picsum.photos/seed/synctech-solutions/800/600',
+    imageHint: 'enterprise cloud architecture',
+  },
+  {
     slug: 'market-genius',
     name: 'Market Genius – AI-Powered Financial Signals & Market Intelligence',
     description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) engineered Market Genius: A high-fidelity financial signal platform providing real-time Buy, Sell, and Hold alerts using Google Genkit and advanced technical indicators.',
