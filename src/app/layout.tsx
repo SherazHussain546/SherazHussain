@@ -114,7 +114,7 @@ export const metadata: Metadata = {
     }
   },
   verification: {
-    google: '-2YVuqfnqiY5zPpoHylxys5gnIrFexTBklppdeVE4Qw',
+    google: 'ivsgH4f4kTUg93hvzWW8YiN9dJfm4frxstgSViLz9qQ',
   },
   alternates: {
     canonical: siteConfig.url,
