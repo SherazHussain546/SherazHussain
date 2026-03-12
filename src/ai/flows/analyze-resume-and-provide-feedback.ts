@@ -74,97 +74,97 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     Generate a 100+ score ATS-optimized Resume (LaTeX), a tailored Cover Letter (LaTeX), and a professional Reach-out Email.
 
     == RESUME TEMPLATE ==
-    \documentclass[10pt, a4paper]{article}
-    \usepackage[T1]{fontenc}
-    \usepackage{mathptmx}
-    \usepackage[a4paper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
-    \usepackage{titlesec}
-    \usepackage{enumitem}
-    \usepackage{hyperref}
-    \pagestyle{empty}
-    \setlength{\parindent}{0pt}
-    \hypersetup{colorlinks=true, linkcolor=black, filecolor=black, urlcolor=black}
-    \titleformat{\section}{\vspace{-5pt}\raggedright\large\bfseries\uppercase}{}{0em}{}[\titlerule]
-    \titlespacing*{\section}{0pt}{10pt}{5pt}
-    \setlist[itemize]{noitemsep, leftmargin=1.5em, topsep=2pt, parsep=2pt}
-    \newcommand{\experienceItem}[4]{\vspace{4pt}\textbf{#1} \hfill #2 \\ \textit{#3} \hfill \textit{#4} \\}
-    \begin{document}
-    \begin{center}
-        {\Huge \textbf{SHERAZ HUSSAIN}} \\
-        \vspace{4pt}
-        Dublin, Ireland $|$ +353 8X XXX XXXX $|$ \href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} \\
-        \href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
-    \end{center}
-    \section{Professional Summary}
+    \\documentclass[10pt, a4paper]{article}
+    \\usepackage[T1]{fontenc}
+    \\usepackage{mathptmx}
+    \\usepackage[a4paper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+    \\usepackage{titlesec}
+    \\usepackage{enumitem}
+    \\usepackage{hyperref}
+    \\pagestyle{empty}
+    \\setlength{\\parindent}{0pt}
+    \\hypersetup{colorlinks=true, linkcolor=black, filecolor=black, urlcolor=black}
+    \\titleformat{\\section}{\\vspace{-5pt}\\raggedright\\large\\bfseries\\uppercase}{}{0em}{}[\\titlerule]
+    \\titlespacing*{\\section}{0pt}{10pt}{5pt}
+    \\setlist[itemize]{noitemsep, leftmargin=1.5em, topsep=2pt, parsep=2pt}
+    \\newcommand{\\experienceItem}[4]{\\vspace{4pt}\\textbf{#1} \\hfill #2 \\\\ \\textit{#3} \\hfill \\textit{#4} \\\\}
+    \\begin{document}
+    \\begin{center}
+        {\\Huge \\textbf{SHERAZ HUSSAIN}} \\\\
+        \\vspace{4pt}
+        Dublin, Ireland $|$ +353 8X XXX XXXX $|$ \\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} \\\\
+        \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
+    \\end{center}
+    \\section{Professional Summary}
     [Generate a high-impact summary focusing on SYNC TECH Solutions and JD keywords]
-    \section{Technical Skills}
-    \begin{itemize}
-        \item \textbf{Languages:} [List relevant]
-        \item \textbf{Frameworks/Tools:} [List relevant]
-        \item \textbf{Cloud \& DevOps:} [List relevant]
-        \item \textbf{Databases:} [List relevant]
-    \end{itemize}
-    \section{Professional Experience}
-    \experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
-    \begin{itemize}
-        \item [Quantifiable achievement 1 related to JD]
-        \item [Quantifiable achievement 2 related to JD]
-    \end{itemize}
+    \\section{Technical Skills}
+    \\begin{itemize}
+        \\item \\textbf{Languages:} [List relevant]
+        \\item \\textbf{Frameworks/Tools:} [List relevant]
+        \\item \\textbf{Cloud \& DevOps:} [List relevant]
+        \\item \\textbf{Databases:} [List relevant]
+    \\end{itemize}
+    \\section{Professional Experience}
+    \\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
+    \\begin{itemize}
+        \\item [Quantifiable achievement 1 related to JD]
+        \\item [Quantifiable achievement 2 related to JD]
+    \\end{itemize}
     [Include other experiences from source]
-    \section{Technical Projects}
-    \textbf{[Project Name]} $|$ \textit{Tech Stack: [Techs]} \hfill \href{[Link]}{Project Link}
-    \begin{itemize}
-        \item [Key accomplishment highlighting technical depth]
-    \end{itemize}
-    \section{Education}
-    \textbf{Dublin Business School} \hfill Dublin, Ireland \\
-    Bachelor of Science in Computing (First Class Honors) $|$ GPA: 4.0/4.0 \hfill Sept 2021 -- April 2025
-    \section{Certifications}
-    \begin{itemize}
-        \item [List certifications from source]
-    \end{itemize}
-    \end{document}
+    \\section{Technical Projects}
+    \\textbf{[Project Name]} $|$ \\textit{Tech Stack: [Techs]} \\hfill \\href{[Link]}{Project Link}
+    \\begin{itemize}
+        \\item [Key accomplishment highlighting technical depth]
+    \\end{itemize}
+    \\section{Education}
+    \\textbf{Dublin Business School} \\hfill Dublin, Ireland \\\\
+    Bachelor of Science in Computing (First Class Honors) $|$ GPA: 4.0/4.0 \\hfill Sept 2021 -- April 2025
+    \\section{Certifications}
+    \\begin{itemize}
+        \\item [List certifications from source]
+    \\end{itemize}
+    \\end{document}
 
     == COVER LETTER TEMPLATE ==
-    \documentclass[11pt,a4paper]{article}
-    \usepackage[utf8]{inputenc}
-    \usepackage[T1]{fontenc}
-    \usepackage{lmodern}
-    \usepackage[margin=1in]{geometry}
-    \usepackage{hyperref}
-    \usepackage{xcolor}
-    \pagestyle{empty}
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{10pt}
-    \definecolor{darkblue}{RGB}{0,0,139}
-    \hypersetup{colorlinks=true, urlcolor=darkblue}
-    \begin{document}
-    \begin{center}
-        \textbf{\Large SHERAZ HUSSAIN}\\
-        \vspace{4pt}
-        \small
+    \\documentclass[11pt,a4paper]{article}
+    \\usepackage[utf8]{inputenc}
+    \\usepackage[T1]{fontenc}
+    \\usepackage{lmodern}
+    \\usepackage[margin=1in]{geometry}
+    \\usepackage{hyperref}
+    \\usepackage{xcolor}
+    \\pagestyle{empty}
+    \\setlength{\\parindent}{0pt}
+    \\setlength{\\parskip}{10pt}
+    \\definecolor{darkblue}{RGB}{0,0,139}
+    \\hypersetup{colorlinks=true, urlcolor=darkblue}
+    \\begin{document}
+    \\begin{center}
+        \\textbf{\\Large SHERAZ HUSSAIN}\\\\
+        \\vspace{4pt}
+        \\small
         +353 8X XXX XXXX $|$ 
-        \href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} $|$ 
-        \href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$
+        \\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} $|$ 
+        \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$
         Dublin, Ireland
-    \end{center}
-    \vspace{20pt}
-    \today
-    \vspace{10pt}
-    Hiring Manager's Name\\
-    Title\\
-    Company Name\\
+    \\end{center}
+    \\vspace{20pt}
+    \\today
+    \\vspace{10pt}
+    Hiring Manager's Name\\\\
+    Title\\\\
+    Company Name\\\\
     City, State
-    \vspace{10pt}
+    \\vspace{10pt}
     Dear [Hiring Manager's Name] / Dear Hiring Manager,
     I am writing to express my strong interest in the [Job Title] position at [Company Name]. As a Freelancer working with SYNC TECH Solutions, I have specialized in [Core Skill from JD] and delivered [Achievement from Source]...
     [Generate body using the template structure provided]
     Sincerely,
-    \vspace{30pt}
+    \\vspace{30pt}
     SHERAZ HUSSAIN
-    \vspace{10pt}
-    \small{Enclosure: Resume}
-    \end{document}
+    \\vspace{10pt}
+    \\small{Enclosure: Resume}
+    \\end{document}
     `,
       output: {
         schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
