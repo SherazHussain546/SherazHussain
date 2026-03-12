@@ -52,12 +52,12 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-wider">Quick Links</h4>
-            <nav className="grid grid-cols-2 gap-2">
+            <nav className="flex flex-col gap-2">
               {footerLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary flex items-center gap-2"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary flex items-center gap-2 w-fit"
                 >
                   {link.name === 'Support my Work' && <Heart className="h-3 w-3 text-red-500" />}
                   {link.name}
