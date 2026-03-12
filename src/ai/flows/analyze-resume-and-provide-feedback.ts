@@ -12,7 +12,7 @@ import {z} from 'genkit';
 import { getPortfolioContent } from '@/lib/portfolio-content';
 
 const AnalyzeResumeAndProvideFeedbackInputSchema = z.object({
-  jobDescription: z.string().describe('The job description to compare the resume against.'),
+  jobDescription: z.string().min(100, 'Job description must be at least 100 characters.'),
 });
 export type AnalyzeResumeAndProvideFeedbackInput = z.infer<typeof AnalyzeResumeAndProvideFeedbackInputSchema>;
 
@@ -27,10 +27,23 @@ const AnalyzeResumeAndProvideFeedbackOutputSchema = z.object({
 });
 export type AnalyzeResumeAndProvideFeedbackOutput = z.infer<typeof AnalyzeResumeAndProvideFeedbackOutputSchema>;
 
+/**
+ * Analyzes a resume against a job description and provides feedback.
+ * Uses a Genkit flow to generate ATS-optimized application assets.
+ */
 export async function analyzeResumeAndProvideFeedback(
   input: AnalyzeResumeAndProvideFeedbackInput
 ): Promise<AnalyzeResumeAndProvideFeedbackOutput> {
-  return analyzeResumeAndProvideFeedbackFlow(input);
+  try {
+    return await analyzeResumeAndProvideFeedbackFlow(input);
+  } catch (e: any) {
+    return {
+      latexResume: '',
+      latexCoverLetter: '',
+      reachOutEmail: { subject: '', body: '' },
+      error: `Generation Failed: ${e.message || 'The AI model could not be reached. Please verify your configuration and try again.'}`,
+    };
+  }
 }
 
 const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
@@ -40,27 +53,25 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     outputSchema: AnalyzeResumeAndProvideFeedbackOutputSchema,
   },
   async (input) => {
-    try {
-      const resumeContent = getPortfolioContent();
-      const {output} = await ai.generate({
-        model: 'googleai/gemini-1.5-flash-latest',
-        prompt: `You are an expert resume writer and career coach specializing in high-performance ATS optimization. Your task is to generate a complete application package (Resume, Cover Letter, and Reach-out Email) tailored perfectly for a specific job description.
+    const resumeContent = getPortfolioContent();
+    const {output} = await ai.generate({
+      model: 'googleai/gemini-1.5-flash',
+      system: `You are an expert resume writer and career coach specializing in high-performance ATS optimization. Your task is to generate a complete application package (Resume, Cover Letter, and Reach-out Email) tailored perfectly for a specific job description for Sheraz Hussain.
 
-    You must follow these rules strictly:
-    1.  **Source of Truth**: The provided portfolio content is the ONLY source of facts about the candidate (Sheraz Hussain). You are forbidden from inventing, exaggerating, or fabricating any information.
-    2.  **Role Consistency**: Always identify the candidate as a "Freelancer working with SYNC TECH Solutions" in professional titles.
-    3.  **Target**: The provided job description is the target. Analyze it for key skills, keywords, and qualifications.
-    4.  **Output Requirements**:
-        - **LaTeX Resume**: Generate full, compile-ready LaTeX code based EXACTLY on the RESUME TEMPLATE provided below. Ensure it is ATS-optimized with a score-potential of 100+. Use the keywords found in the Job Description naturally.
-        - **LaTeX Cover Letter**: Generate full, compile-ready LaTeX code based EXACTLY on the COVER LETTER TEMPLATE provided below. Replace placeholders with tailored content.
-        - **Reach-out Email**: Write a professional reach-out message for LinkedIn or Email.
-    5.  **Honesty**: Do not lie. Every skill in the output must have a basis in the source content.
-
+    STRICT RULES:
+    1. Source of Truth: The provided portfolio content is the ONLY source of facts about Sheraz Hussain. Do not invent, exaggerate, or fabricate information.
+    2. Professional Role: Always identify Sheraz Hussain as a "Freelancer working with SYNC TECH Solutions".
+    3. ATS Optimization: The LaTeX Resume must be structured for maximum parse-ability by ATS algorithms, aiming for a 100+ score.
+    4. LaTeX Compilation: Ensure all LaTeX code is valid, compile-ready, and uses the exact templates provided.`,
+      prompt: `
     Candidate Information (Source of Truth):
     ${resumeContent}
 
-    Job Description (Target):
+    Target Job Description:
     ${input.jobDescription}
+
+    TASK:
+    Generate a 100+ score ATS-optimized Resume (LaTeX), a tailored Cover Letter (LaTeX), and a professional Reach-out Email.
 
     == RESUME TEMPLATE ==
     \\documentclass[10pt, a4paper]{article}
@@ -85,25 +96,25 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
         \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
     \\end{center}
     \\section{Professional Summary}
-    [Generate a 3-4 line summary focusing on SYNC TECH Solutions and relevant JD keywords]
+    [Generate a high-impact summary focusing on SYNC TECH Solutions and JD keywords]
     \\section{Technical Skills}
     \\begin{itemize}
-        \\item \\textbf{Languages:} [List relevant from source]
-        \\item \\textbf{Frameworks/Tools:} [List relevant from source]
-        \\item \\textbf{Cloud \\& DevOps:} [List relevant from source]
-        \\item \\textbf{Databases:} [List relevant from source]
+        \\item \\textbf{Languages:} [List relevant]
+        \\item \\textbf{Frameworks/Tools:} [List relevant]
+        \\item \\textbf{Cloud \\& DevOps:} [List relevant]
+        \\item \\textbf{Databases:} [List relevant]
     \\end{itemize}
     \\section{Professional Experience}
     \\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
     \\begin{itemize}
-        \\item [Point 1 based on source + JD keywords]
-        \\item [Point 2 based on source + JD keywords]
+        \\item [Quantifiable achievement 1 related to JD]
+        \\item [Quantifiable achievement 2 related to JD]
     \\end{itemize}
-    [Include other experiences from source using \\experienceItem]
+    [Include other experiences from source]
     \\section{Technical Projects}
     \\textbf{[Project Name]} $|$ \\textit{Tech Stack: [Techs]} \\hfill \\href{[Link]}{Project Link}
     \\begin{itemize}
-        \\item [Key accomplishment based on source]
+        \\item [Key accomplishment highlighting technical depth]
     \\end{itemize}
     \\section{Education}
     \\textbf{Dublin Business School} \\hfill Dublin, Ireland \\\\
@@ -146,12 +157,8 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     City, State
     \\vspace{10pt}
     Dear [Hiring Manager's Name] / Dear Hiring Manager,
-    I am writing to express my strong interest in the [Job Title] position at [Company Name], as advertised on [where you found the posting]. With [X years] of experience in [your field] and a proven track record of [key achievement or skill], I am confident that my skills and passion align perfectly with the requirements of this role and the innovative work being done at [Company Name].
-    In my current role as Freelancer at SYNC TECH Solutions, I have successfully [describe major achievement or responsibility that relates to the job posting]. For example, I [specific accomplishment with measurable results]. This experience has equipped me with strong expertise in [relevant skills from job description], which I understand are critical for success in the [Job Title] position.
-    My technical proficiency spans [list relevant technologies/skills from the job posting], and I have consistently demonstrated the ability to deliver high-quality solutions under tight deadlines. At [Previous Role/Project], I [another relevant achievement with quantifiable results]. Additionally, I [mention any relevant certifications, education, or specialized training]. These experiences have not only strengthened my technical capabilities but also honed my ability to collaborate effectively with cross-functional teams and communicate complex concepts to diverse stakeholders.
-    What particularly excites me about [Company Name] is [specific reason related to the company's mission, products, culture, or recent achievements]. I have followed [Company Name]'s work on [specific project, product, or initiative], and I am impressed by [something specific that resonates with you]. I am eager to contribute to [specific team or project mentioned in job posting] and believe that my background in [relevant area] would enable me to make meaningful contributions from day one.
-    Beyond my technical skills, I bring strong [soft skills like leadership, communication, problem-solving] abilities and a passion for continuous learning. I am particularly drawn to environments that value innovation and collaboration, and I thrive in settings where I can both contribute my expertise and learn from talented colleagues. I am confident that my combination of technical expertise, proven results, and enthusiasm for [company's industry/mission] makes me an excellent fit for your team.
-    I would welcome the opportunity to discuss how my experience and skills can contribute to the continued success of [Company Name]. I am available for an interview at your convenience and can be reached at [+353 8X XXX XXXX] or [sheraz@synctech.ie]. Thank you for considering my application. I look forward to the possibility of contributing to your team and am excited about the opportunity to bring my skills and passion to [Company Name].
+    I am writing to express my strong interest in the [Job Title] position at [Company Name]. As a Freelancer working with SYNC TECH Solutions, I have specialized in [Core Skill from JD] and delivered [Achievement from Source]...
+    [Generate body using the template structure provided]
     Sincerely,
     \\vspace{30pt}
     SHERAZ HUSSAIN
@@ -159,28 +166,14 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     \\small{Enclosure: Resume}
     \\end{document}
     `,
-        output: {
-          schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
-        }
-      });
-      
-      if (!output) {
-        return {
-            latexResume: '',
-            latexCoverLetter: '',
-            reachOutEmail: { subject: '', body: '' },
-            error: "The AI model failed to return a valid response. Please try again."
-        }
+      output: {
+        schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
       }
-      return output;
-    } catch (e: any) {
-        console.error(e);
-        return {
-            latexResume: '',
-            latexCoverLetter: '',
-            reachOutEmail: { subject: '', body: '' },
-            error: "The AI model could not be reached. Please verify your configuration."
-        }
+    });
+    
+    if (!output) {
+      throw new Error("The AI model returned an invalid or empty response.");
     }
+    return output;
   }
 );
