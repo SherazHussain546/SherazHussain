@@ -43,8 +43,7 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Only emit the error if it's explicitly a permission denial and loading has finished
-    // We check specifically for 'permission-denied' and ensure it's not a transient state
+    // Check for explicit permission denied error after loading completes
     if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,

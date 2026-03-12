@@ -2,41 +2,27 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-03-V4
-    // REASON: Resolving list operation denial by explicitly defining collection-level access.
+    // SECURITY RULES REVISION: 2024-06-03-V6
+    // REASON: Resolving list operation denial by using robust recursive wildcard patterns for collection-wide access.
     
     function isAdmin() {
       return request.auth != null;
     }
 
-    // projectGoals collection: Public read, Admin write
-    match /projectGoals {
-      allow list: if true;
-      allow get: if true;
-      match /{goalId} {
-        allow read: if true;
-        allow write: if isAdmin();
-      }
+    // Public Read Collections (Handled with recursive wildcards for list/get)
+    match /projectGoals/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
-    // posts collection: Public read, Admin write
-    match /posts {
-      allow list: if true;
-      allow get: if true;
-      match /{postId} {
-        allow read: if true;
-        allow write: if isAdmin();
-      }
+    match /posts/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
-    // siteConfig: Public read, Admin write
-    match /siteConfig {
-      allow list: if true;
-      allow get: if true;
-      match /{configId} {
-        allow read: if true;
-        allow write: if isAdmin();
-      }
+    match /siteConfig/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // Analytics: Open creation for tracking, Admin read
