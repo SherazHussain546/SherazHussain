@@ -19,6 +19,7 @@ import {
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function SupportPage() {
   const { toast } = useToast();
@@ -40,7 +41,7 @@ export default function SupportPage() {
       description: 'A simple way to show appreciation for the tools and content I create.',
       icon: Coffee,
       actionLabel: 'Support on Buy Me a Coffee',
-      link: 'https://www.buymeacoffee.com/sherazhussain', // Placeholder
+      link: 'https://www.buymeacoffee.com/sherazhussain546',
       color: 'bg-yellow-500/10 text-yellow-600',
     },
     {
@@ -103,6 +104,17 @@ export default function SupportPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1">
+                  {method.title === 'Buy Me a Coffee' && (
+                    <div className="mb-6 flex justify-start">
+                      <Link href={method.link!} target="_blank" className="transition-transform hover:scale-105">
+                        <img 
+                          src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=sherazhussain546&button_colour=004080&font_colour=ffffff&font_family=Arial&outline_colour=ffffff&coffee_colour=FFDD00" 
+                          alt="Buy me a coffee"
+                          className="h-12 shadow-md rounded-lg"
+                        />
+                      </Link>
+                    </div>
+                  )}
                   {method.value && (
                     <div className="flex items-center justify-between rounded-lg border bg-muted/30 p-3 mt-2">
                       <code className="text-sm font-mono font-semibold">{method.value}</code>
