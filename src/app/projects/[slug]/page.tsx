@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useState, useMemo } from 'react';
+import { use, useState, useRef } from 'react';
 import { projects } from '@/lib/data';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -44,6 +44,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
   const project = projects.find((p) => p.slug === slug);
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   if (!project) {
     notFound();
@@ -60,8 +61,17 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
   const prevTab = currentIndex > 0 ? tabs[currentIndex - 1] : null;
   const nextTab = currentIndex < tabs.length - 1 ? tabs[currentIndex + 1] : null;
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToContent = () => {
+    if (contentRef.current) {
+      const headerOffset = 80;
+      const elementPosition = contentRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
@@ -112,7 +122,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                       onClick={() => {
                         setActiveTab(tab.id);
                         setIsMenuOpen(false);
-                        scrollToTop();
+                        scrollToContent();
                       }}
                       className={cn(
                         "flex items-center gap-3 w-full p-3 rounded-lg transition-all group",
@@ -201,7 +211,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 key={tab.id}
                 onClick={() => {
                   setActiveTab(tab.id);
-                  scrollToTop();
+                  scrollToContent();
                 }}
                 className={cn(
                   "py-5 px-4 font-mono text-[0.65rem] uppercase tracking-widest whitespace-nowrap border-b-2 transition-all",
@@ -217,7 +227,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
         </nav>
 
         {/* CONTENT AREA */}
-        <div className="max-w-5xl mx-auto px-4 md:px-16 py-20 w-full">
+        <div ref={contentRef} className="max-w-5xl mx-auto px-4 md:px-16 py-20 w-full">
           <AnimatePresence mode="wait">
             {activeTab === 'overview' && (
               <motion.section
@@ -391,7 +401,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               <button 
                 onClick={() => {
                   setActiveTab(prevTab.id);
-                  scrollToTop();
+                  scrollToContent();
                 }}
                 className="group flex flex-col items-start gap-2 text-left transition-all"
               >
@@ -407,7 +417,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               <button 
                 onClick={() => {
                   setActiveTab(nextTab.id);
-                  scrollToTop();
+                  scrollToContent();
                 }}
                 className="group flex flex-col items-end text-right transition-all"
               >
