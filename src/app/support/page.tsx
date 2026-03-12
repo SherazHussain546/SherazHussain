@@ -9,12 +9,10 @@ import {
   Coffee, 
   Heart, 
   Wallet, 
-  Banknote, 
   ExternalLink, 
   Copy, 
   Check, 
   ShieldCheck,
-  Activity,
   Zap,
   Globe,
   Coins,
@@ -28,6 +26,7 @@ import {
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -94,21 +93,21 @@ export default function SupportPage() {
     },
   ];
 
-  const valueProps = [
+  const projectGoals = [
     {
-      icon: Zap,
-      title: 'Innovation Velocity',
-      description: 'Your support directly covers the significant compute costs of running Gemini 2.0 Flash and Cloud infrastructure.'
+      icon: Cpu,
+      title: 'Goal 01: AI Compute Scaling',
+      description: 'Acquiring high-density GPU infrastructure to support local inference of Gemini-family models for faster, private AI tool performance.'
+    },
+    {
+      icon: Globe,
+      title: 'Goal 02: Global Edge Network',
+      description: 'Deploying SYNC TECH solutions across a distributed edge network to ensure low-latency access for developers in over 50 countries.'
     },
     {
       icon: ShieldCheck,
-      title: 'Open-Source Integrity',
-      description: 'It allows me to keep building tools that remain free from intrusive corporate data harvesting and tracking.'
-    },
-    {
-      icon: Users,
-      title: 'Global Community',
-      description: 'Directly funds the research that leads to career tools used by hundreds of students and developers worldwide.'
+      title: 'Goal 03: Security Research Hub',
+      description: 'Establishing a dedicated lab for Zero Trust architecture research and developing open-source automated security audit tools.'
     }
   ];
 
@@ -124,8 +123,7 @@ export default function SupportPage() {
         </section>
 
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
-        <div className="absolute top-[10%] right-[-5%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-
+        
         <div className="container relative z-10 mx-auto px-4 py-16 md:py-32 md:px-6">
           <div className="mx-auto max-w-4xl text-center">
             <motion.div
@@ -140,44 +138,61 @@ export default function SupportPage() {
                 Empower the <span className="text-primary italic">Future</span> of AI.
               </h2>
               <p className="mt-8 text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I dedicate my time to building high-performance AI tools, open-source software, and cloud infrastructure that helps the global tech community scale with integrity.
+                As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I dedicate my time to building high-performance AI tools and cloud infrastructure that helps the global tech community scale with integrity.
               </p>
             </motion.div>
           </div>
 
-          <div className="mx-auto mt-24 grid max-w-5xl gap-8 md:grid-cols-3">
-             {valueProps.map((prop, idx) => (
-                <motion.div 
-                    key={prop.title}
+          {/* Active Project Goals Section */}
+          <div className="mx-auto mt-32 max-w-6xl">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
+                  <Target className="h-4 w-4" />
+                  Featured Campaign
+              </div>
+              <h2 className="text-4xl font-extrabold text-foreground md:text-5xl tracking-tight">Active Project Goals</h2>
+            </div>
+            
+            <div className="grid gap-12 lg:grid-cols-2 items-start">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-[2.5rem] p-4 shadow-2xl border border-border/50 overflow-hidden h-fit"
+              >
+                <div 
+                  className="gfm-embed" 
+                  data-url="https://www.gofundme.com/f/be-a-part-of-my-new-projects/widget/medium?sharesheet=undefined&attribution_id=sl:4cfddb57-1fb9-4af0-896d-6e51bb8e9711"
+                ></div>
+              </motion.div>
+              
+              <div className="space-y-10 pt-4">
+                {projectGoals.map((goal, idx) => (
+                  <motion.div 
+                    key={goal.title}
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * idx }}
-                    className="flex flex-col items-center text-center p-8 rounded-3xl bg-white border border-border/50 shadow-sm hover:shadow-xl transition-all"
-                >
-                    <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                        <prop.icon className="h-6 w-6" />
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex gap-6"
+                  >
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <goal.icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-bold mb-3">{prop.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{prop.description}</p>
-                </motion.div>
-             ))}
-          </div>
-
-          <div className="mx-auto mt-32 max-w-2xl text-center">
-            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
-                <Target className="h-4 w-4" />
-                Featured Campaign
-            </div>
-            <h2 className="text-4xl font-extrabold text-foreground md:text-5xl tracking-tight mb-12">New Project Goals</h2>
-            <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl border border-border/50 overflow-hidden">
-              <div 
-                className="gfm-embed" 
-                data-url="https://www.gofundme.com/f/be-a-part-of-my-new-projects/widget/medium?sharesheet=undefined&attribution_id=sl:4cfddb57-1fb9-4af0-896d-6e51bb8e9711"
-              ></div>
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold">{goal.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {goal.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="mx-auto mt-32 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {/* Support Methods Grid */}
+          <div className="mx-auto mt-40 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
             {supportMethods.map((method, idx) => (
               <motion.div 
                 key={method.title}
@@ -225,11 +240,6 @@ export default function SupportPage() {
                         >
                           {copied === 'Web3 Domain' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
                         </Button>
-                      </div>
-                    )}
-                    {method.isEnterprise && (
-                      <div className="text-[11px] font-semibold text-muted-foreground bg-primary/5 p-4 rounded-xl border border-primary/10 border-dashed">
-                        Revolut Pay for fast checkout or Direct SEPA transfers.
                       </div>
                     )}
                   </CardContent>
@@ -283,34 +293,17 @@ export default function SupportPage() {
                                     </Button>
                                   </div>
                                 </div>
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Bank Name & Address</span>
-                                  <span className="text-xs leading-relaxed">{bankDetails.bankName}<br />{bankDetails.bankAddress}</span>
-                                </div>
-                                <div className="flex flex-col gap-1 pt-2 border-t border-dashed">
-                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold flex items-center gap-1">
-                                    Correspondent BIC <Info className="h-3 w-3" />
-                                  </span>
-                                  <span className="text-xs font-mono">{bankDetails.correspondentBic}</span>
-                                </div>
                               </div>
-                              <p className="text-[10px] text-center text-muted-foreground italic">
-                                * All transfers are handled securely via Revolut Bank UAB.
-                              </p>
                             </div>
                           </DialogContent>
                         </Dialog>
                       </>
-                    ) : method.link ? (
+                    ) : (
                       <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
-                        <Link href={method.link} target={method.link.startsWith('mailto') ? '_self' : '_blank'}>
+                        <Link href={method.link!} target={method.link!.startsWith('mailto') ? '_self' : '_blank'}>
                           {method.actionLabel}
                           <ExternalLink className="ml-2 h-4 w-4" />
                         </Link>
-                      </Button>
-                    ) : (
-                      <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2" onClick={() => copyToClipboard(method.value!, 'Web3 Domain')}>
-                        {method.actionLabel}
                       </Button>
                     )}
                   </div>
@@ -319,15 +312,14 @@ export default function SupportPage() {
             ))}
           </div>
 
+          {/* Web3 Spotlight */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mx-auto mt-32 max-w-5xl rounded-[3rem] bg-[#071739] p-12 text-white relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
+            className="mx-auto mt-40 max-w-5xl rounded-[3rem] bg-[#071739] p-12 text-white relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
           >
             <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 rounded-full blur-[120px]" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[120px]" />
-            
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-16">
               <div className="flex-1 space-y-8 text-center md:text-left">
                 <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-bold uppercase tracking-[0.4em]">
@@ -336,7 +328,7 @@ export default function SupportPage() {
                 </div>
                 <h2 className="text-4xl font-bold md:text-5xl tracking-tight">Censorship-Resistant Innovation</h2>
                 <p className="text-white/70 text-lg leading-relaxed font-light">
-                  By supporting my Web3 identity, you fund the research of decentralized AI tools and cloud infrastructure that remains free from intrusive corporate data harvesting.
+                  By supporting my Web3 identity, you fund the research of decentralized AI tools that remain free from intrusive corporate data harvesting.
                 </p>
                 <div className="pt-4 flex flex-wrap justify-center md:justify-start gap-4">
                   <Badge variant="outline" className="text-white border-white/20 px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Bitcoin</Badge>
@@ -346,26 +338,24 @@ export default function SupportPage() {
               </div>
               <div className="w-full md:w-96">
                 <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 backdrop-blur-xl text-center group transition-all hover:bg-white/10 border-t-white/20">
-                  <div className="w-20 h-20 bg-primary rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-transform">
-                    <Wallet className="h-10 w-10 text-[#071739]" />
+                  <div className="relative w-24 h-24 mx-auto mb-8">
+                    <Image 
+                      src="https://ipfs.io/ipfs/QmXuoUmUstZbRv1LFKp3XgUiemzMJ2VmtZnMGv9xcNjj5c" 
+                      alt="Unstoppable Domains Badge" 
+                      fill 
+                      className="object-contain drop-shadow-2xl group-hover:scale-110 transition-transform"
+                    />
                   </div>
                   <div className="font-mono text-[10px] mb-3 opacity-40 uppercase tracking-[0.3em]">Universal Handle</div>
                   <div className="text-xl font-bold text-primary break-all leading-snug">sherazhussain.unstoppable</div>
                   <div className="mt-10 flex flex-col gap-3">
-                    <Button 
-                        asChild
-                        className="w-full h-14 rounded-2xl bg-white text-[#071739] hover:bg-primary hover:text-white font-bold transition-all"
-                    >
+                    <Button asChild className="w-full h-14 rounded-2xl bg-white text-[#071739] hover:bg-primary hover:text-white font-bold transition-all">
                         <Link href="https://ud.me/sherazhussain.unstoppable" target="_blank">
                            View Web3 Profile
                            <ExternalLink className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
-                    <Button 
-                        variant="ghost"
-                        className="w-full h-12 rounded-2xl border border-white/20 text-white hover:bg-white/10 font-bold transition-all"
-                        onClick={() => copyToClipboard('sherazhussain.unstoppable', 'Domain')}
-                    >
+                    <Button variant="ghost" className="w-full h-12 rounded-2xl border border-white/20 text-white hover:bg-white/10 font-bold transition-all" onClick={() => copyToClipboard('sherazhussain.unstoppable', 'Domain')}>
                         Copy Handle
                     </Button>
                   </div>
@@ -373,21 +363,6 @@ export default function SupportPage() {
               </div>
             </div>
           </motion.div>
-
-          <div className="mx-auto mt-40 max-w-4xl text-center border-t pt-20">
-             <div className="flex justify-center mb-10">
-                <div className="h-px w-16 bg-primary/30" />
-                <Cpu className="mx-4 h-6 w-6 text-primary/50" />
-                <div className="h-px w-16 bg-primary/30" />
-             </div>
-             <p className="text-3xl font-medium italic text-foreground/90 leading-relaxed">
-                "Every line of code I write is a commitment to a more intelligent, open, and efficient digital future. Your support allows me to keep these tools accessible to everyone."
-             </p>
-             <div className="mt-12 flex flex-col items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-[0.5em] text-primary">Sheraz Hussain</span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">Freelancer @ SYNC TECH Solutions</span>
-             </div>
-          </div>
         </div>
       </main>
       <Footer />
