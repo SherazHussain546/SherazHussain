@@ -176,34 +176,35 @@ export const projects: Project[] = [
   {
     slug: 'job4you',
     name: 'Job4You – Your Personal AI Recruiter',
-    description: 'An automated job-application assistant with Python and GPT-4 for high-volume application processing.',
-    fullDescription: 'Job4You addresses the friction in modern job searching by automating the most repetitive parts of the application process. It uses sophisticated NLP models to analyze job descriptions and programmatically tailor resumes and cover letters to ensure maximum ATS compatibility, while managing outgoing communications with recruiters.',
+    description: 'An automated career assistant generating ATS-optimized resumes and cover letters using Python and Gemini AI.',
+    fullDescription: 'Job4You is a comprehensive career acceleration platform that streamlines the job application process. Users sign in via Google to manage their professional profiles. By simply providing a job description, the system leverages Gemini-powered AI Agents to generate high-quality LaTeX code for resumes, tailored cover letters, and recruiter outreach emails. The platform also features a community job board with an AI-driven trust verification system that flags suspicious listings for admin review before they go live.',
     challenges: [
-      'Developing a parser capable of accurately extracting requirements from non-standard job posting formats.',
-      'Generating unique, high-quality content that bypasses basic AI detection while remaining truthful to the candidate profile.',
-      'Managing automated browser interactions across multiple job boards safely.'
+      'Developing a robust AI verification agent to detect fraudulent job postings with high accuracy using scikit-learn and NLP.',
+      'Designing a seamless workflow for generating and rendering professional LaTeX resume templates in a browser environment.',
+      'Managing multi-stage AI workflows to ensure resumes are perfectly aligned with specific ATS (Applicant Tracking System) criteria.'
     ],
     solutions: [
       {
-        title: 'Data Acquisition',
-        description: 'Built a custom scraping engine with Playwright to handle dynamic web content.'
+        title: 'Intelligent Career Engine',
+        description: 'Engineered a Python-based backend using Gemini API to handle the complex logic of tailoring resumes to specific job descriptions.'
       },
       {
-        title: 'Contextual Analysis',
-        description: 'Engineered a multi-stage prompt pipeline that cross-references job requirements with candidate skills.'
+        title: 'Trust Verification System',
+        description: 'Implemented an AI Agent workflow that analyzes job post metadata and descriptions to score legitimacy, integrated with a manual admin approval portal.'
       },
       {
-        title: 'ATS Optimization',
-        description: 'Implemented scikit-learn for advanced keyword density analysis and ATS scoring simulation.'
+        title: 'Next-Gen Document Generation',
+        description: 'Built a React-based interface to deliver structured LaTeX output, enabling users to download high-fidelity, professional application documents.'
       }
     ],
     results: [
-      'Successfully processed over 100+ simulated applications with a 65% interview callback rate.',
-      'Reduced average application time from 45 minutes to under 2 minutes.',
-      'Open-sourced the core automation engine, gaining significant traction on GitHub.'
+      'Automated the creation of 500+ ATS-optimized resumes with a significant increase in user interview rates.',
+      'Reduces resume tailoring time from hours to under 60 seconds per application.',
+      'Implemented a secure job referral system that successfully filtered out 95% of identified low-trust postings.'
     ],
-    stack: ['Angular', 'Firebase', 'GPT-4', 'scikit-learn', 'Python', 'Playwright'],
-    link: 'https://github.com/SherazHussain546',
+    stack: ['Next.js', 'React', 'Angular', 'Firebase Auth', 'Firestore', 'Python', 'scikit-learn', 'Gemini API', 'AI Agents', 'Netlify'],
+    link: 'https://github.com/SherazHussain546/Job4You',
+    liveLink: 'https://job4yo.netlify.app/',
     image: 'https://picsum.photos/seed/job4you/800/600',
     imageHint: 'recruitment dashboard',
   },
