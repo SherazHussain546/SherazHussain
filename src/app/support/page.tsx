@@ -175,7 +175,10 @@ export default function SupportPage() {
 
           {/* Featured Posts Section - Strategic Update Feed */}
           <div className="mt-40">
-            <PostsSection />
+            <PostsSection 
+              title={<>Ongoing <span className="text-primary">Projects</span></>}
+              subtitle="Strategic updates and progress reports on active engineering initiatives powered by your support."
+            />
           </div>
 
           {/* Support Methods Grid */}
