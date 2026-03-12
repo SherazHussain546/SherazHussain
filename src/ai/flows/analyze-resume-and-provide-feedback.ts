@@ -55,14 +55,14 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   async (input) => {
     const resumeContent = getPortfolioContent();
     const {output} = await ai.generate({
-      model: 'googleai/gemini-2.0-flash',
+      model: 'googleai/gemini-1.5-flash',
       system: `You are an expert resume writer and career coach specializing in high-performance ATS optimization. Your task is to generate a complete application package (Resume, Cover Letter, and Reach-out Email) tailored perfectly for a specific job description for Sheraz Hussain.
 
     STRICT RULES:
     1. Source of Truth: The provided portfolio content is the ONLY source of facts about Sheraz Hussain. Do not invent, exaggerate, or fabricate information.
     2. Professional Role: Always identify Sheraz Hussain as a "Freelancer working with SYNC TECH Solutions".
     3. ATS Optimization: The LaTeX Resume must be structured for maximum parse-ability by ATS algorithms, aiming for a 100+ score.
-    4. LaTeX Compilation: Ensure all LaTeX code is valid and correctly escaped.`,
+    4. LaTeX Compilation: Ensure all LaTeX code is valid and correctly escaped for compilation.`,
       prompt: `
     Candidate Information (Source of Truth):
     ${resumeContent}
