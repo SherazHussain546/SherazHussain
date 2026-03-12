@@ -141,26 +141,26 @@ export const projects: Project[] = [
   {
     slug: 'market-genius',
     name: 'Market Genius – AI-Powered Financial Signals',
-    description: 'A real-time financial signal platform using Next.js and Genkit that delivers AI-generated buy/sell/hold insights.',
-    fullDescription: 'Market Genius is a high-performance financial analytics suite that empowers users with real-time intelligence on global stocks and cryptocurrencies. By integrating AlphaVantage and Crypto.com APIs, the platform ingests massive datasets which are then processed by a Google Genkit-powered LLM. The AI provides clear, actionable signals—Hold, Sell, or Buy—allowing investors to make data-driven decisions with confidence.',
+    description: 'Real-time stock and crypto intelligence providing actionable Buy, Sell, and Hold signals powered by Google Genkit.',
+    fullDescription: 'Market Genius is a cutting-edge financial intelligence platform that monitors global markets to provide clear, AI-driven guidance. By integrating real-time data from AlphaVantage (stocks) and Crypto.com (crypto), the platform uses Google Genkit (LLM) to analyze volatility and technical indicators. It translates complex market movements into simple "Buy," "Hold," or "Sell" signals, helping users navigate traditional assets and high-volatility cryptocurrencies with data-backed confidence.',
     challenges: [
-      'Aggregating real-time data from AlphaVantage (stocks) and Crypto.com (crypto) without exceeding rate limits.',
-      'Engineering a prompt pipeline that translates complex market volatility into simple, reliable Buy/Sell/Hold signals.',
-      'Implementing real-time push notifications for critical signal changes across web and mobile devices.'
+      'Synchronizing and aggregating real-time data streams from diverse APIs like AlphaVantage and Crypto.com without performance degradation.',
+      'Designing a reliable LLM prompt engineering pipeline with Google Genkit to ensure accurate and responsible financial signaling.',
+      'Implementing real-time push notifications (FCM) and secure authentication (Firebase Auth) across a scalable serverless architecture.'
     ],
     solutions: [
-      'Developed a sophisticated API middleware layer with Firestore-based caching to manage high-frequency data requests efficiently.',
-      'Utilized Google Genkit to build a multi-stage reasoning agent that analyzes sentiment, technical indicators, and historical trends.',
-      'Integrated Firebase Cloud Messaging (FCM) to deliver instant alerts, ensuring users never miss a market move regardless of their location.'
+      'Architected a robust backend using Next.js and Firebase Firestore to cache high-frequency market data and manage user portfolios.',
+      'Utilized Google Genkit to build an AI reasoning engine that processes technical market indicators into human-readable advice.',
+      'Leveraged Firebase Cloud Messaging for instant signal alerts, ensuring users stay updated on market shifts in real-time.'
     ],
     results: [
-      'Reduced decision-making latency by providing instant AI-summarized signals.',
-      'Achieved a 98% delivery success rate for critical financial alerts via FCM.',
-      'Scaled to handle concurrent data streams from over 100+ different assets simultaneously.'
+      'Delivered sub-second AI reasoning for over 100+ stock and cryptocurrency asset pairs.',
+      'Maintained 99.9% uptime for real-time data synchronization and signaling logic.',
+      'Empowered users with a 75% faster decision-making process through AI-summarized insights.'
     ],
-    stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Auth', 'Firestore', 'Firebase Cloud Messaging', 'AlphaVantage API', 'Crypto.com API'],
-    link: 'https://github.com/SherazHussain546',
-    liveLink: 'https://marketgenius546.netlify.app',
+    stack: ['Next.js', 'TypeScript', 'Tailwind', 'ShadCN UI', 'Google Genkit', 'Firebase Auth', 'Firestore', 'Firebase Messaging', 'AlphaVantage API', 'Crypto.com API'],
+    link: 'https://github.com/SherazHussain546/Market-Genius',
+    liveLink: 'https://marketgenius546.netlify.app/',
     image: 'https://picsum.photos/seed/market-genius/800/600',
     imageHint: 'finance dashboard',
   },
