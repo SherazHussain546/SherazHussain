@@ -10,9 +10,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sparkles, ClipboardCopy, FileText, AlertTriangle } from 'lucide-react';
+import { Sparkles, ClipboardCopy, FileText, AlertTriangle, Mail, Code } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const formSchema = z.object({
   jobDescription: z.string().min(100, 'Job description must be at least 100 characters.'),
@@ -41,7 +42,9 @@ export default function ResumeAnalyzer() {
     } catch (e) {
       console.error(e);
       setResult({
-        updatedResume: '',
+        latexResume: '',
+        latexCoverLetter: '',
+        reachOutEmail: { subject: '', body: '' },
         error: 'An unexpected error occurred during analysis. Please try again.'
       });
     } finally {
@@ -49,11 +52,11 @@ export default function ResumeAnalyzer() {
     }
   };
   
-  const handleCopyToClipboard = (text: string) => {
+  const handleCopyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast({
-      title: 'Copied to clipboard!',
-      description: 'The updated resume has been copied to your clipboard.',
+      title: `${label} Copied!`,
+      description: 'Content has been successfully copied to your clipboard.',
     });
   };
 
@@ -62,10 +65,10 @@ export default function ResumeAnalyzer() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Sparkles className="text-primary" />
-          AI Resume Generator
+          AI Recruitment Workplace
         </CardTitle>
         <CardDescription>
-          Your portfolio content is automatically used as your resume. Paste a job description below, and the AI will generate a first-class, tailored resume that is optimized for Applicant Tracking Systems (ATS).
+          Transform your portfolio into a high-scoring, ATS-optimized application package. Paste the job description below to generate LaTeX assets and professional reach-out strategies.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -78,58 +81,130 @@ export default function ResumeAnalyzer() {
                 <FormItem>
                   <FormLabel>Job Description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Paste the full job description here..." {...field} rows={15} />
+                    <Textarea 
+                      placeholder="Paste the target job description here (minimum 100 characters)..." 
+                      {...field} 
+                      rows={12} 
+                      className="bg-muted/10 font-sans"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Generating...' : 'Generate Resume'}
+            <Button type="submit" disabled={loading} className="w-full sm:w-auto">
+              {loading ? (
+                <span className="flex items-center gap-2">
+                   <Sparkles className="h-4 w-4 animate-spin" />
+                   Generating Package...
+                </span>
+              ) : 'Generate Application Assets'}
             </Button>
           </form>
         </Form>
 
         {loading && (
           <div className="space-y-4 pt-4">
-             <Skeleton className="h-8 w-1/4" />
-             <Skeleton className="h-4 w-1/2" />
-             <Skeleton className="h-64 w-full mt-4" />
+             <Skeleton className="h-10 w-full" />
+             <Skeleton className="h-[400px] w-full mt-4" />
           </div>
         )}
         
         {result?.error && (
            <Alert variant="destructive" className="mt-6">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Analysis Failed</AlertTitle>
+            <AlertTitle>Generation Failed</AlertTitle>
             <AlertDescription>{result.error}</AlertDescription>
           </Alert>
         )}
 
-        {result && !result.error && result.updatedResume && (
-           <Card className="bg-background/50 mt-6">
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="text-primary" />
-                  Your Tailored Resume
-                </CardTitle>
-                <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(result.updatedResume)}>
-                  <ClipboardCopy className="h-5 w-5" />
-                </Button>
-              </div>
-              <CardDescription>
-                Here is the AI-optimized version of your resume, tailored specifically for this job application.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                readOnly
-                value={result.updatedResume}
-                className="h-[500px] text-xs bg-muted/20"
-              />
-            </CardContent>
-          </Card>
+        {result && !result.error && (
+          <Tabs defaultValue="resume" className="mt-12 w-full">
+            <TabsList className="grid w-full grid-cols-3 bg-muted/50 p-1 border">
+              <TabsTrigger value="resume" className="flex items-center gap-2">
+                <Code className="h-4 w-4" />
+                Resume (LaTeX)
+              </TabsTrigger>
+              <TabsTrigger value="cover" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Cover Letter
+              </TabsTrigger>
+              <TabsTrigger value="email" className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                Reach Out
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="resume" className="mt-4">
+              <Card className="bg-background/50">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                  <div className="space-y-1">
+                    <CardTitle className="text-lg">LaTeX Resume Code</CardTitle>
+                    <CardDescription>Compile-ready, ATS-optimized LaTeX source.</CardDescription>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(result.latexResume, 'Resume LaTeX')}>
+                    <ClipboardCopy className="h-5 w-5" />
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <Textarea
+                    readOnly
+                    value={result.latexResume}
+                    className="h-[500px] font-mono text-[10px] bg-muted/20"
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="cover" className="mt-4">
+              <Card className="bg-background/50">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                  <div className="space-y-1">
+                    <CardTitle className="text-lg">LaTeX Cover Letter</CardTitle>
+                    <CardDescription>Tailored document addressing the hiring manager.</CardDescription>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(result.latexCoverLetter, 'Cover Letter LaTeX')}>
+                    <ClipboardCopy className="h-5 w-5" />
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <Textarea
+                    readOnly
+                    value={result.latexCoverLetter}
+                    className="h-[500px] font-mono text-[10px] bg-muted/20"
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="email" className="mt-4">
+              <Card className="bg-background/50">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                  <div className="space-y-1">
+                    <CardTitle className="text-lg">Reach-out Strategy</CardTitle>
+                    <CardDescription>Subject and body for direct outreach.</CardDescription>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => handleCopyToClipboard(`Subject: ${result.reachOutEmail.subject}\n\n${result.reachOutEmail.body}`, 'Email')}>
+                    <ClipboardCopy className="h-5 w-5" />
+                  </Button>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary">Subject Line</span>
+                    <div className="rounded-md border p-3 text-sm bg-muted/30 font-medium">{result.reachOutEmail.subject}</div>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary">Message Body</span>
+                    <Textarea
+                      readOnly
+                      value={result.reachOutEmail.body}
+                      className="h-[300px] text-sm bg-muted/20"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         )}
       </CardContent>
     </Card>

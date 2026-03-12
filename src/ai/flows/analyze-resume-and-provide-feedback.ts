@@ -17,7 +17,12 @@ const AnalyzeResumeAndProvideFeedbackInputSchema = z.object({
 export type AnalyzeResumeAndProvideFeedbackInput = z.infer<typeof AnalyzeResumeAndProvideFeedbackInputSchema>;
 
 const AnalyzeResumeAndProvideFeedbackOutputSchema = z.object({
-  updatedResume: z.string().describe('The full, updated resume content, rewritten to better match the job description.'),
+  latexResume: z.string().describe('The full, ATS-optimized resume in LaTeX code.'),
+  latexCoverLetter: z.string().describe('A tailored cover letter in LaTeX code.'),
+  reachOutEmail: z.object({
+    subject: z.string().describe('The subject line for the email.'),
+    body: z.string().describe('The body of the reach-out email.'),
+  }).describe('A professional reach-out email for the hiring manager.'),
   error: z.string().optional().describe('An error message if the analysis failed.'),
 });
 export type AnalyzeResumeAndProvideFeedbackOutput = z.infer<typeof AnalyzeResumeAndProvideFeedbackOutputSchema>;
@@ -39,25 +44,24 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
       const resumeContent = getPortfolioContent();
       const {output} = await ai.generate({
         model: 'googleai/gemini-1.5-flash-latest',
-        prompt: `You are an expert resume writer and career coach. Your task is to rewrite a resume to be perfectly tailored for a specific job description with the best keywords from teh job description added and also make it high ATS-scored.
+        prompt: `You are an expert resume writer and career coach specializing in high-performance ATS optimization. Your task is to generate a complete application package (Resume, Cover Letter, and Reach-out Email) tailored perfectly for a specific job description.
 
     You must follow these rules strictly:
-    1.  **Source of Truth**: The provided resume content is the ONLY source of facts about the candidate's skills, experience, and qualifications. You are forbidden from inventing, exaggerating, or fabricating any information. Every skill and experience in the output must have a direct basis in the source resume content.
-    2.  **Target**: The provided job description is the target. You must analyze it to identify the most important keywords, skills, and qualifications the employer is looking for.
-    3.  **Action**: Rewrite the resume to be a first-class, ATS-optimized document. This means:
-        - Rephrase bullet points to use action verbs and metrics that align with the job description.
-        - Strategically reorder skills or project highlights to emphasize what's most relevant.
-        - Ensure the most important keywords from the job description are naturally integrated into the resume content.
-        - The output must be a complete, professional resume, not just a list of suggestions.
-    4.  **Honesty is Critical**: Do not lie. The final resume must be a truthful representation of the candidate's experience as described in the source content.
+    1.  **Source of Truth**: The provided portfolio content is the ONLY source of facts about the candidate (Sheraz Hussain). You are forbidden from inventing, exaggerating, or fabricating any information.
+    2.  **Target**: The provided job description is the target. Analyze it for key skills, keywords, and qualifications.
+    3.  **Output Requirements**:
+        - **LaTeX Resume**: Generate full, compile-ready LaTeX code for a professional resume. It MUST be ATS-optimized with a score-potential of 100+. Use standard LaTeX classes like 'article' and packages like 'hyperref', 'geometry', and 'enumitem'. Ensure sections (Experience, Projects, Education, Certifications) are clearly defined.
+        - **LaTeX Cover Letter**: Generate full, compile-ready LaTeX code for a tailored cover letter. It should address the specific company and role, explaining why the candidate's background (as a Freelancer working with SYNC TECH Solutions) is the perfect fit.
+        - **Reach-out Email**: Write a professional LinkedIn or Email reach-out message to the hiring manager. Include a compelling subject line and a concise body.
+    4.  **Honesty**: Do not lie. Every skill in the output must have a basis in the source content.
 
-    Resume Content (Source of Truth):
+    Candidate Information (Source of Truth):
     ${resumeContent}
 
     Job Description (Target):
     ${input.jobDescription}
 
-    Now, generate the full, updated, and tailored resume.
+    Now, generate the full application package.
     `,
         output: {
           schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
@@ -66,17 +70,20 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
       
       if (!output) {
         return {
-            updatedResume: '',
+            latexResume: '',
+            latexCoverLetter: '',
+            reachOutEmail: { subject: '', body: '' },
             error: "The AI model failed to return a valid response. Please try again."
         }
       }
       return output;
     } catch (e: any) {
         console.error(e);
-        // Return a structured error to be displayed in the UI
         return {
-            updatedResume: '',
-            error: "The AI model could not be reached. This is likely an environment configuration issue. Please verify your API keys and model availability."
+            latexResume: '',
+            latexCoverLetter: '',
+            reachOutEmail: { subject: '', body: '' },
+            error: "The AI model could not be reached. Please verify your configuration."
         }
     }
   }
