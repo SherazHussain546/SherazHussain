@@ -109,7 +109,7 @@ export default function PostsSection() {
         {!loading && !error && allPosts.length === 0 ? (
             <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
         ) : (
-           <div className="mx-auto max-w-3xl">
+           <div className="mx-auto max-w-xl">
               <Carousel
                 setApi={setApi}
                 opts={{
@@ -124,7 +124,7 @@ export default function PostsSection() {
                 return (
                   <CarouselItem key={post.id} className="basis-full">
                     <div className="p-1">
-                      <Card className="group mx-auto flex max-w-2xl flex-col overflow-hidden border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20">
+                      <Card className="group mx-auto flex max-w-md flex-col overflow-hidden border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                         <CardHeader className="p-0">
                             <div className="relative aspect-video w-full overflow-hidden">
                                 <Image
@@ -140,7 +140,7 @@ export default function PostsSection() {
                             </div>
                         </CardHeader>
                         <CardContent className="flex-1 space-y-4 p-6">
-                          <h3 className="line-clamp-2 text-xl font-bold text-foreground">{post.title}</h3>
+                          <h3 className="line-clamp-2 text-lg font-bold text-foreground">{post.title}</h3>
                           <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed italic">"{post.description}"</p>
                            {post.hashtags && (
                             <div className="flex flex-wrap gap-1.5 pt-2">
@@ -153,7 +153,7 @@ export default function PostsSection() {
                            )}
                         </CardContent>
                         <CardFooter className="p-6 pt-0 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
-                          <Button asChild variant="ghost" className="w-full justify-between text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary transition-all">
+                          <Button asChild variant="ghost" className="w-full justify-between text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary/10 transition-all">
                             <Link
                               href={post.link}
                               target="_blank"
