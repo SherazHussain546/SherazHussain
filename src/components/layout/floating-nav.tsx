@@ -42,28 +42,28 @@ const navItems: NavItemProps[] = [
     label: 'Get in Touch',
     icon: Mail,
     target: '_self',
-    bgColor: 'bg-slate-800/70 hover:bg-slate-900',
+    bgColor: 'bg-slate-800/55 hover:bg-slate-900',
   },
   {
     href: 'https://github.com/SherazHussain546',
     label: 'Follow on GitHub',
     icon: Github,
     target: '_blank',
-    bgColor: 'bg-teal-600/70 hover:bg-teal-700',
+    bgColor: 'bg-teal-600/55 hover:bg-teal-700',
   },
   {
     href: 'https://linkedin.com/in/sherazhussain546/',
     label: 'Connect on LinkedIn',
     icon: Linkedin,
     target: '_blank',
-    bgColor: 'bg-blue-600/70 hover:bg-blue-700',
+    bgColor: 'bg-blue-600/55 hover:bg-blue-700',
   },
   {
     href: '/support',
     label: 'Support my Work',
     icon: Heart,
     target: '_self',
-    bgColor: 'bg-rose-600/70 hover:bg-rose-700',
+    bgColor: 'bg-rose-600/55 hover:bg-rose-700',
   },
 ];
 
