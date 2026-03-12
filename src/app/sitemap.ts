@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '',
     '/projects',
     '/survey',
+    '/support',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({

@@ -1,10 +1,11 @@
-import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, Heart } from 'lucide-react';
 import Link from 'next/link';
 
 const footerLinks = [
   { name: 'Skills', href: '/#skills' },
   { name: 'Projects', href: '/#projects' },
   { name: 'Certifications', href: '/#certifications' },
+  { name: 'Support my Work', href: '/support' },
   { name: 'Feedback Survey', href: '/survey' },
 ];
 
@@ -56,8 +57,9 @@ export default function Footer() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  className="text-sm text-muted-foreground transition-colors hover:text-primary flex items-center gap-2"
                 >
+                  {link.name === 'Support my Work' && <Heart className="h-3 w-3 text-red-500" />}
                   {link.name}
                 </Link>
               ))}
