@@ -6,9 +6,10 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Syne, DM_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 const syne = Syne({
   subsets: ['latin'],
@@ -31,7 +32,6 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
     notFound();
   }
 
-  // Mock stats for the "Engineering" feel
   const stats = [
     { num: '100%', desc: 'Custom Engineering' },
     { num: '<2s', desc: 'Avg. Load Time' },
@@ -48,21 +48,15 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
     )}>
       <Header />
       
-      {/* Custom Styles for the Document Aesthetic */}
-      <style jsx global>{`
-        .font-syne { font-family: var(--font-syne), sans-serif; }
-        .font-dm-sans { font-family: var(--font-dm-sans), sans-serif; }
-      `}</style>
-
       <main className="flex-1">
-        {/* TOP BAR OVERLAY FOR CASE STUDY */}
-        <div className="flex justify-between items-center px-4 md:px-16 py-4 border-b border-[#CDD5DB] sticky top-16 bg-[#f8f9fa]/90 backdrop-blur-md z-40">
+        {/* TOP BAR */}
+        <div className="flex justify-between items-center px-6 md:px-16 py-4 border-b border-[#CDD5DB] sticky top-16 bg-[#f8f9fa]/90 backdrop-blur-md z-40">
            <span className="text-[0.6rem] md:text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#4B6382]">Engineering Case Study</span>
            <span className="text-[0.6rem] md:text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#A68858]">Document: {project.slug.toUpperCase()}</span>
         </div>
 
         {/* HERO SECTION */}
-        <section className="px-4 md:px-16 py-12 md:py-24 border-b border-[#CDD5DB] grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 md:gap-16 items-start lg:items-end">
+        <section className="px-6 md:px-16 py-12 md:py-24 border-b border-[#CDD5DB] grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 md:gap-16 items-start lg:items-end">
           <div className="space-y-6">
             <div className="flex items-center gap-3 text-[0.65rem] md:text-[0.72rem] font-bold tracking-[0.16em] uppercase text-[#A68858]">
               <div className="w-6 md:w-8 h-[2px] bg-[#A68858]"></div>
@@ -76,7 +70,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             </p>
           </div>
 
-          <div className="flex flex-col gap-4 md:gap-5 border-l md:border-l-0 md:pl-0 pl-4 border-[#CDD5DB]">
+          <div className="flex flex-col gap-4 md:gap-5 border-l lg:border-l-0 lg:pl-0 pl-4 border-[#CDD5DB]">
             <div className="space-y-1">
               <div className="text-[0.6rem] md:text-[0.68rem] font-bold tracking-[0.14em] uppercase text-[#4B6382]">Principal Engineer</div>
               <div className="font-syne font-bold text-sm md:text-[0.95rem]">Sheraz Hussain</div>
@@ -99,7 +93,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
         </section>
 
         {/* STATS STRIP */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-b border-[#CDD5DB]">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b border-[#CDD5DB]">
           {stats.map((stat, i) => (
             <div key={i} className="p-8 md:p-12 border-b sm:border-b-0 sm:border-r border-[#CDD5DB] last:border-r-0 last:border-b-0 hover:bg-[#071739] group transition-all duration-300">
               <div className="text-3xl md:text-5xl font-extrabold text-[#A68858] leading-none font-syne group-hover:text-white">{stat.num}</div>
@@ -110,8 +104,8 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
 
         {/* CONTENT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] border-b border-[#CDD5DB]">
-          {/* SIDEBAR - HIDDEN ON MOBILE/TABLET */}
-          <aside className="border-r border-[#CDD5DB] p-12 hidden lg:block sticky top-32 h-fit">
+          {/* SIDEBAR */}
+          <aside className="border-r border-[#CDD5DB] p-8 lg:p-12 hidden lg:block sticky top-32 h-fit">
             <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382] mb-6">Contents</div>
             <nav className="flex flex-col gap-3">
               {['Background', 'Challenge', 'Solution', 'Technology', 'Results'].map((item, idx) => (
@@ -150,7 +144,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 <div className="w-6 h-[1.5px] bg-[#A68858]"></div>
               </div>
               <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 font-syne">Problem Statement</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {project.challenges.map((challenge, i) => (
                   <div key={i} className="bg-[#071739] text-white p-6 md:p-8 rounded-sm shadow-sm">
                     <div className="text-2xl md:text-3xl font-extrabold text-[#A68858] mb-4 font-syne">0{i+1}</div>
