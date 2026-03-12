@@ -311,6 +311,142 @@ export const projects: Project[] = [
     image: 'https://picsum.photos/seed/goexploree/800/600',
     imageHint: 'real estate map app',
   },
+  {
+    slug: 'luxe-threads',
+    name: 'Luxe Threads – E-Commerce Scaling & Technical Brand Management',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) architected an end-to-end brand management system and technical marketing funnel that doubled organic traffic.',
+    fullDescription: 'Luxe Threads required a modern, high-conversion e-commerce architecture to transition from boutique sales to a scalable digital brand. Sheraz Hussain, acting as a technical consultant for SYNC TECH Solutions, engineered a comprehensive e-commerce ecosystem. The solution focused on high-fidelity user interfaces, automated inventory management, and a robust technical SEO framework. By implementing advanced analytics and conversion-rate optimization (CRO) strategies, the platform achieved a 100% increase in organic reach and significantly reduced cart abandonment rates.',
+    challenges: [
+      'Transitioning a manual retail process to a fully automated e-commerce ecosystem.',
+      'Optimizing marketing spend through high-conversion landing pages and technical SEO.',
+      'Implementing real-time inventory synchronization across multiple sales channels.'
+    ],
+    solutions: [
+      {
+        title: 'Performance-First Storefront',
+        description: 'Built a high-speed storefront using Next.js and Tailwind, ensuring rapid load times essential for mobile shoppers and SEO ranking.'
+      },
+      {
+        title: 'Automated Operations',
+        description: 'Integrated the Shopify API with custom Node.js middleware to automate order processing and inventory updates, reducing manual overhead.'
+      },
+      {
+        title: 'Conversion Strategy',
+        description: 'Designed and deployed data-driven marketing funnels that utilize heatmaps and A/B testing to maximize user conversion.'
+      }
+    ],
+    results: [
+      'Doubled organic traffic within the first six months of deployment.',
+      'Increased average order value (AOV) by 25% through strategic UI/UX improvements.',
+      'Achieved a 99% accuracy rate in automated inventory tracking.'
+    ],
+    stack: ['Next.js', 'React', 'Shopify API', 'Tailwind CSS', 'Google Analytics', 'Technical SEO', 'Node.js'],
+    link: 'https://github.com/SherazHussain546',
+    image: 'https://picsum.photos/seed/luxethreads/800/600',
+    imageHint: 'luxury ecommerce fashion',
+  },
+  {
+    slug: 'stylish-marble-art',
+    name: 'Stylish Marble Art – Traditional Business Digital Transformation',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) transformed a traditional marble business into a modern e-commerce powerhouse with advanced SEO strategies.',
+    fullDescription: 'Stylish Marble Art, a specialist in luxury stonework, faced a plateau in physical showroom leads. Sheraz Hussain (SYNC TECH Solutions) led a comprehensive digital transformation to capture the international luxury interior design market. This project involved migrating a traditional catalog to a high-fidelity WordPress/WooCommerce platform, optimized for high-ticket technical SEO. The engineering focused on a bespoke product visualization system and an automated quote generation engine, turning a static portfolio into a dynamic sales machine.',
+    challenges: [
+      'Digitizing a high-touch, physical product catalog for an international audience.',
+      'Implementing a custom quote-generation system for bespoke marble works.',
+      'Competing in a highly saturated luxury interior design market through technical SEO.'
+    ],
+    solutions: [
+      {
+        title: 'Digital Showroom Architecture',
+        description: 'Transformed a physical-only business into a global digital showroom with high-resolution asset management and performance-optimized galleries.'
+      },
+      {
+        title: 'Custom Logic Engineering',
+        description: 'Developed a custom PHP-based pricing and quote engine that handles complex international shipping and material calculations.'
+      },
+      {
+        title: 'SEO Authority Building',
+        description: 'Executed a strategic technical SEO audit and content roadmap, positioning the site for competitive keywords in the luxury stone industry.'
+      }
+    ],
+    results: [
+      'Generated over 200+ high-quality international leads in the first quarter.',
+      'Ranked on the first page of Google for primary luxury marble keywords.',
+      'Increased global site sessions by 300% year-over-year.'
+    ],
+    stack: ['WordPress', 'WooCommerce', 'Custom PHP', 'MySQL', 'Technical SEO', 'Cloudflare', 'Elementor'],
+    link: 'https://www.stylishmarbleart.com',
+    image: 'https://picsum.photos/seed/stylishmarble/800/600',
+    imageHint: 'luxury marble interior',
+  },
+  {
+    slug: 'blogify-blog',
+    name: 'blogify.blog – High-Performance CMS & Publishing Architecture',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) optimized a content-heavy publishing platform for technical SEO and publishing velocity.',
+    fullDescription: 'blogify.blog is a high-velocity content publishing platform that required extreme performance to maintain SEO dominance. Sheraz Hussain (SYNC TECH Solutions) re-engineered the platform\'s architecture to support thousands of concurrent readers. The project involved building a custom headless CMS bridge, implementing multi-layer caching with Redis, and automating technical metadata generation using AI agents. This case study demonstrates expertise in high-availability cloud infrastructure and content-delivery optimization.',
+    challenges: [
+      'Achieving sub-second page loads for content-heavy articles with high-resolution imagery.',
+      'Building a custom headless CMS bridge for improved editorial workflow.',
+      'Automating technical SEO metadata generation to handle high-volume publishing.'
+    ],
+    solutions: [
+      {
+        title: 'Headless CMS Engineering',
+        description: 'Decoupled the frontend from the content source to allow for extreme performance and scalability using a React-based delivery layer.'
+      },
+      {
+        title: 'High-Performance Caching',
+        description: 'Implemented a sophisticated Redis-based caching strategy and AWS CloudFront CDN distribution to minimize server response times globally.'
+      },
+      {
+        title: 'AI Metadata Automation',
+        description: 'Integrated AI agents to automatically generate SEO descriptions, schema markup, and social sharing assets for every new publication.'
+      }
+    ],
+    results: [
+      'Achieved a perfect 100/100 Lighthouse performance score across all article pages.',
+      'Reduced editorial content production time by 30% through automation.',
+      'Maintained 99.99% uptime during viral social media traffic spikes.'
+    ],
+    stack: ['React', 'Node.js', 'PostgreSQL', 'Redis', 'Technical SEO', 'AWS CloudFront', 'Headless CMS'],
+    link: 'https://www.blogify.blog',
+    image: 'https://picsum.photos/seed/blogify/800/600',
+    imageHint: 'modern blogging platform',
+  },
+  {
+    slug: 'aptly-dressed',
+    name: 'APTLY DRESSED – Strategic Affiliate Infrastructure & API Engineering',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) engineered high-concurrency affiliate systems for global retail brands.',
+    fullDescription: 'APTLY DRESSED is a high-volume affiliate marketing platform that serves as a bridge between consumers and global retail giants. Sheraz Hussain (SYNC TECH Solutions) engineered the core tracking and synchronization engine. This mission-critical system handles millions of daily product updates and clicks, requiring extreme technical resilience. The project focused on high-concurrency Python/FastAPI backend architecture, automated product matching, and a scalable cloud-native infrastructure capable of handling peak holiday traffic without latency.',
+    challenges: [
+      'Handling millions of daily product updates via high-concurrency API hooks with global retailers.',
+      'Developing a resilient tracking system for global affiliate conversion attribution.',
+      'Scaling infrastructure to handle viral traffic spikes during peak retail seasons like Black Friday.'
+    ],
+    solutions: [
+      {
+        title: 'High-Concurrency Backend',
+        description: 'Architected a resilient Python/FastAPI backend that utilizes asynchronous processing to handle thousands of requests per second.'
+      },
+      {
+        title: 'Global Attribution Logic',
+        description: 'Engineered a secure, first-party cookie tracking system that ensures 100% accurate conversion attribution across multiple domains.'
+      },
+      {
+        title: 'Cloud-Native Scaling',
+        description: 'Deployed a containerized infrastructure using Docker and Kubernetes, allowing for automated horizontal scaling during traffic bursts.'
+      }
+    ],
+    results: [
+      'Successfully processed over 5 million clicks with zero attribution loss.',
+      'Automated the ingestion of 100k+ daily product SKU updates.',
+      'Achieved sub-100ms response times for global redirect hooks.'
+    ],
+    stack: ['Python', 'FastAPI', 'PostgreSQL', 'Docker', 'Kubernetes', 'Terraform', 'Google Cloud Platform', 'Redis'],
+    link: 'https://www.aptlydressed.com',
+    image: 'https://picsum.photos/seed/aptlydressed/800/600',
+    imageHint: 'affiliate marketing tech',
+  },
 ];
 
 export const education = {

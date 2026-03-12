@@ -41,6 +41,34 @@
       "width": 600,
       "height": 400,
       "hint": "real estate mobile"
+    },
+    "luxeThreads": {
+      "src": "https://picsum.photos/seed/luxethreads/800/600",
+      "alt": "Luxe Threads E-Commerce Case Study",
+      "width": 800,
+      "height": 600,
+      "hint": "luxury ecommerce fashion"
+    },
+    "stylishMarble": {
+      "src": "https://picsum.photos/seed/stylishmarble/800/600",
+      "alt": "Stylish Marble Art Transformation Case Study",
+      "width": 800,
+      "height": 600,
+      "hint": "luxury marble interior"
+    },
+    "blogify": {
+      "src": "https://picsum.photos/seed/blogify/800/600",
+      "alt": "blogify.blog CMS Case Study",
+      "width": 800,
+      "height": 600,
+      "hint": "modern blogging platform"
+    },
+    "aptlyDressed": {
+      "src": "https://picsum.photos/seed/aptlydressed/800/600",
+      "alt": "APTLY DRESSED Affiliate Tech Case Study",
+      "width": 800,
+      "height": 600,
+      "hint": "affiliate marketing tech"
     }
   }
 }
