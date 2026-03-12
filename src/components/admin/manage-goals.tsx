@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -37,8 +38,8 @@ export default function ManageGoals() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<any>(null);
 
-  const goalsCollection = collection(firestore, 'projectGoals');
-  const goalsQuery = query(goalsCollection, orderBy('order', 'asc'));
+  const goalsCollection = useMemo(() => collection(firestore, 'projectGoals'), []);
+  const goalsQuery = useMemo(() => query(goalsCollection, orderBy('order', 'asc')), [goalsCollection]);
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function ManageGoals() {
       });
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [goalsError]);
+  }, [goalsError, goalsCollection.path]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),

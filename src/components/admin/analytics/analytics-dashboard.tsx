@@ -1,18 +1,17 @@
+
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection, query, orderBy, limit } from 'firebase/firestore';
+import { collection, query, orderBy } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { 
-  BarChart, 
-  LineChart, 
+  Activity, 
   Users, 
   MousePointer2, 
   TrendingUp, 
   Globe,
-  Activity,
   ArrowUpRight
 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,8 +30,8 @@ import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function AnalyticsDashboard() {
-  const analyticsCollection = collection(firestore, 'analyticsEvents');
-  const analyticsQuery = query(analyticsCollection, orderBy('timestamp', 'desc'));
+  const analyticsCollection = useMemo(() => collection(firestore, 'analyticsEvents'), []);
+  const analyticsQuery = useMemo(() => query(analyticsCollection, orderBy('timestamp', 'desc')), [analyticsCollection]);
   const [snapshot, loading, error] = useCollection(analyticsQuery);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export default function AnalyticsDashboard() {
       });
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [error]);
+  }, [error, analyticsCollection.path]);
 
   if (loading) {
     return (
@@ -73,12 +72,12 @@ export default function AnalyticsDashboard() {
 
   const events = snapshot?.docs.map(doc => ({
     id: doc.id,
-    ...doc.data()
+    ...(doc.data() as any)
   })) || [];
 
   // 1. Basic Metrics
   const totalViews = events.length;
-  const sessions = new Set(events.map(e => (e as any).sessionId)).size;
+  const sessions = new Set(events.map(e => e.sessionId)).size;
   const viewsPerSession = sessions > 0 ? (totalViews / sessions).toFixed(1) : 0;
 
   // 2. Page Popularity Data (for Chart)
