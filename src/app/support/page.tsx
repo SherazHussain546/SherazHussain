@@ -101,7 +101,9 @@ export default function SupportPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#FDFDFB]">
       <Header />
+      {/* GoFundMe Embed Script */}
       <Script defer src="https://www.gofundme.com/static/js/embed.js" />
+      
       <main className="flex-1 relative overflow-hidden">
         <section className="sr-only">
           <h1>Support Sheraz Hussain - SYNC TECH Solutions</h1>
@@ -148,6 +150,7 @@ export default function SupportPage() {
              ))}
           </div>
 
+          {/* Featured Campaign Section with Provided Embed */}
           <div className="mx-auto mt-32 max-w-2xl text-center">
             <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
                 <Target className="h-4 w-4" />
