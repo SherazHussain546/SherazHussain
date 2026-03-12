@@ -49,7 +49,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
       <Header />
       
       <main className="flex-1">
-        {/* TOP BAR */}
+        {/* TOP BAR / SUB-HEADER */}
         <div className="flex justify-between items-center px-6 md:px-16 py-4 border-b border-[#CDD5DB] sticky top-16 bg-[#f8f9fa]/90 backdrop-blur-md z-40">
            <span className="text-[0.6rem] md:text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#4B6382]">Engineering Case Study</span>
            <span className="text-[0.6rem] md:text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#A68858]">Document: {project.slug.toUpperCase()}</span>
@@ -104,29 +104,42 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
 
         {/* CONTENT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] border-b border-[#CDD5DB]">
-          {/* SIDEBAR */}
-          <aside className="border-r border-[#CDD5DB] p-8 lg:p-12 hidden lg:block sticky top-32 h-fit">
+          
+          {/* SIDEBAR NAVIGATION */}
+          <aside className="border-r border-[#CDD5DB] p-8 lg:p-12 hidden lg:block sticky top-32 h-fit max-h-[calc(100vh-128px)] overflow-y-auto">
             <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382] mb-6">Contents</div>
             <nav className="flex flex-col gap-3">
-              {['Background', 'Challenge', 'Solution', 'Technology', 'Results'].map((item, idx) => (
+              {[
+                { label: 'Background', id: 'background' },
+                { label: 'Challenge', id: 'challenge' },
+                { label: 'Solution', id: 'solution' },
+                { label: 'Technology', id: 'technology' },
+                { label: 'Results', id: 'results' }
+              ].map((item, idx) => (
                 <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`} 
-                  className="text-[0.75rem] font-bold tracking-widest text-[#4B6382] hover:text-[#071739] border-l-2 border-transparent hover:border-[#A68858] pl-3 transition-all uppercase"
+                  key={item.id}
+                  href={`#${item.id}`} 
+                  className="text-[0.75rem] font-bold tracking-widest text-[#4B6382] hover:text-[#071739] border-l-2 border-transparent hover:border-[#A68858] pl-3 transition-all uppercase block"
                 >
-                  0{idx + 1} · {item}
+                  0{idx + 1} · {item.label}
                 </a>
               ))}
             </nav>
-            <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382] mt-12 mb-2">Publisher</div>
-            <div className="font-syne font-bold text-xs text-[#071739]">SYNC TECH SOLUTIONS</div>
+
+            <div className="mt-12 space-y-4">
+              <div className="text-[0.6rem] tracking-[0.2em] uppercase font-bold text-[#4B6382]">Published by</div>
+              <div>
+                <div className="font-syne font-bold text-xs text-[#071739]">SYNC TECH SOLUTIONS</div>
+                <div className="text-[0.7rem] text-[#A68858] font-medium mt-1">synctech.ie</div>
+              </div>
+            </div>
           </aside>
 
           {/* MAIN CONTENT AREA */}
           <div className="p-6 md:p-16 max-w-5xl">
             
             {/* 01 BACKGROUND */}
-            <section id="background" className="mb-16 md:mb-24">
+            <section id="background" className="mb-16 md:mb-24 scroll-mt-40">
               <div className="flex items-center gap-2 text-[0.65rem] md:text-[0.68rem] font-bold tracking-[0.2em] uppercase text-[#A68858] mb-6">
                 01 — Background
                 <div className="w-6 h-[1.5px] bg-[#A68858]"></div>
@@ -138,7 +151,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             </section>
 
             {/* 02 CHALLENGE */}
-            <section id="challenge" className="mb-16 md:mb-24">
+            <section id="challenge" className="mb-16 md:mb-24 scroll-mt-40">
               <div className="flex items-center gap-2 text-[0.65rem] md:text-[0.68rem] font-bold tracking-[0.2em] uppercase text-[#A68858] mb-6">
                 02 — The Challenge
                 <div className="w-6 h-[1.5px] bg-[#A68858]"></div>
@@ -156,7 +169,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             </section>
 
             {/* 03 SOLUTION */}
-            <section id="solution" className="mb-16 md:mb-24">
+            <section id="solution" className="mb-16 md:mb-24 scroll-mt-40">
               <div className="flex items-center gap-2 text-[0.65rem] md:text-[0.68rem] font-bold tracking-[0.2em] uppercase text-[#A68858] mb-6">
                 03 — The Solution
                 <div className="w-6 h-[1.5px] bg-[#A68858]"></div>
@@ -176,7 +189,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             </section>
 
             {/* 04 TECHNOLOGY */}
-            <section id="technology" className="mb-16 md:mb-24">
+            <section id="technology" className="mb-16 md:mb-24 scroll-mt-40">
               <div className="flex items-center gap-2 text-[0.65rem] md:text-[0.68rem] font-bold tracking-[0.2em] uppercase text-[#A68858] mb-6">
                 04 — Tech Stack
                 <div className="w-6 h-[1.5px] bg-[#A68858]"></div>
@@ -192,7 +205,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             </section>
 
             {/* 05 RESULTS */}
-            <section id="results" className="mb-8">
+            <section id="results" className="mb-8 scroll-mt-40">
               <div className="flex items-center gap-2 text-[0.65rem] md:text-[0.68rem] font-bold tracking-[0.2em] uppercase text-[#A68858] mb-6">
                 05 — Outcomes
                 <div className="w-6 h-[1.5px] bg-[#A68858]"></div>
