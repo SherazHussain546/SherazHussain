@@ -2,14 +2,9 @@ import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
 const footerLinks = [
-  { name: 'About', href: '/#about' },
   { name: 'Skills', href: '/#skills' },
-  { name: 'Experience', href: '/#experience' },
   { name: 'Projects', href: '/#projects' },
-  { name: 'Education', href: '/#education' },
   { name: 'Certifications', href: '/#certifications' },
-  { name: 'Posts', href: '#posts' },
-  { name: 'Contact', href: '/#contact' },
   { name: 'Feedback Survey', href: '/survey' },
 ];
 
