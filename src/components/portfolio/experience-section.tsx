@@ -55,7 +55,7 @@ export default function ExperienceSection() {
                 <CarouselItem key={`${exp.role}-${exp.company}-${index}`} className="basis-full">
                   <div className="p-1">
                     <Card
-                      className="group flex flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20"
+                      className="group mx-auto flex max-w-2xl flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20"
                     >
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between">
