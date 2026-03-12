@@ -5,17 +5,22 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageSquareQuote, X } from 'lucide-react';
+import { Heart, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export default function FeedbackPopup() {
+export default function SupportPopup() {
   const [isVisible, setIsVisible] = useState(false);
   const [hasBeenDismissed, setHasBeenDismissed] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    // Don't show on survey page or admin pages
-    if (pathname.startsWith('/survey') || pathname.startsWith('/admin') || hasBeenDismissed) {
+    // Don't show on support page, survey page or admin pages
+    if (
+      pathname.startsWith('/support') || 
+      pathname.startsWith('/survey') || 
+      pathname.startsWith('/admin') || 
+      hasBeenDismissed
+    ) {
       setIsVisible(false);
       return;
     }
@@ -40,7 +45,11 @@ export default function FeedbackPopup() {
     setIsVisible(false);
   };
   
-  if (pathname.startsWith('/survey') || pathname.startsWith('/admin')) return null;
+  if (
+    pathname.startsWith('/support') || 
+    pathname.startsWith('/survey') || 
+    pathname.startsWith('/admin')
+  ) return null;
 
   return (
     <AnimatePresence>
@@ -52,33 +61,33 @@ export default function FeedbackPopup() {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className="fixed bottom-4 right-4 z-50 w-full max-w-sm"
         >
-          <Card className="shadow-2xl">
+          <Card className="shadow-2xl border-primary/20 bg-white/95 backdrop-blur-sm">
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-2 right-2 h-6 w-6"
+              className="absolute top-2 right-2 h-6 w-6 hover:bg-muted"
               onClick={handleDismiss}
-              aria-label="Dismiss feedback prompt"
+              aria-label="Dismiss support prompt"
             >
               <X className="h-4 w-4" />
             </Button>
             <CardHeader className="flex-row items-start gap-4 space-y-0 pr-10">
-               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                <MessageSquareQuote className="h-6 w-6 text-primary" />
+               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10">
+                <Heart className="h-6 w-6 text-red-500 fill-red-500" />
               </div>
               <div>
-                <CardTitle>Made it to the end?</CardTitle>
+                <CardTitle className="text-lg">Enjoying the projects?</CardTitle>
                 <CardDescription className="mt-1">
-                  Your feedback would be amazing!
+                  Help me keep building open-source tools.
                 </CardDescription>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
-                I'd be grateful to hear your thoughts on my portfolio. It only takes a minute.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                As a Freelancer at SYNC TECH Solutions, I dedicate time to free AI tools. Your support makes this possible.
               </p>
-              <Button asChild className="mt-4 w-full" size="sm">
-                <Link href="/survey">Give Feedback</Link>
+              <Button asChild className="mt-4 w-full bg-primary hover:bg-primary/90" size="sm">
+                <Link href="/support">Support My Work</Link>
               </Button>
             </CardContent>
           </Card>
