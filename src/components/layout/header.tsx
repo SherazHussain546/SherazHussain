@@ -51,10 +51,18 @@ export default function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className="relative text-sm font-medium text-foreground/80 transition-colors hover:text-primary group"
+              className={cn(
+                'relative text-sm font-medium transition-colors group',
+                link.name === 'Support' 
+                  ? 'text-red-500 hover:text-red-600' 
+                  : 'text-foreground/80 hover:text-primary'
+              )}
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+              <span className={cn(
+                'absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full',
+                link.name === 'Support' ? 'bg-red-500' : 'bg-primary'
+              )} />
             </Link>
           ))}
         </nav>
@@ -75,7 +83,12 @@ export default function Header() {
                   <Link
                     key={link.name}
                     href={link.href}
-                    className="text-lg font-medium text-foreground/80 transition-all hover:text-primary hover:translate-x-2"
+                    className={cn(
+                      'text-lg font-medium transition-all hover:translate-x-2',
+                      link.name === 'Support' 
+                        ? 'text-red-500 hover:text-red-600' 
+                        : 'text-foreground/80 hover:text-primary'
+                    )}
                   >
                     {link.name}
                   </Link>

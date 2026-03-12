@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail, MapPin, Phone, Heart } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const footerLinks = [
   { name: 'Skills', href: '/#skills' },
@@ -57,9 +58,14 @@ export default function Footer() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary flex items-center gap-2 w-fit"
+                  className={cn(
+                    "text-sm transition-colors flex items-center gap-2 w-fit",
+                    link.name === 'Support my Work' 
+                      ? "text-red-500 hover:text-red-600 font-medium" 
+                      : "text-muted-foreground hover:text-primary"
+                  )}
                 >
-                  {link.name === 'Support my Work' && <Heart className="h-3 w-3 text-red-500" />}
+                  {link.name === 'Support my Work' && <Heart className="h-3 w-3 text-red-500 fill-red-500" />}
                   {link.name}
                 </Link>
               ))}
