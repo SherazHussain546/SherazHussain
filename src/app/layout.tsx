@@ -95,7 +95,12 @@ export const metadata: Metadata = {
     'Market Intelligence',
     'Financial Signals',
     'Conversational AI',
-    'Document Intelligence'
+    'Document Intelligence',
+    'Daft.ie inspired',
+    'Real Estate Mobile App',
+    'Geospatial Development',
+    'Ionic Capacitor Expert',
+    'Real-time Market Data'
   ],
   robots: {
     index: true,
