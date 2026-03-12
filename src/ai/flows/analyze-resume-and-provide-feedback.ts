@@ -55,6 +55,7 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   async (input) => {
     const resumeContent = getPortfolioContent();
     const {output} = await ai.generate({
+      // CHANGE MODEL HERE: googleai/gemini-2.0-flash is currently the latest.
       model: 'googleai/gemini-2.0-flash',
       system: `You are an expert resume writer and career coach specializing in high-performance ATS optimization. Your task is to generate a complete application package (Resume, Cover Letter, and Reach-out Email) tailored perfectly for a specific job description for Sheraz Hussain.
 
@@ -96,31 +97,31 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
         \\\\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\\\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
     \\\\end{center}
     \\\\section{Professional Summary}
-    [Generate summary]
+    [Fill this based on job description: Results-oriented [Job Title] with [Number] years of experience in [Industry]...]
     \\\\section{Technical Skills}
     \\\\begin{itemize}
-        \\\\item \\\\textbf{Languages:} [Relevant]
-        \\\\item \\\\textbf{Frameworks/Tools:} [Relevant]
-        \\\\item \\\\textbf{Cloud \\\\& DevOps:} [Relevant]
-        \\\\item \\\\textbf{Databases:} [Relevant]
+        \\\\item \\\\textbf{Languages:} [Relevant skills from portfolio]
+        \\\\item \\\\textbf{Frameworks/Tools:} [Relevant skills from portfolio]
+        \\\\item \\\\textbf{Cloud \\\\& DevOps:} [Relevant skills from portfolio]
+        \\\\item \\\\textbf{Databases:} [Relevant skills from portfolio]
     \\\\end{itemize}
     \\\\section{Professional Experience}
     \\\\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
     \\\\begin{itemize}
-        \\\\item [Achievement 1]
+        \\\\item [Achievement 1 from portfolio, quantifiably stated]
     \\\\end{itemize}
-    [Add other experiences from source]
+    [Include all other relevant experiences from the portfolio]
     \\\\section{Technical Projects}
     \\\\textbf{Project Name} $|$ \\\\textit{Tech Stack: [Stack]} \\\\hfill \\\\href{https://github.com/...}{Project Link}
     \\\\begin{itemize}
-        \\\\item [Achievement 1]
+        \\\\item [Achievement 1 from portfolio]
     \\\\end{itemize}
     \\\\section{Education}
     \\\\textbf{Dublin Business School} \\\\hfill Dublin, Ireland \\\\\\\\
     Bachelor of Science in Computing (First Class Honors) $|$ GPA: 1:1 \\\\hfill Sept 2021 -- April 2025
     \\\\section{Certifications}
     \\\\begin{itemize}
-        \\\\item Certification Name -- Issuing Organization (Year)
+        \\\\item [List all certifications from portfolio]
     \\\\end{itemize}
     \\\\end{document}
 
@@ -156,7 +157,7 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     City, State
     \\\\vspace{10pt}
     Dear Hiring Manager,
-    [Generate tailored body based on the requested template structure]
+    [Generate tailored body based on the candidate's actual experience and the job description]
     Sincerely,
     \\\\vspace{30pt}
     SHERAZ HUSSAIN
