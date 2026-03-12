@@ -330,9 +330,9 @@ export default function SupportPage() {
                   By supporting my Web3 identity, you fund the research of decentralized AI tools that remain free from intrusive corporate data harvesting.
                 </p>
                 <div className="pt-4 flex flex-wrap justify-center md:justify-start gap-4">
-                  <Badge variant="outline" className="text-white border-[#2596be] bg-[#2596be] px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Bitcoin</Badge>
-                  <Badge variant="outline" className="text-white border-white/20 px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Cardano</Badge>
-                  <Badge variant="outline" className="text-white border-white/20 px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Solana</Badge>
+                  <Badge variant="outline" className="text-white border-[#F7931A] bg-[#F7931A] px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Bitcoin</Badge>
+                  <Badge variant="outline" className="text-white border-[#0033AD] bg-[#0033AD] px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Cardano</Badge>
+                  <Badge variant="outline" className="text-white border-[#9945FF] bg-[#9945FF] px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Solana</Badge>
                 </div>
               </div>
               <div className="w-full md:w-96">
