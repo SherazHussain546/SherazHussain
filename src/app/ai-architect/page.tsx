@@ -13,8 +13,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Badge } from '@/components/ui/badge';
 import { getArchitectAdvice, AIArchitectOutput } from '@/ai/flows/ai-architect-flow';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Cpu, Layers, ListChecks, ArrowRight, BrainCircuit } from 'lucide-react';
+import { Sparkles, Cpu, Layers, ListChecks, ArrowRight, BrainCircuit, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 const formSchema = z.object({
   problemDescription: z.string().min(20, 'Please describe your challenge in more detail (min 20 chars).'),
@@ -58,6 +59,13 @@ export default function AIArchitectPage() {
       <Header />
       <main className="flex-1 py-12 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
+          <Button asChild variant="ghost" size="sm" className="mb-8 -ml-3 gap-2 text-muted-foreground hover:text-primary">
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Link>
+          </Button>
+
           <div className="mx-auto max-w-4xl text-center mb-16">
             <Badge variant="outline" className="mb-6 px-4 py-1 text-[10px] font-bold uppercase tracking-widest border-primary/40 text-primary">
               SYNC TECH AI WORKPLACE

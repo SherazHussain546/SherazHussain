@@ -1,6 +1,8 @@
-
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function SurveyPage() {
   return (
@@ -8,6 +10,13 @@ export default function SurveyPage() {
       <Header />
       <main className="flex-1 py-12 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
+          <Button asChild variant="ghost" size="sm" className="mb-8 -ml-3 gap-2 text-muted-foreground hover:text-primary">
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Link>
+          </Button>
+
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
               Feedback Survey

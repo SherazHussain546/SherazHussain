@@ -13,7 +13,8 @@ import {
   Users,
   AlertCircle,
   Handshake,
-  Mail
+  Mail,
+  ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -83,7 +84,14 @@ export default function FormsHubPage() {
         {/* Background Accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
         
-        <div className="container relative z-10 mx-auto px-4 py-16 md:py-32 md:px-6">
+        <div className="container relative z-10 mx-auto px-4 py-8 md:py-16 md:px-6">
+          <Button asChild variant="ghost" size="sm" className="mb-8 -ml-3 gap-2 text-muted-foreground hover:text-primary">
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Link>
+          </Button>
+
           <div className="mx-auto max-w-4xl text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
