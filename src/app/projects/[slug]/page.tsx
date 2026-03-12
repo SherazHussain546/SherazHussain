@@ -60,6 +60,10 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
   const prevTab = currentIndex > 0 ? tabs[currentIndex - 1] : null;
   const nextTab = currentIndex < tabs.length - 1 ? tabs[currentIndex + 1] : null;
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className={cn(
       "min-h-screen bg-[#FDFDFB] text-[#071739] selection:bg-[#A68858]/20 selection:text-[#071739]",
@@ -108,7 +112,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                       onClick={() => {
                         setActiveTab(tab.id);
                         setIsMenuOpen(false);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        scrollToTop();
                       }}
                       className={cn(
                         "flex items-center gap-3 w-full p-3 rounded-lg transition-all group",
@@ -197,7 +201,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 key={tab.id}
                 onClick={() => {
                   setActiveTab(tab.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  scrollToTop();
                 }}
                 className={cn(
                   "py-5 px-4 font-mono text-[0.65rem] uppercase tracking-widest whitespace-nowrap border-b-2 transition-all",
@@ -387,7 +391,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               <button 
                 onClick={() => {
                   setActiveTab(prevTab.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  scrollToTop();
                 }}
                 className="group flex flex-col items-start gap-2 text-left transition-all"
               >
@@ -403,7 +407,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               <button 
                 onClick={() => {
                   setActiveTab(nextTab.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  scrollToTop();
                 }}
                 className="group flex flex-col items-end text-right transition-all"
               >
