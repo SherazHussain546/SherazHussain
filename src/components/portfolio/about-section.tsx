@@ -17,7 +17,7 @@ export default function AboutSection() {
   return (
     <section id="about" className="py-20 md:py-32">
       <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-3 md:px-6">
-        <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-lg md:h-64 md:w-64">
+        <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-xl border-4 border-primary md:h-64 md:w-64 ring-4 ring-primary/10">
            {loading ? (
              <Skeleton className="h-full w-full rounded-full" />
            ) : (
