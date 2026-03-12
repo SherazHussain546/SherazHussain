@@ -19,13 +19,14 @@ import {
   Globe,
   Coins,
   Cpu,
-  Code2,
-  Users
+  Users,
+  Target
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Script from 'next/script';
 
 export default function SupportPage() {
   const { toast } = useToast();
@@ -65,7 +66,7 @@ export default function SupportPage() {
       description: 'Invest in long-term infrastructure, large-scale AI research, and open-source sustainability.',
       icon: Heart,
       actionLabel: 'Contribute to the Goal',
-      link: 'https://www.gofundme.com/', 
+      link: 'https://www.gofundme.com/f/be-a-part-of-my-new-projects', 
       color: 'bg-emerald-500/10 text-emerald-600',
     },
     {
@@ -100,14 +101,13 @@ export default function SupportPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#FDFDFB]">
       <Header />
+      <Script defer src="https://www.gofundme.com/static/js/embed.js" />
       <main className="flex-1 relative overflow-hidden">
-        {/* SEO Metadata for accessibility/crawlers */}
         <section className="sr-only">
           <h1>Support Sheraz Hussain - SYNC TECH Solutions</h1>
           <p>Support the development of high-performance AI tools, open-source software, and cloud infrastructure.</p>
         </section>
 
-        {/* Decorative Background */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
         <div className="absolute top-[10%] right-[-5%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -130,7 +130,6 @@ export default function SupportPage() {
             </motion.div>
           </div>
 
-          {/* Impact Cards */}
           <div className="mx-auto mt-24 grid max-w-5xl gap-8 md:grid-cols-3">
              {valueProps.map((prop, idx) => (
                 <motion.div 
@@ -149,8 +148,21 @@ export default function SupportPage() {
              ))}
           </div>
 
-          {/* Support Grid */}
-          <div className="mx-auto mt-20 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-32 max-w-2xl text-center">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
+                <Target className="h-4 w-4" />
+                Featured Campaign
+            </div>
+            <h2 className="text-4xl font-extrabold text-foreground md:text-5xl tracking-tight mb-12">New Project Goals</h2>
+            <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl border border-border/50 overflow-hidden">
+              <div 
+                className="gfm-embed" 
+                data-url="https://www.gofundme.com/f/be-a-part-of-my-new-projects/widget/medium?sharesheet=undefined&attribution_id=sl:4cfddb57-1fb9-4af0-896d-6e51bb8e9711"
+              ></div>
+            </div>
+          </div>
+
+          <div className="mx-auto mt-32 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
             {supportMethods.map((method, idx) => (
               <motion.div 
                 key={method.title}
@@ -225,7 +237,6 @@ export default function SupportPage() {
             ))}
           </div>
 
-          {/* Web3 Verified Spotlight */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -269,7 +280,6 @@ export default function SupportPage() {
             </div>
           </motion.div>
 
-          {/* Real-time Activity Hub */}
           <div className="mx-auto mt-32 max-w-5xl">
              <div className="mb-16 text-center">
                 <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
@@ -291,7 +301,6 @@ export default function SupportPage() {
              </div>
           </div>
 
-          {/* Mission Statement */}
           <div className="mx-auto mt-40 max-w-4xl text-center border-t pt-20">
              <div className="flex justify-center mb-10">
                 <div className="h-px w-16 bg-primary/30" />
