@@ -24,6 +24,9 @@ const itemVariants = {
 };
 
 export default function ProjectsSection() {
+  // Show only the top 4 projects on the home page
+  const featuredProjects = projects.slice(0, 4);
+
   return (
     <section id="projects" className="bg-card py-20 md:py-32 border-t">
       <div className="container mx-auto px-4 md:px-6">
@@ -49,7 +52,7 @@ export default function ProjectsSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2"
         >
-          {projects.map((project) => (
+          {featuredProjects.map((project) => (
             <motion.div key={project.slug} variants={itemVariants}>
               <Card className="group flex h-full flex-col overflow-hidden bg-background/50 transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl border-border/50 hover:-translate-y-2">
                 <CardHeader className="pb-0 pt-6 px-6">
