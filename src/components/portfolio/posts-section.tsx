@@ -109,7 +109,7 @@ export default function PostsSection() {
         {!loading && !error && allPosts.length === 0 ? (
             <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
         ) : (
-           <div className="mx-auto max-w-xl">
+           <div className="mx-auto max-w-md">
               <Carousel
                 setApi={setApi}
                 opts={{
@@ -139,11 +139,11 @@ export default function PostsSection() {
                                 </div>
                             </div>
                         </CardHeader>
-                        <CardContent className="flex-1 space-y-4 p-6">
+                        <CardContent className="flex-1 space-y-4 p-6 text-center">
                           <h3 className="line-clamp-2 text-lg font-bold text-foreground">{post.title}</h3>
                           <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed italic">"{post.description}"</p>
                            {post.hashtags && (
-                            <div className="flex flex-wrap gap-1.5 pt-2">
+                            <div className="flex flex-wrap justify-center gap-1.5 pt-2">
                                 {post.hashtags.split(',').map(tag => (
                                     <Badge key={tag.trim()} variant="secondary" className="text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary border-none">
                                       {tag.trim()}
@@ -153,12 +153,12 @@ export default function PostsSection() {
                            )}
                         </CardContent>
                         <CardFooter className="p-6 pt-0 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
-                          <Button asChild variant="ghost" className="w-full justify-between text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary/10 transition-all">
+                          <Button asChild variant="ghost" className="w-full justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all">
                             <Link
                               href={post.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-between w-full"
+                              className="flex items-center justify-center gap-2 w-full"
                             >
                               <span>Read on {post.platform}</span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -41,7 +41,7 @@ export default function ExperienceSection() {
           </p>
         </div>
         
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-md">
           <Carousel
             setApi={setApi}
             opts={{
@@ -55,7 +55,7 @@ export default function ExperienceSection() {
                 <CarouselItem key={`${exp.role}-${exp.company}-${index}`} className="basis-full">
                   <div className="p-1">
                     <Card
-                      className="group mx-auto flex max-w-2xl flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20"
+                      className="group mx-auto flex max-w-md flex-col border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20"
                     >
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between">
@@ -89,9 +89,9 @@ export default function ExperienceSection() {
                       </CardContent>
                       <CardFooter className="pt-6 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
                         {exp.link ? (
-                          <Button asChild variant="ghost" size="lg" className="w-full justify-between hover:bg-primary hover:text-primary-foreground">
-                            <Link href={exp.link} target="_blank" rel="noopener noreferrer">
-                              Visit Project Website
+                          <Button asChild variant="ghost" size="lg" className="w-full justify-center hover:bg-primary hover:text-primary-foreground transition-all">
+                            <Link href={exp.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full">
+                              <span>Visit Project Website</span>
                               <ExternalLink className="h-5 w-5" />
                             </Link>
                           </Button>
