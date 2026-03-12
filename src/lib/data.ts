@@ -243,6 +243,40 @@ export const projects: Project[] = [
     imageHint: 'AI recruitment platform',
   },
   {
+    slug: 'stylish-marble-art',
+    name: 'Stylish Marble Art – Digital Hegemony & SEO Dominance for Luxury Stonework',
+    description: 'A Karachi-based marble powerhouse with 3 physical stores, transformed into a search engine leader using Next.js and advanced geospatial intelligence.',
+    fullDescription: 'Stylish Marble Art is a legendary name in Karachi and the wider Sindh province, operating three major showrooms. Sheraz Hussain (SYNC TECH Solutions) led a comprehensive digital transformation to capture the high-end luxury market. By implementing a high-performance Next.js frontend deployed on Netlify, integrated with a custom SQL backend and Google Maps API for multi-location discovery, the platform achieved a 100% success rate in search engine visibility. The strategic implementation of niche keywords and technical metadata ensured the brand\'s dominance at the top of global and local search results.',
+    challenges: [
+      'Optimizing multi-location geospatial discovery for 3 Karachi stores.',
+      'Competing for top-tier search rankings in a high-stakes luxury stone market.',
+      'Ensuring sub-second load times for high-resolution marble texture displays.'
+    ],
+    solutions: [
+      {
+        title: 'Geospatial Multi-Location',
+        description: 'Integrated Google Maps API with custom markers for all three physical Karachi showrooms, improving local foot traffic discovery.'
+      },
+      {
+        title: 'Next.js & Netlify Optimization',
+        description: 'Leveraged static site generation (SSG) to provide instant load speeds, crucial for retaining high-net-worth clients.'
+      },
+      {
+        title: 'Advanced SEO Engineering',
+        description: 'Architected a sophisticated metadata layer and keyword strategy that propelled the site to the #1 spot for regional marble commerce.'
+      }
+    ],
+    results: [
+      'Maintained #1 search engine ranking for primary luxury stone keywords.',
+      'Successfully digitized a provincial leader with 3 physical branches.',
+      'Increased digital lead generation by 400% through technical SEO dominance.'
+    ],
+    stack: ['Next.js', 'Google Maps API', 'Custom SQL', 'Netlify', 'Technical SEO', 'Metadata Engineering', 'React'],
+    link: 'https://www.stylishmarbleart.com',
+    image: 'https://picsum.photos/seed/stylishmarble/800/600',
+    imageHint: 'luxury marble interior',
+  },
+  {
     slug: 'chattyai',
     name: 'ChattyAI – AI-Driven Conversational Study Assistant & Document Intelligence',
     description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) engineered ChattyAI, a high-performance study platform that empowered 400+ DBS students with document intelligence, live video streaming, and AI-driven summarization.',
@@ -344,40 +378,6 @@ export const projects: Project[] = [
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/seed/luxethreads/800/600',
     imageHint: 'luxury ecommerce fashion',
-  },
-  {
-    slug: 'stylish-marble-art',
-    name: 'Stylish Marble Art – Traditional Business Digital Transformation',
-    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) transformed a traditional marble business into a modern e-commerce powerhouse with advanced SEO strategies.',
-    fullDescription: 'Stylish Marble Art, a specialist in luxury stonework, faced a plateau in physical showroom leads. Sheraz Hussain (SYNC TECH Solutions) led a comprehensive digital transformation to capture the international luxury interior design market. This project involved migrating a traditional catalog to a high-fidelity WordPress/WooCommerce platform, optimized for high-ticket technical SEO. The engineering focused on a bespoke product visualization system and an automated quote generation engine, turning a static portfolio into a dynamic sales machine.',
-    challenges: [
-      'Digitizing a high-touch, physical product catalog for an international audience.',
-      'Implementing a custom quote-generation system for bespoke marble works.',
-      'Competing in a highly saturated luxury interior design market through technical SEO.'
-    ],
-    solutions: [
-      {
-        title: 'Digital Showroom Architecture',
-        description: 'Transformed a physical-only business into a global digital showroom with high-resolution asset management and performance-optimized galleries.'
-      },
-      {
-        title: 'Custom Logic Engineering',
-        description: 'Developed a custom PHP-based pricing and quote engine that handles complex international shipping and material calculations.'
-      },
-      {
-        title: 'SEO Authority Building',
-        description: 'Executed a strategic technical SEO audit and content roadmap, positioning the site for competitive keywords in the luxury stone industry.'
-      }
-    ],
-    results: [
-      'Generated over 200+ high-quality international leads in the first quarter.',
-      'Ranked on the first page of Google for primary luxury marble keywords.',
-      'Increased global site sessions by 300% year-over-year.'
-    ],
-    stack: ['WordPress', 'WooCommerce', 'Custom PHP', 'MySQL', 'Technical SEO', 'Cloudflare', 'Elementor'],
-    link: 'https://www.stylishmarbleart.com',
-    image: 'https://picsum.photos/seed/stylishmarble/800/600',
-    imageHint: 'luxury marble interior',
   },
   {
     slug: 'blogify-blog',
