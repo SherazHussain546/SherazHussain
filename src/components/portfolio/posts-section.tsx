@@ -43,11 +43,13 @@ const platformIcons: { [key: string]: React.ElementType } = {
 interface PostsSectionProps {
   title?: React.ReactNode;
   subtitle?: string;
+  showImages?: boolean;
 }
 
 export default function PostsSection({ 
   title = <>Featured <span className="text-primary">Posts</span></>,
-  subtitle = "Updates and insights from my latest projects and social platforms."
+  subtitle = "Updates and insights from my latest projects and social platforms.",
+  showImages = true
 }: PostsSectionProps) {
   const [api, setApi] = useState<CarouselApi>();
   const postsCollection = collection(firestore, 'posts');
@@ -64,7 +66,7 @@ export default function PostsSection({
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/seed/github-post/600/400',
     imageHint: 'github code',
-    hashtations: '#OpenSource, #Developer, #Coding, #Portfolio, #NextJS, #React',
+    hashtags: '#OpenSource, #Developer, #Coding, #Portfolio, #NextJS, #React',
     createdAt: Timestamp.now(),
   };
 
@@ -102,10 +104,10 @@ export default function PostsSection({
     <section id="posts" className="bg-card py-20 md:py-32">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground text-balance">
             {title}
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-balance">
             {subtitle}
           </p>
         </div>
@@ -133,21 +135,30 @@ export default function PostsSection({
                   <CarouselItem key={post.id} className="basis-full">
                     <div className="p-1">
                       <Card className="group mx-auto flex max-w-md flex-col overflow-hidden border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20">
-                        <CardHeader className="p-0">
-                            <div className="relative aspect-video w-full overflow-hidden">
-                                <Image
-                                    src={post.image || 'https://picsum.photos/seed/1/600/400'}
-                                    alt={post.title}
-                                    fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                    data-ai-hint={post.imageHint}
-                                />
-                                <div className="absolute top-4 right-4 rounded-full bg-background/80 p-2 shadow-sm backdrop-blur-sm">
-                                    <Icon className="h-5 w-5 text-primary" />
-                                </div>
-                            </div>
-                        </CardHeader>
+                        {showImages && (
+                          <CardHeader className="p-0">
+                              <div className="relative aspect-video w-full overflow-hidden">
+                                  <Image
+                                      src={post.image || 'https://picsum.photos/seed/1/600/400'}
+                                      alt={post.title}
+                                      fill
+                                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                      data-ai-hint={post.imageHint}
+                                  />
+                                  <div className="absolute top-4 right-4 rounded-full bg-background/80 p-2 shadow-sm backdrop-blur-sm">
+                                      <Icon className="h-5 w-5 text-primary" />
+                                  </div>
+                              </div>
+                          </CardHeader>
+                        )}
                         <CardContent className="flex-1 space-y-4 p-6 text-center">
+                          {!showImages && (
+                            <div className="flex justify-center mb-2">
+                              <div className="rounded-full bg-primary/10 p-2">
+                                <Icon className="h-5 w-5 text-primary" />
+                              </div>
+                            </div>
+                          )}
                           <h3 className="line-clamp-2 text-lg font-bold text-foreground">{post.title}</h3>
                           <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed italic">"{post.description}"</p>
                            {post.hashtags && (

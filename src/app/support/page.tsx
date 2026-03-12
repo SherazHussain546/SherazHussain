@@ -178,6 +178,7 @@ export default function SupportPage() {
             <PostsSection 
               title={<>Ongoing <span className="text-primary">Projects</span></>}
               subtitle="Strategic updates and progress reports on active engineering initiatives powered by your support."
+              showImages={false}
             />
           </div>
 
