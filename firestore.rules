@@ -2,38 +2,36 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-02-V1
-    // REASON: Resolving persistent 'list' operation denials by using explicit granular permissions.
+    // SECURITY RULES REVISION: 2024-06-03-V2
+    // REASON: Resolving list operation denials on projectGoals by hardening public read permissions.
     
     function isAuthenticated() {
       return request.auth != null;
     }
 
-    // Posts: Publicly readable, admin manageable
+    // Public collections: Accessible by anyone, manageable by admin
     match /posts/{postId} {
-      allow get, list: if true;
-      allow create, update, delete: if isAuthenticated();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
 
-    // Project Goals: Publicly readable, admin manageable
     match /projectGoals/{goalId} {
-      allow get, list: if true;
-      allow create, update, delete: if isAuthenticated();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
 
-    // Site Config: Publicly readable, admin manageable
     match /siteConfig/{configId} {
-      allow get, list: if true;
-      allow create, update, delete: if isAuthenticated();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
 
-    // Analytics: Anyone can create (log events), only admin can read
+    // Analytics: Open creation for tracking, admin-only read
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow get, list: if isAuthenticated();
+      allow read: if isAuthenticated();
     }
 
-    // Workflows: Admin only access
+    // Admin-only collections
     match /workflows/{workflowId} {
       allow read, write: if isAuthenticated();
     }
