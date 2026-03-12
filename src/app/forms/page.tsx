@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   MessageSquareQuote, 
-  ClipboardCheck, 
   Laptop, 
-  Send, 
+  Zap, 
   ArrowRight, 
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  Users
+  ClipboardCheck, 
+  ShieldCheck, 
+  Users,
+  AlertCircle,
+  LifeBuoy
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -31,6 +31,21 @@ const formCategories = [
         icon: MessageSquareQuote,
         link: '/survey',
         badge: 'Active',
+        isInternal: true,
+      }
+    ]
+  },
+  {
+    title: 'Service & Support',
+    description: 'Resolution channels for technical issues or service feedback.',
+    forms: [
+      {
+        id: 'complain-form',
+        name: 'Official Complaint Form',
+        description: 'Submit formal feedback or report issues regarding services or tools.',
+        icon: AlertCircle,
+        link: '/complaints',
+        badge: 'Secure',
         isInternal: true,
       }
     ]
@@ -131,7 +146,7 @@ export default function FormsHubPage() {
                           <Button asChild variant="ghost" className="w-full justify-between group/btn">
                             <Link href={form.link} className="flex items-center justify-between w-full">
                               <span className="font-bold uppercase tracking-widest text-[10px]">
-                                {form.isInternal ? 'Open Survey' : 'Initiate Request'}
+                                {form.isInternal ? 'Open Channel' : 'Initiate Request'}
                               </span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                             </Link>

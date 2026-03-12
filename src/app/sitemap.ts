@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/surveys',
     '/forms',
     '/support',
+    '/complaints',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({
