@@ -62,7 +62,7 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     1. Source of Truth: The provided portfolio content is the ONLY source of facts about Sheraz Hussain. Do not invent, exaggerate, or fabricate information.
     2. Professional Role: Always identify Sheraz Hussain as a "Freelancer working with SYNC TECH Solutions".
     3. ATS Optimization: The LaTeX Resume must be structured for maximum parse-ability by ATS algorithms, aiming for a 100+ score.
-    4. LaTeX Compilation: Ensure all LaTeX code is valid and correctly escaped for compilation. Use double backslashes for all commands in your response if needed to ensure they are literals.`,
+    4. LaTeX Compilation: Ensure all LaTeX code is valid and correctly escaped for compilation. Use double backslashes for all commands in your response (e.g., \\\\usepackage) to ensure they are interpreted correctly as LaTeX commands.`,
       prompt: `
     Candidate Information (Source of Truth):
     ${resumeContent}
@@ -74,80 +74,80 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     Generate a 100+ score ATS-optimized Resume (LaTeX), a tailored Cover Letter (LaTeX), and a professional Reach-out Email.
 
     == RESUME TEMPLATE ==
-    \\documentclass[10pt, a4paper]{article}
-    \\usepackage[T1]{fontenc}
-    \\usepackage{mathptmx}
-    \\usepackage[a4paper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
-    \\usepackage{titlesec}
-    \\usepackage{enumitem}
-    \\usepackage{hyperref}
-    \\pagestyle{empty}
-    \\setlength{\\parindent}{0pt}
-    \\hypersetup{colorlinks=true, linkcolor=black, filecolor=black, urlcolor=black}
-    \\titleformat{\\section}{\\vspace{-5pt}\\raggedright\\large\\bfseries\\uppercase}{}{0em}{}[\\titlerule]
-    \\titlespacing*{\\section}{0pt}{10pt}{5pt}
-    \\setlist[itemize]{noitemsep, leftmargin=1.5em, topsep=2pt, parsep=2pt}
-    \\newcommand{\\experienceItem}[4]{\\vspace{4pt}\\textbf{#1} \\hfill #2 \\\\ \\textit{#3} \\hfill \\textit{#4} \\\\}
-    \\begin{document}
-    \\begin{center}
-        {\\Huge \\textbf{SHERAZ HUSSAIN}} \\\\
-        \\vspace{4pt}
-        Dublin, Ireland $|$ +353 8X XXX XXXX $|$ \\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} \\\\
-        \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
-    \\end{center}
-    \\section{Professional Summary}
+    \\\\documentclass[10pt, a4paper]{article}
+    \\\\usepackage[T1]{fontenc}
+    \\\\usepackage{mathptmx}
+    \\\\usepackage[a4paper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+    \\\\usepackage{titlesec}
+    \\\\usepackage{enumitem}
+    \\\\usepackage{hyperref}
+    \\\\pagestyle{empty}
+    \\\\setlength{\\\\parindent}{0pt}
+    \\\\hypersetup{colorlinks=true, linkcolor=black, filecolor=black, urlcolor=black}
+    \\\\titleformat{\\\\section}{\\\\vspace{-5pt}\\\\raggedright\\\\large\\\\bfseries\\\\uppercase}{}{0em}{}[\\\\titlerule]
+    \\\\titlespacing*{\\\\section}{0pt}{10pt}{5pt}
+    \\\\setlist[itemize]{noitemsep, leftmargin=1.5em, topsep=2pt, parsep=2pt}
+    \\\\newcommand{\\\\experienceItem}[4]{\\\\vspace{4pt}\\\\textbf{#1} \\\\hfill #2 \\\\\\\\ \\\\textit{#3} \\\\hfill \\\\textit{#4} \\\\\\\\}
+    \\\\begin{document}
+    \\\\begin{center}
+        {\\\\Huge \\\\textbf{SHERAZ HUSSAIN}} \\\\\\\\
+        \\\\vspace{4pt}
+        Dublin, Ireland $|$ +353 8X XXX XXXX $|$ \\\\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} \\\\\\\\
+        \\\\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\\\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
+    \\\\end{center}
+    \\\\section{Professional Summary}
     [Generate summary]
-    \\section{Technical Skills}
-    \\begin{itemize}
-        \\item \\textbf{Languages:} [Relevant]
-        \\item \\textbf{Frameworks/Tools:} [Relevant]
-    \\end{itemize}
-    \\section{Professional Experience}
-    \\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
-    \\begin{itemize}
-        \\item [Achievement 1]
-    \\end{itemize}
-    \\end{document}
+    \\\\section{Technical Skills}
+    \\\\begin{itemize}
+        \\\\item \\\\textbf{Languages:} [Relevant]
+        \\\\item \\\\textbf{Frameworks/Tools:} [Relevant]
+    \\\\end{itemize}
+    \\\\section{Professional Experience}
+    \\\\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
+    \\\\begin{itemize}
+        \\\\item [Achievement 1]
+    \\\\end{itemize}
+    \\\\end{document}
 
     == COVER LETTER TEMPLATE ==
-    \\documentclass[11pt,a4paper]{article}
-    \\usepackage[utf8]{inputenc}
-    \\usepackage[T1]{fontenc}
-    \\usepackage{lmodern}
-    \\usepackage[margin=1in]{geometry}
-    \\usepackage{hyperref}
-    \\usepackage{xcolor}
-    \\pagestyle{empty}
-    \\setlength{\\parindent}{0pt}
-    \\setlength{\\parskip}{10pt}
-    \\definecolor{darkblue}{RGB}{0,0,139}
-    \\hypersetup{colorlinks=true, urlcolor=darkblue}
-    \\begin{document}
-    \\begin{center}
-        \\textbf{\\Large SHERAZ HUSSAIN}\\\\
-        \\vspace{4pt}
-        \\small
+    \\\\documentclass[11pt,a4paper]{article}
+    \\\\usepackage[utf8]{inputenc}
+    \\\\usepackage[T1]{fontenc}
+    \\\\usepackage{lmodern}
+    \\\\usepackage[margin=1in]{geometry}
+    \\\\usepackage{hyperref}
+    \\\\usepackage{xcolor}
+    \\\\pagestyle{empty}
+    \\\\setlength{\\\\parindent}{0pt}
+    \\\\setlength{\\\\parskip}{10pt}
+    \\\\definecolor{darkblue}{RGB}{0,0,139}
+    \\\\hypersetup{colorlinks=true, urlcolor=darkblue}
+    \\\\begin{document}
+    \\\\begin{center}
+        \\\\textbf{\\\\Large SHERAZ HUSSAIN}\\\\\\\\
+        \\\\vspace{4pt}
+        \\\\small
         +353 8X XXX XXXX $|$ 
-        \\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} $|$ 
-        \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$
+        \\\\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} $|$ 
+        \\\\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$
         Dublin, Ireland
-    \\end{center}
-    \\vspace{20pt}
-    \\today
-    \\vspace{10pt}
-    Hiring Manager's Name\\\\
-    Title\\\\
-    Company Name\\\\
+    \\\\end{center}
+    \\\\vspace{20pt}
+    \\\\today
+    \\\\vspace{10pt}
+    Hiring Manager's Name\\\\\\\\
+    Title\\\\\\\\
+    Company Name\\\\\\\\
     City, State
-    \\vspace{10pt}
+    \\\\vspace{10pt}
     Dear Hiring Manager,
     [Generate tailored body]
     Sincerely,
-    \\vspace{30pt}
+    \\\\vspace{30pt}
     SHERAZ HUSSAIN
-    \\vspace{10pt}
-    \\small{Enclosure: Resume}
-    \\end{document}
+    \\\\vspace{10pt}
+    \\\\small{Enclosure: Resume}
+    \\\\end{document}
     `,
       output: {
         schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
