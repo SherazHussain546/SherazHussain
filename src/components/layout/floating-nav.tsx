@@ -22,14 +22,14 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
       rel={target === '_blank' ? 'noopener noreferrer' : ''}
       aria-label={label}
       className={cn(
-        'group relative flex h-12 w-12 items-center justify-center rounded-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden hover:w-48',
+        'group relative flex h-12 w-12 items-center justify-center rounded-lg shadow-xl transition-all duration-300 ease-in-out overflow-hidden hover:w-48 border border-white/10',
         bgColor
       )}
     >
       <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:-translate-x-full">
-        <Icon className="h-6 w-6 flex-shrink-0 text-white" />
+        <Icon className="h-5 w-5 flex-shrink-0 text-white" />
       </div>
-      <span className="absolute left-0 pl-4 pr-4 whitespace-nowrap text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 translate-x-full w-full text-left">
+      <span className="absolute left-0 pl-4 pr-4 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 translate-x-full w-full text-left">
         {label}
       </span>
     </Link>
@@ -42,28 +42,28 @@ const navItems: NavItemProps[] = [
     label: 'Get in Touch',
     icon: Mail,
     target: '_self',
-    bgColor: 'bg-gray-500/30 hover:bg-gray-600/50',
+    bgColor: 'bg-slate-800 hover:bg-slate-900',
   },
   {
     href: 'https://github.com/SherazHussain546',
     label: 'Follow on GitHub',
     icon: Github,
     target: '_blank',
-    bgColor: 'bg-teal-600/30 hover:bg-teal-700/50',
+    bgColor: 'bg-teal-600 hover:bg-teal-700',
   },
   {
     href: 'https://linkedin.com/in/sherazhussain546/',
     label: 'Connect on LinkedIn',
     icon: Linkedin,
     target: '_blank',
-    bgColor: 'bg-blue-600/30 hover:bg-blue-700/50',
+    bgColor: 'bg-blue-600 hover:bg-blue-700',
   },
   {
     href: '/support',
     label: 'Support my Work',
     icon: Heart,
     target: '_self',
-    bgColor: 'bg-red-600/30 hover:bg-red-700/50',
+    bgColor: 'bg-rose-600 hover:bg-rose-700',
   },
 ];
 
