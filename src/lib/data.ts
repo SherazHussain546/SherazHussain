@@ -55,6 +55,10 @@ export const skills = {
     icon: ShieldCheck,
     items: ['Penetration Testing', 'Network Security', 'Zero Trust Architecture', 'Data Encryption', 'Threat Detection'],
   },
+  'Soft Skills': {
+    icon: Users,
+    items: ['Strategic Leadership', 'Technical Mentorship', 'Client Relationship Management', 'Problem Solving', 'Agile Methodology', 'Effective Communication'],
+  },
 };
 
 export const experiences = [
