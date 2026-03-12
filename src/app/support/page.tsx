@@ -375,27 +375,6 @@ export default function SupportPage() {
             </div>
           </motion.div>
 
-          <div className="mx-auto mt-32 max-w-5xl">
-             <div className="mb-16 text-center">
-                <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
-                    <Activity className="h-4 w-4 animate-pulse" />
-                    Community Pulse
-                </div>
-                <h2 className="text-4xl font-extrabold text-foreground md:text-5xl tracking-tight">Live Impact Feed</h2>
-                <p className="text-lg text-muted-foreground mt-6 max-wxl mx-auto font-medium">See the real-time heartbeat of the community supporting this engineering journey.</p>
-             </div>
-             
-             <div className="relative aspect-[16/8] w-full overflow-hidden rounded-[3rem] border-8 border-white shadow-[0_40px_100px_rgba(0,0,0,0.1)] bg-white">
-                <iframe 
-                  src="https://studio.buymeacoffee.com/stream-alert/page/sherazhussain546?user_key=3eed59c9-dc4b-4e84-b034-0a89bd538775"
-                  className="absolute top-0 left-0 h-full w-full pointer-events-none"
-                  frameBorder="0"
-                  title="Sheraz Hussain BuyMeACoffee Stream Alert"
-                />
-                <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-[3rem]" />
-             </div>
-          </div>
-
           <div className="mx-auto mt-40 max-w-4xl text-center border-t pt-20">
              <div className="flex justify-center mb-10">
                 <div className="h-px w-16 bg-primary/30" />
