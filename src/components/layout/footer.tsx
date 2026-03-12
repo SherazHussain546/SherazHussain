@@ -6,7 +6,7 @@ const footerLinks = [
   { name: 'Projects', href: '/#projects' },
   { name: 'Certifications', href: '/#certifications' },
   { name: 'Support my Work', href: '/support' },
-  { name: 'Feedback Survey', href: '/survey' },
+  { name: 'Forms & Surveys', href: '/forms' },
 ];
 
 export default function Footer() {

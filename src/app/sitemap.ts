@@ -16,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '',
     '/projects',
     '/survey',
+    '/surveys',
+    '/forms',
     '/support',
   ];
 
