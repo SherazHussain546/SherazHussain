@@ -7,14 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   MessageSquareQuote, 
-  Laptop, 
-  Zap, 
   ArrowRight, 
   ClipboardCheck, 
   ShieldCheck, 
   Users,
   AlertCircle,
-  BrainCircuit,
   Handshake,
   Mail
 } from 'lucide-react';
@@ -22,21 +19,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const formCategories = [
-  {
-    title: 'Interactive AI Tools',
-    description: 'Real-time utilities for technical strategy and project planning.',
-    forms: [
-      {
-        id: 'ai-architect',
-        name: 'AI Solution Architect',
-        description: 'Describe a technical challenge and get an immediate cloud-native architectural roadmap.',
-        icon: BrainCircuit,
-        link: '/ai-architect',
-        badge: 'Gemini Powered',
-        isInternal: true,
-      }
-    ]
-  },
   {
     title: 'Community & Feedback',
     description: 'Help shape the future of the digital tools I build.',
@@ -163,7 +145,7 @@ export default function FormsHubPage() {
                           <Button asChild variant="ghost" className="w-full justify-between group/btn">
                             <Link href={form.link} className="flex items-center justify-between w-full">
                               <span className="font-bold uppercase tracking-widest text-[10px]">
-                                {form.id === 'ai-architect' ? 'Launch Tool' : 'Initiate Request'}
+                                Initiate Request
                               </span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                             </Link>
