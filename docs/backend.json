@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Post": {
@@ -43,6 +44,32 @@
       },
       "required": ["platform", "title", "description", "link"]
     },
+    "ProjectGoal": {
+      "title": "Project Goal",
+      "description": "Represents a specific fundraising or development goal for the portfolio.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "iconName": {
+          "type": "string",
+          "description": "The name of the Lucide icon to use (e.g., 'Cpu', 'Globe', 'ShieldCheck')."
+        },
+        "order": {
+          "type": "number",
+          "description": "Display order on the support page."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["title", "description", "iconName", "order"]
+    },
     "SiteConfig": {
       "title": "Site Configuration",
       "description": "Stores global configuration settings for the website.",
@@ -52,7 +79,6 @@
           "type": "string",
           "format": "uri",
           "description": "The URL for the founder's profile image."
-"description": "The URL for the founder's profile image."
         }
       }
     },
@@ -90,6 +116,12 @@
         "$ref": "#/docs/entities/Post"
       },
       "description": "Stores all the featured posts for the portfolio."
+    },
+    "/projectGoals/{goalId}": {
+      "schema": {
+        "$ref": "#/docs/entities/ProjectGoal"
+      },
+      "description": "Stores project goals displayed on the support page."
     },
     "/siteConfig/{configId}": {
       "schema": {

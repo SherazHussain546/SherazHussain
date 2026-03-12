@@ -1,3 +1,4 @@
+
 'use client';
 
 import Header from '@/components/layout/header';
@@ -23,6 +24,7 @@ import {
   Info,
   CreditCard
 } from 'lucide-react';
+import * as Icons from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
@@ -30,10 +32,19 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { firestore } from '@/firebase/client';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function SupportPage() {
   const { toast } = useToast();
   const [copied, setCopied] = useState<string | null>(null);
+
+  // Dynamic goals from Firestore
+  const goalsCollection = collection(firestore, 'projectGoals');
+  const goalsQuery = query(goalsCollection, orderBy('order', 'asc'));
+  const [snapshot, loading, error] = useCollection(goalsQuery);
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -93,23 +104,7 @@ export default function SupportPage() {
     },
   ];
 
-  const projectGoals = [
-    {
-      icon: Cpu,
-      title: 'Goal 01: AI Compute Scaling',
-      description: 'Acquiring high-density GPU infrastructure to support local inference of Gemini-family models for faster, private AI tool performance.'
-    },
-    {
-      icon: Globe,
-      title: 'Goal 02: Global Edge Network',
-      description: 'Deploying SYNC TECH solutions across a distributed edge network to ensure low-latency access for developers in over 50 countries.'
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Goal 03: Security Research Hub',
-      description: 'Establishing a dedicated lab for Zero Trust architecture research and developing open-source automated security audit tools.'
-    }
-  ];
+  const projectGoals = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() })) || [];
 
   return (
     <div className="flex min-h-screen flex-col bg-[#FDFDFB]">
@@ -117,11 +112,6 @@ export default function SupportPage() {
       <Script defer src="https://www.gofundme.com/static/js/embed.js" />
       
       <main className="flex-1 relative overflow-hidden">
-        <section className="sr-only">
-          <h1>Support Sheraz Hussain - SYNC TECH Solutions</h1>
-          <p>Support the development of high-performance AI tools, open-source software, and cloud infrastructure.</p>
-        </section>
-
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
         
         <div className="container relative z-10 mx-auto px-4 py-16 md:py-32 md:px-6">
@@ -134,9 +124,9 @@ export default function SupportPage() {
               <Badge variant="outline" className="mb-8 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.3em] border-primary/40 text-primary bg-primary/5">
                 Patron of Modern Engineering
               </Badge>
-              <h2 className="text-5xl font-extrabold tracking-tighter text-foreground md:text-8xl mb-8 leading-[1.1]">
+              <h1 className="text-5xl font-extrabold tracking-tighter text-foreground md:text-8xl mb-8 leading-[1.1]">
                 Empower the <span className="text-primary italic">Future</span> of AI.
-              </h2>
+              </h1>
               <p className="mt-8 text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                 As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I dedicate my time to building high-performance AI tools and cloud infrastructure that helps the global tech community scale with integrity.
               </p>
@@ -167,26 +157,42 @@ export default function SupportPage() {
               </motion.div>
               
               <div className="space-y-10 pt-4">
-                {projectGoals.map((goal, idx) => (
-                  <motion.div 
-                    key={goal.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="flex gap-6"
-                  >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                      <goal.icon className="h-6 w-6" />
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-bold">{goal.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {goal.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
+                {loading && (
+                   <div className="space-y-10">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="flex gap-6">
+                           <Skeleton className="h-12 w-12 rounded-2xl shrink-0" />
+                           <div className="space-y-2 flex-1">
+                              <Skeleton className="h-6 w-1/3" />
+                              <Skeleton className="h-16 w-full" />
+                           </div>
+                        </div>
+                      ))}
+                   </div>
+                )}
+                {projectGoals.map((goal: any, idx) => {
+                  const IconComponent = (Icons as any)[goal.iconName] || Icons.HelpCircle;
+                  return (
+                    <motion.div 
+                      key={goal.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex gap-6"
+                    >
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                        <IconComponent className="h-6 w-6" />
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-bold">{goal.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {goal.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -338,14 +344,6 @@ export default function SupportPage() {
               </div>
               <div className="w-full md:w-96">
                 <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 backdrop-blur-xl text-center group transition-all hover:bg-white/10 border-t-white/20">
-                  <div className="relative w-24 h-24 mx-auto mb-8">
-                    <Image 
-                      src="https://ipfs.io/ipfs/QmXuoUmUstZbRv1LFKp3XgUiemzMJ2VmtZnMGv9xcNjj5c" 
-                      alt="Unstoppable Domains Badge" 
-                      fill 
-                      className="object-contain drop-shadow-2xl group-hover:scale-110 transition-transform"
-                    />
-                  </div>
                   <div className="font-mono text-[10px] mb-3 opacity-40 uppercase tracking-[0.3em]">Universal Handle</div>
                   <div className="text-xl font-bold text-primary break-all leading-snug">sherazhussain.unstoppable</div>
                   <div className="mt-10 flex flex-col gap-3">

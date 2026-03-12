@@ -1,13 +1,15 @@
+
 'use client';
 import { getAuth, signOut } from 'firebase/auth';
 import { app } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
-import { LogOut, LayoutDashboard, FileText, Settings, LineChart } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, Settings, LineChart, Target } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
+import ManageGoals from './manage-goals';
 import SiteSettings from './site-settings';
 
 const auth = getAuth(app);
@@ -45,7 +47,7 @@ export default function Dashboard() {
       </div>
 
       <Tabs defaultValue="analytics" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-muted/50 border">
+        <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-muted/50 border">
           <TabsTrigger value="analytics" className="flex items-center gap-2 py-2">
             <LineChart className="h-4 w-4" />
             <span className="hidden sm:inline">Analytics</span>
@@ -57,6 +59,10 @@ export default function Dashboard() {
           <TabsTrigger value="posts" className="flex items-center gap-2 py-2">
             <LayoutDashboard className="h-4 w-4" />
             <span className="hidden sm:inline">Posts</span>
+          </TabsTrigger>
+          <TabsTrigger value="goals" className="flex items-center gap-2 py-2">
+            <Target className="h-4 w-4" />
+            <span className="hidden sm:inline">Goals</span>
           </TabsTrigger>
           <TabsTrigger value="settings" className="flex items-center gap-2 py-2">
             <Settings className="h-4 w-4" />
@@ -72,6 +78,9 @@ export default function Dashboard() {
           </TabsContent>
           <TabsContent value="posts">
             <ManagePosts />
+          </TabsContent>
+          <TabsContent value="goals">
+            <ManageGoals />
           </TabsContent>
           <TabsContent value="settings">
             <SiteSettings />

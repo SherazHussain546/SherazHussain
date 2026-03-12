@@ -14,6 +14,12 @@ service cloud.firestore {
       allow write: if isSignedIn();
     }
 
+    // Project goals can be read by anyone, but only managed by an admin.
+    match /projectGoals/{goalId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
     // Site config can be read by anyone, but only written by an admin.
     match /siteConfig/{configId} {
       allow read: if true;
