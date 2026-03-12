@@ -306,8 +306,8 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                         <div key={i} className="grid grid-cols-[40px_1fr] gap-8 py-10 items-start">
                           <div className="font-bebas text-2xl text-[#A68858]/30">0{i+1}</div>
                           <div>
-                            <h4 className="font-bold text-sm mb-3">Phase 0{i+1} Resolution</h4>
-                            <p className="text-muted-foreground text-sm font-light leading-relaxed">{solution}</p>
+                            <h4 className="font-bold text-sm mb-3">{solution.title}</h4>
+                            <p className="text-muted-foreground text-sm font-light leading-relaxed">{solution.description}</p>
                           </div>
                         </div>
                       ))}

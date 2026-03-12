@@ -17,7 +17,7 @@ export interface Project {
   description: string;
   fullDescription: string;
   challenges: string[];
-  solutions: string[];
+  solutions: { title: string; description: string }[];
   results: string[];
   stack: string[];
   link: string;
@@ -149,9 +149,18 @@ export const projects: Project[] = [
       'Implementing real-time push notifications (FCM) and secure authentication (Firebase Auth) across a scalable serverless architecture.'
     ],
     solutions: [
-      'Architected a robust backend using Next.js and Firebase Firestore to cache high-frequency market data and manage user portfolios.',
-      'Utilized Google Genkit to build an AI reasoning engine that processes technical market indicators into human-readable advice.',
-      'Leveraged Firebase Cloud Messaging for instant signal alerts, ensuring users stay updated on market shifts in real-time.'
+      {
+        title: 'Core Infrastructure',
+        description: 'Architected a robust backend using Next.js and Firebase Firestore to cache high-frequency market data and manage user portfolios.'
+      },
+      {
+        title: 'AI Intelligence Engine',
+        description: 'Utilized Google Genkit to build an AI reasoning engine that processes technical market indicators into human-readable advice.'
+      },
+      {
+        title: 'Real-time Connectivity',
+        description: 'Leveraged Firebase Cloud Messaging for instant signal alerts, ensuring users stay updated on market shifts in real-time.'
+      }
     ],
     results: [
       'Delivered sub-second AI reasoning for over 100+ stock and cryptocurrency asset pairs.',
@@ -175,9 +184,18 @@ export const projects: Project[] = [
       'Managing automated browser interactions across multiple job boards safely.'
     ],
     solutions: [
-      'Built a custom scraping engine with Playwright to handle dynamic web content.',
-      'Engineered a multi-stage prompt pipeline that cross-references job requirements with candidate skills.',
-      'Implemented scikit-learn for advanced keyword density analysis and ATS scoring simulation.'
+      {
+        title: 'Data Acquisition',
+        description: 'Built a custom scraping engine with Playwright to handle dynamic web content.'
+      },
+      {
+        title: 'Contextual Analysis',
+        description: 'Engineered a multi-stage prompt pipeline that cross-references job requirements with candidate skills.'
+      },
+      {
+        title: 'ATS Optimization',
+        description: 'Implemented scikit-learn for advanced keyword density analysis and ATS scoring simulation.'
+      }
     ],
     results: [
       'Successfully processed over 100+ simulated applications with a 65% interview callback rate.',
@@ -200,9 +218,18 @@ export const projects: Project[] = [
       'Integrating a local database for offline history tracking.'
     ],
     solutions: [
-      'Utilized Gemini 1.5 Flash for high-speed, contextual responses.',
-      'Leveraged Ionic and Capacitor for a unified cross-platform mobile codebase.',
-      'Implemented SQLite for persistent local storage of study sessions and user progress.'
+      {
+        title: 'Intelligent Dialogue',
+        description: 'Utilized Gemini 1.5 Flash for high-speed, contextual responses.'
+      },
+      {
+        title: 'Platform Agnostic',
+        description: 'Leveraged Ionic and Capacitor for a unified cross-platform mobile codebase.'
+      },
+      {
+        title: 'Offline Resilience',
+        description: 'Implemented SQLite for persistent local storage of study sessions and user progress.'
+      }
     ],
     results: [
       'Facilitated over 5,000+ interactions in the first semester.',
@@ -225,9 +252,18 @@ export const projects: Project[] = [
       'Synchronizing real-time availability for viewing appointments.'
     ],
     solutions: [
-      'Implemented marker clustering and lazy loading for the Google Maps integration.',
-      'Utilized Firebase Authentication for robust and secure user identity management.',
-      'Architected a Firestore-based real-time database to manage live booking schedules.'
+      {
+        title: 'Geospatial Performance',
+        description: 'Implemented marker clustering and lazy loading for the Google Maps integration.'
+      },
+      {
+        title: 'Secure Identity',
+        description: 'Utilized Firebase Authentication for robust and secure user identity management.'
+      },
+      {
+        title: 'Real-time Operations',
+        description: 'Architected a Firestore-based real-time database to manage live booking schedules.'
+      }
     ],
     results: [
       'Deployed to both App Store and Play Store successfully.',
