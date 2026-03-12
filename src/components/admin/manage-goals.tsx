@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -46,7 +45,7 @@ export default function ManageGoals() {
 
   useEffect(() => {
     // Definitive permission check: Only emit error if we are not loading, user is definitely logged in, 
-    // and the server returned a permission-denied code.
+    // and the server returned a permission-denied code for the list operation.
     if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && !authLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,

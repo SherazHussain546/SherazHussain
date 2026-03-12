@@ -1,42 +1,40 @@
-
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-05-V20-ULTRA-STABLE
-    // This revision uses explicit collection and document matching to ensure 
-    // that 'list' operations are correctly authorized for all administrative components.
+    // SECURITY RULES REVISION: 2024-06-05-V50-ULTRA-STABLE
+    // This revision uses explicit operation matching to ensure 'list' operations are authorized.
     
-    function isAuthenticated() {
+    function isSignedIn() {
       return request.auth != null;
     }
 
-    // projectGoals: Publicly readable (get/list), Auth required for all writes
+    // projectGoals: Publicly readable, Auth required for all writes
     match /projectGoals/{goalId} {
-      allow read: if true;
-      allow write: if isAuthenticated();
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn();
     }
 
-    // posts: Publicly readable (get/list), Auth required for all writes
+    // posts: Publicly readable, Auth required for all writes
     match /posts/{postId} {
-      allow read: if true;
-      allow write: if isAuthenticated();
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn();
     }
 
     // siteConfig: Publicly readable, Auth required for writes
     match /siteConfig/{configId} {
-      allow read: if true;
-      allow write: if isAuthenticated();
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn();
     }
 
-    // analyticsEvents: Publicly creatable, Auth (Admin) read access
+    // analyticsEvents: Publicly creatable, Auth read access
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow read: if isAuthenticated();
+      allow get, list: if isSignedIn();
     }
 
     // workflows: Admin-only access
     match /workflows/{workflowId} {
-      allow read, write: if isAuthenticated();
+      allow get, list, create, update, delete: if isSignedIn();
     }
   }
 }
