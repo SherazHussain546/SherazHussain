@@ -114,8 +114,8 @@ export default function PostsSection() {
                                     className="object-contain transition-transform duration-300"
                                     data-ai-hint={post.imageHint}
                                 />
-                                <div className="absolute top-2 right-2">
-                                    <Icon className="h-6 w-6 text-white" />
+                                <div className="absolute top-2 right-2 rounded-full bg-background/80 p-1.5 shadow-sm">
+                                    <Icon className="h-5 w-5 text-primary" />
                                 </div>
                             </div>
                         </CardHeader>
