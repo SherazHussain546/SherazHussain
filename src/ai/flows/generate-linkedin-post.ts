@@ -35,7 +35,7 @@ const generateLinkedInPostFlow = ai.defineFlow(
   },
   async (input) => {
     const { output } = await ai.generate({
-      model: 'googleai/gemini-1.5-flash',
+      model: 'googleai/gemini-2.0-flash',
       system: `You are an expert social media and LinkedIn content writer.
 
 You will be provided with:
@@ -67,10 +67,9 @@ ${input.instructions}
 **Task:**
 Using the information above, generate the content for a LinkedIn post:
 - Use the Description and Instructions to create a new post.
-- Ensure your output is positive, professional, clear, and follows all provided instructions and feedback.
+- Ensure your output is professional, clear, and follows all provided instructions and feedback.
 - Do not include any explanations, just the final post content only, ready to publish on LinkedIn.
-- Limit to 1300 characters.
-- If the user demands to keep the same post as the Post Description (in the instructions), then keep the same post content as provided in the Post Description, and output it.`,
+- Limit to 1300 characters.`,
       output: {
         schema: LinkedInPostOutputSchema,
       },
