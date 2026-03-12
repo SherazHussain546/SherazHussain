@@ -22,7 +22,8 @@ import {
   Users,
   Target,
   Building2,
-  Info
+  Info,
+  CreditCard
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -82,10 +83,11 @@ export default function SupportPage() {
       color: 'bg-emerald-500/10 text-emerald-600',
     },
     {
-      title: 'Enterprise & Direct',
-      description: 'Professional sponsorship and direct Euro bank transfers for high-level technical consulting.',
+      title: 'Enterprise & Revolut',
+      description: 'Direct Euro bank transfers and high-speed Revolut Pay checkout for professional consulting.',
       icon: Building2,
-      actionLabel: 'View Bank Details',
+      actionLabel: 'Pay via Revolut',
+      link: 'https://checkout.revolut.com/pay/2bdfa9a9-0137-484f-94c7-9ae333896e15',
       color: 'bg-purple-500/10 text-purple-600',
       isEnterprise: true
     },
@@ -226,70 +228,78 @@ export default function SupportPage() {
                     )}
                     {method.isEnterprise && (
                       <div className="text-[11px] font-semibold text-muted-foreground bg-primary/5 p-4 rounded-xl border border-primary/10 border-dashed">
-                        Direct Euro (SEPA) transfers via Revolut Business.
+                        Revolut Pay for fast checkout or Direct SEPA transfers.
                       </div>
                     )}
                   </CardContent>
-                  <div className="p-6 pt-0 mt-auto">
+                  <div className="p-6 pt-0 mt-auto flex flex-col gap-2">
                     {method.isEnterprise ? (
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
-                            {method.actionLabel}
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-md bg-white">
-                          <DialogHeader>
-                            <DialogTitle className="flex items-center gap-2">
-                              <Building2 className="h-5 w-5 text-primary" />
-                              Bank Transfer Details
-                            </DialogTitle>
-                            <DialogDescription>
-                              Use these details for direct contributions or enterprise consulting payments.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="space-y-4 mt-4">
-                            <div className="rounded-2xl border p-4 bg-muted/5 space-y-3">
-                              <div className="flex flex-col gap-1">
-                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Beneficiary</span>
-                                <span className="text-sm font-semibold">{bankDetails.beneficiary}</span>
-                              </div>
-                              <div className="flex flex-col gap-1 relative group">
-                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (Euro)</span>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm font-mono font-bold text-primary">{bankDetails.iban}</span>
-                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(bankDetails.iban, 'IBAN')}>
-                                    <Copy className="h-3 w-3" />
-                                  </Button>
+                      <>
+                        <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20 bg-primary hover:bg-primary/90">
+                          <Link href={method.link!} target="_blank">
+                             <CreditCard className="mr-2 h-4 w-4" />
+                             {method.actionLabel}
+                          </Link>
+                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2">
+                              View Bank Details
+                              <Building2 className="ml-2 h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-md bg-white">
+                            <DialogHeader>
+                              <DialogTitle className="flex items-center gap-2">
+                                <Building2 className="h-5 w-5 text-primary" />
+                                Bank Transfer Details
+                              </DialogTitle>
+                              <DialogDescription>
+                                Use these details for direct contributions or enterprise consulting payments.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="space-y-4 mt-4">
+                              <div className="rounded-2xl border p-4 bg-muted/5 space-y-3">
+                                <div className="flex flex-col gap-1">
+                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Beneficiary</span>
+                                  <span className="text-sm font-semibold">{bankDetails.beneficiary}</span>
+                                </div>
+                                <div className="flex flex-col gap-1 relative group">
+                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (Euro)</span>
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-sm font-mono font-bold text-primary">{bankDetails.iban}</span>
+                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(bankDetails.iban, 'IBAN')}>
+                                      <Copy className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">BIC / SWIFT</span>
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-sm font-mono font-bold text-primary">{bankDetails.bic}</span>
+                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(bankDetails.bic, 'BIC')}>
+                                      <Copy className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Bank Name & Address</span>
+                                  <span className="text-xs leading-relaxed">{bankDetails.bankName}<br />{bankDetails.bankAddress}</span>
+                                </div>
+                                <div className="flex flex-col gap-1 pt-2 border-t border-dashed">
+                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold flex items-center gap-1">
+                                    Correspondent BIC <Info className="h-3 w-3" />
+                                  </span>
+                                  <span className="text-xs font-mono">{bankDetails.correspondentBic}</span>
                                 </div>
                               </div>
-                              <div className="flex flex-col gap-1">
-                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">BIC / SWIFT</span>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm font-mono font-bold text-primary">{bankDetails.bic}</span>
-                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(bankDetails.bic, 'BIC')}>
-                                    <Copy className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              </div>
-                              <div className="flex flex-col gap-1">
-                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Bank Name & Address</span>
-                                <span className="text-xs leading-relaxed">{bankDetails.bankName}<br />{bankDetails.bankAddress}</span>
-                              </div>
-                              <div className="flex flex-col gap-1 pt-2 border-t border-dashed">
-                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold flex items-center gap-1">
-                                  Correspondent BIC <Info className="h-3 w-3" />
-                                </span>
-                                <span className="text-xs font-mono">{bankDetails.correspondentBic}</span>
-                              </div>
+                              <p className="text-[10px] text-center text-muted-foreground italic">
+                                * All transfers are handled securely via Revolut Bank UAB.
+                              </p>
                             </div>
-                            <p className="text-[10px] text-center text-muted-foreground italic">
-                              * All transfers are handled securely via Revolut Bank UAB.
-                            </p>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
+                          </DialogContent>
+                        </Dialog>
+                      </>
                     ) : method.link ? (
                       <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
                         <Link href={method.link} target={method.link.startsWith('mailto') ? '_self' : '_blank'}>
