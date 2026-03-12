@@ -141,28 +141,28 @@ export const projects: Project[] = [
   {
     slug: 'market-genius',
     name: 'Market Genius – AI-Powered Financial Signals',
-    description: 'A real-time financial signal platform using Next.js and Genkit that delivers AI-generated insights.',
-    fullDescription: 'Market Genius is an advanced financial analytics platform designed to bridge the gap between complex market data and actionable insights. By leveraging Large Language Models (LLMs) via Google Genkit, it processes real-time streams from global financial markets to provide sentiment analysis, predictive signals, and trend alerts for both traditional stocks and high-volatility cryptocurrencies.',
+    description: 'A real-time financial signal platform using Next.js and Genkit that delivers AI-generated buy/sell/hold insights.',
+    fullDescription: 'Market Genius is a high-performance financial analytics suite that empowers users with real-time intelligence on global stocks and cryptocurrencies. By integrating AlphaVantage and Crypto.com APIs, the platform ingests massive datasets which are then processed by a Google Genkit-powered LLM. The AI provides clear, actionable signals—Hold, Sell, or Buy—allowing investors to make data-driven decisions with confidence.',
     challenges: [
-      'Integrating high-frequency data streams from multiple disparate APIs without hitting rate limits.',
-      'Ensuring low-latency delivery of AI-generated insights to end-users.',
-      'Maintaining high availability for critical push notification services during peak market hours.'
+      'Aggregating real-time data from AlphaVantage (stocks) and Crypto.com (crypto) without exceeding rate limits.',
+      'Engineering a prompt pipeline that translates complex market volatility into simple, reliable Buy/Sell/Hold signals.',
+      'Implementing real-time push notifications for critical signal changes across web and mobile devices.'
     ],
     solutions: [
-      'Implemented a robust caching layer using Redis to minimize redundant API calls.',
-      'Architected a serverless backend using Firebase Functions to scale AI processing on-demand.',
-      'Utilized Firebase Cloud Messaging (FCM) for sub-second notification delivery across web and mobile.'
+      'Developed a sophisticated API middleware layer with Firestore-based caching to manage high-frequency data requests efficiently.',
+      'Utilized Google Genkit to build a multi-stage reasoning agent that analyzes sentiment, technical indicators, and historical trends.',
+      'Integrated Firebase Cloud Messaging (FCM) to deliver instant alerts, ensuring users never miss a market move regardless of their location.'
     ],
     results: [
-      'Achieved a 40% reduction in data retrieval latency.',
-      'Onboarded over 500 active beta users within the first month.',
-      'Maintained a 99.9% uptime during high-volatility market events.'
+      'Reduced decision-making latency by providing instant AI-summarized signals.',
+      'Achieved a 98% delivery success rate for critical financial alerts via FCM.',
+      'Scaled to handle concurrent data streams from over 100+ different assets simultaneously.'
     ],
-    stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Cloud Messaging'],
+    stack: ['Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Google Genkit', 'Firebase Auth', 'Firestore', 'Firebase Cloud Messaging', 'AlphaVantage API', 'Crypto.com API'],
     link: 'https://github.com/SherazHussain546',
     liveLink: 'https://marketgenius546.netlify.app',
     image: 'https://picsum.photos/seed/market-genius/800/600',
-    imageHint: 'finance analytics',
+    imageHint: 'finance dashboard',
   },
   {
     slug: 'job4you',
