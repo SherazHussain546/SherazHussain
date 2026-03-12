@@ -55,6 +55,9 @@ export const metadata: Metadata = {
   keywords: [
     'Sheraz Hussain',
     'SYNC TECH Solutions',
+    'sherazhussain.pw',
+    'sheraz.synctech.ie',
+    'sherazhussain.synctech.ie',
     'AI Developer Ireland',
     'Cloud Infrastructure',
     'Open-Source Software',
@@ -134,7 +137,6 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
-          {/* Buy Me a Coffee Widget */}
           <Script 
             data-name="BMC-Widget" 
             data-cfasync="false" 
