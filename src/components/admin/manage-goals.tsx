@@ -44,6 +44,7 @@ export default function ManageGoals() {
 
   useEffect(() => {
     // Only emit the error if it's explicitly a permission denial and loading has finished
+    // We check specifically for 'permission-denied' and ensure it's not a transient state
     if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
@@ -232,7 +233,7 @@ export default function ManageGoals() {
                 />
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full">
+              <Button type="submit" disabled={loading}>
                 {loading ? 'Adding...' : 'Add Goal'}
               </Button>
             </form>

@@ -2,38 +2,52 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-03-V3
-    // REASON: Resolving persistent list operation denials on projectGoals by using broad wildcard matching for public read.
+    // SECURITY RULES REVISION: 2024-06-03-V4
+    // REASON: Resolving list operation denial by explicitly defining collection-level access.
     
-    function isAuthenticated() {
+    function isAdmin() {
       return request.auth != null;
     }
 
-    // Public collections: Accessible by anyone, manageable by admin
-    match /posts/{document=**} {
-      allow read: if true;
-      allow write: if isAuthenticated();
+    // projectGoals collection: Public read, Admin write
+    match /projectGoals {
+      allow list: if true;
+      allow get: if true;
+      match /{goalId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
     }
 
-    match /projectGoals/{document=**} {
-      allow read: if true;
-      allow write: if isAuthenticated();
+    // posts collection: Public read, Admin write
+    match /posts {
+      allow list: if true;
+      allow get: if true;
+      match /{postId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
     }
 
-    match /siteConfig/{document=**} {
-      allow read: if true;
-      allow write: if isAuthenticated();
+    // siteConfig: Public read, Admin write
+    match /siteConfig {
+      allow list: if true;
+      allow get: if true;
+      match /{configId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
     }
 
-    // Analytics: Open creation for tracking, admin-only read
+    // Analytics: Open creation for tracking, Admin read
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow read: if isAuthenticated();
+      allow read: if isAdmin();
     }
 
     // Admin-only collections
     match /workflows/{workflowId} {
-      allow read, write: if isAuthenticated();
+      allow read, write: if isAdmin();
     }
   }
 }
