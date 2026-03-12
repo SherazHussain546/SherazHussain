@@ -166,6 +166,20 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
+          {/* Buy Me a Coffee Widget */}
+          <Script 
+            data-name="BMC-Widget" 
+            data-cfasync="false" 
+            src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
+            data-id="sherazhussain546" 
+            data-description="Support me on Buy me a coffee!" 
+            data-message="Thank you for visiting. I dedicate my time to building high-performance AI tools, open-source software, and cloud infrastructure that helps the global tech community." 
+            data-color="#FF813F" 
+            data-position="Right" 
+            data-x_margin="18" 
+            data-y_margin="18"
+            strategy="afterInteractive"
+          />
           <AuthProvider>
             <FloatingNav />
             <AnalyticsTracker />
