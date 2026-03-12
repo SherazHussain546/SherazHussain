@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
+import { firestore, auth } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -43,7 +43,6 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Only emit the error if it's a permission denial
     if (goalsError && goalsError.code === 'permission-denied') {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
@@ -79,13 +78,6 @@ export default function ManageGoals() {
       ...data,
       createdAt: serverTimestamp(),
     })
-    .then(() => {
-      toast({
-        title: 'Goal Added!',
-        description: 'Your new project goal has been saved.',
-      });
-      form.reset();
-    })
     .catch(async (serverError) => {
       if (serverError.code === 'permission-denied') {
         const permissionError = new FirestorePermissionError({
@@ -96,6 +88,13 @@ export default function ManageGoals() {
         errorEmitter.emit('permission-error', permissionError);
       }
     })
+    .then(() => {
+      toast({
+        title: 'Goal Added!',
+        description: 'Your new project goal has been saved.',
+      });
+      form.reset();
+    })
     .finally(() => setLoading(false));
   };
 
@@ -104,14 +103,6 @@ export default function ManageGoals() {
     setLoading(true);
     const goalRef = doc(firestore, 'projectGoals', editingGoal.id);
     updateDoc(goalRef, data)
-    .then(() => {
-      toast({
-        title: 'Goal Updated!',
-        description: 'Goal successfully updated.',
-      });
-      setIsEditDialogOpen(false);
-      setEditingGoal(null);
-    })
     .catch(async (serverError) => {
       if (serverError.code === 'permission-denied') {
         const permissionError = new FirestorePermissionError({
@@ -122,15 +113,20 @@ export default function ManageGoals() {
         errorEmitter.emit('permission-error', permissionError);
       }
     })
+    .then(() => {
+      toast({
+        title: 'Goal Updated!',
+        description: 'Goal successfully updated.',
+      });
+      setIsEditDialogOpen(false);
+      setEditingGoal(null);
+    })
     .finally(() => setLoading(false));
   };
 
   const deleteGoal = async (id: string) => {
     const goalRef = doc(firestore, 'projectGoals', id);
     deleteDoc(goalRef)
-    .then(() => {
-      toast({ title: 'Goal Deleted' });
-    })
     .catch(async (serverError) => {
       if (serverError.code === 'permission-denied') {
         const permissionError = new FirestorePermissionError({
@@ -139,6 +135,9 @@ export default function ManageGoals() {
         });
         errorEmitter.emit('permission-error', permissionError);
       }
+    })
+    .then(() => {
+      toast({ title: 'Goal Deleted' });
     });
   }
   

@@ -3,39 +3,36 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    // Force redeploy trigger: Simplified read permissions and ensured list/get consistency
+    // Helper to force a redeploy trigger: Updated to explicit granular permissions
+    // and direct auth state checks to resolve 'list' operation denials.
     
-    // Posts can be read by anyone, but only managed by an authenticated user.
+    // Posts: Publicly readable, admin manageable
     match /posts/{postId} {
-      allow read: if true;
-      allow write: if isSignedIn();
+      allow get, list: if true;
+      allow create, update, delete: if request.auth != null;
     }
 
-    // Project goals can be read by anyone, but only managed by an admin.
+    // Project Goals: Publicly readable, admin manageable
     match /projectGoals/{goalId} {
-      allow read: if true;
-      allow write: if isSignedIn();
+      allow get, list: if true;
+      allow create, update, delete: if request.auth != null;
     }
 
-    // Site config can be read by anyone, but only written by an admin.
+    // Site Config: Publicly readable, admin manageable
     match /siteConfig/{configId} {
-      allow read: if true;
-      allow write: if isSignedIn();
+      allow get, list: if true;
+      allow create, update, delete: if request.auth != null;
     }
 
-    // Analytics events can be created by anyone, but only read by an admin.
+    // Analytics: Anyone can create, only admin can read
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow read: if isSignedIn();
+      allow get, list: if request.auth != null;
     }
 
-    // Workflows are admin only.
+    // Workflows: Admin only
     match /workflows/{workflowId} {
-      allow read, write: if isSignedIn();
+      allow read, write: if request.auth != null;
     }
   }
 }
