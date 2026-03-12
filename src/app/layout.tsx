@@ -8,6 +8,7 @@ import { AuthProvider } from '@/hooks/use-auth';
 import AnalyticsTracker from '@/components/admin/analytics/analytics-tracker';
 import FloatingNav from '@/components/layout/floating-nav';
 import FeedbackPopup from '@/components/layout/feedback-popup';
+import FirebaseErrorListener from '@/components/FirebaseErrorListener';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -151,6 +152,7 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
           <AuthProvider>
+            <FirebaseErrorListener />
             <FloatingNav />
             <AnalyticsTracker />
             {children}

@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -10,7 +9,7 @@ import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -18,8 +17,10 @@ import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Trash2, Pencil, Cpu, Globe, ShieldCheck, Target, Zap, Heart } from 'lucide-react';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 const goalSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
@@ -39,6 +40,16 @@ export default function ManageGoals() {
   const goalsCollection = collection(firestore, 'projectGoals');
   const goalsQuery = query(goalsCollection, orderBy('order', 'asc'));
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
+
+  useEffect(() => {
+    if (goalsError) {
+      const permissionError = new FirestorePermissionError({
+        path: goalsCollection.path,
+        operation: 'list',
+      });
+      errorEmitter.emit('permission-error', permissionError);
+    }
+  }, [goalsError]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),
@@ -62,58 +73,65 @@ export default function ManageGoals() {
 
   const onSubmit: SubmitHandler<GoalFormValues> = async (data) => {
     setLoading(true);
-    try {
-      await addDoc(goalsCollection, {
-        ...data,
-        createdAt: serverTimestamp(),
-      });
+    addDoc(goalsCollection, {
+      ...data,
+      createdAt: serverTimestamp(),
+    })
+    .then(() => {
       toast({
         title: 'Goal Added!',
         description: 'Your new project goal has been saved.',
       });
       form.reset();
-    } catch (error) {
-      console.error('Error adding document: ', error);
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'Could not save the goal.',
+    })
+    .catch(async (serverError) => {
+      const permissionError = new FirestorePermissionError({
+        path: goalsCollection.path,
+        operation: 'create',
+        requestResourceData: data,
       });
-    } finally {
-      setLoading(false);
-    }
+      errorEmitter.emit('permission-error', permissionError);
+    })
+    .finally(() => setLoading(false));
   };
 
   const onEditSubmit: SubmitHandler<GoalFormValues> = async (data) => {
     if (!editingGoal) return;
     setLoading(true);
-    try {
-      const goalRef = doc(firestore, 'projectGoals', editingGoal.id);
-      await updateDoc(goalRef, data);
+    const goalRef = doc(firestore, 'projectGoals', editingGoal.id);
+    updateDoc(goalRef, data)
+    .then(() => {
       toast({
         title: 'Goal Updated!',
         description: 'Goal successfully updated.',
       });
       setIsEditDialogOpen(false);
       setEditingGoal(null);
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Update Failed',
-        description: 'Could not update the goal.',
+    })
+    .catch(async (serverError) => {
+      const permissionError = new FirestorePermissionError({
+        path: goalRef.path,
+        operation: 'update',
+        requestResourceData: data,
       });
-    } finally {
-      setLoading(false);
-    }
+      errorEmitter.emit('permission-error', permissionError);
+    })
+    .finally(() => setLoading(false));
   };
 
   const deleteGoal = async (id: string) => {
-    try {
-      await deleteDoc(doc(firestore, 'projectGoals', id));
+    const goalRef = doc(firestore, 'projectGoals', id);
+    deleteDoc(goalRef)
+    .then(() => {
       toast({ title: 'Goal Deleted' });
-    } catch (error) {
-      toast({ variant: 'destructive', title: 'Deletion Failed' });
-    }
+    })
+    .catch(async (serverError) => {
+      const permissionError = new FirestorePermissionError({
+        path: goalRef.path,
+        operation: 'delete',
+      });
+      errorEmitter.emit('permission-error', permissionError);
+    });
   }
   
   const openEditDialog = (goal: any) => {

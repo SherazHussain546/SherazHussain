@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
@@ -26,10 +27,23 @@ import {
 } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function AnalyticsDashboard() {
-  const analyticsQuery = query(collection(firestore, 'analyticsEvents'), orderBy('timestamp', 'desc'));
+  const analyticsCollection = collection(firestore, 'analyticsEvents');
+  const analyticsQuery = query(analyticsCollection, orderBy('timestamp', 'desc'));
   const [snapshot, loading, error] = useCollection(analyticsQuery);
+
+  useEffect(() => {
+    if (error) {
+      const permissionError = new FirestorePermissionError({
+        path: analyticsCollection.path,
+        operation: 'list',
+      });
+      errorEmitter.emit('permission-error', permissionError);
+    }
+  }, [error]);
 
   if (loading) {
     return (
@@ -54,7 +68,7 @@ export default function AnalyticsDashboard() {
   }
 
   if (error) {
-    return <p className="text-destructive">Error loading analytics: {error.message}</p>;
+    return <p className="text-destructive">Error loading analytics dashboard. Developer overlay should provide context.</p>;
   }
 
   const events = snapshot?.docs.map(doc => ({
@@ -64,11 +78,11 @@ export default function AnalyticsDashboard() {
 
   // 1. Basic Metrics
   const totalViews = events.length;
-  const sessions = new Set(events.map(e => e.sessionId)).size;
+  const sessions = new Set(events.map(e => (e as any).sessionId)).size;
   const viewsPerSession = sessions > 0 ? (totalViews / sessions).toFixed(1) : 0;
 
   // 2. Page Popularity Data (for Chart)
-  const pathCounts = events.reduce((acc: { [key: string]: number }, event) => {
+  const pathCounts = events.reduce((acc: { [key: string]: number }, event: any) => {
     const path = event.path || '/';
     acc[path] = (acc[path] || 0) + 1;
     return acc;
