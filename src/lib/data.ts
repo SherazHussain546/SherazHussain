@@ -150,7 +150,7 @@ export const projects: Project[] = [
     ],
     solutions: [
       {
-        title: 'Core AI Intelligence',
+        title: 'AI Intelligence',
         description: 'Architected a sophisticated reasoning engine using Google Genkit that processes technical market indicators into human-readable signals.'
       },
       {
@@ -163,9 +163,9 @@ export const projects: Project[] = [
       }
     ],
     results: [
-      'Delivered sub-second AI reasoning for over 100+ stock and crypto asset pairs.',
+      'Delivered sub-second AI reasoning for over 100+ asset pairs.',
       'Maintained 99.9% uptime for high-frequency data synchronization.',
-      'Achieved a 75% faster decision-making process for users through AI-summarized technical insights.'
+      'Achieved a 75% faster decision-making process for users.'
     ],
     stack: ['Next.js', 'TypeScript', 'Google Genkit', 'Firebase Firestore', 'Firebase Messaging', 'Firebase Auth', 'AlphaVantage API', 'Crypto.com API', 'Tailwind CSS', 'ShadCN UI'],
     link: 'https://github.com/SherazHussain546/Market-Genius',
@@ -185,7 +185,7 @@ export const projects: Project[] = [
     ],
     solutions: [
       {
-        title: 'ATS Intelligence Engine',
+        title: 'ATS Engine',
         description: 'Utilized Gemini API and custom AI Agents to re-engineer resume content for maximum compatibility with recruitment algorithms.'
       },
       {
@@ -198,8 +198,8 @@ export const projects: Project[] = [
       }
     ],
     results: [
-      'Reduces resume tailoring time from hours to under 60 seconds per application.',
-      'Successfully identified and filtered 95% of low-trust job postings via AI verification.',
+      'Reduces resume tailoring time from hours to under 60 seconds.',
+      'Filtered 95% of low-trust job postings via AI verification.',
       'Enabled over 500+ users to generate ATS-ready application documents.'
     ],
     stack: ['Next.js', 'React', 'Angular', 'Firebase Auth', 'Firestore', 'Python', 'scikit-learn', 'Gemini API', 'AI Agents', 'Netlify'],
@@ -233,12 +233,12 @@ export const projects: Project[] = [
       }
     ],
     results: [
-      'Successfully empowered 400+ students at Dublin Business School with automated study material generation.',
-      'Achieved a 60% reduction in study preparation time through AI-driven summarization and quiz generation.',
+      'Empowered 400+ students at Dublin Business School with automated study material generation.',
+      'Achieved a 60% reduction in study preparation time through AI-driven summarization.',
       'Maintained 98% accuracy across 10,000+ technical tutoring interactions.'
     ],
     stack: ['Ionic', 'Angular', 'Firebase Auth', 'Firestore', 'Gemini API', 'OpenAI API', 'Supabase', 'TypeScript', 'Tailwind CSS', 'Capacitor'],
-    link: 'https://github.com/SherazHussain546',
+    link: 'https://github.com/SherazHussain546/ChattyAI',
     image: 'https://picsum.photos/seed/chattyai/800/600',
     imageHint: 'AI study assistant',
   },

@@ -90,7 +90,12 @@ export const metadata: Metadata = {
     'IT Consultant Ireland',
     'Dublin',
     'Ireland',
-    'Tech Portfolio'
+    'Tech Portfolio',
+    'AI Recruiter',
+    'Market Intelligence',
+    'Financial Signals',
+    'Conversational AI',
+    'Document Intelligence'
   ],
   robots: {
     index: true,
