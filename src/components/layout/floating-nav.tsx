@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Mail, Pencil } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -59,11 +59,11 @@ const navItems: NavItemProps[] = [
     bgColor: 'bg-blue-600/30 hover:bg-blue-700/50',
   },
   {
-    href: '/survey',
-    label: 'Give Feedback',
-    icon: Pencil,
+    href: '/support',
+    label: 'Support my Work',
+    icon: Heart,
     target: '_self',
-    bgColor: 'bg-purple-600/30 hover:bg-purple-700/50',
+    bgColor: 'bg-red-600/30 hover:bg-red-700/50',
   },
 ];
 
@@ -78,8 +78,8 @@ export default function FloatingNav() {
       return;
     }
 
-    // Always show on the survey page
-    if (pathname.startsWith('/survey')) {
+    // Always show on these pages
+    if (pathname.startsWith('/survey') || pathname.startsWith('/support')) {
       setIsVisible(true);
       return;
     }
