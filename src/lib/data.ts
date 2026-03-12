@@ -313,34 +313,34 @@ export const projects: Project[] = [
   },
   {
     slug: 'luxe-threads',
-    name: 'Luxe Threads – E-Commerce Scaling & Technical Brand Management',
-    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) architected an end-to-end brand management system and technical marketing funnel that doubled organic traffic.',
-    fullDescription: 'Luxe Threads required a modern, high-conversion e-commerce architecture to transition from boutique sales to a scalable digital brand. Sheraz Hussain, acting as a technical consultant for SYNC TECH Solutions, engineered a comprehensive e-commerce ecosystem. The solution focused on high-fidelity user interfaces, automated inventory management, and a robust technical SEO framework. By implementing advanced analytics and conversion-rate optimization (CRO) strategies, the platform achieved a 100% increase in organic reach and significantly reduced cart abandonment rates.',
+    name: 'Luxe Threads – High-Revenue Shopify Dropshipping & Luxury Brand Scaling',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) architected a high-conversion Shopify ecosystem for Luxe Threads, driving record-breaking revenue through strategic ad management and luxury content curation.',
+    fullDescription: 'Luxe Threads is a premier Shopify-based dropshipping powerhouse specializing in luxury fashion. Sheraz Hussain (SYNC TECH Solutions) led the technical and marketing transformation, focusing on high-ROAS ad campaigns and automated content management. The project centered on creating a seamless, premium shopping experience that matches the luxury of the outfits provided. By optimizing the Shopify Liquid engine and integrating advanced pixel tracking, the platform achieved industry-leading conversion rates and scaled to become one of the most profitable dropshipping ventures in its niche.',
     challenges: [
-      'Transitioning a manual retail process to a fully automated e-commerce ecosystem.',
-      'Optimizing marketing spend through high-conversion landing pages and technical SEO.',
-      'Implementing real-time inventory synchronization across multiple sales channels.'
+      'Scaling a Shopify infrastructure to handle massive traffic spikes from high-budget social media ad campaigns.',
+      'Maintaining a consistent luxury brand identity across automated dropshipping product feeds.',
+      'Optimizing multi-channel marketing attribution to ensure high ROAS (Return on Ad Spend).'
     ],
     solutions: [
       {
-        title: 'Performance-First Storefront',
-        description: 'Built a high-speed storefront using Next.js and Tailwind, ensuring rapid load times essential for mobile shoppers and SEO ranking.'
+        title: 'Brand-First Content Management',
+        description: 'Developed a curated content pipeline that elevates standard dropshipping assets into a premium luxury aesthetic.'
       },
       {
-        title: 'Automated Operations',
-        description: 'Integrated the Shopify API with custom Node.js middleware to automate order processing and inventory updates, reducing manual overhead.'
+        title: 'Ad Performance Engineering',
+        description: 'Implemented advanced Meta and Google pixel tracking with custom event triggers to optimize automated bidding strategies.'
       },
       {
-        title: 'Conversion Strategy',
-        description: 'Designed and deployed data-driven marketing funnels that utilize heatmaps and A/B testing to maximize user conversion.'
+        title: 'Shopify Performance Tuning',
+        description: 'Optimized theme liquid files and third-party app integrations to ensure sub-2s load times during peak traffic.'
       }
     ],
     results: [
-      'Doubled organic traffic within the first six months of deployment.',
-      'Increased average order value (AOV) by 25% through strategic UI/UX improvements.',
-      'Achieved a 99% accuracy rate in automated inventory tracking.'
+      'Generated record-breaking monthly revenue, establishing the brand as a top-tier dropshipping competitor.',
+      'Achieved an average ROAS of 4.5x through data-driven ad management and audience segmentation.',
+      'Successfully delivered thousands of luxury outfits globally with a 95% customer satisfaction rate.'
     ],
-    stack: ['Next.js', 'React', 'Shopify API', 'Tailwind CSS', 'Google Analytics', 'Technical SEO', 'Node.js'],
+    stack: ['Shopify', 'Liquid', 'Meta Ads Manager', 'Google Ads', 'Technical SEO', 'Conversion Rate Optimization', 'Google Analytics 4'],
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/seed/luxethreads/800/600',
     imageHint: 'luxury ecommerce fashion',
