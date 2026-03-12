@@ -26,10 +26,14 @@ This is the repository for the personal portfolio of Sheraz Hussain, a Freelance
 - **CRITICAL**: Never commit your `.env` file. It is now ignored by `.gitignore`.
 
 ### 3. Git Workflow
-To keep your repository in sync, use the following commands:
+To keep your repository in sync and secure, use the following commands:
+
 ```bash
 # Pull latest changes
 git pull origin main
+
+# If .env was previously committed, remove it from the index:
+git rm --cached .env
 
 # Add and commit your updates
 git add .
@@ -40,4 +44,4 @@ git push origin main
 ```
 
 ## Security Note
-If your API keys have been leaked, please **rotate them immediately** in the Firebase Console and update your Netlify environment variables.
+If your API keys have been leaked, please **rotate them immediately** in the Firebase Console and update your Netlify environment variables. The `.gitignore` file is configured to prevent future leaks of your `.env` file.
