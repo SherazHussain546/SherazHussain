@@ -44,16 +44,16 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Definitive permission check: Only emit error if we are not loading, user is definitely logged in, 
-    // and the server returned a permission-denied code for the list operation.
-    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && !authLoading && user) {
+    // Only emit permission error if we are definitively seeing a permission-denied code 
+    // from the server after the initial loading state has resolved.
+    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && !authLoading) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [goalsError, goalsLoading, authLoading, goalsCollection.path, user]);
+  }, [goalsError, goalsLoading, authLoading, goalsCollection.path]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),
