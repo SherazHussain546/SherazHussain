@@ -104,6 +104,12 @@ const nextConfig: NextConfig = {
         hostname: 'job4yo.netlify.app',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ipfs.io',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

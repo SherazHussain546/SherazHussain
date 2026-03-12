@@ -28,6 +28,7 @@ import {
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -72,7 +73,8 @@ export default function SupportPage() {
       value: 'sherazhussain.unstoppable',
       actionLabel: 'Copy Web3 Domain',
       color: 'bg-blue-500/10 text-blue-600',
-      isWeb3: true
+      isWeb3: true,
+      badgeUrl: 'https://ipfs.io/ipfs/QmXuoUmUstZbRv1LFKp3XgUiemzMJ2VmtZnMGv9xcNjj5c'
     },
     {
       title: 'GoFundMe',
@@ -210,6 +212,18 @@ export default function SupportPage() {
                           />
                         </Link>
                       </div>
+                    )}
+                    {method.isWeb3 && method.badgeUrl && (
+                        <div className="flex justify-center py-4">
+                            <div className="relative h-20 w-20 overflow-hidden rounded-2xl border-2 border-blue-500/20 shadow-lg group-hover:border-blue-500/50 transition-all">
+                                <Image 
+                                    src={method.badgeUrl}
+                                    alt="Unstoppable Domains Verified Badge"
+                                    fill
+                                    className="object-contain p-1"
+                                />
+                            </div>
+                        </div>
                     )}
                     {method.value && (
                       <div className="flex items-center justify-between rounded-2xl border bg-muted/20 p-4 transition-colors hover:bg-muted/40 group/copy">
@@ -368,7 +382,7 @@ export default function SupportPage() {
                     Community Pulse
                 </div>
                 <h2 className="text-4xl font-extrabold text-foreground md:text-5xl tracking-tight">Live Impact Feed</h2>
-                <p className="text-lg text-muted-foreground mt-6 max-w-xl mx-auto font-medium">See the real-time heartbeat of the community supporting this engineering journey.</p>
+                <p className="text-lg text-muted-foreground mt-6 max-wxl mx-auto font-medium">See the real-time heartbeat of the community supporting this engineering journey.</p>
              </div>
              
              <div className="relative aspect-[16/8] w-full overflow-hidden rounded-[3rem] border-8 border-white shadow-[0_40px_100px_rgba(0,0,0,0.1)] bg-white">
