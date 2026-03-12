@@ -41,16 +41,15 @@ export default function ManagePosts() {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [isEditDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
-  const [setIsEditDialogOpen] = useState<any>(null); // Fixed missing setter
 
   const postsCollection = useMemo(() => collection(firestore, 'posts'), []);
   const postsQuery = useMemo(() => query(postsCollection, orderBy('createdAt', 'desc')), [postsCollection]);
   const [postsSnapshot, postsLoading, postsError] = useCollection(postsQuery);
 
   useEffect(() => {
-    // Only report permission errors once all loading states are resolved and user is authenticated
+    // Definitive permission check for administrative collection listing
     if (postsError && postsError.code === 'permission-denied' && !postsLoading && !authLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: postsCollection.path,
@@ -132,7 +131,7 @@ export default function ManagePosts() {
         title: 'Post Updated!',
         description: 'Your post has been successfully updated.',
       });
-      if (setIsEditDialogOpen) setIsEditDialogOpen(false);
+      setIsEditDialogOpen(false);
       setEditingPost(null);
     })
     .finally(() => setLoading(false));
@@ -166,7 +165,7 @@ export default function ManagePosts() {
         imageHint: post.imageHint || '',
         hashtags: post.hashtags || '',
     });
-    if (setIsEditDialogOpen) setIsEditDialogOpen(true);
+    setIsEditDialogOpen(true);
   }
 
   const posts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
@@ -349,7 +348,7 @@ export default function ManagePosts() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto bg-white">
           <DialogHeader>
             <DialogTitle>Edit Post</DialogTitle>
           </DialogHeader>
