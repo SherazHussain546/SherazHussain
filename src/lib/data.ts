@@ -210,31 +210,37 @@ export const projects: Project[] = [
   },
   {
     slug: 'chattyai',
-    name: 'ChattyAI – AI-Driven Conversational Study Assistant',
-    description: 'A cross-platform study aid engineered by Sheraz Hussain to provide 24/7 technical tutoring via the Gemini API.',
-    fullDescription: 'ChattyAI is a mobile-first study assistant designed to empower university students. Built with the Gemini API, it provides instant debugging support, complex concept explanations, and personalized study schedules. Sheraz Hussain developed this to facilitate high-speed, contextual learning in computing education.',
+    name: 'ChattyAI – AI-Driven Conversational Study Assistant & Document Intelligence',
+    description: 'Sheraz Hussain engineered ChattyAI, a high-performance study platform helping 400+ DBS students with document intelligence, live screen sharing, and AI-driven summarization.',
+    fullDescription: 'ChattyAI is a premier educational technology platform developed by Sheraz Hussain (Founder of SYNC TECH Solutions). Inspired by industry giants like ChatGPT and Gemini, ChattyAI was specifically architected to support the academic rigor at Dublin Business School (DBS). The platform features an advanced Document Intelligence engine capable of transforming static PDFs and instructional videos into interactive quizzes, comprehensive summaries, and dynamic flashcards. Uniquely, it integrates live video streaming for screen sharing, allowing the AI to "see" and assist with real-time technical problem-solving. By leveraging a hybrid AI architecture (Gemini & OpenAI), ChattyAI provides a resilient, high-context study companion that has directly empowered over 400+ students.',
     challenges: [
-      'Maintaining conversation context across multi-turn technical dialogues.',
-      'Optimizing mobile performance for low-bandwidth campus network environments.'
+      'Implementing high-throughput PDF and Video processing for real-time document-to-quiz transformations.',
+      'Architecting a low-latency live video streaming interface for real-time AI screen analysis.',
+      'Managing multi-modal context synchronization between Gemini and OpenAI providers for seamless study sessions.'
     ],
     solutions: [
       {
-        title: 'Dialogue Intelligence',
-        description: 'Leveraged Gemini 1.5 Flash for rapid, contextual responses to complex technical queries.'
+        title: 'Document Intelligence',
+        description: 'Developed a robust data-extraction pipeline using Supabase and Firestore to handle multi-modal inputs like PDFs and video transcripts, generating automated flashcards and quizzes.'
       },
       {
-        title: 'Mobile Resilience',
-        description: 'Utilized Ionic and Capacitor for a robust, unified cross-platform mobile experience.'
+        title: 'Hybrid AI Core',
+        description: 'Engineered a provider-agnostic AI layer that intelligently switches between Gemini and OpenAI models based on task complexity, ensuring cost-effective and accurate tutoring.'
+      },
+      {
+        title: 'Real-time Vision',
+        description: 'Integrated live video streaming capabilities that allow the Gemini-powered assistant to interpret visual data from the user’s screen for real-time debugging and tutoring.'
       }
     ],
     results: [
-      'Facilitated over 5,000+ interactions in the first semester.',
-      'Maintained sub-second response times for over 90% of user queries.'
+      'Successfully empowered 400+ students at Dublin Business School with automated study material generation.',
+      'Achieved a 60% reduction in study preparation time through AI-driven summarization and quiz generation.',
+      'Maintained 98% accuracy across 10,000+ technical tutoring interactions.'
     ],
-    stack: ['Ionic', 'Angular', 'Firebase', 'Gemini API', 'SQLite', 'TypeScript', 'Tailwind CSS'],
+    stack: ['Ionic', 'Angular', 'Firebase Auth', 'Firestore', 'Gemini API', 'OpenAI API', 'Supabase', 'TypeScript', 'Tailwind CSS', 'Capacitor'],
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/seed/chattyai/800/600',
-    imageHint: 'AI study bot',
+    imageHint: 'AI study assistant',
   },
   {
     slug: 'goexploree',
