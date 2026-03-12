@@ -1,11 +1,13 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from '@/components/ui/carousel';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -38,6 +40,7 @@ const platformIcons: { [key: string]: React.ElementType } = {
 };
 
 export default function PostsSection() {
+  const [api, setApi] = useState<CarouselApi>();
   const postsCollection = collection(firestore, 'posts');
   const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
   const [postsSnapshot, loading, error] = useCollection(postsQuery);
@@ -59,6 +62,15 @@ export default function PostsSection() {
   const allPosts = [githubPost, ...firestorePosts];
   allPosts.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
 
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [api]);
 
   if (loading) {
     return (
@@ -91,10 +103,12 @@ export default function PostsSection() {
         {!loading && !error && allPosts.length === 0 ? (
             <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
         ) : (
-           <Carousel
+           <div className="mx-auto max-w-3xl">
+              <Carousel
+                setApi={setApi}
                 opts={{
                     align: 'start',
-                    loop: allPosts.length > 3,
+                    loop: true,
                 }}
                 className="w-full"
             >
@@ -102,44 +116,47 @@ export default function PostsSection() {
               {allPosts.map((post) => {
                 const Icon = platformIcons[post.platform] || Rss;
                 return (
-                  <CarouselItem key={post.id} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={post.id} className="basis-full">
                     <div className="p-1">
-                      <Card className="group flex h-full flex-col overflow-hidden transition-all hover:shadow-primary/20 hover:shadow-lg">
-                        <CardHeader>
-                            <div className="relative aspect-video w-full overflow-hidden rounded-t-lg">
+                      <Card className="group mx-auto flex max-w-2xl flex-col overflow-hidden transition-all hover:shadow-primary/20 hover:shadow-lg">
+                        <CardHeader className="p-0">
+                            <div className="relative aspect-video w-full overflow-hidden">
                                 <Image
                                     src={post.image || 'https://picsum.photos/seed/1/600/400'}
                                     alt={post.title}
                                     fill
-                                    className="object-contain transition-transform duration-300"
+                                    className="object-cover transition-transform duration-300"
                                     data-ai-hint={post.imageHint}
                                 />
-                                <div className="absolute top-2 right-2 rounded-full bg-background/80 p-1.5 shadow-sm">
+                                <div className="absolute top-4 right-4 rounded-full bg-background/80 p-2 shadow-sm">
                                     <Icon className="h-5 w-5 text-primary" />
                                 </div>
                             </div>
                         </CardHeader>
-                        <CardContent className="flex-1 space-y-3">
-                          <h3 className="line-clamp-2 text-lg font-bold">{post.title}</h3>
-                          <p className="line-clamp-3 text-sm text-muted-foreground">{post.description}</p>
+                        <CardContent className="flex-1 space-y-4 p-6">
+                          <h3 className="line-clamp-2 text-xl font-bold">{post.title}</h3>
+                          <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed">{post.description}</p>
                            {post.hashtags && (
-                            <div className="flex flex-wrap gap-1">
+                            <div className="flex flex-wrap gap-1.5 pt-2">
                                 {post.hashtags.split(',').map(tag => (
-                                    <Badge key={tag.trim()} variant="secondary" className="text-xs">{tag.trim()}</Badge>
+                                    <Badge key={tag.trim()} variant="secondary" className="text-[10px] font-medium uppercase tracking-wider">
+                                      {tag.trim()}
+                                    </Badge>
                                 ))}
                             </div>
                            )}
                         </CardContent>
-                        <CardFooter>
-                          <Link
-                            href={post.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex w-full items-center justify-between text-sm font-semibold text-primary"
-                          >
-                            <span>Read on {post.platform}</span>
-                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                          </Link>
+                        <CardFooter className="p-6 pt-0">
+                          <Button asChild variant="ghost" className="w-full justify-between text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary/5">
+                            <Link
+                              href={post.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <span>Read on {post.platform}</span>
+                              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                          </Button>
                         </CardFooter>
                       </Card>
                     </div>
@@ -147,13 +164,12 @@ export default function PostsSection() {
                 );
               })}
             </CarouselContent>
-             {allPosts.length > 3 && (
-                <>
-                    <CarouselPrevious className="hidden lg:flex" />
-                    <CarouselNext className="hidden lg:flex" />
-                </>
-             )}
+            <div className="flex justify-center gap-4 mt-8">
+              <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10" />
+              <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10" />
+            </div>
           </Carousel>
+           </div>
         )}
 
       </div>
