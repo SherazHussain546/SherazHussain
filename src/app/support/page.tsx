@@ -20,13 +20,16 @@ import {
   Coins,
   Cpu,
   Users,
-  Target
+  Target,
+  Building2,
+  Info
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 export default function SupportPage() {
   const { toast } = useToast();
@@ -40,6 +43,15 @@ export default function SupportPage() {
       description: `${label} has been copied to your clipboard.`,
     });
     setTimeout(() => setCopied(null), 2000);
+  };
+
+  const bankDetails = {
+    beneficiary: 'Sheraz Hussain',
+    iban: 'IE25 REVO 9903 6011 9835 69',
+    bic: 'REVOIE23',
+    bankName: 'Revolut Bank UAB',
+    bankAddress: '2 Dublin Landings, North Dock, Dublin 1, D01 V4A3, Ireland',
+    correspondentBic: 'CHASDEFX'
   };
 
   const supportMethods = [
@@ -70,13 +82,12 @@ export default function SupportPage() {
       color: 'bg-emerald-500/10 text-emerald-600',
     },
     {
-      title: 'Enterprise Support',
-      description: 'Professional sponsorship and bank transfers for high-level consulting and architecture.',
-      icon: Banknote,
-      details: 'Invoicing available for corporate and professional partners.',
-      actionLabel: 'Inquire via Email',
-      link: 'mailto:sheraz@synctech.ie',
+      title: 'Enterprise & Direct',
+      description: 'Professional sponsorship and direct Euro bank transfers for high-level technical consulting.',
+      icon: Building2,
+      actionLabel: 'View Bank Details',
       color: 'bg-purple-500/10 text-purple-600',
+      isEnterprise: true
     },
   ];
 
@@ -101,7 +112,6 @@ export default function SupportPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#FDFDFB]">
       <Header />
-      {/* GoFundMe Embed Script */}
       <Script defer src="https://www.gofundme.com/static/js/embed.js" />
       
       <main className="flex-1 relative overflow-hidden">
@@ -150,7 +160,6 @@ export default function SupportPage() {
              ))}
           </div>
 
-          {/* Featured Campaign Section with Provided Embed */}
           <div className="mx-auto mt-32 max-w-2xl text-center">
             <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
                 <Target className="h-4 w-4" />
@@ -215,14 +224,73 @@ export default function SupportPage() {
                         </Button>
                       </div>
                     )}
-                    {method.details && (
+                    {method.isEnterprise && (
                       <div className="text-[11px] font-semibold text-muted-foreground bg-primary/5 p-4 rounded-xl border border-primary/10 border-dashed">
-                        {method.details}
+                        Direct Euro (SEPA) transfers via Revolut Business.
                       </div>
                     )}
                   </CardContent>
                   <div className="p-6 pt-0 mt-auto">
-                    {method.link ? (
+                    {method.isEnterprise ? (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
+                            {method.actionLabel}
+                            <ExternalLink className="ml-2 h-4 w-4" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md bg-white">
+                          <DialogHeader>
+                            <DialogTitle className="flex items-center gap-2">
+                              <Building2 className="h-5 w-5 text-primary" />
+                              Bank Transfer Details
+                            </DialogTitle>
+                            <DialogDescription>
+                              Use these details for direct contributions or enterprise consulting payments.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="space-y-4 mt-4">
+                            <div className="rounded-2xl border p-4 bg-muted/5 space-y-3">
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Beneficiary</span>
+                                <span className="text-sm font-semibold">{bankDetails.beneficiary}</span>
+                              </div>
+                              <div className="flex flex-col gap-1 relative group">
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (Euro)</span>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-mono font-bold text-primary">{bankDetails.iban}</span>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(bankDetails.iban, 'IBAN')}>
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">BIC / SWIFT</span>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-mono font-bold text-primary">{bankDetails.bic}</span>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => copyToClipboard(bankDetails.bic, 'BIC')}>
+                                    <Copy className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Bank Name & Address</span>
+                                <span className="text-xs leading-relaxed">{bankDetails.bankName}<br />{bankDetails.bankAddress}</span>
+                              </div>
+                              <div className="flex flex-col gap-1 pt-2 border-t border-dashed">
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold flex items-center gap-1">
+                                  Correspondent BIC <Info className="h-3 w-3" />
+                                </span>
+                                <span className="text-xs font-mono">{bankDetails.correspondentBic}</span>
+                              </div>
+                            </div>
+                            <p className="text-[10px] text-center text-muted-foreground italic">
+                              * All transfers are handled securely via Revolut Bank UAB.
+                            </p>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    ) : method.link ? (
                       <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
                         <Link href={method.link} target={method.link.startsWith('mailto') ? '_self' : '_blank'}>
                           {method.actionLabel}
