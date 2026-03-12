@@ -57,7 +57,7 @@ html {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
@@ -69,4 +69,17 @@ html {
     .hover\:pause:hover {
         animation-play-state: paused;
     }
+    .text-balance {
+      text-wrap: balance;
+    }
+}
+
+/* Optimization for smooth transitions */
+.transition-all {
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.will-change-transform {
+  will-change: transform;
 }

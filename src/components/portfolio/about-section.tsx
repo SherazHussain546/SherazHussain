@@ -8,6 +8,7 @@ import { doc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { Skeleton } from '../ui/skeleton';
 import { TypeAnimation } from 'react-type-animation';
+import { motion } from 'framer-motion';
 
 const summaries = [
   "Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach as a Freelancer working with SYNC TECH Solutions.",
@@ -23,14 +24,19 @@ const summaries = [
 export default function AboutSection() {
     const [summaryIndex, setSummaryIndex] = useState(0);
     const settingsRef = doc(firestore, 'siteConfig', 'main');
-    const [settings, loading, error] = useDocumentData(settingsRef);
+    const [settings, loading] = useDocumentData(settingsRef);
 
     const founderImageUrl = settings?.founderImageUrl || "https://synctech.ie/_next/image?url=%2Ffounder.jpg&w=640&q=75";
 
   return (
-    <section id="about" className="py-20 md:py-32">
+    <section id="about" className="py-20 md:py-32 overflow-hidden">
       <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-3 md:px-6">
-        <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full border-4 border-primary md:h-64 md:w-64 ring-4 ring-primary/20 shadow-[0_0_20px_hsl(var(--primary)/0.6)] transition-all duration-500 hover:shadow-[0_0_40px_hsl(var(--primary)/0.8)] hover:scale-[1.02]">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative mx-auto h-48 w-48 overflow-hidden rounded-full border-4 border-primary md:h-64 md:w-64 ring-4 ring-primary/20 shadow-[0_0_20px_hsl(var(--primary)/0.6)] transition-all duration-500 hover:shadow-[0_0_40px_hsl(var(--primary)/0.8)] hover:scale-[1.02] will-change-transform"
+        >
            {loading ? (
              <Skeleton className="h-full w-full rounded-full" />
            ) : (
@@ -38,12 +44,18 @@ export default function AboutSection() {
                 src={founderImageUrl}
                 alt="Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer"
                 fill
+                priority
                 className="object-cover"
-                data-ai-hint="portrait man"
+                data-ai-hint="professional man"
             />
            )}
-        </div>
-        <div className="space-y-4 text-center md:col-span-2 md:text-left">
+        </motion.div>
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="space-y-4 text-center md:col-span-2 md:text-left"
+        >
           <div className="min-h-[120px] md:min-h-[100px]">
             <TypeAnimation
                 sequence={[
@@ -76,17 +88,17 @@ export default function AboutSection() {
             </p>
           </div>
           <div className="flex justify-center gap-6 pt-4 md:justify-start">
-            <Link href="mailto:sheraz@synctech.ie" aria-label="Email">
+            <Link href="mailto:sheraz@synctech.ie" aria-label="Email" className="transition-transform hover:scale-110">
               <Mail className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
-            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-transform hover:scale-110">
               <Github className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
-            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-transform hover:scale-110">
               <Linkedin className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

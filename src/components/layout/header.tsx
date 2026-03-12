@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const navLinks = [
   { name: 'About', href: '/#about' },
@@ -23,21 +24,26 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
       className={cn(
-        'sticky top-0 z-50 w-full transition-all duration-300',
-        isScrolled ? 'bg-background/80 border-b border-border/50 backdrop-blur-lg' : 'bg-transparent'
+        'sticky top-0 z-50 w-full transition-all duration-500 ease-in-out',
+        isScrolled 
+          ? 'bg-background/80 border-b border-border/50 backdrop-blur-lg py-2 shadow-sm' 
+          : 'bg-transparent py-4'
       )}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary">
+      <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
+        <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary transition-transform hover:scale-105 active:scale-95">
           <span>Sheraz Hussain</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
@@ -45,30 +51,31 @@ export default function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+              className="relative text-sm font-medium text-foreground/80 transition-colors hover:text-primary group"
             >
               {link.name}
+              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
         </nav>
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="transition-transform active:scale-90">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <SheetTitle className="text-left text-primary">Sheraz Hussain</SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-4 pt-8">
+              <nav className="flex flex-col gap-6 pt-10">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
-                    className="text-lg font-medium text-foreground/80 transition-colors hover:text-primary"
+                    className="text-lg font-medium text-foreground/80 transition-all hover:text-primary hover:translate-x-2"
                   >
                     {link.name}
                   </Link>
@@ -78,6 +85,6 @@ export default function Header() {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

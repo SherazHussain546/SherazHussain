@@ -13,34 +13,36 @@ const logos = [
   { name: 'Duolingo', src: 'https://logos-world.net/wp-content/uploads/2021/08/Duolingo-Logo.png'},
 ];
 
-const duplicatedLogos = [...logos, ...logos];
+const duplicatedLogos = [...logos, ...logos, ...logos];
 
 export default function CertifiedBySection() {
   return (
-    <section id="certified-by" className="py-16 md:py-24 bg-card/30">
+    <section id="certified-by" className="py-16 md:py-24 bg-card/30 overflow-hidden">
         <style jsx>{`
             @keyframes scroll {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-50%); }
+                0% { transform: translate3d(0, 0, 0); }
+                100% { transform: translate3d(-33.33%, 0, 0); }
             }
             .scrolling-logos {
                 animation: scroll 40s linear infinite;
+                will-change: transform;
             }
         `}</style>
       <div className="container mx-auto px-4 md:px-6">
-        <h3 className="mb-8 text-center text-lg font-medium text-foreground">
+        <h3 className="mb-8 text-center text-lg font-medium text-foreground opacity-80">
           I am certified by:
         </h3>
         <Link href="/#certifications" scroll={true} aria-label="View my certifications">
           <div className="relative w-full overflow-hidden mask-gradient">
-            <div className="flex w-[200%] scrolling-logos hover:pause">
+            <div className="flex w-[300%] scrolling-logos hover:pause">
               {duplicatedLogos.map((logo, index) => (
-                <div key={`${logo.name}-${index}`} className="mx-8 flex h-16 w-36 flex-shrink-0 items-center justify-center transition-all duration-300 md:mx-12">
+                <div key={`${logo.name}-${index}`} className="mx-8 flex h-16 w-36 flex-shrink-0 items-center justify-center transition-opacity duration-300 hover:opacity-80 md:mx-12 grayscale hover:grayscale-0">
                    <div className="relative h-full w-full">
                         <Image
                             src={logo.src}
                             alt={logo.name}
                             fill
+                            sizes="(max-width: 768px) 144px, 144px"
                             className="object-contain"
                         />
                    </div>
