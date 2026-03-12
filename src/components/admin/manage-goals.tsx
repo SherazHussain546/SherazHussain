@@ -43,15 +43,15 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Only emit the error if it's explicitly a permission denial from Firestore
-    if (goalsError && goalsError.code === 'permission-denied') {
+    // Only emit the error if it's explicitly a permission denial from Firestore and loading has finished
+    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [goalsError, goalsCollection.path]);
+  }, [goalsError, goalsLoading, goalsCollection.path]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),

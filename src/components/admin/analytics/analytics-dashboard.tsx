@@ -27,7 +27,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
 import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
+import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 
 export default function AnalyticsDashboard() {
   const analyticsCollection = useMemo(() => collection(firestore, 'analyticsEvents'), []);
@@ -35,14 +35,15 @@ export default function AnalyticsDashboard() {
   const [snapshot, loading, error] = useCollection(analyticsQuery);
 
   useEffect(() => {
-    if (error) {
+    // Only emit error if confirmed permission denial and not loading
+    if (error && error.code === 'permission-denied' && !loading) {
       const permissionError = new FirestorePermissionError({
         path: analyticsCollection.path,
         operation: 'list',
-      });
+      } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [error, analyticsCollection.path]);
+  }, [error, loading, analyticsCollection.path]);
 
   if (loading) {
     return (
@@ -66,8 +67,8 @@ export default function AnalyticsDashboard() {
     );
   }
 
-  if (error) {
-    return <p className="text-destructive">Error loading analytics dashboard. Developer overlay should provide context.</p>;
+  if (error && error.code === 'permission-denied') {
+    return <p className="text-destructive">Insufficient permissions to view analytics. Please contact an administrator.</p>;
   }
 
   const events = snapshot?.docs.map(doc => ({
