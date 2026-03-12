@@ -62,7 +62,8 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     1. Source of Truth: The provided portfolio content is the ONLY source of facts about Sheraz Hussain. Do not invent, exaggerate, or fabricate information.
     2. Professional Role: Always identify Sheraz Hussain as a "Freelancer working with SYNC TECH Solutions".
     3. ATS Optimization: The LaTeX Resume must be structured for maximum parse-ability by ATS algorithms, aiming for a 100+ score.
-    4. LaTeX Compilation: Ensure all LaTeX code is valid, compile-ready, and uses the exact templates provided.`,
+    4. LaTeX Compilation: Ensure all LaTeX code is valid and uses the exact templates provided.
+    5. CRITICAL: Every LaTeX command MUST start with a backslash (e.g., \\section, \\textbf).`,
       prompt: `
     Candidate Information (Source of Truth):
     ${resumeContent}
@@ -96,32 +97,16 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
         \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
     \\end{center}
     \\section{Professional Summary}
-    [Generate a high-impact summary focusing on SYNC TECH Solutions and JD keywords]
+    [Generate summary]
     \\section{Technical Skills}
     \\begin{itemize}
-        \\item \\textbf{Languages:} [List relevant]
-        \\item \\textbf{Frameworks/Tools:} [List relevant]
-        \\item \\textbf{Cloud \& DevOps:} [List relevant]
-        \\item \\textbf{Databases:} [List relevant]
+        \\item \\textbf{Languages:} [Relevant]
+        \\item \\textbf{Frameworks/Tools:} [Relevant]
     \\end{itemize}
     \\section{Professional Experience}
     \\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
     \\begin{itemize}
-        \\item [Quantifiable achievement 1 related to JD]
-        \\item [Quantifiable achievement 2 related to JD]
-    \\end{itemize}
-    [Include other experiences from source]
-    \\section{Technical Projects}
-    \\textbf{[Project Name]} $|$ \\textit{Tech Stack: [Techs]} \\hfill \\href{[Link]}{Project Link}
-    \\begin{itemize}
-        \\item [Key accomplishment highlighting technical depth]
-    \\end{itemize}
-    \\section{Education}
-    \\textbf{Dublin Business School} \\hfill Dublin, Ireland \\\\
-    Bachelor of Science in Computing (First Class Honors) $|$ GPA: 4.0/4.0 \\hfill Sept 2021 -- April 2025
-    \\section{Certifications}
-    \\begin{itemize}
-        \\item [List certifications from source]
+        \\item [Achievement 1]
     \\end{itemize}
     \\end{document}
 
@@ -156,9 +141,8 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     Company Name\\\\
     City, State
     \\vspace{10pt}
-    Dear [Hiring Manager's Name] / Dear Hiring Manager,
-    I am writing to express my strong interest in the [Job Title] position at [Company Name]. As a Freelancer working with SYNC TECH Solutions, I have specialized in [Core Skill from JD] and delivered [Achievement from Source]...
-    [Generate body using the template structure provided]
+    Dear Hiring Manager,
+    [Generate tailored body]
     Sincerely,
     \\vspace{30pt}
     SHERAZ HUSSAIN
