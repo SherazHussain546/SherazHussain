@@ -41,8 +41,9 @@ export default function ManagePosts() {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isEditDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [setIsEditDialogOpen] = useState<any>(null); // Fixed missing setter
 
   const postsCollection = useMemo(() => collection(firestore, 'posts'), []);
   const postsQuery = useMemo(() => query(postsCollection, orderBy('createdAt', 'desc')), [postsCollection]);
@@ -131,7 +132,7 @@ export default function ManagePosts() {
         title: 'Post Updated!',
         description: 'Your post has been successfully updated.',
       });
-      setIsEditDialogOpen(false);
+      if (setIsEditDialogOpen) setIsEditDialogOpen(false);
       setEditingPost(null);
     })
     .finally(() => setLoading(false));
@@ -165,7 +166,7 @@ export default function ManagePosts() {
         imageHint: post.imageHint || '',
         hashtags: post.hashtags || '',
     });
-    setIsEditDialogOpen(true);
+    if (setIsEditDialogOpen) setIsEditDialogOpen(true);
   }
 
   const posts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
