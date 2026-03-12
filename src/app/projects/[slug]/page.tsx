@@ -82,7 +82,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             )}
           >
             {isMenuOpen ? <X size={14} /> : <Hash size={14} className="text-[#A68858]" />}
-            {isMenuOpen ? 'Close Menu' : 'Navigator'}
+            {isMenuOpen ? 'Close Menu' : 'Contents'}
           </Button>
 
           <AnimatePresence>
