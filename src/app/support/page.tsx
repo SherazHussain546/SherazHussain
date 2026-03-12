@@ -13,13 +13,12 @@ import {
   ExternalLink, 
   Copy, 
   Check, 
-  ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Activity
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function SupportPage() {
   const { toast } = useToast();
@@ -86,9 +85,6 @@ export default function SupportPage() {
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
               As a <span className="font-semibold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I dedicate my time to building high-performance AI tools, open-source software, and cloud infrastructure that helps the global tech community.
             </p>
-            <p className="mt-4 text-muted-foreground">
-              Your support helps cover server costs, API fees (like Gemini and OpenAI), and allows me to keep these resources free and accessible for everyone.
-            </p>
           </div>
 
           <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-2">
@@ -148,6 +144,26 @@ export default function SupportPage() {
                 </div>
               </Card>
             ))}
+          </div>
+
+          {/* Live Activity Section */}
+          <div className="mx-auto mt-20 max-w-4xl">
+             <div className="mb-8 text-center">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest mb-4">
+                    <Activity className="h-3 w-3 animate-pulse" />
+                    Live Support Feed
+                </div>
+                <h2 className="text-2xl font-bold text-foreground md:text-3xl">Recent Activity</h2>
+                <p className="text-sm text-muted-foreground mt-2">Real-time updates from the amazing community supporting my work.</p>
+             </div>
+             
+             <div className="relative aspect-[16/6] w-full overflow-hidden rounded-2xl border bg-muted/20 shadow-inner">
+                <iframe 
+                  src="https://studio.buymeacoffee.com/stream-alert/page/sherazhussain546?user_key=3eed59c9-dc4b-4e84-b034-0a89bd538775"
+                  className="absolute top-0 left-0 h-full w-full pointer-events-none"
+                  frameBorder="0"
+                />
+             </div>
           </div>
 
           {/* Engagement Section */}
