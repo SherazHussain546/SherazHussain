@@ -28,7 +28,6 @@ import {
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -74,8 +73,7 @@ export default function SupportPage() {
       actionLabel: 'Pay via Web3 Profile',
       link: 'https://ud.me/sherazhussain.unstoppable',
       color: 'bg-blue-500/10 text-blue-600',
-      isWeb3: true,
-      badgeUrl: 'https://ipfs.io/ipfs/QmXuoUmUstZbRv1LFKp3XgUiemzMJ2VmtZnMGv9xcNjj5c'
+      isWeb3: true
     },
     {
       title: 'GoFundMe',
@@ -213,18 +211,6 @@ export default function SupportPage() {
                           />
                         </Link>
                       </div>
-                    )}
-                    {method.isWeb3 && method.badgeUrl && (
-                        <div className="flex justify-center py-4">
-                            <div className="relative h-20 w-20 overflow-hidden rounded-2xl border-2 border-blue-500/20 shadow-lg group-hover:border-blue-500/50 transition-all">
-                                <Image 
-                                    src={method.badgeUrl}
-                                    alt="Unstoppable Domains Verified Badge"
-                                    fill
-                                    className="object-contain p-1"
-                                />
-                            </div>
-                        </div>
                     )}
                     {method.value && (
                       <div className="flex items-center justify-between rounded-2xl border bg-muted/20 p-4 transition-colors hover:bg-muted/40 group/copy">
