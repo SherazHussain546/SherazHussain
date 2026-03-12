@@ -16,8 +16,9 @@ import { Skeleton } from '../ui/skeleton';
 import { collection, query, orderBy, Timestamp } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '@/firebase/client';
-import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
-import { Badge } from '../ui/badge';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 export interface Post {
     id: string;
@@ -76,7 +77,7 @@ export default function PostsSection() {
     return (
       <section id="posts" className="bg-card py-20 md:py-32">
         <div className="container mx-auto px-4 md:px-6">
-           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl text-foreground">
             Featured <span className="text-primary">Posts</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -92,9 +93,14 @@ export default function PostsSection() {
   return (
     <section id="posts" className="bg-card py-20 md:py-32">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-          Featured <span className="text-primary">Posts</span>
-        </h2>
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+            Featured <span className="text-primary">Posts</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+            Updates and insights from my latest projects and social platforms.
+          </p>
+        </div>
         
         {error && (
             <p className="text-center text-destructive">Failed to load posts. Please try again later.</p>
@@ -118,40 +124,41 @@ export default function PostsSection() {
                 return (
                   <CarouselItem key={post.id} className="basis-full">
                     <div className="p-1">
-                      <Card className="group mx-auto flex max-w-2xl flex-col overflow-hidden transition-all hover:shadow-primary/20 hover:shadow-lg">
+                      <Card className="group mx-auto flex max-w-2xl flex-col overflow-hidden border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                         <CardHeader className="p-0">
                             <div className="relative aspect-video w-full overflow-hidden">
                                 <Image
                                     src={post.image || 'https://picsum.photos/seed/1/600/400'}
                                     alt={post.title}
                                     fill
-                                    className="object-cover transition-transform duration-300"
+                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                                     data-ai-hint={post.imageHint}
                                 />
-                                <div className="absolute top-4 right-4 rounded-full bg-background/80 p-2 shadow-sm">
+                                <div className="absolute top-4 right-4 rounded-full bg-background/80 p-2 shadow-sm backdrop-blur-sm">
                                     <Icon className="h-5 w-5 text-primary" />
                                 </div>
                             </div>
                         </CardHeader>
                         <CardContent className="flex-1 space-y-4 p-6">
-                          <h3 className="line-clamp-2 text-xl font-bold">{post.title}</h3>
-                          <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed">{post.description}</p>
+                          <h3 className="line-clamp-2 text-xl font-bold text-foreground">{post.title}</h3>
+                          <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed italic">"{post.description}"</p>
                            {post.hashtags && (
                             <div className="flex flex-wrap gap-1.5 pt-2">
                                 {post.hashtags.split(',').map(tag => (
-                                    <Badge key={tag.trim()} variant="secondary" className="text-[10px] font-medium uppercase tracking-wider">
+                                    <Badge key={tag.trim()} variant="secondary" className="text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary border-none">
                                       {tag.trim()}
                                     </Badge>
                                 ))}
                             </div>
                            )}
                         </CardContent>
-                        <CardFooter className="p-6 pt-0">
-                          <Button asChild variant="ghost" className="w-full justify-between text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary/5">
+                        <CardFooter className="p-6 pt-0 border-t bg-muted/5 group-hover:bg-primary/5 transition-colors">
+                          <Button asChild variant="ghost" className="w-full justify-between text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary transition-all">
                             <Link
                               href={post.link}
                               target="_blank"
                               rel="noopener noreferrer"
+                              className="flex items-center justify-between w-full"
                             >
                               <span>Read on {post.platform}</span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -165,8 +172,8 @@ export default function PostsSection() {
               })}
             </CarouselContent>
             <div className="flex justify-center gap-4 mt-8">
-              <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10" />
-              <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10" />
+              <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
+              <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
             </div>
           </Carousel>
            </div>
