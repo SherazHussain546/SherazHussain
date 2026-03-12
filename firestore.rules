@@ -2,39 +2,40 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-03-V10-FIX
-    // REASON: Hardening list permissions for public collections and ensuring robust admin write access.
+    // SECURITY RULES REVISION: 2024-06-04-V15-FINAL-HARDENED
+    // This revision uses recursive wildcards to ensure both listing and getting documents 
+    // are correctly authorized for all administrative and public routes.
     
     function isUserAuthenticated() {
       return request.auth != null;
     }
 
-    // projectGoals: Publicly readable (get and list), Auth required for all writes
-    match /projectGoals/{goalId} {
-      allow get, list: if true;
-      allow create, update, delete: if isUserAuthenticated();
+    // projectGoals: Publicly readable, Auth required for all writes
+    match /projectGoals/{document=**} {
+      allow read: if true;
+      allow write: if isUserAuthenticated();
     }
 
     // posts: Publicly readable, Auth required for all writes
-    match /posts/{postId} {
-      allow get, list: if true;
-      allow create, update, delete: if isUserAuthenticated();
+    match /posts/{document=**} {
+      allow read: if true;
+      allow write: if isUserAuthenticated();
     }
 
     // siteConfig: Publicly readable, Auth required for writes
-    match /siteConfig/{configId} {
-      allow get, list: if true;
+    match /siteConfig/{document=**} {
+      allow read: if true;
       allow write: if isUserAuthenticated();
     }
 
     // analyticsEvents: Publicly creatable, Auth (Admin) read access
-    match /analyticsEvents/{eventId} {
+    match /analyticsEvents/{document=**} {
       allow create: if true;
-      allow get, list: if isUserAuthenticated();
+      allow read: if isUserAuthenticated();
     }
 
     // workflows: Admin-only access
-    match /workflows/{workflowId} {
+    match /workflows/{document=**} {
       allow read, write: if isUserAuthenticated();
     }
   }

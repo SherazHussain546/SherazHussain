@@ -38,7 +38,7 @@ const postSchema = z.object({
 type PostFormValues = z.infer<typeof postSchema>;
 
 export default function ManagePosts() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -49,15 +49,15 @@ export default function ManagePosts() {
   const [postsSnapshot, postsLoading, postsError] = useCollection(postsQuery);
 
   useEffect(() => {
-    // Only report permission errors once loading is finished and user is authenticated
-    if (postsError && postsError.code === 'permission-denied' && !postsLoading && user) {
+    // Only report permission errors once all loading states are resolved and user is authenticated
+    if (postsError && postsError.code === 'permission-denied' && !postsLoading && !authLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: postsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [postsError, postsLoading, postsCollection.path, user]);
+  }, [postsError, postsLoading, authLoading, postsCollection.path, user]);
 
   const form = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),

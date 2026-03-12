@@ -28,22 +28,24 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { formatDistanceToNow } from 'date-fns';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function AnalyticsDashboard() {
+  const { user, loading: authLoading } = useAuth();
   const analyticsCollection = useMemo(() => collection(firestore, 'analyticsEvents'), []);
   const analyticsQuery = useMemo(() => query(analyticsCollection, orderBy('timestamp', 'desc')), [analyticsCollection]);
   const [snapshot, loading, error] = useCollection(analyticsQuery);
 
   useEffect(() => {
-    // Only emit error if confirmed permission denial and not loading
-    if (error && error.code === 'permission-denied' && !loading) {
+    // Only report permission errors once all loading states are resolved and user is definitely authenticated
+    if (error && error.code === 'permission-denied' && !loading && !authLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: analyticsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [error, loading, analyticsCollection.path]);
+  }, [error, loading, authLoading, analyticsCollection.path, user]);
 
   if (loading) {
     return (

@@ -34,7 +34,7 @@ const goalSchema = z.object({
 type GoalFormValues = z.infer<typeof goalSchema>;
 
 export default function ManageGoals() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -45,15 +45,15 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Only report permission errors once loading is finished and user is definitely authenticated
-    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && user) {
+    // Only report permission errors once all loading states are resolved and user is definitely authenticated
+    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && !authLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [goalsError, goalsLoading, goalsCollection.path, user]);
+  }, [goalsError, goalsLoading, authLoading, goalsCollection.path, user]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),
