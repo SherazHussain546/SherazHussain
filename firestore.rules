@@ -2,9 +2,9 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-05-24-v5
-    // Simplified rule groupings to resolve persistent 'list' operation denials 
-    // on public collections like projectGoals and posts.
+    // SECURITY RULES REVISION: 2024-05-25-v2
+    // REASON: Resolving persistent 'list' operation denials on public collections.
+    // Explicitly defining read/write for clarity.
 
     // Posts: Publicly readable, admin manageable
     match /posts/{postId} {

@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
-import { firestore, auth } from '@/firebase/client';
+import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -19,9 +19,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil, Cpu, Globe, ShieldCheck, Target, Zap, Heart } from 'lucide-react';
+import { Trash2, Pencil } from 'lucide-react';
 import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
+import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 
 const goalSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
@@ -44,11 +44,11 @@ export default function ManageGoals() {
 
   useEffect(() => {
     // Only emit the error if it's explicitly a permission denial from Firestore
-    if (goalsError && (goalsError as any).code === 'permission-denied') {
+    if (goalsError && goalsError.code === 'permission-denied') {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
-      });
+      } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
   }, [goalsError, goalsCollection.path]);
@@ -85,7 +85,7 @@ export default function ManageGoals() {
           path: goalsCollection.path,
           operation: 'create',
           requestResourceData: data,
-        });
+        } satisfies SecurityRuleContext);
         errorEmitter.emit('permission-error', permissionError);
       }
     })
@@ -110,7 +110,7 @@ export default function ManageGoals() {
           path: goalRef.path,
           operation: 'update',
           requestResourceData: data,
-        });
+        } satisfies SecurityRuleContext);
         errorEmitter.emit('permission-error', permissionError);
       }
     })
@@ -133,7 +133,7 @@ export default function ManageGoals() {
         const permissionError = new FirestorePermissionError({
           path: goalRef.path,
           operation: 'delete',
-        });
+        } satisfies SecurityRuleContext);
         errorEmitter.emit('permission-error', permissionError);
       }
     })
