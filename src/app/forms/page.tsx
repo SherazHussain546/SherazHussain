@@ -14,15 +14,32 @@ import {
   ShieldCheck, 
   Users,
   AlertCircle,
-  LifeBuoy
+  BrainCircuit,
+  Handshake,
+  Mail
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const formCategories = [
   {
-    title: 'Community Feedback',
-    description: 'Help me improve the digital experience and tools I build for the global tech community.',
+    title: 'Interactive AI Tools',
+    description: 'Real-time utilities for technical strategy and project planning.',
+    forms: [
+      {
+        id: 'ai-architect',
+        name: 'AI Solution Architect',
+        description: 'Describe a technical challenge and get an immediate cloud-native architectural roadmap.',
+        icon: BrainCircuit,
+        link: '/ai-architect',
+        badge: 'Gemini Powered',
+        isInternal: true,
+      }
+    ]
+  },
+  {
+    title: 'Community & Feedback',
+    description: 'Help shape the future of the digital tools I build.',
     forms: [
       {
         id: 'portfolio-feedback',
@@ -36,13 +53,22 @@ const formCategories = [
     ]
   },
   {
-    title: 'Service & Support',
-    description: 'Resolution channels for technical issues or service feedback.',
+    title: 'Strategic Engagement',
+    description: 'Direct entry points for high-level collaborations and service resolution.',
     forms: [
+      {
+        id: 'partnership-proposal',
+        name: 'Partnership Inquiry',
+        description: 'Propose long-term strategic collaborations or corporate partnerships.',
+        icon: Handshake,
+        link: 'mailto:sheraz@synctech.ie?subject=Partnership Inquiry',
+        badge: 'B2B Priority',
+        isInternal: false,
+      },
       {
         id: 'complain-form',
         name: 'Official Complaint Form',
-        description: 'Submit formal feedback or report issues regarding services or tools.',
+        description: 'Submit formal feedback or report issues regarding services.',
         icon: AlertCircle,
         link: '/complaints',
         badge: 'Secure',
@@ -51,25 +77,16 @@ const formCategories = [
     ]
   },
   {
-    title: 'Professional Engagement',
-    description: 'Direct entry points for technical consulting and project collaborations via SYNC TECH Solutions.',
+    title: 'Subscription',
+    description: 'Stay updated with the latest in AI and Cloud infrastructure.',
     forms: [
       {
-        id: 'tech-consultation',
-        name: 'Technical Consultation',
-        description: 'Request a session for AI, Cloud, or Full-Stack architecture advice.',
-        icon: Laptop,
-        link: 'mailto:sheraz@synctech.ie?subject=Technical Consultation Request',
-        badge: 'Priority',
-        isInternal: false,
-      },
-      {
-        id: 'project-inquiry',
-        name: 'Project Collaboration',
-        description: 'Propose a new project or partnership with SYNC TECH Solutions.',
-        icon: Zap,
-        link: 'mailto:sheraz@synctech.ie?subject=New Project Inquiry',
-        badge: 'Fast-Track',
+        id: 'newsletter',
+        name: 'Tech Insights Newsletter',
+        description: 'Get weekly updates on open-source projects and AI research.',
+        icon: Mail,
+        link: 'mailto:sheraz@synctech.ie?subject=Subscribe to Tech Insights',
+        badge: 'Weekly',
         isInternal: false,
       }
     ]
@@ -95,10 +112,10 @@ export default function FormsHubPage() {
                 Interaction & Strategy Hub
               </Badge>
               <h1 className="text-4xl font-extrabold tracking-tighter text-foreground md:text-7xl mb-8 leading-[1.1]">
-                Forms <span className="text-primary italic">&</span> Surveys.
+                Forms <span className="text-primary italic">&</span> Strategy.
               </h1>
               <p className="mt-8 text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I value every interaction. Choose a channel below to share your insights or initiate a professional engagement.
+                As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I value high-fidelity interaction. Choose a channel below to collaborate or share insights.
               </p>
             </motion.div>
           </div>
@@ -146,7 +163,7 @@ export default function FormsHubPage() {
                           <Button asChild variant="ghost" className="w-full justify-between group/btn">
                             <Link href={form.link} className="flex items-center justify-between w-full">
                               <span className="font-bold uppercase tracking-widest text-[10px]">
-                                {form.isInternal ? 'Open Channel' : 'Initiate Request'}
+                                {form.id === 'ai-architect' ? 'Launch Tool' : 'Initiate Request'}
                               </span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                             </Link>
@@ -170,9 +187,9 @@ export default function FormsHubPage() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px]" />
             <div className="relative z-10 space-y-6">
               <ClipboardCheck className="h-10 w-10 text-primary mx-auto mb-4" />
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Integrity-Driven Data</h2>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Integrity-Driven Strategy</h2>
               <p className="text-white/70 text-lg font-light leading-relaxed">
-                All information submitted through these forms is handled with the highest standard of data privacy. As part of my commitment to the open-source community, your feedback helps shape the future of tools that remain free from intrusive corporate tracking.
+                All information submitted through these channels is handled with strict confidentiality. Whether it's AI architectural advice or feedback, your insights fuel a more intelligent and open digital future.
               </p>
               <div className="pt-6 flex justify-center gap-8">
                  <div className="flex flex-col items-center gap-2">
