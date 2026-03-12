@@ -72,7 +72,9 @@ export const metadata: Metadata = {
     'AI Tools Developer',
     'Dublin Business School Alumnus',
     'ATS Resume Optimizer',
-    'Market Genius AI'
+    'Market Genius AI',
+    'Software Architecture Consulting',
+    'Freelance Developer Dublin'
   ],
   robots: {
     index: true,
