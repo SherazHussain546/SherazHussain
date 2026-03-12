@@ -35,8 +35,8 @@ const generateLinkedInPostFlow = ai.defineFlow(
   },
   async (input) => {
     const { output } = await ai.generate({
-      // CHANGE MODEL HERE: googleai/gemini-2.0-flash is currently the latest.
-      model: 'googleai/gemini-3.0',
+      // Gemini 2.0 Flash is the latest high-performance generation.
+      model: 'googleai/gemini-2.0-flash',
       system: `You are an expert social media and LinkedIn content writer.
 
 You will be provided with:

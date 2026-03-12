@@ -55,7 +55,7 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
   async (input) => {
     const resumeContent = getPortfolioContent();
     const {output} = await ai.generate({
-      // CHANGE MODEL HERE: googleai/gemini-2.0-flash is currently the latest.
+      // Gemini 2.0 Flash is the latest high-performance generation.
       model: 'googleai/gemini-2.0-flash',
       system: `You are an expert resume writer and career coach specializing in high-performance ATS optimization. Your task is to generate a complete application package (Resume, Cover Letter, and Reach-out Email) tailored perfectly for a specific job description for Sheraz Hussain.
 
