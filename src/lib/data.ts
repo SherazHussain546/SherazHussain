@@ -88,11 +88,12 @@ export const experiences = [
     company: 'blogify.blog',
     link: 'https://www.blogify.blog',
     period: 'September 2025 - Present',
-    description: 'Full-stack development for content-heavy publishing platforms.',
+    description: 'Full-stack development for content-heavy publishing platforms and SaaS solutions.',
     points: [
-      'Customized CMS features to improve technical SEO and publishing velocity.',
-      'Enhanced platform performance through specialized technical audits and speed optimization.',
-      'Managed cloud deployment and continuous integration pipelines.',
+      'Architected a multi-tenant blogging platform with secure Firebase Authentication and Firestore database management.',
+      'Developed a "Snippet-as-a-Service" feature allowing users to embed blog feeds into external sites for a subscription fee.',
+      'Implemented a subscription logic modeled after the "cheapest coffee" concept (€2.99) to drive user retention.',
+      'Managed cloud deployment and continuous integration on Google Cloud Platform.',
     ],
   },
   {
@@ -381,34 +382,34 @@ export const projects: Project[] = [
   },
   {
     slug: 'blogify-blog',
-    name: 'blogify.blog – High-Performance CMS & Publishing Architecture',
-    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) optimized a content-heavy publishing platform for technical SEO and publishing velocity.',
-    fullDescription: 'blogify.blog is a high-velocity content publishing platform that required extreme performance to maintain SEO dominance. Sheraz Hussain (SYNC TECH Solutions) re-engineered the platform\'s architecture to support thousands of concurrent readers. The project involved building a custom headless CMS bridge, implementing multi-layer caching with Redis, and automating technical metadata generation using AI agents. This case study demonstrates expertise in high-availability cloud infrastructure and content-delivery optimization.',
+    name: 'blogify.blog – High-Performance SaaS Blogging & Content Distribution',
+    description: 'Sheraz Hussain (Freelancer working with SYNC TECH Solutions) engineered a full-stack blogging platform with user authentication and a unique content-embedding snippet model.',
+    fullDescription: 'blogify.blog is a comprehensive SaaS blogging platform developed by Sheraz Hussain (Freelancer working with SYNC TECH Solutions) that empowers users to author, publish, and distribute content globally. Built with a high-performance React frontend and a Node.js backend integrated with Google Cloud Platform, the platform offers seamless user onboarding via Firebase Authentication. A standout feature is the "Snippet-as-a-Service," allowing users to embed their blog feeds into their own external websites for a nominal subscription fee of €2.99 (the cost of a cheap coffee). This project highlights expertise in secure multi-tenant architecture and real-time content delivery using Firestore.',
     challenges: [
-      'Achieving sub-second page loads for content-heavy articles with high-resolution imagery.',
-      'Building a custom headless CMS bridge for improved editorial workflow.',
-      'Automating technical SEO metadata generation to handle high-volume publishing.'
+      'Architecting a secure multi-tenant environment for thousands of independent blog feeds.',
+      'Engineering a low-friction "Snippet-as-a-Service" model for external content embedding.',
+      'Optimizing Firebase Authentication and Firestore rules for secure, high-speed data access.'
     ],
     solutions: [
       {
-        title: 'Headless CMS Engineering',
-        description: 'Decoupled the frontend from the content source to allow for extreme performance and scalability using a React-based delivery layer.'
+        title: 'SaaS Architecture',
+        description: 'Developed a scalable React/Node.js application on Google Cloud that supports independent user profiles and secure content isolation.'
       },
       {
-        title: 'High-Performance Caching',
-        description: 'Implemented a sophisticated Redis-based caching strategy and AWS CloudFront CDN distribution to minimize server response times globally.'
+        title: 'Secure Snippet Delivery',
+        description: 'Created a cross-domain content embedding system that allows users to integrate their blog presence into external domains securely.'
       },
       {
-        title: 'AI Metadata Automation',
-        description: 'Integrated AI agents to automatically generate SEO descriptions, schema markup, and social sharing assets for every new publication.'
+        title: 'Subscription Micro-transactions',
+        description: 'Implemented a lightweight subscription state management system tied to the Firestore backend for micro-payments.'
       }
     ],
     results: [
-      'Achieved a perfect 100/100 Lighthouse performance score across all article pages.',
-      'Reduced editorial content production time by 30% through automation.',
-      'Maintained 99.99% uptime during viral social media traffic spikes.'
+      'Successfully launched a functional SaaS blogging model with external embedding capabilities.',
+      'Achieved sub-second data synchronization for blog updates via Firestore real-time listeners.',
+      'Built a production-ready authentication pipeline handling secure user sessions globally.'
     ],
-    stack: ['React', 'Node.js', 'PostgreSQL', 'Redis', 'Technical SEO', 'AWS CloudFront', 'Headless CMS'],
+    stack: ['React', 'Node.js', 'Firebase Authentication', 'Firestore', 'Google Cloud Platform', 'JavaScript', 'SaaS Architecture', 'Technical SEO'],
     link: 'https://www.blogify.blog',
     image: 'https://picsum.photos/seed/blogify/800/600',
     imageHint: 'modern blogging platform',
