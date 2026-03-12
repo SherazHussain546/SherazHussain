@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, useMemo } from 'react';
 import { projects } from '@/lib/data';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -12,13 +12,13 @@ import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
+  ArrowLeft,
   BookOpen, 
   Code2, 
   Cpu, 
   BarChart3, 
   Hash,
-  X,
-  Menu
+  X
 } from 'lucide-react';
 
 const bebas = Bebas_Neue({
@@ -56,6 +56,10 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
     { id: 'results', label: 'Performance Metrics', icon: BarChart3, num: '04' },
   ];
 
+  const currentIndex = tabs.findIndex((t) => t.id === activeTab);
+  const prevTab = currentIndex > 0 ? tabs[currentIndex - 1] : null;
+  const nextTab = currentIndex < tabs.length - 1 ? tabs[currentIndex + 1] : null;
+
   return (
     <div className={cn(
       "min-h-screen bg-[#FDFDFB] text-[#071739] selection:bg-[#A68858]/20 selection:text-[#071739]",
@@ -69,7 +73,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
 
       <Header />
 
-      {/* FLOATING DOCUMENT NAVIGATOR */}
+      {/* FLOATING DOCUMENT NAVIGATOR (Right Hand Side) */}
       <div className="fixed top-24 right-6 z-[100] hidden md:block">
         <div className="relative">
           <Button
@@ -82,7 +86,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             )}
           >
             {isMenuOpen ? <X size={14} /> : <Hash size={14} className="text-[#A68858]" />}
-            {isMenuOpen ? 'Close Menu' : 'Contents'}
+            {isMenuOpen ? 'Close' : 'Contents'}
           </Button>
 
           <AnimatePresence>
@@ -95,7 +99,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               >
                 <div className="p-4 border-b border-[#A68858]/10 mb-2">
                   <div className="font-mono text-[0.55rem] uppercase tracking-[0.2em] text-[#A68858]">Technical Document</div>
-                  <div className="font-bebas text-lg leading-none mt-1">Contents</div>
+                  <div className="font-bebas text-lg leading-none mt-1">Sections</div>
                 </div>
                 <nav className="space-y-1">
                   {tabs.map((tab) => (
@@ -104,6 +108,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                       onClick={() => {
                         setActiveTab(tab.id);
                         setIsMenuOpen(false);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
                       className={cn(
                         "flex items-center gap-3 w-full p-3 rounded-lg transition-all group",
@@ -190,7 +195,10 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className={cn(
                   "py-5 px-4 font-mono text-[0.65rem] uppercase tracking-widest whitespace-nowrap border-b-2 transition-all",
                   activeTab === tab.id 
@@ -372,6 +380,41 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               </motion.section>
             )}
           </AnimatePresence>
+
+          {/* NEXT / PREVIOUS PHASE NAVIGATION */}
+          <div className="flex justify-between items-center mt-20 pt-10 border-t border-[#A68858]/10">
+            {prevTab ? (
+              <button 
+                onClick={() => {
+                  setActiveTab(prevTab.id);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="group flex flex-col items-start gap-2 text-left transition-all"
+              >
+                <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858]">Previous Phase</span>
+                <span className="font-bebas text-2xl flex items-center gap-3 group-hover:text-[#A68858] transition-colors">
+                  <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
+                  {prevTab.label}
+                </span>
+              </button>
+            ) : <div />}
+
+            {nextTab ? (
+              <button 
+                onClick={() => {
+                  setActiveTab(nextTab.id);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="group flex flex-col items-end text-right transition-all"
+              >
+                <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858]">Next Phase</span>
+                <span className="font-bebas text-2xl flex items-center gap-3 group-hover:text-[#A68858] transition-colors">
+                  {nextTab.label}
+                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+                </span>
+              </button>
+            ) : <div />}
+          </div>
         </div>
 
       </main>
