@@ -7,17 +7,17 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    // Force redeploy trigger: Updated project goal and analytics permissions
+    // Force redeploy trigger: Simplified read permissions and ensured list/get consistency
     
     // Posts can be read by anyone, but only managed by an authenticated user.
     match /posts/{postId} {
-      allow read, list: if true;
+      allow read: if true;
       allow write: if isSignedIn();
     }
 
     // Project goals can be read by anyone, but only managed by an admin.
     match /projectGoals/{goalId} {
-      allow read, list: if true;
+      allow read: if true;
       allow write: if isSignedIn();
     }
 
@@ -30,7 +30,7 @@ service cloud.firestore {
     // Analytics events can be created by anyone, but only read by an admin.
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow read, list, write: if isSignedIn();
+      allow read: if isSignedIn();
     }
 
     // Workflows are admin only.

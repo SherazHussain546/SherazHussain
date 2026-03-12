@@ -43,7 +43,8 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    if (goalsError) {
+    // Only emit the error if it's a permission denial
+    if (goalsError && goalsError.code === 'permission-denied') {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
@@ -86,12 +87,14 @@ export default function ManageGoals() {
       form.reset();
     })
     .catch(async (serverError) => {
-      const permissionError = new FirestorePermissionError({
-        path: goalsCollection.path,
-        operation: 'create',
-        requestResourceData: data,
-      });
-      errorEmitter.emit('permission-error', permissionError);
+      if (serverError.code === 'permission-denied') {
+        const permissionError = new FirestorePermissionError({
+          path: goalsCollection.path,
+          operation: 'create',
+          requestResourceData: data,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      }
     })
     .finally(() => setLoading(false));
   };
@@ -110,12 +113,14 @@ export default function ManageGoals() {
       setEditingGoal(null);
     })
     .catch(async (serverError) => {
-      const permissionError = new FirestorePermissionError({
-        path: goalRef.path,
-        operation: 'update',
-        requestResourceData: data,
-      });
-      errorEmitter.emit('permission-error', permissionError);
+      if (serverError.code === 'permission-denied') {
+        const permissionError = new FirestorePermissionError({
+          path: goalRef.path,
+          operation: 'update',
+          requestResourceData: data,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      }
     })
     .finally(() => setLoading(false));
   };
@@ -127,11 +132,13 @@ export default function ManageGoals() {
       toast({ title: 'Goal Deleted' });
     })
     .catch(async (serverError) => {
-      const permissionError = new FirestorePermissionError({
-        path: goalRef.path,
-        operation: 'delete',
-      });
-      errorEmitter.emit('permission-error', permissionError);
+      if (serverError.code === 'permission-denied') {
+        const permissionError = new FirestorePermissionError({
+          path: goalRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      }
     });
   }
   
