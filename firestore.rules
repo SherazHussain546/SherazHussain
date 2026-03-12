@@ -2,35 +2,35 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // SECURITY RULES REVISION: 2024-05-24-v5
+    // Simplified rule groupings to resolve persistent 'list' operation denials 
+    // on public collections like projectGoals and posts.
 
-    // Helper to force a redeploy trigger: Updated to explicit granular permissions
-    // and direct auth state checks to resolve 'list' operation denials.
-    
     // Posts: Publicly readable, admin manageable
     match /posts/{postId} {
-      allow get, list: if true;
-      allow create, update, delete: if request.auth != null;
+      allow read: if true;
+      allow write: if request.auth != null;
     }
 
     // Project Goals: Publicly readable, admin manageable
     match /projectGoals/{goalId} {
-      allow get, list: if true;
-      allow create, update, delete: if request.auth != null;
+      allow read: if true;
+      allow write: if request.auth != null;
     }
 
     // Site Config: Publicly readable, admin manageable
     match /siteConfig/{configId} {
-      allow get, list: if true;
-      allow create, update, delete: if request.auth != null;
+      allow read: if true;
+      allow write: if request.auth != null;
     }
 
-    // Analytics: Anyone can create, only admin can read
+    // Analytics: Anyone can create (log events), only admin can read
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow get, list: if request.auth != null;
+      allow read: if request.auth != null;
     }
 
-    // Workflows: Admin only
+    // Workflows: Admin only access
     match /workflows/{workflowId} {
       allow read, write: if request.auth != null;
     }
