@@ -70,7 +70,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
       <Header />
 
       {/* FLOATING DOCUMENT NAVIGATOR */}
-      <div className="fixed top-24 left-6 z-[100] hidden md:block">
+      <div className="fixed top-24 right-6 z-[100] hidden md:block">
         <div className="relative">
           <Button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -88,10 +88,10 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 10, x: -10 }}
+                initial={{ opacity: 0, scale: 0.95, y: 10, x: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 10, x: -10 }}
-                className="absolute top-14 left-0 w-64 bg-white border-2 border-[#A68858]/20 rounded-2xl shadow-2xl overflow-hidden p-2"
+                exit={{ opacity: 0, scale: 0.95, y: 10, x: 10 }}
+                className="absolute top-14 right-0 w-64 bg-white border-2 border-[#A68858]/20 rounded-2xl shadow-2xl overflow-hidden p-2"
               >
                 <div className="p-4 border-b border-[#A68858]/10 mb-2">
                   <div className="font-mono text-[0.55rem] uppercase tracking-[0.2em] text-[#A68858]">Technical Document</div>
