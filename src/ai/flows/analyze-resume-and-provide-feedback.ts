@@ -101,11 +101,26 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     \\\\begin{itemize}
         \\\\item \\\\textbf{Languages:} [Relevant]
         \\\\item \\\\textbf{Frameworks/Tools:} [Relevant]
+        \\\\item \\\\textbf{Cloud \\\\& DevOps:} [Relevant]
+        \\\\item \\\\textbf{Databases:} [Relevant]
     \\\\end{itemize}
     \\\\section{Professional Experience}
     \\\\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
     \\\\begin{itemize}
         \\\\item [Achievement 1]
+    \\\\end{itemize}
+    [Add other experiences from source]
+    \\\\section{Technical Projects}
+    \\\\textbf{Project Name} $|$ \\\\textit{Tech Stack: [Stack]} \\\\hfill \\\\href{https://github.com/...}{Project Link}
+    \\\\begin{itemize}
+        \\\\item [Achievement 1]
+    \\\\end{itemize}
+    \\\\section{Education}
+    \\\\textbf{Dublin Business School} \\\\hfill Dublin, Ireland \\\\\\\\
+    Bachelor of Science in Computing (First Class Honors) $|$ GPA: 1:1 \\\\hfill Sept 2021 -- April 2025
+    \\\\section{Certifications}
+    \\\\begin{itemize}
+        \\\\item Certification Name -- Issuing Organization (Year)
     \\\\end{itemize}
     \\\\end{document}
 
@@ -141,7 +156,7 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     City, State
     \\\\vspace{10pt}
     Dear Hiring Manager,
-    [Generate tailored body]
+    [Generate tailored body based on the requested template structure]
     Sincerely,
     \\\\vspace{30pt}
     SHERAZ HUSSAIN
