@@ -48,18 +48,71 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
 
     You must follow these rules strictly:
     1.  **Source of Truth**: The provided portfolio content is the ONLY source of facts about the candidate (Sheraz Hussain). You are forbidden from inventing, exaggerating, or fabricating any information.
-    2.  **Target**: The provided job description is the target. Analyze it for key skills, keywords, and qualifications.
-    3.  **Output Requirements**:
-        - **LaTeX Resume**: Generate full, compile-ready LaTeX code for a professional resume. It MUST be ATS-optimized with a score-potential of 100+. Use standard LaTeX classes like 'article' and packages like 'hyperref', 'geometry', and 'enumitem'. Ensure sections (Experience, Projects, Education, Certifications) are clearly defined. Highlight the role as a "Freelancer working with SYNC TECH Solutions".
-        - **LaTeX Cover Letter**: Generate full, compile-ready LaTeX code based EXACTLY on the template provided below. Replace all bracketed placeholders (e.g., [Job Title], [Company Name], [X years]) with tailored content derived from the candidate's portfolio and the job description. Ensure the tone is professional and persuasive.
-        - **Reach-out Email**: Write a professional LinkedIn or Email reach-out message to the hiring manager. Include a compelling subject line and a concise body.
-    4.  **Honesty**: Do not lie. Every skill in the output must have a basis in the source content.
+    2.  **Role Consistency**: Always identify the candidate as a "Freelancer working with SYNC TECH Solutions" in professional titles.
+    3.  **Target**: The provided job description is the target. Analyze it for key skills, keywords, and qualifications.
+    4.  **Output Requirements**:
+        - **LaTeX Resume**: Generate full, compile-ready LaTeX code based EXACTLY on the RESUME TEMPLATE provided below. Ensure it is ATS-optimized with a score-potential of 100+. Use the keywords found in the Job Description naturally.
+        - **LaTeX Cover Letter**: Generate full, compile-ready LaTeX code based EXACTLY on the COVER LETTER TEMPLATE provided below. Replace placeholders with tailored content.
+        - **Reach-out Email**: Write a professional reach-out message for LinkedIn or Email.
+    5.  **Honesty**: Do not lie. Every skill in the output must have a basis in the source content.
 
     Candidate Information (Source of Truth):
     ${resumeContent}
 
     Job Description (Target):
     ${input.jobDescription}
+
+    == RESUME TEMPLATE ==
+    \\documentclass[10pt, a4paper]{article}
+    \\usepackage[T1]{fontenc}
+    \\usepackage{mathptmx}
+    \\usepackage[a4paper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+    \\usepackage{titlesec}
+    \\usepackage{enumitem}
+    \\usepackage{hyperref}
+    \\pagestyle{empty}
+    \\setlength{\\parindent}{0pt}
+    \\hypersetup{colorlinks=true, linkcolor=black, filecolor=black, urlcolor=black}
+    \\titleformat{\\section}{\\vspace{-5pt}\\raggedright\\large\\bfseries\\uppercase}{}{0em}{}[\\titlerule]
+    \\titlespacing*{\\section}{0pt}{10pt}{5pt}
+    \\setlist[itemize]{noitemsep, leftmargin=1.5em, topsep=2pt, parsep=2pt}
+    \\newcommand{\\experienceItem}[4]{\\vspace{4pt}\\textbf{#1} \\hfill #2 \\\\ \\textit{#3} \\hfill \\textit{#4} \\\\}
+    \\begin{document}
+    \\begin{center}
+        {\\Huge \\textbf{SHERAZ HUSSAIN}} \\\\
+        \\vspace{4pt}
+        Dublin, Ireland $|$ +353 8X XXX XXXX $|$ \\href{mailto:sheraz@synctech.ie}{sheraz@synctech.ie} \\\\
+        \\href{https://linkedin.com/in/sherazhussain546}{linkedin.com/in/sherazhussain546} $|$ \\href{https://github.com/SherazHussain546}{github.com/SherazHussain546}
+    \\end{center}
+    \\section{Professional Summary}
+    [Generate a 3-4 line summary focusing on SYNC TECH Solutions and relevant JD keywords]
+    \\section{Technical Skills}
+    \\begin{itemize}
+        \\item \\textbf{Languages:} [List relevant from source]
+        \\item \\textbf{Frameworks/Tools:} [List relevant from source]
+        \\item \\textbf{Cloud \\& DevOps:} [List relevant from source]
+        \\item \\textbf{Databases:} [List relevant from source]
+    \\end{itemize}
+    \\section{Professional Experience}
+    \\experienceItem{SYNC TECH Solutions}{Remote/Dublin}{Freelancer working with SYNC TECH Solutions}{Aug 2025 -- Present}
+    \\begin{itemize}
+        \\item [Point 1 based on source + JD keywords]
+        \\item [Point 2 based on source + JD keywords]
+    \\end{itemize}
+    [Include other experiences from source using \\experienceItem]
+    \\section{Technical Projects}
+    \\textbf{[Project Name]} $|$ \\textit{Tech Stack: [Techs]} \\hfill \\href{[Link]}{Project Link}
+    \\begin{itemize}
+        \\item [Key accomplishment based on source]
+    \\end{itemize}
+    \\section{Education}
+    \\textbf{Dublin Business School} \\hfill Dublin, Ireland \\\\
+    Bachelor of Science in Computing (First Class Honors) $|$ GPA: 4.0/4.0 \\hfill Sept 2021 -- April 2025
+    \\section{Certifications}
+    \\begin{itemize}
+        \\item [List certifications from source]
+    \\end{itemize}
+    \\end{document}
 
     == COVER LETTER TEMPLATE ==
     \\documentclass[11pt,a4paper]{article}
@@ -105,8 +158,6 @@ const analyzeResumeAndProvideFeedbackFlow = ai.defineFlow(
     \\vspace{10pt}
     \\small{Enclosure: Resume}
     \\end{document}
-
-    Now, generate the full application package.
     `,
         output: {
           schema: AnalyzeResumeAndProvideFeedbackOutputSchema,
