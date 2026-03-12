@@ -7,8 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, Github, ExternalLink } from 'lucide-react';
+import { ArrowRight, Github, ExternalLink, Code2 } from 'lucide-react';
 
 export default function ProjectsGallery() {
   return (
@@ -28,16 +27,14 @@ export default function ProjectsGallery() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
             {projects.map((project) => (
               <Card key={project.slug} className="group flex flex-col overflow-hidden bg-card/50 transition-all hover:shadow-primary/20 hover:shadow-xl border-border/50">
-                <CardHeader className="p-0">
-                  <div className="relative aspect-video w-full overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      data-ai-hint={project.imageHint}
-                    />
-                    <div className="absolute inset-0 bg-primary/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                <CardHeader className="pb-0 pt-6 px-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Code2 className="h-4 w-4" />
+                    </div>
+                    <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest border-primary/20 text-primary">
+                      Engineering Project
+                    </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1 space-y-4 p-6">
@@ -46,19 +43,14 @@ export default function ProjectsGallery() {
                     <p className="text-muted-foreground leading-relaxed">{project.description}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {project.stack.slice(0, 4).map((tech) => (
+                    {project.stack.map((tech) => (
                       <Badge key={tech} variant="secondary" className="bg-primary/10 text-primary border-none text-[10px] font-bold uppercase tracking-widest">
                         {tech}
                       </Badge>
                     ))}
-                    {project.stack.length > 4 && (
-                      <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest">
-                        +{project.stack.length - 4} More
-                      </Badge>
-                    )}
                   </div>
                 </CardContent>
-                <CardFooter className="p-6 pt-0 gap-3">
+                <CardFooter className="p-6 pt-0 gap-3 border-t bg-muted/5 mt-4">
                   <Button asChild variant="default" className="flex-1">
                     <Link href={`/projects/${project.slug}`}>
                       View Case Study
