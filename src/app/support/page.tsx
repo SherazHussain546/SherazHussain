@@ -17,7 +17,10 @@ import {
   Activity,
   Zap,
   Globe,
-  Coins
+  Coins,
+  Cpu,
+  Code2,
+  Users
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -43,7 +46,7 @@ export default function SupportPage() {
       title: 'Buy Me a Coffee',
       description: 'The quickest way to support daily AI tool development and coffee-fueled coding sessions.',
       icon: Coffee,
-      actionLabel: 'Support on Buy Me a Coffee',
+      actionLabel: 'Support via Coffee',
       link: 'https://www.buymeacoffee.com/sherazhussain546',
       color: 'bg-orange-500/10 text-orange-600',
       badge: true
@@ -61,7 +64,7 @@ export default function SupportPage() {
       title: 'GoFundMe',
       description: 'Invest in long-term infrastructure, large-scale AI research, and open-source sustainability.',
       icon: Heart,
-      actionLabel: 'Contribute via GoFundMe',
+      actionLabel: 'Contribute to the Goal',
       link: 'https://www.gofundme.com/', 
       color: 'bg-emerald-500/10 text-emerald-600',
     },
@@ -76,72 +79,98 @@ export default function SupportPage() {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+  const valueProps = [
+    {
+      icon: Zap,
+      title: 'Innovation Velocity',
+      description: 'Your support directly covers the significant compute costs of running Gemini 2.0 Flash and Cloud infrastructure.'
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Open-Source Integrity',
+      description: 'It allows me to keep building tools that remain free from intrusive corporate data harvesting and tracking.'
+    },
+    {
+      icon: Users,
+      title: 'Global Community',
+      description: 'Directly funds the research that leads to career tools used by hundreds of students and developers worldwide.'
     }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1
-    }
-  };
+  ];
 
   return (
     <div className="flex min-h-screen flex-col bg-[#FDFDFB]">
       <Header />
       <main className="flex-1 relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
-        <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-[10%] left-[-10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+        {/* SEO Metadata for accessibility/crawlers */}
+        <section className="sr-only">
+          <h1>Support Sheraz Hussain - SYNC TECH Solutions</h1>
+          <p>Support the development of high-performance AI tools, open-source software, and cloud infrastructure.</p>
+        </section>
+
+        {/* Decorative Background */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
+        <div className="absolute top-[10%] right-[-5%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="container relative z-10 mx-auto px-4 py-16 md:py-32 md:px-6">
           <div className="mx-auto max-w-4xl text-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <Badge variant="outline" className="mb-6 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] border-primary/30 text-primary bg-primary/5">
-                Support the Mission
+              <Badge variant="outline" className="mb-8 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.3em] border-primary/40 text-primary bg-primary/5">
+                Patron of Modern Engineering
               </Badge>
-              <h1 className="text-5xl font-extrabold tracking-tight text-foreground md:text-7xl mb-8">
-                Empower the <span className="text-primary italic">Future</span> of AI
-              </h1>
-              <p className="mt-6 text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                As a <span className="font-semibold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I build tools that democratize AI and cloud technology for everyone.
+              <h2 className="text-5xl font-extrabold tracking-tighter text-foreground md:text-8xl mb-8 leading-[1.1]">
+                Empower the <span className="text-primary italic">Future</span> of AI.
+              </h2>
+              <p className="mt-8 text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+                As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I dedicate my time to building high-performance AI tools, open-source software, and cloud infrastructure that helps the global tech community scale with integrity.
               </p>
             </motion.div>
           </div>
 
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mx-auto mt-20 grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-4"
-          >
-            {supportMethods.map((method) => (
-              <motion.div key={method.title} variants={itemVariants}>
-                <Card className="group flex flex-col h-full border-border/50 bg-white/50 backdrop-blur-sm transition-all hover:shadow-2xl hover:-translate-y-1 hover:border-primary/30">
-                  <CardHeader className="space-y-4">
-                    <div className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3 ${method.color}`}>
-                      <method.icon className="h-7 w-7" />
+          {/* Impact Cards */}
+          <div className="mx-auto mt-24 grid max-w-5xl gap-8 md:grid-cols-3">
+             {valueProps.map((prop, idx) => (
+                <motion.div 
+                    key={prop.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * idx }}
+                    className="flex flex-col items-center text-center p-8 rounded-3xl bg-white border border-border/50 shadow-sm hover:shadow-xl transition-all"
+                >
+                    <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                        <prop.icon className="h-6 w-6" />
                     </div>
-                    <div className="space-y-1">
+                    <h3 className="text-lg font-bold mb-3">{prop.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{prop.description}</p>
+                </motion.div>
+             ))}
+          </div>
+
+          {/* Support Grid */}
+          <div className="mx-auto mt-20 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {supportMethods.map((method, idx) => (
+              <motion.div 
+                key={method.title}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + (0.1 * idx) }}
+              >
+                <Card className="group flex flex-col h-full border-border/40 bg-white/70 backdrop-blur-md transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-primary/50">
+                  <CardHeader className="space-y-4">
+                    <div className={`flex h-16 w-16 items-center justify-center rounded-2xl shadow-inner transition-transform group-hover:scale-110 ${method.color}`}>
+                      <method.icon className="h-8 w-8" />
+                    </div>
+                    <div className="space-y-2">
                       <CardTitle className="text-xl flex items-center gap-2">
                         {method.title}
                         {method.isWeb3 && <Zap className="h-3 w-3 text-blue-500 animate-pulse" />}
                       </CardTitle>
-                      <CardDescription className="text-sm leading-relaxed">{method.description}</CardDescription>
+                      <CardDescription className="text-sm leading-relaxed font-medium">
+                        {method.description}
+                      </CardDescription>
                     </div>
                   </CardHeader>
                   <CardContent className="flex-1 space-y-4">
@@ -150,15 +179,17 @@ export default function SupportPage() {
                         <Link href={method.link!} target="_blank" className="transition-transform hover:scale-105 active:scale-95">
                           <img 
                             src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=sherazhussain546&button_colour=004080&font_colour=ffffff&font_family=Arial&outline_colour=ffffff&coffee_colour=FFDD00" 
-                            alt="Buy me a coffee"
-                            className="h-10 shadow-sm rounded-lg"
+                            alt="Support Sheraz Hussain on Buy me a coffee"
+                            className="h-11 shadow-md rounded-xl"
                           />
                         </Link>
                       </div>
                     )}
                     {method.value && (
-                      <div className="flex items-center justify-between rounded-xl border bg-muted/30 p-4 transition-colors hover:bg-muted/50">
-                        <code className="text-[11px] font-mono font-bold tracking-tight text-primary">{method.value}</code>
+                      <div className="flex items-center justify-between rounded-2xl border bg-muted/20 p-4 transition-colors hover:bg-muted/40 group/copy">
+                        <code className="text-[11px] font-mono font-bold tracking-tight text-primary truncate max-w-[150px]">
+                            {method.value}
+                        </code>
                         <Button 
                           variant="ghost" 
                           size="sm" 
@@ -170,21 +201,21 @@ export default function SupportPage() {
                       </div>
                     )}
                     {method.details && (
-                      <div className="text-xs font-medium text-muted-foreground bg-muted/20 p-3 rounded-lg border border-dashed italic">
+                      <div className="text-[11px] font-semibold text-muted-foreground bg-primary/5 p-4 rounded-xl border border-primary/10 border-dashed">
                         {method.details}
                       </div>
                     )}
                   </CardContent>
                   <div className="p-6 pt-0 mt-auto">
                     {method.link ? (
-                      <Button asChild className="w-full shadow-md">
+                      <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
                         <Link href={method.link} target={method.link.startsWith('mailto') ? '_self' : '_blank'}>
                           {method.actionLabel}
                           <ExternalLink className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
                     ) : (
-                      <Button variant="outline" className="w-full" onClick={() => copyToClipboard(method.value!, 'Web3 Domain')}>
+                      <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2" onClick={() => copyToClipboard(method.value!, 'Web3 Domain')}>
                         {method.actionLabel}
                       </Button>
                     )}
@@ -192,110 +223,87 @@ export default function SupportPage() {
                 </Card>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Web3 Spotlight Section */}
+          {/* Web3 Verified Spotlight */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mx-auto mt-32 max-w-5xl rounded-[2.5rem] bg-[#071739] p-12 text-white relative overflow-hidden shadow-2xl"
+            className="mx-auto mt-32 max-w-5xl rounded-[3rem] bg-[#071739] p-12 text-white relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px]" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px]" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 rounded-full blur-[120px]" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[120px]" />
             
-            <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-              <div className="flex-1 space-y-6 text-center md:text-left">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-bold uppercase tracking-[0.3em]">
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-16">
+              <div className="flex-1 space-y-8 text-center md:text-left">
+                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-bold uppercase tracking-[0.4em]">
                   <Globe className="h-4 w-4" />
-                  Web3 Verified Identity
+                  Decentralized Web3 Handle
                 </div>
-                <h2 className="text-3xl font-bold md:text-4xl">Decentralized Support</h2>
+                <h2 className="text-4xl font-bold md:text-5xl tracking-tight">Censorship-Resistant Innovation</h2>
                 <p className="text-white/70 text-lg leading-relaxed font-light">
-                  Direct support through the blockchain using my Unstoppable Domain. By supporting my Web3 identity, you help build a future of decentralized AI tools and censorship-resistant software.
+                  By supporting my Web3 identity, you fund the research of decentralized AI tools and cloud infrastructure that remains free from intrusive corporate data harvesting.
                 </p>
                 <div className="pt-4 flex flex-wrap justify-center md:justify-start gap-4">
-                  <Badge variant="outline" className="text-white border-white/20 px-4 py-1">Ethereum</Badge>
-                  <Badge variant="outline" className="text-white border-white/20 px-4 py-1">Polygon</Badge>
-                  <Badge variant="outline" className="text-white border-white/20 px-4 py-1">Bitcoin</Badge>
+                  <Badge variant="outline" className="text-white border-white/20 px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Ethereum</Badge>
+                  <Badge variant="outline" className="text-white border-white/20 px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Polygon</Badge>
+                  <Badge variant="outline" className="text-white border-white/20 px-5 py-1.5 font-mono text-[10px] tracking-widest uppercase">Solana</Badge>
                 </div>
               </div>
-              <div className="w-full md:w-80 space-y-4">
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md text-center group transition-all hover:bg-white/10">
-                  <div className="w-16 h-16 bg-primary rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-xl group-hover:rotate-6 transition-transform">
-                    <Wallet className="h-8 w-8 text-[#071739]" />
+              <div className="w-full md:w-96">
+                <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-10 backdrop-blur-xl text-center group transition-all hover:bg-white/10 border-t-white/20">
+                  <div className="w-20 h-20 bg-primary rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-transform">
+                    <Wallet className="h-10 w-10 text-[#071739]" />
                   </div>
-                  <div className="font-mono text-sm mb-2 opacity-50 uppercase tracking-widest">Universal Handle</div>
-                  <div className="text-xl font-bold text-primary break-all">sherazhussain.unstoppable</div>
+                  <div className="font-mono text-[10px] mb-3 opacity-40 uppercase tracking-[0.3em]">Universal Handle</div>
+                  <div className="text-xl font-bold text-primary break-all leading-snug">sherazhussain.unstoppable</div>
                   <Button 
-                    className="mt-8 w-full bg-white text-[#071739] hover:bg-primary hover:text-[#071739]"
+                    className="mt-10 w-full h-14 rounded-2xl bg-white text-[#071739] hover:bg-primary hover:text-white font-bold transition-all"
                     onClick={() => copyToClipboard('sherazhussain.unstoppable', 'Domain')}
                   >
-                    Copy Address
+                    Copy Handle
                   </Button>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Live Activity Section */}
+          {/* Real-time Activity Hub */}
           <div className="mx-auto mt-32 max-w-5xl">
-             <div className="mb-12 text-center">
-                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
+             <div className="mb-16 text-center">
+                <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
                     <Activity className="h-4 w-4 animate-pulse" />
-                    Real-time Support Hub
+                    Community Pulse
                 </div>
-                <h2 className="text-4xl font-bold text-foreground">Community Impact</h2>
-                <p className="text-lg text-muted-foreground mt-4 max-w-xl mx-auto">See the live heartbeat of the community supporting this engineering journey.</p>
+                <h2 className="text-4xl font-extrabold text-foreground md:text-5xl tracking-tight">Live Impact Feed</h2>
+                <p className="text-lg text-muted-foreground mt-6 max-w-xl mx-auto font-medium">See the real-time heartbeat of the community supporting this engineering journey.</p>
              </div>
              
-             <div className="relative aspect-[16/7] w-full overflow-hidden rounded-[2rem] border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-white">
+             <div className="relative aspect-[16/8] w-full overflow-hidden rounded-[3rem] border-8 border-white shadow-[0_40px_100px_rgba(0,0,0,0.1)] bg-white">
                 <iframe 
                   src="https://studio.buymeacoffee.com/stream-alert/page/sherazhussain546?user_key=3eed59c9-dc4b-4e84-b034-0a89bd538775"
                   className="absolute top-0 left-0 h-full w-full pointer-events-none"
                   frameBorder="0"
+                  title="Sheraz Hussain BuyMeACoffee Stream Alert"
                 />
-                <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-[2rem]" />
+                <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-[3rem]" />
              </div>
           </div>
 
-          {/* Engagement Section */}
-          <div className="mx-auto mt-32 max-w-5xl rounded-[3rem] border border-primary/10 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5 p-12 md:p-20 text-center relative overflow-hidden">
-             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-[#FDFDFB] mx-auto mb-10 shadow-xl shadow-primary/20">
-                <ShieldCheck className="h-8 w-8" />
+          {/* Mission Statement */}
+          <div className="mx-auto mt-40 max-w-4xl text-center border-t pt-20">
+             <div className="flex justify-center mb-10">
+                <div className="h-px w-16 bg-primary/30" />
+                <Cpu className="mx-4 h-6 w-6 text-primary/50" />
+                <div className="h-px w-16 bg-primary/30" />
              </div>
-             <h2 className="text-4xl font-extrabold text-foreground mb-12">The ROI of Supporting Me</h2>
-             <div className="grid gap-12 md:grid-cols-3 text-left">
-                <div className="space-y-4 group">
-                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                      <Zap className="h-5 w-5" />
-                   </div>
-                   <h4 className="text-lg font-bold">Innovation Velocity</h4>
-                   <p className="text-sm text-muted-foreground leading-relaxed">Your support directly covers the significant compute costs of running Gemini 2.0 Flash and Cloud infrastructure.</p>
-                </div>
-                <div className="space-y-4 group">
-                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                      <ShieldCheck className="h-5 w-5" />
-                   </div>
-                   <h4 className="text-lg font-bold">Open-Source Integrity</h4>
-                   <p className="text-sm text-muted-foreground leading-relaxed">It allows me to keep building tools that remain free from intrusive corporate data harvesting and tracking.</p>
-                </div>
-                <div className="space-y-4 group">
-                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                      <Globe className="h-5 w-5" />
-                   </div>
-                   <h4 className="text-lg font-bold">Global Community</h4>
-                   <p className="text-sm text-muted-foreground leading-relaxed">Directly funds the research that leads to career tools used by hundreds of students and developers worldwide.</p>
-                </div>
-             </div>
-             <div className="mt-20 pt-12 border-t border-primary/10 flex flex-col items-center gap-6">
-                <p className="text-2xl font-medium italic text-foreground/80 max-w-2xl">"Every bit of support fuels the next breakthrough. Thank you for being a patron of modern engineering."</p>
-                <div className="flex items-center gap-4">
-                  <div className="h-px w-8 bg-primary/30" />
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-[0.5em]">Sheraz Hussain — Freelancer @ SYNC TECH</p>
-                  <div className="h-px w-8 bg-primary/30" />
-                </div>
+             <p className="text-3xl font-medium italic text-foreground/90 leading-relaxed">
+                "Every line of code I write is a commitment to a more intelligent, open, and efficient digital future. Your support allows me to keep these tools accessible to everyone."
+             </p>
+             <div className="mt-12 flex flex-col items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-[0.5em] text-primary">Sheraz Hussain</span>
+                <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">Freelancer @ SYNC TECH Solutions</span>
              </div>
           </div>
         </div>
