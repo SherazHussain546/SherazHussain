@@ -106,8 +106,10 @@ export default function ExperienceSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex -left-16 border-primary/20 hover:bg-primary/10" />
-            <CarouselNext className="hidden md:flex -right-16 border-primary/20 hover:bg-primary/10" />
+            <div className="flex justify-center gap-4 mt-8">
+              <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10" />
+              <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10" />
+            </div>
           </Carousel>
         </div>
       </div>
