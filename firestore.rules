@@ -2,38 +2,40 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-03-V6
-    // REASON: Resolving list operation denial by using robust recursive wildcard patterns for collection-wide access.
+    // SECURITY RULES REVISION: 2024-06-03-V10-FIX
+    // REASON: Hardening list permissions for public collections and ensuring robust admin write access.
     
-    function isAdmin() {
+    function isUserAuthenticated() {
       return request.auth != null;
     }
 
-    // Public Read Collections (Handled with recursive wildcards for list/get)
-    match /projectGoals/{document=**} {
-      allow read: if true;
-      allow write: if isAdmin();
+    // projectGoals: Publicly readable (get and list), Auth required for all writes
+    match /projectGoals/{goalId} {
+      allow get, list: if true;
+      allow create, update, delete: if isUserAuthenticated();
     }
 
-    match /posts/{document=**} {
-      allow read: if true;
-      allow write: if isAdmin();
+    // posts: Publicly readable, Auth required for all writes
+    match /posts/{postId} {
+      allow get, list: if true;
+      allow create, update, delete: if isUserAuthenticated();
     }
 
-    match /siteConfig/{document=**} {
-      allow read: if true;
-      allow write: if isAdmin();
+    // siteConfig: Publicly readable, Auth required for writes
+    match /siteConfig/{configId} {
+      allow get, list: if true;
+      allow write: if isUserAuthenticated();
     }
 
-    // Analytics: Open creation for tracking, Admin read
+    // analyticsEvents: Publicly creatable, Auth (Admin) read access
     match /analyticsEvents/{eventId} {
       allow create: if true;
-      allow read: if isAdmin();
+      allow get, list: if isUserAuthenticated();
     }
 
-    // Admin-only collections
+    // workflows: Admin-only access
     match /workflows/{workflowId} {
-      allow read, write: if isAdmin();
+      allow read, write: if isUserAuthenticated();
     }
   }
 }

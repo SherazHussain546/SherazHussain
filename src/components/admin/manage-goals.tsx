@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuth } from '@/hooks/use-auth';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -33,6 +34,7 @@ const goalSchema = z.object({
 type GoalFormValues = z.infer<typeof goalSchema>;
 
 export default function ManageGoals() {
+  const { user } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -43,15 +45,15 @@ export default function ManageGoals() {
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Check for explicit permission denied error after loading completes
-    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading) {
+    // Only report permission errors once loading is finished and user is definitely authenticated
+    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [goalsError, goalsLoading, goalsCollection.path]);
+  }, [goalsError, goalsLoading, goalsCollection.path, user]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),
@@ -246,8 +248,8 @@ export default function ManageGoals() {
           <CardDescription>Manage goals appearing on your support hub.</CardDescription>
         </CardHeader>
         <CardContent>
-          {goalsLoading && <p>Loading...</p>}
-          {goals.length === 0 && !goalsLoading && <p className="text-muted-foreground italic">No goals added yet.</p>}
+          {goalsLoading && <p className="text-sm text-muted-foreground animate-pulse">Synchronizing goals...</p>}
+          {!goalsLoading && goals.length === 0 && <p className="text-muted-foreground italic">No goals added yet.</p>}
           <Table>
             <TableHeader>
               <TableRow>

@@ -1,12 +1,14 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuth } from '@/hooks/use-auth';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -17,9 +19,11 @@ import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Trash2, Pencil } from 'lucide-react';
 import { Post } from '@/components/portfolio/posts-section';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 
 const postSchema = z.object({
   platform: z.enum(['LinkedIn', 'Instagram', 'Facebook', 'GitHub', 'Other']),
@@ -34,14 +38,26 @@ const postSchema = z.object({
 type PostFormValues = z.infer<typeof postSchema>;
 
 export default function ManagePosts() {
+  const { user } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
-  const postsCollection = collection(firestore, 'posts');
-  const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
+  const postsCollection = useMemo(() => collection(firestore, 'posts'), []);
+  const postsQuery = useMemo(() => query(postsCollection, orderBy('createdAt', 'desc')), [postsCollection]);
   const [postsSnapshot, postsLoading, postsError] = useCollection(postsQuery);
+
+  useEffect(() => {
+    // Only report permission errors once loading is finished and user is authenticated
+    if (postsError && postsError.code === 'permission-denied' && !postsLoading && user) {
+      const permissionError = new FirestorePermissionError({
+        path: postsCollection.path,
+        operation: 'list',
+      } satisfies SecurityRuleContext);
+      errorEmitter.emit('permission-error', permissionError);
+    }
+  }, [postsError, postsLoading, postsCollection.path, user]);
 
   const form = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
@@ -71,67 +87,74 @@ export default function ManagePosts() {
 
   const onSubmit: SubmitHandler<PostFormValues> = async (data) => {
     setLoading(true);
-    try {
-      await addDoc(postsCollection, {
-        ...data,
-        createdAt: serverTimestamp(),
-      });
+    addDoc(postsCollection, {
+      ...data,
+      createdAt: serverTimestamp(),
+    })
+    .catch(async (serverError) => {
+      if (serverError.code === 'permission-denied') {
+        const permissionError = new FirestorePermissionError({
+          path: postsCollection.path,
+          operation: 'create',
+          requestResourceData: data,
+        } satisfies SecurityRuleContext);
+        errorEmitter.emit('permission-error', permissionError);
+      }
+    })
+    .then(() => {
       toast({
         title: 'Post Added!',
         description: 'Your new post has been saved.',
       });
       form.reset();
-    } catch (error) {
-      console.error('Error adding document: ', error);
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'Could not save the post. Please try again.',
-      });
-    } finally {
-      setLoading(false);
-    }
+    })
+    .finally(() => setLoading(false));
   };
 
   const onEditSubmit: SubmitHandler<PostFormValues> = async (data) => {
     if (!editingPost) return;
     setLoading(true);
-    try {
-      const postRef = doc(firestore, 'posts', editingPost.id);
-      await updateDoc(postRef, data);
+    const postRef = doc(firestore, 'posts', editingPost.id);
+    updateDoc(postRef, data)
+    .catch(async (serverError) => {
+      if (serverError.code === 'permission-denied') {
+        const permissionError = new FirestorePermissionError({
+          path: postRef.path,
+          operation: 'update',
+          requestResourceData: data,
+        } satisfies SecurityRuleContext);
+        errorEmitter.emit('permission-error', permissionError);
+      }
+    })
+    .then(() => {
       toast({
         title: 'Post Updated!',
         description: 'Your post has been successfully updated.',
       });
       setIsEditDialogOpen(false);
       setEditingPost(null);
-    } catch (error) {
-      console.error('Error updating document: ', error);
-      toast({
-        variant: 'destructive',
-        title: 'Update Failed',
-        description: 'Could not update the post. Please try again.',
-      });
-    } finally {
-      setLoading(false);
-    }
+    })
+    .finally(() => setLoading(false));
   };
 
   const deletePost = async (id: string) => {
-    try {
-      await deleteDoc(doc(firestore, 'posts', id));
+    const postRef = doc(firestore, 'posts', id);
+    deleteDoc(postRef)
+    .catch(async (serverError) => {
+      if (serverError.code === 'permission-denied') {
+        const permissionError = new FirestorePermissionError({
+          path: postRef.path,
+          operation: 'delete',
+        } satisfies SecurityRuleContext);
+        errorEmitter.emit('permission-error', permissionError);
+      }
+    })
+    .then(() => {
       toast({
         title: 'Post Deleted',
         description: 'The post has been successfully deleted.',
       });
-    } catch (error) {
-      console.error('Error deleting document: ', error);
-      toast({
-        variant: 'destructive',
-        title: 'Deletion Failed',
-        description: 'Could not delete the post. Please try again.',
-      });
-    }
+    });
   }
   
   const openEditDialog = (post: Post) => {
@@ -276,9 +299,8 @@ export default function ManagePosts() {
           <CardDescription>View and manage your current featured posts.</CardDescription>
         </CardHeader>
         <CardContent>
-          {postsLoading && <p>Loading posts...</p>}
-          {postsError && <p className="text-destructive">Error loading posts: {postsError.message}</p>}
-          {!postsLoading && posts.length === 0 && <p>No posts found.</p>}
+          {postsLoading && <p className="text-sm text-muted-foreground animate-pulse">Synchronizing posts...</p>}
+          {!postsLoading && posts.length === 0 && <p className="text-muted-foreground italic">No posts found.</p>}
           {posts.length > 0 && (
              <Table>
               <TableHeader>
@@ -329,9 +351,6 @@ export default function ManagePosts() {
         <DialogContent className="sm:max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Post</DialogTitle>
-            <DialogDescription>
-              Make changes to your post here. Click save when you're done.
-            </DialogDescription>
           </DialogHeader>
           <Form {...editForm}>
             <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-4 py-4">
@@ -452,5 +471,3 @@ export default function ManagePosts() {
     </div>
   );
 }
-
-    
