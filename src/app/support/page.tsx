@@ -1,4 +1,3 @@
-
 'use client';
 
 import Header from '@/components/layout/header';
@@ -28,23 +27,14 @@ import * as Icons from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Script from 'next/script';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { firestore } from '@/firebase/client';
-import { Skeleton } from '@/components/ui/skeleton';
+import { projectGoals } from '@/lib/data';
 
 export default function SupportPage() {
   const { toast } = useToast();
   const [copied, setCopied] = useState<string | null>(null);
-
-  // Dynamic goals from Firestore
-  const goalsCollection = collection(firestore, 'projectGoals');
-  const goalsQuery = query(goalsCollection, orderBy('order', 'asc'));
-  const [snapshot, loading, error] = useCollection(goalsQuery);
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -104,8 +94,6 @@ export default function SupportPage() {
     },
   ];
 
-  const projectGoals = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() })) || [];
-
   return (
     <div className="flex min-h-screen flex-col bg-[#FDFDFB]">
       <Header />
@@ -157,20 +145,7 @@ export default function SupportPage() {
               </motion.div>
               
               <div className="space-y-10 pt-4">
-                {loading && (
-                   <div className="space-y-10">
-                      {[...Array(3)].map((_, i) => (
-                        <div key={i} className="flex gap-6">
-                           <Skeleton className="h-12 w-12 rounded-2xl shrink-0" />
-                           <div className="space-y-2 flex-1">
-                              <Skeleton className="h-6 w-1/3" />
-                              <Skeleton className="h-16 w-full" />
-                           </div>
-                        </div>
-                      ))}
-                   </div>
-                )}
-                {projectGoals.map((goal: any, idx) => {
+                {projectGoals.map((goal, idx) => {
                   const IconComponent = (Icons as any)[goal.iconName] || Icons.HelpCircle;
                   return (
                     <motion.div 

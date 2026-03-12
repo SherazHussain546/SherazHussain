@@ -1,4 +1,4 @@
-import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon, Bitcoin } from 'lucide-react';
+import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon, Bitcoin, Cpu, Zap, Users } from 'lucide-react';
 
 type CertificateType = {
   title: string;
@@ -372,3 +372,27 @@ export const otherCertificates: CertificateType[] = [
 ];
 
 export const allCertificates: CertificateType[] = [...mainCertificates, ...otherCertificates];
+
+export const projectGoals = [
+  {
+    id: 'goal-1',
+    title: 'AI Infrastructure & Compute Scaling',
+    description: 'Funding high-performance GPU instances and API credits to keep Gemini-powered tools fast, accessible, and free for the global tech community.',
+    iconName: 'Cpu',
+    order: 1
+  },
+  {
+    id: 'goal-2',
+    title: 'Open-Source Sustainability',
+    description: 'Ensuring long-term maintenance and feature updates for projects like Market Genius and Job4You, keeping them free from corporate paywalls.',
+    iconName: 'Zap',
+    order: 2
+  },
+  {
+    id: 'goal-3',
+    title: 'Technical Mentorship & Resources',
+    description: 'Scaling free workshops, high-quality technical documentation, and career acceleration tools to empower the next generation of Irish developers.',
+    iconName: 'Users',
+    order: 3
+  }
+];
