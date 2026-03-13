@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText } from 'lucide-react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { doc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
@@ -96,6 +96,9 @@ export default function AboutSection() {
             </Link>
             <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-transform hover:scale-110">
               <Linkedin className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
+            </Link>
+            <Link href="https://medium.com/@sherazhussain546" target="_blank" rel="noopener noreferrer" aria-label="Medium" className="transition-transform hover:scale-110">
+              <FileText className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
           </div>
         </motion.div>

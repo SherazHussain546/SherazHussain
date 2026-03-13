@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, FileText } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -57,6 +57,13 @@ const navItems: NavItemProps[] = [
     icon: Linkedin,
     target: '_blank',
     bgColor: 'bg-blue-600/55 hover:bg-blue-700',
+  },
+  {
+    href: 'https://medium.com/@sherazhussain546',
+    label: 'Read on Medium',
+    icon: FileText,
+    target: '_blank',
+    bgColor: 'bg-zinc-700/55 hover:bg-zinc-800',
   },
   {
     href: '/support',
