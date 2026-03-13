@@ -8,6 +8,11 @@ This is the repository for the personal portfolio of Sheraz Hussain, a Freelance
 - **Support Hub**: Multi-channel support (BuyMeACoffee, Web3, GoFundMe) for community-driven innovation.
 - **Responsive Design**: Built with Next.js 15, Tailwind CSS, and ShadCN UI.
 
+## Social Media Assets (For Reference)
+
+### Medium / LinkedIn Professional Bio
+"Sheraz Hussain is a First-Class Honors Software Engineer and AI/Cloud Developer based in Dublin, Ireland. Working as a Freelancer with SYNC TECH Solutions, he specializes in architecting high-performance enterprise systems and scalable AI-driven applications. With a passion for technical integrity and innovation, Sheraz bridges the gap between complex engineering and strategic business growth. Graduate of Dublin Business School and developer of high-fidelity tools for the global tech community."
+
 ## Tech Stack
 - Next.js 15 (App Router)
 - Google Genkit (Gemini 2.0 Flash)
