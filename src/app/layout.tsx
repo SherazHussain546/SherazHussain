@@ -132,6 +132,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn('font-sans antialiased', inter.variable)}>
           <Script 
+            id="usercentrics-cmp"
+            src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
+            data-settings-id="4uTD-bP9QRDJKY"
+            strategy="afterInteractive"
+          />
+          <Script 
             src="https://www.googletagmanager.com/gtag/js?id=G-CX3V7SF35L" 
             strategy="afterInteractive" 
           />
