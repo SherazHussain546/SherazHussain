@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Mail, Heart, FileText } from 'lucide-react';
+import Image from 'next/image';
+import { Github, Linkedin, Mail, Heart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 type NavItemProps = {
   href: string;
   label: string;
-  icon: React.ElementType;
+  icon?: React.ElementType;
+  imageSrc?: string;
   target?: string;
   bgColor: string;
 };
 
-const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => {
+const NavItem = ({ href, label, icon: Icon, imageSrc, target, bgColor }: NavItemProps) => {
   return (
     <Link
       href={href}
@@ -27,7 +29,13 @@ const NavItem = ({ href, label, icon: Icon, target, bgColor }: NavItemProps) => 
       )}
     >
       <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:-translate-x-full">
-        <Icon className="h-5 w-5 flex-shrink-0 text-white" />
+        {Icon ? (
+          <Icon className="h-5 w-5 flex-shrink-0 text-white" />
+        ) : imageSrc ? (
+          <div className="relative h-5 w-5 grayscale invert brightness-0">
+            <Image src={imageSrc} alt={label} fill className="object-contain" />
+          </div>
+        ) : null}
       </div>
       <span className="absolute left-0 pl-4 pr-4 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 translate-x-full w-full text-left">
         {label}
@@ -61,7 +69,7 @@ const navItems: NavItemProps[] = [
   {
     href: 'https://medium.com/@sherazhussain546',
     label: 'Read on Medium',
-    icon: FileText,
+    imageSrc: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogowik.com%2Fcontent%2Fuploads%2Fimages%2Fmedium-icon239.logowik.com.webp&f=1&nofb=1&ipt=e219d4416b656308578da22ce715195368578fb758932af8c2485399cbc368af',
     target: '_blank',
     bgColor: 'bg-zinc-700/55 hover:bg-zinc-800',
   },

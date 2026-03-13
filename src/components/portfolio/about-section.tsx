@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Github, Linkedin, Mail, FileText } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { doc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
@@ -97,8 +97,15 @@ export default function AboutSection() {
             <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-transform hover:scale-110">
               <Linkedin className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
-            <Link href="https://medium.com/@sherazhussain546" target="_blank" rel="noopener noreferrer" aria-label="Medium" className="transition-transform hover:scale-110">
-              <FileText className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
+            <Link href="https://medium.com/@sherazhussain546" target="_blank" rel="noopener noreferrer" aria-label="Medium" className="transition-transform hover:scale-110 flex items-center">
+              <div className="relative h-6 w-6 grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition-all">
+                <Image 
+                  src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogowik.com%2Fcontent%2Fuploads%2Fimages%2Fmedium-icon239.logowik.com.webp&f=1&nofb=1&ipt=e219d4416b656308578da22ce715195368578fb758932af8c2485399cbc368af" 
+                  alt="Medium"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </Link>
           </div>
         </motion.div>
