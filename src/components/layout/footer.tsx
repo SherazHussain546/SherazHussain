@@ -1,6 +1,5 @@
 import { Github, Linkedin, Mail, MapPin, Phone, Heart } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 const footerLinks = [
@@ -40,22 +39,6 @@ export default function Footer() {
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link 
-                href="https://medium.com/@sherazhussain546" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-muted-foreground hover:text-primary transition-colors flex items-center"
-                aria-label="Medium"
-              >
-                <div className="relative h-5 w-5 grayscale hover:grayscale-0 transition-all opacity-70 hover:opacity-100">
-                  <Image 
-                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogowik.com%2Fcontent%2Fuploads%2Fimages%2Fmedium-icon239.logowik.com.webp&f=1&nofb=1&ipt=e219d4416b656308578da22ce715195368578fb758932af8c2485399cbc368af" 
-                    alt="Medium"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
               </Link>
               <Link 
                 href="mailto:sheraz@synctech.ie" 

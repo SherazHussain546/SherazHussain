@@ -21,7 +21,6 @@ const siteConfig = {
   links: {
     github: 'https://github.com/SherazHussain546',
     linkedin: 'https://linkedin.com/in/sherazhussain546/',
-    medium: 'https://medium.com/@sherazhussain546',
   },
 }
 
@@ -109,7 +108,6 @@ export default function RootLayout({
       'sameAs': [
         siteConfig.links.github,
         siteConfig.links.linkedin,
-        siteConfig.links.medium
       ],
       'jobTitle': 'Full-Stack Software Engineer & AI/Cloud Developer',
       'worksFor': {

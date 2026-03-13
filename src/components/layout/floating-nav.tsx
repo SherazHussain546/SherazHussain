@@ -67,13 +67,6 @@ const navItems: NavItemProps[] = [
     bgColor: 'bg-blue-600/55 hover:bg-blue-700',
   },
   {
-    href: 'https://medium.com/@sherazhussain546',
-    label: 'Read on Medium',
-    imageSrc: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogowik.com%2Fcontent%2Fuploads%2Fimages%2Fmedium-icon239.logowik.com.webp&f=1&nofb=1&ipt=e219d4416b656308578da22ce715195368578fb758932af8c2485399cbc368af',
-    target: '_blank',
-    bgColor: 'bg-zinc-700/55 hover:bg-zinc-800',
-  },
-  {
     href: '/support',
     label: 'Support my Work',
     icon: Heart,

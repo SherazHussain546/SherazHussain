@@ -11,7 +11,6 @@ const logos = [
   { name: 'Google', src: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogos-world.net%2Fwp-content%2Fuploads%2F2020%2F09%2FGoogle-Logo.png&f=1&nofb=1&ipt=5d0006785e6eb0c4fb3332743434e051c94e8681def5b7dead3439e6ae8118cf' },
   { name: 'Crypto.com', src: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.1V-ny0uCga2pZX_TdQ44hgHaE8%3Fpid%3DApi&f=1&ipt=4ec84e1b2b8ec25dce1afc304a5c8ef2a99c4b9abc0d0f5b131bf32aec800004' },
   { name: 'Duolingo', src: 'https://logos-world.net/wp-content/uploads/2021/08/Duolingo-Logo.png'},
-  { name: 'Medium', src: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogowik.com%2Fcontent%2Fuploads%2Fimages%2Fmedium-icon239.logowik.com.webp&f=1&nofb=1&ipt=e219d4416b656308578da22ce715195368578fb758932af8c2485399cbc368af' },
 ];
 
 const duplicatedLogos = [...logos, ...logos, ...logos];
