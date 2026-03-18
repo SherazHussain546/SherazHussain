@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/support',
     '/complaints',
     '/ai-architect',
+    '/contact',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({

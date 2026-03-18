@@ -16,7 +16,7 @@ const navLinks = [
   { name: 'Certifications', href: '/#certifications'},
   { name: 'Posts', href: '/#posts' },
   { name: 'Support', href: '/support' },
-  { name: 'Contact', href: '/#contact' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
