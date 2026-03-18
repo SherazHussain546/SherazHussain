@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, MapPin, Phone, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Phone, Heart, Users } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -39,6 +39,15 @@ export default function Footer() {
                 aria-label="Sheraz Hussain LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
+              </Link>
+              <Link 
+                href="https://www.linkedin.com/groups/17913030/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Join Sheraz's LinkedIn Innovation Group"
+              >
+                <Users className="h-5 w-5" />
               </Link>
               <Link 
                 href="mailto:sheraz@synctech.ie" 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, Users } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -65,6 +65,13 @@ const navItems: NavItemProps[] = [
     icon: Linkedin,
     target: '_blank',
     bgColor: 'bg-blue-600/55 hover:bg-blue-700',
+  },
+  {
+    href: 'https://www.linkedin.com/groups/17913030/',
+    label: 'Join LinkedIn Group',
+    icon: Users,
+    target: '_blank',
+    bgColor: 'bg-indigo-600/55 hover:bg-indigo-700',
   },
   {
     href: '/support',

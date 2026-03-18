@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Mail, Linkedin, Github, Heart } from 'lucide-react';
+import { Mail, Linkedin, Github, Heart, Users } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ContactSection() {
@@ -32,6 +32,12 @@ export default function ContactSection() {
             <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer">
               <Linkedin className="mr-2 h-5 w-5" />
               Connect on LinkedIn
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+            <Link href="https://www.linkedin.com/groups/17913030/" target="_blank" rel="noopener noreferrer">
+              <Users className="mr-2 h-5 w-5" />
+              Join LinkedIn Group
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-primary/50 text-primary hover:bg-primary hover:text-white">

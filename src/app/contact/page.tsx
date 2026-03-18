@@ -19,7 +19,8 @@ import {
   Send, 
   Sparkles,
   MessageSquare,
-  Globe
+  Globe,
+  Users
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -51,6 +52,13 @@ export default function ContactPage() {
       link: 'https://linkedin.com/in/sherazhussain546/',
       icon: Linkedin,
       color: 'bg-blue-500/10 text-blue-600',
+    },
+    {
+      title: 'Innovation Group',
+      value: 'Join Community',
+      link: 'https://www.linkedin.com/groups/17913030/',
+      icon: Users,
+      color: 'bg-indigo-500/10 text-indigo-600',
     },
     {
       title: 'GitHub Repositories',
