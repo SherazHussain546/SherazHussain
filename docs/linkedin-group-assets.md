@@ -1,10 +1,10 @@
-# LinkedIn Group Assets: Inclusive Innovation & Open-Source Hub
+# LinkedIn Group Assets: Creativity & Sheraz
 
 This document contains the high-fidelity copy for your LinkedIn group, designed to build a community around your mission of democratizing technology.
 
-## 1. Group Title Suggestion
-**Open-Source Innovation for Universal Accessibility**  
-*(Alternative: The Inclusive Tech & AI Open-Source Community)*
+## 1. Group Title
+**Creativity & Sheraz**  
+*(Official Community Hub)*
 
 ## 2. Group Description (About this group)
 Welcome to the frontier of **Inclusive Innovation**. 
@@ -52,7 +52,7 @@ While we love AI, please do not flood the group with low-effort, AI-generated "e
 
 Hi [Member Name],
 
-Thank you for joining **Open-Source Innovation for Universal Accessibility**. We are thrilled to have you as part of this community.
+Thank you for joining **Creativity & Sheraz**. We are thrilled to have you as part of this community.
 
 This group was founded on a simple but powerful belief: **Elite technology should be an asset for everyone.** 
 

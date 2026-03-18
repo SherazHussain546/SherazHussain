@@ -68,7 +68,7 @@ const navItems: NavItemProps[] = [
   },
   {
     href: 'https://www.linkedin.com/groups/17913030/',
-    label: 'Join LinkedIn Group',
+    label: 'Join Creativity & Sheraz',
     icon: Users,
     target: '_blank',
     bgColor: 'bg-indigo-600/55 hover:bg-indigo-700',

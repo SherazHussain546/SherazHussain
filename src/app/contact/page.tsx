@@ -55,7 +55,7 @@ export default function ContactPage() {
     },
     {
       title: 'Innovation Group',
-      value: 'Join Community',
+      value: 'Creativity & Sheraz',
       link: 'https://www.linkedin.com/groups/17913030/',
       icon: Users,
       color: 'bg-indigo-500/10 text-indigo-600',

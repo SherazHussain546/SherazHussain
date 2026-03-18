@@ -37,7 +37,7 @@ export default function ContactSection() {
           <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
             <Link href="https://www.linkedin.com/groups/17913030/" target="_blank" rel="noopener noreferrer">
               <Users className="mr-2 h-5 w-5" />
-              Join LinkedIn Group
+              Join Creativity & Sheraz
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-primary/50 text-primary hover:bg-primary hover:text-white">
