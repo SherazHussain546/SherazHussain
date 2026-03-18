@@ -310,6 +310,18 @@ export const allCertificates: CertificateType[] = [
     ],
   },
   {
+    title: 'Deloitte Australia Data Analytics Job Simulation',
+    issuer: 'Forage',
+    date: 'Aug 31, 2025',
+    icon: Database,
+    skills: ['Computer Networking', 'Data Analysis', 'Data Modeling', 'Data Structures', 'Data Visualization Tools', 'Formal Communication', 'Log Analysis', 'Planning', 'Programming', 'Python Programming', 'Software Development', 'Spreadsheet Skills', 'Web Security'],
+    points: [
+      'Completed a Deloitte job simulation involving data analysis and forensic technology.',
+      'Created a data dashboard using Tableau.',
+      'Used Excel to classify data and draw business conclusions.',
+    ],
+  },
+  {
     title: 'AI-Powered Performance Certification',
     issuer: 'Google',
     date: 'Jun 2023',
