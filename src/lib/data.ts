@@ -1,4 +1,4 @@
-import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon, Bitcoin, Cpu, Zap, Users } from 'lucide-react';
+import { Code, Server, Cloud, Database, BrainCircuit, ShieldCheck, Smartphone, Award, Star, School, LucideIcon, Bitcoin, Cpu, Zap, Users, Globe } from 'lucide-react';
 
 type CertificateType = {
   title: string;
@@ -279,6 +279,13 @@ export const allCertificates: CertificateType[] = [
     ],
   },
   {
+    title: 'AWS Certified Cloud Practitioner',
+    issuer: 'Amazon Web Services',
+    date: 'Issued Mar 2024',
+    icon: Cloud,
+    skills: ['Cloud Infrastructure', 'Serverless Computing', 'Security & Compliance'],
+  },
+  {
     title: 'Mastercard Cybersecurity Virtual Program',
     issuer: 'Forage',
     date: 'Issued Feb 2025',
@@ -313,6 +320,20 @@ export const allCertificates: CertificateType[] = [
     date: 'Jan 2024',
     icon: Bitcoin,
     skills: ['Market Analysis', 'Asset Liquidity', 'Financial Signals'],
+  },
+  {
+    title: 'English Language Proficiency (Expert)',
+    issuer: 'Duolingo',
+    date: 'Issued Jan 2024',
+    icon: Globe,
+    skills: ['Professional Communication', 'Technical Documentation', 'Global Collaboration'],
+  },
+  {
+    title: 'Azure Fundamentals (AZ-900)',
+    issuer: 'Microsoft',
+    date: 'Issued May 2024',
+    icon: ShieldCheck,
+    skills: ['Azure Services', 'Cloud Governance', 'Cloud Privacy'],
   },
 ];
 
