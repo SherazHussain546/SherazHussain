@@ -134,7 +134,7 @@ export default function SupportPage() {
                 Democratizing <span className="text-primary italic">Technology</span>.
               </h1>
               <p className="mt-8 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                My primary mission in IT is to empower individuals who aren't tech-savvy. I engineer free, open-source platforms to bridge the digital divide—ensuring advanced technology is an asset for everyone, made possible through your vital support.
+                I am on a mission to dismantle the barriers of technical complexity. By engineering high-fidelity, open-source platforms, I translate the power of elite AI and Cloud infrastructure into intuitive, accessible tools for everyone. Your support directly enables this bridge across the digital divide, making innovation a universal asset.
               </p>
             </motion.div>
           </div>
