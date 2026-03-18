@@ -141,34 +141,6 @@ export default function SupportPage() {
             </motion.div>
           </div>
 
-          {/* Featured GitHub Sponsor Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mx-auto mt-24 max-w-4xl flex flex-col items-center text-center space-y-8"
-          >
-             <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-slate-900/10 text-slate-900 text-[10px] font-bold uppercase tracking-[0.4em]">
-                <Github className="h-4 w-4" />
-                GitHub Sponsorship
-             </div>
-             <div className="w-full max-w-[600px] overflow-hidden rounded-2xl border bg-white shadow-xl transition-all hover:shadow-2xl">
-                <div className="overflow-x-auto no-scrollbar">
-                  <iframe 
-                    src="https://github.com/sponsors/SherazHussain546/card" 
-                    title="Sponsor SherazHussain546" 
-                    height="225" 
-                    width="600" 
-                    style={{ border: 0 }}
-                    className="mx-auto min-w-[600px]"
-                  />
-                </div>
-             </div>
-             <p className="text-sm text-muted-foreground max-w-lg italic">
-                Support my open-source projects and get featured as a sponsor on my GitHub profile. Every contribution fuels further innovation.
-             </p>
-          </motion.div>
-
           {/* Active Project Goals Section */}
           <div className="mx-auto mt-32 max-w-6xl">
             <div className="text-center mb-16">
@@ -261,7 +233,7 @@ export default function SupportPage() {
                           title="Sponsor SherazHussain546" 
                           height="32" 
                           width="114" 
-                          style={{ border: 0, border_radius: '6px' }}
+                          style={{ border: 0, borderRadius: '6px' }}
                         ></iframe>
                       </div>
                     )}
