@@ -286,14 +286,15 @@ export const allCertificates: CertificateType[] = [
     skills: ['Cloud Infrastructure', 'Serverless Computing', 'Security & Compliance'],
   },
   {
-    title: 'Mastercard Cybersecurity Virtual Program',
+    title: 'Mastercard Cybersecurity Virtual Experience Program',
     issuer: 'Forage',
-    date: 'Issued Feb 2025',
+    date: 'Feb 17, 2025',
     icon: ShieldCheck,
-    skills: ['Threat Detection', 'Network Security', 'Security Awareness'],
+    skills: ['Communication', 'Cybersecurity', 'Data Analysis', 'Data Visualization', 'Design Thinking', 'Problem Solving', 'Security Awareness', 'Security Training', 'Strategy'],
     points: [
-      'Served as a high-level analyst on the Security Awareness Team.',
-      'Identified and neutralized simulated phishing and network intrusion threats.',
+      'Completed a job simulation where I served as an analyst on Mastercard’s Security Awareness Team.',
+      'Helped identify and report security threats such as phishing.',
+      'Analyzed and identified which areas of the business needed more robust security training and implemented training courses and procedures for those teams.',
     ],
   },
   {
