@@ -112,7 +112,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
       <Header />
 
-      <div className="fixed top-24 right-6 z-[100] hidden md:block">
+      <div className="fixed top-24 right-4 md:right-6 z-[100] hidden md:block">
         <div className="relative">
           <Button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -201,7 +201,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
               </div>
             </div>
             
-            <h1 className="font-bebas text-[clamp(3rem,8vw,6rem)] leading-[0.9] tracking-[0.02em] mb-8">
+            <h1 className="font-bebas text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-[0.02em] mb-8">
               {project.name.split('–')[0]} <br />
               <span className="text-[#A68858]">{project.name.split('–')[1] || ''}</span>
             </h1>
@@ -213,19 +213,19 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-8 border-t border-[#A68858]/10">
               <div className="space-y-1">
                 <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Principal</div>
-                <div className="font-semibold text-sm">Sheraz Hussain</div>
+                <div className="font-semibold text-xs md:text-sm">Sheraz Hussain</div>
               </div>
               <div className="space-y-1">
                 <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Expertise</div>
-                <div className="font-semibold text-sm">Next.js & AI</div>
+                <div className="font-semibold text-xs md:text-sm">Next.js & AI</div>
               </div>
               <div className="space-y-1">
                 <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Visibility</div>
-                <div className="font-semibold text-sm text-[#A68858]">Global (Indexed)</div>
+                <div className="font-semibold text-xs md:text-sm text-[#A68858]">Global (Indexed)</div>
               </div>
               <div className="space-y-1">
                 <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Source</div>
-                <div className="font-semibold text-sm underline decoration-[#A68858]/30 underline-offset-4 cursor-pointer hover:text-[#A68858] transition-colors">
+                <div className="font-semibold text-xs md:text-sm underline decoration-[#A68858]/30 underline-offset-4 cursor-pointer hover:text-[#A68858] transition-colors">
                   <Link href={project.link} target="_blank">View Repository</Link>
                 </div>
               </div>
@@ -255,7 +255,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           </div>
         </nav>
 
-        <div ref={contentRef} className="max-w-5xl mx-auto px-4 md:px-16 py-20 w-full">
+        <div ref={contentRef} className="max-w-5xl mx-auto px-4 md:px-16 py-12 md:py-20 w-full">
           <AnimatePresence mode="wait">
             {activeTab === 'overview' && (
               <motion.section
@@ -263,27 +263,27 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="space-y-16"
+                className="space-y-12 md:space-y-16"
               >
                 <div className="max-w-3xl">
                   <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 01 — Executive Summary</div>
-                  <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Project Objectives</h2>
-                  <p className="text-[#071739]/80 text-lg font-light leading-relaxed">
+                  <h2 className="font-bebas text-[clamp(2rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Project Objectives</h2>
+                  <p className="text-[#071739]/80 text-base md:text-lg font-light leading-relaxed">
                     {project.fullDescription}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="bg-white border border-[#A68858]/10 p-8 rounded-xl shadow-sm">
-                    <div className="font-bebas text-4xl text-[#A68858] mb-4">100%</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+                  <div className="bg-white border border-[#A68858]/10 p-6 md:p-8 rounded-xl shadow-sm">
+                    <div className="font-bebas text-3xl md:text-4xl text-[#A68858] mb-2 md:mb-4">100%</div>
                     <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Personal Engineering</div>
                   </div>
-                  <div className="bg-white border border-[#A68858]/10 p-8 rounded-xl shadow-sm">
-                    <div className="font-bebas text-4xl text-[#A68858] mb-4">&lt; 2s</div>
+                  <div className="bg-white border border-[#A68858]/10 p-6 md:p-8 rounded-xl shadow-sm">
+                    <div className="font-bebas text-3xl md:text-4xl text-[#A68858] mb-2 md:mb-4">&lt; 2s</div>
                     <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Load Latency</div>
                   </div>
-                  <div className="bg-white border border-[#A68858]/10 p-8 rounded-xl shadow-sm">
-                    <div className="font-bebas text-4xl text-[#A68858] mb-4">98+</div>
+                  <div className="bg-white border border-[#A68858]/10 p-6 md:p-8 rounded-xl shadow-sm">
+                    <div className="font-bebas text-3xl md:text-4xl text-[#A68858] mb-2 md:mb-4">98+</div>
                     <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">SEO Audit Score</div>
                   </div>
                 </div>
@@ -296,19 +296,19 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="space-y-16"
+                className="space-y-12 md:space-y-16"
               >
                 <div>
                   <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 02 — Engineering Resilience</div>
-                  <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Execution</h2>
+                  <h2 className="font-bebas text-[clamp(2rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Execution</h2>
                   
-                  <div className="space-y-6 mb-20">
+                  <div className="space-y-6 mb-16 md:mb-20">
                     <h3 className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858] flex items-center gap-4">
                       Challenge Matrix <span className="h-[1px] flex-1 bg-[#A68858]/10"></span>
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {project.challenges.map((challenge, i) => (
-                        <div key={i} className="bg-[#071739] text-white p-8 rounded-lg shadow-xl group">
+                        <div key={i} className="bg-[#071739] text-white p-6 md:p-8 rounded-lg shadow-xl group">
                           <div className="font-mono text-[0.65rem] text-[#A68858] mb-4 uppercase tracking-widest">Challenge 0{i+1}</div>
                           <p className="text-sm font-light leading-relaxed opacity-80">{challenge}</p>
                         </div>
@@ -322,10 +322,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                     </h3>
                     <div className="divide-y divide-[#A68858]/10">
                       {project.solutions.map((solution, i) => (
-                        <div key={i} className="grid grid-cols-[40px_1fr] gap-8 py-10 items-start">
+                        <div key={i} className="grid grid-cols-[40px_1fr] gap-4 md:gap-8 py-8 md:py-10 items-start">
                           <div className="font-bebas text-2xl text-[#A68858]/30">0{i+1}</div>
                           <div>
-                            <h4 className="font-bold text-sm mb-3">{solution.title}</h4>
+                            <h4 className="font-bold text-sm mb-2 md:mb-3">{solution.title}</h4>
                             <p className="text-muted-foreground text-sm font-light leading-relaxed">{solution.description}</p>
                           </div>
                         </div>
@@ -344,32 +344,32 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 exit={{ opacity: 0, y: -10 }}
               >
                 <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 03 — Infrastructure Components</div>
-                <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Ecosystem</h2>
+                <h2 className="font-bebas text-[clamp(2rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Ecosystem</h2>
                 
-                <div className="flex flex-wrap gap-2 mb-16">
+                <div className="flex flex-wrap gap-2 mb-12 md:mb-16">
                   {project.stack.map((tech) => (
                     <div 
                       key={tech} 
-                      className="px-5 py-2 border border-[#071739] bg-transparent font-mono text-[0.7rem] text-[#071739] hover:bg-[#071739] hover:text-white transition-all cursor-default rounded-sm"
+                      className="px-4 md:px-5 py-2 border border-[#071739] bg-transparent font-mono text-[0.65rem] md:text-[0.7rem] text-[#071739] hover:bg-[#071739] hover:text-white transition-all cursor-default rounded-sm"
                     >
                       {tech}
                     </div>
                   ))}
                 </div>
 
-                <div className="bg-[#071739] rounded-lg p-10 font-mono text-[0.7rem] leading-loose text-white relative overflow-hidden shadow-2xl">
-                  <div className="absolute top-4 right-6 text-[0.55rem] text-[#A68858] tracking-widest uppercase">System: STABLE</div>
+                <div className="bg-[#071739] rounded-lg p-6 md:p-10 font-mono text-[0.65rem] md:text-[0.7rem] leading-loose text-white relative overflow-hidden shadow-2xl">
+                  <div className="absolute top-4 right-6 text-[0.55rem] text-[#A68858] tracking-widest uppercase hidden sm:block">System: STABLE</div>
                   <div className="text-[#A68858] mb-4 opacity-50"># Configuration Parameters</div>
-                  <div className="flex gap-4 mb-1">
-                    <span className="text-[#A68858] w-32">architecture</span>
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 mb-3 sm:mb-1">
+                    <span className="text-[#A68858] w-full sm:w-32">architecture</span>
                     <span className="text-white/80">Personal / Next.js Native</span>
                   </div>
-                  <div className="flex gap-4 mb-1">
-                    <span className="text-[#A68858] w-32">indexing_status</span>
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 mb-3 sm:mb-1">
+                    <span className="text-[#A68858] w-full sm:w-32">indexing_status</span>
                     <span className="text-white/80">Active / Global Coverage</span>
                   </div>
-                  <div className="flex gap-4">
-                    <span className="text-[#A68858] w-32">ssl_layer</span>
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
+                    <span className="text-[#A68858] w-full sm:w-32">ssl_layer</span>
                     <span className="text-white/80">End-to-End Encryption</span>
                   </div>
                 </div>
@@ -384,10 +384,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 exit={{ opacity: 0, y: -10 }}
               >
                 <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 04 — Performance Outcomes</div>
-                <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Measured Impact</h2>
+                <h2 className="font-bebas text-[clamp(2rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Measured Impact</h2>
                 
-                <div className="overflow-x-auto border-t border-[#A68858]/10">
-                  <table className="w-full text-left">
+                <div className="overflow-x-auto border-t border-[#A68858]/10 w-full">
+                  <table className="w-full text-left min-w-[400px]">
                     <thead>
                       <tr className="border-b border-[#A68858]/10">
                         <th className="py-6 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Performance Metric</th>
@@ -397,9 +397,9 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                     <tbody className="divide-y divide-[#A68858]/10">
                       {project.results.map((result, i) => (
                         <tr key={i} className="hover:bg-[#A68858]/5 transition-colors">
-                          <td className="py-8 font-semibold text-base text-[#071739]">{result}</td>
-                          <td className="py-8">
-                            <span className="text-[#A68858] font-mono text-[0.7rem] uppercase font-bold tracking-widest flex items-center gap-2">
+                          <td className="py-6 md:py-8 font-semibold text-sm md:text-base text-[#071739]">{result}</td>
+                          <td className="py-6 md:py-8">
+                            <span className="text-[#A68858] font-mono text-[0.65rem] md:text-[0.7rem] uppercase font-bold tracking-widest flex items-center gap-2">
                               <span className="w-2 h-2 rounded-full bg-[#A68858] animate-pulse"></span>
                               Verified Audit
                             </span>
@@ -410,10 +410,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                   </table>
                 </div>
 
-                <div className="mt-20 p-10 border-l-4 border-[#A68858] bg-white shadow-xl relative rounded-r-2xl border border-[#A68858]/10">
+                <div className="mt-16 md:mt-20 p-6 md:p-10 border-l-4 border-[#A68858] bg-white shadow-xl relative rounded-r-2xl border border-[#A68858]/10">
                   <div className="absolute top-8 right-10 text-6xl font-bebas text-[#A68858]/5 leading-none select-none">"</div>
                   <div className="max-w-2xl relative z-10">
-                    <p className="text-xl font-bold mb-6 italic leading-relaxed">"The technical integrity of this engineering deployment established new benchmarks for scalability and SEO dominance."</p>
+                    <p className="text-lg md:text-xl font-bold mb-4 md:mb-6 italic leading-relaxed">"The technical integrity of this engineering deployment established new benchmarks for scalability and SEO dominance."</p>
                     <div className="font-mono text-[0.65rem] uppercase tracking-widest text-[#A68858]">
                       — Engineering Review &nbsp;·&nbsp; {project.slug}.integrity
                     </div>
@@ -428,17 +428,17 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="space-y-12"
+                className="space-y-10 md:space-y-12"
               >
                  <div>
                     <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 05 — SEO & Strategic Metadata</div>
-                    <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Technical Visibility Index</h2>
-                    <p className="text-[#071739]/80 text-lg font-light leading-relaxed max-w-3xl">
+                    <h2 className="font-bebas text-[clamp(2rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Technical Visibility Index</h2>
+                    <p className="text-[#071739]/80 text-base md:text-lg font-light leading-relaxed max-w-3xl">
                       This case study is engineered for global search engine discovery. I utilize high-density technical keywords and geospatial metadata to ensure the work is ranked for competitive queries in Next.js, AI, and Cloud Architecture.
                     </p>
                  </div>
 
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     <Card className="border-primary/20 bg-primary/5">
                         <CardHeader className="flex flex-row items-center gap-3">
                             <Globe className="h-5 w-5 text-primary" />
@@ -447,15 +447,15 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                         <CardContent className="space-y-4">
                             <div className="flex items-center gap-3">
                                 <MapPin className="h-4 w-4 text-[#A68858]" />
-                                <span className="text-sm font-mono text-muted-foreground uppercase">Origin: Dublin, Ireland</span>
+                                <span className="text-xs md:text-sm font-mono text-muted-foreground uppercase">Origin: Dublin, Ireland</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Globe className="h-4 w-4 text-[#A68858]" />
-                                <span className="text-sm font-mono text-muted-foreground uppercase">Delivery: Global (Remote/Cloud)</span>
+                                <span className="text-xs md:text-sm font-mono text-muted-foreground uppercase">Delivery: Global (Remote/Cloud)</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <ShieldCheck className="h-4 w-4 text-[#A68858]" />
-                                <span className="text-sm font-mono text-muted-foreground uppercase">Status: Production Grade</span>
+                                <span className="text-xs md:text-sm font-mono text-muted-foreground uppercase">Status: Production Grade</span>
                             </div>
                         </CardContent>
                     </Card>
@@ -468,20 +468,20 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                         <CardContent>
                             <div className="flex flex-wrap gap-2">
                                 {project.stack.map(tag => (
-                                    <Badge key={tag} variant="outline" className="bg-white/50 border-primary/20 text-[10px] font-bold uppercase tracking-widest">
+                                    <Badge key={tag} variant="outline" className="bg-white/50 border-primary/20 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">
                                         #{tag.replace(/\s+/g, '')}
                                     </Badge>
                                 ))}
-                                <Badge variant="outline" className="bg-white/50 border-primary/20 text-[10px] font-bold uppercase tracking-widest">#SherazHussain</Badge>
-                                <Badge variant="outline" className="bg-white/50 border-primary/20 text-[10px] font-bold uppercase tracking-widest">#DublinEngineer</Badge>
+                                <Badge variant="outline" className="bg-white/50 border-primary/20 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">#SherazHussain</Badge>
+                                <Badge variant="outline" className="bg-white/50 border-primary/20 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">#DublinEngineer</Badge>
                             </div>
                         </CardContent>
                     </Card>
                  </div>
 
-                 <div className="rounded-xl border-2 border-dashed border-[#A68858]/20 p-8 bg-white/50">
+                 <div className="rounded-xl border-2 border-dashed border-[#A68858]/20 p-6 md:p-8 bg-white/50">
                     <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-[0.3em] mb-4">Metadata Analysis</div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-mono text-[0.65rem] text-muted-foreground leading-relaxed">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-mono text-[0.6rem] md:text-[0.65rem] text-muted-foreground leading-relaxed">
                         <div className="space-y-1">
                             <div className="text-[#071739] font-bold uppercase tracking-widest">Meta Description Injection</div>
                             <p>{project.description}</p>
@@ -496,7 +496,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
             )}
           </AnimatePresence>
 
-          <div className="flex justify-between items-center mt-20 pt-10 border-t border-[#A68858]/10">
+          <div className="flex justify-between items-center mt-12 md:mt-20 pt-8 md:pt-10 border-t border-[#A68858]/10">
             {prevTab ? (
               <button 
                 onClick={() => {
@@ -505,10 +505,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 }}
                 className="group flex flex-col items-start gap-2 text-left transition-all"
               >
-                <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858]">Previous Phase</span>
-                <span className="font-bebas text-2xl flex items-center gap-3 group-hover:text-[#A68858] transition-colors">
-                  <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
-                  {prevTab.label}
+                <span className="font-mono text-[0.55rem] md:text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858]">Previous Phase</span>
+                <span className="font-bebas text-xl md:text-2xl flex items-center gap-2 md:gap-3 group-hover:text-[#A68858] transition-colors">
+                  <ArrowLeft size={16} className="md:w-5 md:h-5 transition-transform group-hover:-translate-x-1" />
+                  {prevTab.label.split(' ')[0]}
                 </span>
               </button>
             ) : <div />}
@@ -521,10 +521,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 }}
                 className="group flex flex-col items-end text-right transition-all"
               >
-                <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858]">Next Phase</span>
-                <span className="font-bebas text-2xl flex items-center gap-3 group-hover:text-[#A68858] transition-colors">
-                  {nextTab.label}
-                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+                <span className="font-mono text-[0.55rem] md:text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858]">Next Phase</span>
+                <span className="font-bebas text-xl md:text-2xl flex items-center gap-2 md:gap-3 group-hover:text-[#A68858] transition-colors">
+                  {nextTab.label.split(' ')[0]}
+                  <ArrowRight size={16} className="md:w-5 md:h-5 transition-transform group-hover:translate-x-1" />
                 </span>
               </button>
             ) : <div />}
@@ -533,13 +533,13 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
       </main>
 
-      <section className="border-t border-[#A68858]/10 px-4 md:px-16 py-24 bg-white">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+      <section className="border-t border-[#A68858]/10 px-4 md:px-16 py-16 md:py-24 bg-white">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
           <div className="text-center md:text-left">
-            <div className="font-bebas text-5xl tracking-widest leading-none">
+            <div className="font-bebas text-4xl md:text-5xl tracking-widest leading-none">
               READY TO <span className="text-[#A68858]">ENGINEER?</span>
             </div>
-            <div className="text-[0.6rem] text-muted-foreground mt-4 font-mono uppercase tracking-[0.4em]">
+            <div className="text-[0.55rem] md:text-[0.6rem] text-muted-foreground mt-4 font-mono uppercase tracking-[0.4em]">
               SHERAZ HUSSAIN — ELITE TECHNICAL DELIVERY
             </div>
           </div>
