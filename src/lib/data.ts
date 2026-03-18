@@ -298,14 +298,15 @@ export const allCertificates: CertificateType[] = [
     ],
   },
   {
-    title: 'Deloitte Technology & Data Simulation',
+    title: 'Deloitte Australia Cyber Job Simulation',
     issuer: 'Forage',
-    date: 'Issued Aug 2025',
-    icon: Code,
-    skills: ['Python', 'Data Analytics', 'Log Analysis'],
+    date: 'Aug 30, 2025',
+    icon: ShieldCheck,
+    skills: ['Computer Networking', 'Data Analysis', 'Data Modeling', 'Data Structures', 'Data Visualization Tools', 'Formal Communication', 'Log Analysis', 'Planning', 'Programming', 'Python Programming', 'Software Development', 'Spreadsheet Skills', 'Web Security'],
     points: [
-      'Processed high-volume activity logs to derive strategic business intelligence.',
-      'Built interactive data dashboards using enterprise-grade classification methods.',
+      'Completed a job simulation involving reading web activity logs.',
+      'Supported a client in a cyber security breach.',
+      'Answered questions to identify suspicious user activity.',
     ],
   },
   {
