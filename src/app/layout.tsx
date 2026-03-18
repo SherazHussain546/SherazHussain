@@ -13,10 +13,10 @@ import FirebaseErrorListener from '@/components/FirebaseErrorListener';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const siteConfig = {
-  name: 'Sheraz Hussain | Elite Software Engineer & AI Solutions Architect',
+  name: 'Sheraz Hussain | Elite Software Architect & AI Solutions Engineer',
   shortName: 'Sheraz Hussain Portfolio',
   url: 'https://sheraz.synctech.ie',
-  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Specialist based in Dublin, Ireland. Expert in Next.js, Google Genkit, and Enterprise Cloud Architecture. Engineered for global scale and technical dominance.',
+  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems. Engineering an open digital future through inclusive, open-source innovation.',
   author: 'Sheraz Hussain',
   ogImage: 'https://sheraz.synctech.ie/og-image.png',
   links: {
@@ -41,23 +41,21 @@ export const metadata: Metadata = {
   category: 'Technology',
   keywords: [
     'Sheraz Hussain',
-    'Full-Stack Software Engineer',
-    'AI Solutions Architect',
-    'Next.js Expert Ireland',
-    'Google Genkit Specialist',
-    'Cloud Infrastructure Engineer',
-    'Dublin Software Developer',
+    'Software Architect Dublin',
+    'AI Solutions Engineer',
+    'Next.js 15 Expert',
+    'Google Genkit Developer',
+    'Cloud Systems Architect',
+    'Elite Full-Stack Engineer',
+    'Open Source Developer Ireland',
+    'Inclusive Tech Innovation',
     'Enterprise AI Implementation',
-    'React Expert Developer',
-    'High-Performance Web Apps',
-    'Generative AI Developer',
+    'React Technical Lead',
+    'High-Performance Web Engineering',
     'ATS Resume Optimization AI',
     'Software Architecture Consultant',
-    'First-Class Honors Engineer',
-    'Dublin Business School Computing',
-    'Tech Innovation Dublin',
-    'Elite Freelance Developer',
-    'Scalable Cloud Systems'
+    'Dublin Business School First Class Honors',
+    'Scalable Cloud Infrastructure'
   ],
   openGraph: {
     type: 'website',
@@ -69,7 +67,7 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'Sheraz Hussain - Full-Stack & AI Engineering Portfolio',
+        alt: 'Sheraz Hussain - Elite Engineering & AI Architecture',
         type: 'image/png',
       }
     ],
@@ -116,21 +114,21 @@ export default function RootLayout({
         siteConfig.links.github,
         siteConfig.links.linkedin,
       ],
-      'jobTitle': 'Full-Stack Software Engineer & AI/Cloud Developer',
+      'jobTitle': 'Principal Software Architect & AI Solutions Engineer',
       'knowsAbout': [
         'Artificial Intelligence',
         'Cloud Computing',
-        'Software Engineering',
-        'Next.js',
+        'Software Architecture',
+        'Next.js 15',
         'React',
         'Google Genkit',
         'Cybersecurity',
-        'Full-Stack Development'
+        'Inclusive Innovation'
       ],
       'worksFor': {
         '@type': 'Organization',
-        'name': 'SYNC TECH Solutions',
-        'url': 'https://www.synctech.ie'
+        'name': 'Technical Consultancy & Open Source Initiative',
+        'url': siteConfig.url
       },
        "image": siteConfig.ogImage,
        "description": siteConfig.description,
@@ -176,8 +174,8 @@ export default function RootLayout({
             data-cfasync="false" 
             src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
             data-id="sherazhussain546" 
-            data-description="Support Sheraz Hussain's Innovation" 
-            data-message="Thank you for visiting. I dedicate my time to engineering elite AI tools and open-source infrastructure for the global tech community." 
+            data-description="Support Sheraz's Open Source Mission" 
+            data-message="Thank you for visiting. Your support directly fuels the development of free AI tools designed for universal accessibility." 
             data-color="#FF813F" 
             data-position="Right" 
             data-x_margin="18" 

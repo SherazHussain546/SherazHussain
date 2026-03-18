@@ -11,14 +11,14 @@ import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
 
 const summaries = [
-  "I am an elite First-Class Honors Software Engineer specializing in AI, Cloud, and High-Performance Web Applications. My focus is on delivering technical excellence through advanced engineering and accessible innovation.",
-  "Expert in architecting modern, responsive digital ecosystems using Next.js and React. I prioritize sub-second performance and superior user experience, ensuring your brand dominates its niche.",
-  "Leading the frontier of Generative AI integration. I build intelligent agents and automated systems that transform complex data into strategic business assets for everyone.",
-  "Committed to the highest standards of digital integrity, implementing Zero Trust architectures and robust security while keeping the user experience simple and intuitive.",
-  "Mastering cross-platform mobile development with Ionic and Capacitor. I deliver high-fidelity applications that bridge the gap for users who aren't tech-savvy.",
-  "My objective in IT is to empower all users by building free, open-source platforms. I believe technology should be an asset, not a barrier, for every individual.",
-  "Available for high-stakes technical consultations and collaborative engineering projects. I help visionary brands turn technical challenges into market-leading digital products.",
-  "Pushing the boundaries of what is possible in AI and Web development. I am an engineer driven by precision, innovation, and the pursuit of a more open digital future."
+  "I am an elite First-Class Honors Software Engineer and AI Solutions Architect. My mission is to deliver technical excellence through advanced engineering while making innovation accessible to everyone.",
+  "I specialize in architecting modern, responsive digital ecosystems using Next.js 15. I prioritize sub-second performance and a superior user experience, ensuring your brand dominates its market.",
+  "Leading the frontier of Generative AI integration, I build intelligent agents and automated systems that transform complex data into strategic business assets.",
+  "Committed to the highest standards of digital integrity, I implement Zero Trust architectures and robust security, keeping the user experience simple and intuitive.",
+  "I bridge the gap for users who aren't tech-savvy. My objective in IT is to empower every individual by building free, open-source platforms that make technology an asset, not a barrier.",
+  "Mastering cross-platform development with Next.js, Ionic, and Capacitor, I deliver high-fidelity applications that work seamlessly across all devices.",
+  "Available for high-stakes technical consultations and collaborative engineering. I help visionary brands turn complex challenges into market-leading digital products.",
+  "Pushing the boundaries of what's possible in AI and Web development, I am an engineer driven by precision, innovation, and the pursuit of an open digital future."
 ];
 
 export default function AboutSection() {
@@ -42,7 +42,7 @@ export default function AboutSection() {
            ) : (
             <Image
                 src={founderImageUrl}
-                alt="Sheraz Hussain - Elite Full-Stack Software Engineer & AI Architect"
+                alt="Sheraz Hussain - Principal Software Engineer & AI Architect"
                 fill
                 priority
                 className="object-cover"
@@ -62,19 +62,19 @@ export default function AboutSection() {
                 () => setSummaryIndex(0),
                 'Hi, I am Sheraz Hussain', 3000,
                 () => setSummaryIndex(1),
-                'I am an Elite Full-Stack Engineer', 3000,
+                'I am an Elite Software Architect', 3000,
                 () => setSummaryIndex(2),
-                'I am an AI Solutions Architect', 3000,
+                'I am an AI Solutions Engineer', 3000,
                 () => setSummaryIndex(3),
-                'I Empower the Non-Tech Savvy', 3000,
+                'I Secure Digital Ecosystems', 3000,
                 () => setSummaryIndex(4),
-                'I Build Open Source Platforms', 3000,
+                'I Empower the Non-Tech Savvy', 3000,
                 () => setSummaryIndex(5),
-                'I am your Strategic Tech Partner', 3000,
+                'I Build Open Source Platforms', 3000,
                 () => setSummaryIndex(6),
-                'I Engineer the Future of AI', 3000,
+                'I am Your Strategic Tech Partner', 3000,
                 () => setSummaryIndex(7),
-                'Tech for Everyone, Everywhere', 3000,
+                'Engineering an Open Digital Future', 3000,
                 ]}
                 wrapper="h1"
                 speed={50}

@@ -61,7 +61,7 @@ export default function SupportPage() {
   const supportMethods = [
     {
       title: 'GitHub Sponsors',
-      description: 'Support my open-source journey and technical research directly through GitHub Sponsors.',
+      description: 'Support my journey in engineering elite open-source AI tools and accessible infrastructure.',
       icon: Github,
       actionLabel: 'Become a Sponsor',
       link: 'https://github.com/sponsors/SherazHussain546',
@@ -69,34 +69,34 @@ export default function SupportPage() {
     },
     {
       title: 'Buy Me a Coffee',
-      description: 'The quickest way to support daily AI tool development and coffee-fueled coding sessions.',
+      description: 'The most direct way to fuel my daily development sessions and technical research.',
       icon: Coffee,
-      actionLabel: 'Support via Coffee',
+      actionLabel: 'Fuel the Code',
       link: 'https://www.buymeacoffee.com/sherazhussain546',
       color: 'bg-orange-500/10 text-orange-600',
       badge: true
     },
     {
-      title: 'Web3 & Crypto',
-      description: 'Support using decentralized finance via my Unstoppable Domain. Secure and borderless.',
+      title: 'Web3 & Decentralized',
+      description: 'Support borderless innovation through decentralized finance via my Unstoppable Domain.',
       icon: Coins,
       value: 'sherazhussain.unstoppable',
-      actionLabel: 'Pay via Web3 Profile',
+      actionLabel: 'View Web3 Profile',
       link: 'https://ud.me/sherazhussain.unstoppable',
       color: 'bg-blue-500/10 text-blue-600',
       isWeb3: true
     },
     {
-      title: 'GoFundMe',
-      description: 'Invest in long-term infrastructure, large-scale AI research, and open-source sustainability.',
+      title: 'GoFundMe Campaign',
+      description: 'Contribute to long-term infrastructure and large-scale AI research initiatives.',
       icon: Heart,
-      actionLabel: 'Contribute to the Goal',
+      actionLabel: 'View Campaign',
       link: 'https://www.gofundme.com/f/be-a-part-of-my-new-projects', 
       color: 'bg-emerald-500/10 text-emerald-600',
     },
     {
       title: 'Enterprise & Revolut',
-      description: 'Direct Euro bank transfers and high-speed Revolut Pay checkout for professional consulting.',
+      description: 'Direct Euro transfers and high-speed Revolut Pay for professional contributions.',
       icon: Building2,
       actionLabel: 'Pay via Revolut',
       link: 'https://checkout.revolut.com/pay/2bdfa9a9-0137-484f-94c7-9ae333896e15',
@@ -128,25 +128,24 @@ export default function SupportPage() {
               transition={{ duration: 0.6 }}
             >
               <Badge variant="outline" className="mb-8 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.3em] border-primary/40 text-primary bg-primary/5">
-                Mission: Tech for Everyone
+                Objective: Inclusive Innovation
               </Badge>
               <h1 className="text-4xl font-extrabold tracking-tighter text-foreground md:text-8xl mb-8 leading-[1.1]">
-                Empowering the <span className="text-primary italic">Community</span>.
+                Democratizing <span className="text-primary italic">Technology</span>.
               </h1>
               <p className="mt-8 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                My main objective in IT is to empower users who aren't tech-savvy. I am building free, open-source platforms to make advanced technology accessible to everyone—a mission made possible through your support.
+                My primary mission in IT is to empower individuals who aren't tech-savvy. I engineer free, open-source platforms to bridge the digital divide—ensuring advanced technology is an asset for everyone, made possible through your vital support.
               </p>
             </motion.div>
           </div>
 
-          {/* Active Project Goals Section */}
           <div className="mx-auto mt-24 md:mt-32 max-w-6xl">
             <div className="text-center mb-12 md:mb-16">
               <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-[0.4em] mb-6">
                   <Target className="h-4 w-4" />
-                  Featured Campaign
+                  Active Initiative
               </div>
-              <h2 className="text-3xl font-extrabold text-foreground md:text-5xl tracking-tight">Active Project Goals</h2>
+              <h2 className="text-3xl font-extrabold text-foreground md:text-5xl tracking-tight">Technical Milestones</h2>
             </div>
             
             <div className="grid gap-8 md:gap-12 lg:grid-cols-2 items-start">
@@ -167,7 +166,7 @@ export default function SupportPage() {
                   const IconComponent = (Icons as any)[goal.iconName] || Icons.HelpCircle;
                   return (
                     <motion.div 
-                      key={goal.id}
+                      key={idx}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -190,16 +189,14 @@ export default function SupportPage() {
             </div>
           </div>
 
-          {/* Featured Posts Section - Strategic Update Feed */}
           <div className="mt-24 md:mt-40">
             <PostsSection 
-              title={<>Ongoing <span className="text-primary">Projects</span></>}
-              subtitle="Strategic updates and progress reports on active engineering initiatives powered by your support."
+              title={<>Strategic <span className="text-primary">Updates</span></>}
+              subtitle="Real-time insights and progress reports on open-source engineering initiatives powered by your contributions."
               showImages={false}
             />
           </div>
 
-          {/* Support Methods Grid */}
           <div className="mx-auto mt-24 md:mt-40 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
             {supportMethods.map((method, idx) => (
               <motion.div 
@@ -228,8 +225,8 @@ export default function SupportPage() {
                       <div className="flex justify-center py-2">
                         <Link href={method.link!} target="_blank" className="transition-transform hover:scale-105 active:scale-95">
                           <img 
-                            src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=sherazhussain546&button_colour=004080&font_colour=ffffff&font_family=Arial&outline_colour=ffffff&coffee_colour=FFDD00" 
-                            alt="Support Sheraz Hussain on Buy me a coffee"
+                            src="https://img.buymeacoffee.com/button-api/?text=Fuel Sheraz's Code&emoji=☕&slug=sherazhussain546&button_colour=004080&font_colour=ffffff&font_family=Arial&outline_colour=ffffff&coffee_colour=FFDD00" 
+                            alt="Support Sheraz Hussain"
                             className="h-10 md:h-11 shadow-md rounded-xl"
                           />
                         </Link>
@@ -243,10 +240,10 @@ export default function SupportPage() {
                         <Button 
                           variant="ghost" 
                           size="sm" 
-                          onClick={() => copyToClipboard(method.value!, 'Web3 Domain')}
+                          onClick={() => copyToClipboard(method.value!, 'Identifier')}
                           className="h-8 w-8 p-0"
                         >
-                          {copied === 'Web3 Domain' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+                          {copied === 'Identifier' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
                         </Button>
                       </div>
                     )}
@@ -263,7 +260,7 @@ export default function SupportPage() {
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2">
-                              View Bank Details
+                              View Details
                               <Building2 className="ml-2 h-4 w-4" />
                             </Button>
                           </DialogTrigger>
@@ -271,10 +268,10 @@ export default function SupportPage() {
                             <DialogHeader>
                               <DialogTitle className="flex items-center gap-2">
                                 <Building2 className="h-5 w-5 text-primary" />
-                                Bank Transfer Details
+                                Professional Transfer
                               </DialogTitle>
                               <DialogDescription>
-                                Use these details for direct contributions or enterprise consulting payments.
+                                Use these credentials for strategic contributions or consulting payments.
                               </DialogDescription>
                             </DialogHeader>
                             <div className="space-y-4 mt-4">
@@ -284,7 +281,7 @@ export default function SupportPage() {
                                   <span className="text-sm font-semibold">{bankDetails.beneficiary}</span>
                                 </div>
                                 <div className="flex flex-col gap-1 relative group">
-                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (Euro)</span>
+                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (EUR)</span>
                                   <div className="flex items-center justify-between gap-2">
                                     <span className="text-[11px] md:text-sm font-mono font-bold text-primary break-all">{bankDetails.iban}</span>
                                     <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => copyToClipboard(bankDetails.iban, 'IBAN')}>
@@ -320,7 +317,6 @@ export default function SupportPage() {
             ))}
           </div>
 
-          {/* Web3 Spotlight */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -332,11 +328,11 @@ export default function SupportPage() {
               <div className="flex-1 space-y-6 md:space-y-8 text-center lg:text-left">
                 <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-bold uppercase tracking-[0.4em]">
                   <Globe className="h-4 w-4" />
-                  Decentralized Web3 Handle
+                  Censorship-Resistant Innovation
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">Censorship-Resistant Innovation</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">Decentralized AI Future</h2>
                 <p className="text-white/70 text-base md:text-lg leading-relaxed font-light">
-                  By supporting my Web3 identity, you fund the research of decentralized AI tools that remain free from intrusive corporate data harvesting.
+                  By supporting my decentralized identity, you fund the development of AI tools that remain open, secure, and free from corporate data harvesting.
                 </p>
                 <div className="pt-4 flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4">
                   <Badge variant="outline" className="text-white border-[#F7931A] bg-[#F7931A] px-4 md:px-5 py-1.5 font-mono text-[9px] md:text-[10px] tracking-widest uppercase">Bitcoin</Badge>
@@ -351,7 +347,7 @@ export default function SupportPage() {
                   <div className="mt-8 md:mt-10 flex flex-col gap-3">
                     <Button asChild className="w-full h-12 md:h-14 rounded-2xl bg-white text-[#071739] hover:bg-primary hover:text-white font-bold transition-all">
                         <Link href="https://ud.me/sherazhussain.unstoppable" target="_blank">
-                           View Web3 Profile
+                           Inspect Profile
                            <ExternalLink className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
