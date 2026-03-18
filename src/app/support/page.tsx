@@ -65,7 +65,7 @@ export default function SupportPage() {
       icon: Github,
       actionLabel: 'Become a Sponsor',
       link: 'https://github.com/sponsors/SherazHussain546',
-      color: 'bg-primary/10 text-primary',
+      color: 'bg-slate-900 text-slate-100',
     },
     {
       title: 'Buy Me a Coffee',
