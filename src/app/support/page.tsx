@@ -66,7 +66,7 @@ export default function SupportPage() {
       icon: Github,
       actionLabel: 'Become a Sponsor',
       link: 'https://github.com/sponsors/SherazHussain546',
-      color: 'bg-slate-900/10 text-slate-900',
+      color: 'bg-primary/10 text-primary',
       isSponsor: true
     },
     {
@@ -227,7 +227,7 @@ export default function SupportPage() {
                   </CardHeader>
                   <CardContent className="flex-1 space-y-4">
                     {method.isSponsor && (
-                      <div className="flex justify-center py-4 bg-muted/5 rounded-xl border border-dashed">
+                      <div className="flex justify-center py-4 bg-primary/5 rounded-xl border border-dashed border-primary/20">
                         <iframe 
                           src="https://github.com/sponsors/SherazHussain546/button" 
                           title="Sponsor SherazHussain546" 
