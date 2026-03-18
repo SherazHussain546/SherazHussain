@@ -43,3 +43,32 @@ When reviewing open-source tools shared by others, focus on technical improvemen
 
 ### 7. No AI-Generated Low-Value Spam
 While we love AI, please do not flood the group with low-effort, AI-generated "engagement bait" posts. Every contribution should add meaningful value to the community.
+
+---
+
+## 4. Group Welcome Note (Auto-Message for New Members)
+
+**Subject:** Welcome to the Frontier of Inclusive Innovation! 🚀
+
+Hi [Member Name],
+
+Thank you for joining **Open-Source Innovation for Universal Accessibility**. We are thrilled to have you as part of this community.
+
+This group was founded on a simple but powerful belief: **Elite technology should be an asset for everyone.** 
+
+As a new member, you now have direct access to a network dedicated to dismantling technical barriers. Here, we share high-fidelity, open-source AI and Cloud tools designed specifically for intuitive use, regardless of technical background.
+
+**How to get started:**
+1. **Introduce yourself:** Tell us about your interest in inclusive tech or a project you're working on.
+2. **Explore the Featured section:** Find links to our latest free open-source applications.
+3. **Share your feedback:** If you use one of our tools, let us know how we can make it better for everyone.
+
+We engineer excellence through respectful collaboration. Please take a moment to review our group rules in the "About" section to ensure we maintain a high standard of professional and inclusive discourse.
+
+Let's build a more intelligent and open digital future together.
+
+Best regards,
+
+**Sheraz Hussain**  
+Founder, SYNC TECH Solutions
+*Engineering Technical Supremacy through Accessibility*
