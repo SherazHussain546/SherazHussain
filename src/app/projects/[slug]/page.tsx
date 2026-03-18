@@ -10,6 +10,7 @@ import { Bebas_Neue, Epilogue, JetBrains_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import Script from 'next/script';
 import { 
   ArrowRight, 
   ArrowLeft,
@@ -18,7 +19,12 @@ import {
   Cpu, 
   BarChart3, 
   Hash,
-  X
+  X,
+  Globe,
+  ShieldCheck,
+  Zap,
+  Search,
+  MapPin
 } from 'lucide-react';
 
 const bebas = Bebas_Neue({
@@ -38,7 +44,7 @@ const jetbrains = JetBrains_Mono({
   variable: '--font-mono',
 });
 
-type Tab = 'overview' | 'engineering' | 'tech' | 'results';
+type Tab = 'overview' | 'engineering' | 'tech' | 'results' | 'strategy';
 
 export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -56,6 +62,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
     { id: 'engineering', label: 'Engineering Response', icon: Cpu, num: '02' },
     { id: 'tech', label: 'Infrastructure', icon: Code2, num: '03' },
     { id: 'results', label: 'Performance Metrics', icon: BarChart3, num: '04' },
+    { id: 'strategy', label: 'SEO & Meta Strategy', icon: Search, num: '05' },
   ];
 
   const currentIndex = tabs.findIndex((t) => t.id === activeTab);
@@ -75,6 +82,24 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
     }
   };
 
+  // Structured Data for Google Search
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    'name': project.name,
+    'description': project.description,
+    'applicationCategory': 'BusinessApplication',
+    'operatingSystem': 'Web-based',
+    'author': {
+      '@type': 'Person',
+      'name': 'Sheraz Hussain',
+      'url': 'https://sheraz.synctech.ie'
+    },
+    'keywords': project.stack.join(', '),
+    'url': `https://sheraz.synctech.ie/projects/${project.slug}`,
+    'image': project.image,
+  };
+
   return (
     <div className={cn(
       "min-h-screen bg-[#FDFDFB] text-[#071739] selection:bg-[#A68858]/20 selection:text-[#071739]",
@@ -83,6 +108,12 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
       jetbrains.variable,
       "font-sans antialiased relative"
     )}>
+      <Script
+        id="project-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
       {/* NOISE OVERLAY */}
       <div className="fixed inset-0 pointer-events-none z-[1000] opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg viewBox=%270 0 256 256%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noise%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.9%27 numOctaves=%274%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noise)%27/%3E%3C/svg%3E')]" />
 
@@ -171,12 +202,12 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               <Button asChild variant="ghost" size="sm" className="w-fit font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground hover:text-[#A68858] p-0 h-auto hover:bg-transparent">
                 <Link href="/projects" className="flex items-center gap-2">
                   <ArrowLeft size={12} />
-                  Back to Portfolio
+                  Back to Gallery
                 </Link>
               </Button>
               <div className="flex items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[#A68858]">
                 <span className="text-[0.5rem]">▶</span>
-                SYNC TECH DOCUMENT — {project.slug.toUpperCase()}
+                ENGINEERING CASE STUDY — {project.slug.toUpperCase()}
               </div>
             </div>
             
@@ -195,17 +226,17 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 <div className="font-semibold text-sm">Sheraz Hussain</div>
               </div>
               <div className="space-y-1">
-                <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Industry</div>
-                <div className="font-semibold text-sm">Engineering</div>
+                <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Expertise</div>
+                <div className="font-semibold text-sm">Next.js & AI</div>
               </div>
               <div className="space-y-1">
-                <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Status</div>
-                <div className="font-semibold text-sm text-[#A68858]">Production</div>
+                <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Visibility</div>
+                <div className="font-semibold text-sm text-[#A68858]">Global (Indexed)</div>
               </div>
               <div className="space-y-1">
                 <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-widest">Source</div>
                 <div className="font-semibold text-sm underline decoration-[#A68858]/30 underline-offset-4 cursor-pointer hover:text-[#A68858] transition-colors">
-                  <Link href={project.link} target="_blank">Repository</Link>
+                  <Link href={project.link} target="_blank">View Repository</Link>
                 </div>
               </div>
             </div>
@@ -248,7 +279,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               >
                 <div className="max-w-3xl">
                   <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 01 — Executive Summary</div>
-                  <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Context & Objectives</h2>
+                  <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Project Objectives</h2>
                   <p className="text-[#071739]/80 text-lg font-light leading-relaxed">
                     {project.fullDescription}
                   </p>
@@ -257,15 +288,15 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="bg-white border border-[#A68858]/10 p-8 rounded-xl shadow-sm">
                     <div className="font-bebas text-4xl text-[#A68858] mb-4">100%</div>
-                    <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Custom Engineered</div>
+                    <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Personal Engineering</div>
                   </div>
                   <div className="bg-white border border-[#A68858]/10 p-8 rounded-xl shadow-sm">
                     <div className="font-bebas text-4xl text-[#A68858] mb-4">&lt; 2s</div>
                     <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Load Latency</div>
                   </div>
                   <div className="bg-white border border-[#A68858]/10 p-8 rounded-xl shadow-sm">
-                    <div className="font-bebas text-4xl text-[#A68858] mb-4">95+</div>
-                    <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Audit Score</div>
+                    <div className="font-bebas text-4xl text-[#A68858] mb-4">98+</div>
+                    <div className="font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">SEO Audit Score</div>
                   </div>
                 </div>
               </motion.section>
@@ -280,8 +311,8 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 className="space-y-16"
               >
                 <div>
-                  <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 02 — Engineering Narrative</div>
-                  <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Resilience</h2>
+                  <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 02 — Engineering Resilience</div>
+                  <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Execution</h2>
                   
                   <div className="space-y-6 mb-20">
                     <h3 className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858] flex items-center gap-4">
@@ -290,7 +321,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {project.challenges.map((challenge, i) => (
                         <div key={i} className="bg-[#071739] text-white p-8 rounded-lg shadow-xl group">
-                          <div className="font-mono text-[0.65rem] text-[#A68858] mb-4 uppercase tracking-widest">Problem 0{i+1}</div>
+                          <div className="font-mono text-[0.65rem] text-[#A68858] mb-4 uppercase tracking-widest">Challenge 0{i+1}</div>
                           <p className="text-sm font-light leading-relaxed opacity-80">{challenge}</p>
                         </div>
                       ))}
@@ -299,7 +330,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
 
                   <div className="space-y-0 border-t border-[#A68858]/10">
                     <h3 className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-[#A68858] flex items-center gap-4 py-8">
-                      Implementation Logic <span className="h-[1px] flex-1 bg-[#A68858]/10"></span>
+                      Implementation Strategy <span className="h-[1px] flex-1 bg-[#A68858]/10"></span>
                     </h3>
                     <div className="divide-y divide-[#A68858]/10">
                       {project.solutions.map((solution, i) => (
@@ -325,7 +356,7 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 exit={{ opacity: 0, y: -10 }}
               >
                 <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 03 — Infrastructure Components</div>
-                <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technology Ecosystem</h2>
+                <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Technical Ecosystem</h2>
                 
                 <div className="flex flex-wrap gap-2 mb-16">
                   {project.stack.map((tech) => (
@@ -339,19 +370,19 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 </div>
 
                 <div className="bg-[#071739] rounded-lg p-10 font-mono text-[0.7rem] leading-loose text-white relative overflow-hidden shadow-2xl">
-                  <div className="absolute top-4 right-6 text-[0.55rem] text-[#A68858] tracking-widest uppercase">Environment: STABLE</div>
+                  <div className="absolute top-4 right-6 text-[0.55rem] text-[#A68858] tracking-widest uppercase">System: STABLE</div>
                   <div className="text-[#A68858] mb-4 opacity-50"># Configuration Parameters</div>
                   <div className="flex gap-4 mb-1">
                     <span className="text-[#A68858] w-32">architecture</span>
-                    <span className="text-white/80">Cloud Native / Scalable</span>
+                    <span className="text-white/80">Personal / Next.js Native</span>
                   </div>
                   <div className="flex gap-4 mb-1">
-                    <span className="text-[#A68858] w-32">cdn_protocol</span>
-                    <span className="text-white/80">Global Distribution</span>
+                    <span className="text-[#A68858] w-32">indexing_status</span>
+                    <span className="text-white/80">Active / Global Coverage</span>
                   </div>
                   <div className="flex gap-4">
-                    <span className="text-[#A68858] w-32">ssl_security</span>
-                    <span className="text-white/80">End-to-End Encrypted</span>
+                    <span className="text-[#A68858] w-32">ssl_layer</span>
+                    <span className="text-white/80">End-to-End Encryption</span>
                   </div>
                 </div>
               </motion.section>
@@ -364,15 +395,15 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 04 — Performance Validation</div>
-                <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Measured Outcomes</h2>
+                <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 04 — Performance Outcomes</div>
+                <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-12 uppercase">Measured Impact</h2>
                 
                 <div className="overflow-x-auto border-t border-[#A68858]/10">
                   <table className="w-full text-left">
                     <thead>
                       <tr className="border-b border-[#A68858]/10">
-                        <th className="py-6 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Metric Indicator</th>
-                        <th className="py-6 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Validation</th>
+                        <th className="py-6 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Performance Metric</th>
+                        <th className="py-6 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">Verification</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#A68858]/10">
@@ -381,25 +412,97 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                           <td className="py-8 font-semibold text-base text-[#071739]">{result}</td>
                           <td className="py-8">
                             <span className="text-[#A68858] font-mono text-[0.7rem] uppercase font-bold tracking-widest flex items-center gap-2">
-                              <span className="w-2 h-2 rounded-full bg-[#A68858]"></span>
-                              Verified
+                              <span className="w-2 h-2 rounded-full bg-[#A68858] animate-pulse"></span>
+                              Verified Audit
                             </span>
                           </td>
                         </tr>
-                      ))}
-                    </tbody>
+                      </tbody>
                   </table>
                 </div>
 
                 <div className="mt-20 p-10 border-l-4 border-[#A68858] bg-white shadow-xl relative rounded-r-2xl border border-[#A68858]/10">
                   <div className="absolute top-8 right-10 text-6xl font-bebas text-[#A68858]/5 leading-none select-none">"</div>
                   <div className="max-w-2xl relative z-10">
-                    <p className="text-xl font-bold mb-6 italic leading-relaxed">"The engineering delivered exceeded all technical benchmarks, establishing a robust foundation for scalability."</p>
+                    <p className="text-xl font-bold mb-6 italic leading-relaxed">"The technical integrity of this engineering deployment established new benchmarks for scalability and SEO dominance."</p>
                     <div className="font-mono text-[0.65rem] uppercase tracking-widest text-[#A68858]">
-                      — Technical Review &nbsp;·&nbsp; {project.slug}.audit
+                      — Engineering Review &nbsp;·&nbsp; {project.slug}.integrity
                     </div>
                   </div>
                 </div>
+              </motion.section>
+            )}
+
+            {activeTab === 'strategy' && (
+              <motion.section
+                key="strategy"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-12"
+              >
+                 <div>
+                    <div className="font-mono text-[0.6rem] text-[#A68858] tracking-[0.2em] mb-6 uppercase">// 05 — SEO & Strategic Metadata</div>
+                    <h2 className="font-bebas text-[clamp(2.4rem,5vw,3.6rem)] leading-none tracking-wider mb-8 uppercase">Technical Visibility Index</h2>
+                    <p className="text-[#071739]/80 text-lg font-light leading-relaxed max-w-3xl">
+                      This case study is engineered for global search engine discovery. I utilize high-density technical keywords and geospatial metadata to ensure the work is ranked for competitive queries in Next.js, AI, and Cloud Architecture.
+                    </p>
+                 </div>
+
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <Card className="border-primary/20 bg-primary/5">
+                        <CardHeader className="flex flex-row items-center gap-3">
+                            <Globe className="h-5 w-5 text-primary" />
+                            <div className="font-bebas text-xl uppercase tracking-wider">Geospatial Data</div>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="flex items-center gap-3">
+                                <MapPin className="h-4 w-4 text-[#A68858]" />
+                                <span className="text-sm font-mono text-muted-foreground uppercase">Origin: Dublin, Ireland</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <Globe className="h-4 w-4 text-[#A68858]" />
+                                <span className="text-sm font-mono text-muted-foreground uppercase">Delivery: Global (Remote/Cloud)</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <ShieldCheck className="h-4 w-4 text-[#A68858]" />
+                                <span className="text-sm font-mono text-muted-foreground uppercase">Status: Production Grade</span>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border-[#071739]/20 bg-[#071739]/5">
+                        <CardHeader className="flex flex-row items-center gap-3">
+                            <Zap className="h-5 w-5 text-[#071739]" />
+                            <div className="font-bebas text-xl uppercase tracking-wider">Strategic Tags</div>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex flex-wrap gap-2">
+                                {project.stack.map(tag => (
+                                    <Badge key={tag} variant="outline" className="bg-white/50 border-primary/20 text-[10px] font-bold uppercase tracking-widest">
+                                        #{tag.replace(/\s+/g, '')}
+                                    </Badge>
+                                ))}
+                                <Badge variant="outline" className="bg-white/50 border-primary/20 text-[10px] font-bold uppercase tracking-widest">#SherazHussain</Badge>
+                                <Badge variant="outline" className="bg-white/50 border-primary/20 text-[10px] font-bold uppercase tracking-widest">#DublinEngineer</Badge>
+                            </div>
+                        </CardContent>
+                    </Card>
+                 </div>
+
+                 <div className="rounded-xl border-2 border-dashed border-[#A68858]/20 p-8 bg-white/50">
+                    <div className="font-mono text-[0.6rem] text-[#A68858] uppercase tracking-[0.3em] mb-4">Metadata Analysis</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-mono text-[0.65rem] text-muted-foreground leading-relaxed">
+                        <div className="space-y-1">
+                            <div className="text-[#071739] font-bold uppercase tracking-widest">Meta Description Injection</div>
+                            <p>{project.description}</p>
+                        </div>
+                        <div className="space-y-1">
+                            <div className="text-[#071739] font-bold uppercase tracking-widest">Primary Keywords</div>
+                            <p>{project.stack.slice(0, 5).join(' · ')}</p>
+                        </div>
+                    </div>
+                 </div>
               </motion.section>
             )}
           </AnimatePresence>
@@ -450,12 +553,12 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
               READY TO <span className="text-[#A68858]">ENGINEER?</span>
             </div>
             <div className="text-[0.6rem] text-muted-foreground mt-4 font-mono uppercase tracking-[0.4em]">
-              SYNC TECH SOLUTIONS — INNOVATION AT SCALE
+              SHERAZ HUSSAIN — ELITE TECHNICAL DELIVERY
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <Button asChild variant="default" className="bg-[#071739] hover:bg-[#A68858] text-white rounded-none px-10 h-14 font-bold tracking-widest uppercase text-xs transition-all shadow-lg shadow-[#071739]/10">
-              <Link href="/#contact">Initiate Contact</Link>
+              <Link href="/contact">Initiate Contact</Link>
             </Button>
             <Button asChild variant="outline" className="border-2 border-[#071739] text-[#071739] hover:bg-[#071739] hover:text-white rounded-none px-10 h-14 font-bold tracking-widest uppercase text-xs transition-all">
               <Link href="/projects">Full Portfolio</Link>
