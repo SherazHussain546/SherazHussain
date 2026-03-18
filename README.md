@@ -8,23 +8,6 @@ This is the repository for the personal portfolio of Sheraz Hussain, a Freelance
 - **Support Hub**: Multi-channel support (BuyMeACoffee, Web3, GoFundMe, GitHub Sponsors) for community-driven innovation.
 - **Responsive Design**: Built with Next.js 15, Tailwind CSS, and ShadCN UI.
 
-## GitHub Sponsors Assets (Copy & Paste)
-
-### Short Bio (Sidebar)
-First-Class Honors Software Engineer & AI/Cloud Developer @ SYNC TECH Solutions. Building high-fidelity AI agents and scalable cloud infrastructure to empower the global tech community.
-
-### Profile Introduction (Markdown)
-```markdown
-Hi, I'm **Sheraz Hussain**, a Freelancer working with **SYNC TECH Solutions**. I'm passionate about architecting high-performance enterprise systems and pushing the boundaries of what's possible with Generative AI and Cloud Computing.
-
-By sponsoring my work, you are directly supporting:
-- **Innovation at Scale**: The development of high-fidelity tools like *Market Genius* and *Job4You*.
-- **Open-Source Integrity**: Keeping advanced AI utilities free and accessible for the global tech community.
-- **Technical Mentorship**: Creating resources and documentation to empower the next generation of engineers.
-
-Your support fuels my coffee-driven coding sessions and helps cover the infrastructure costs for the free AI tools I provide. Let's engineer a more intelligent and open digital future together! 🚀
-```
-
 ## Social Media Assets (For Reference)
 
 ### Medium / LinkedIn Professional Bio
