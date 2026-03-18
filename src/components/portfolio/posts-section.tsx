@@ -19,18 +19,7 @@ import { firestore } from '@/firebase/client';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-
-export interface Post {
-    id: string;
-    platform: string;
-    title: string;
-    description: string;
-    link: string;
-    image?: string;
-    imageHint?: string;
-    hashtags?: string;
-    createdAt: Timestamp;
-}
+import { Post } from '@/types/database';
 
 const platformIcons: { [key: string]: React.ElementType } = {
   LinkedIn: Linkedin,

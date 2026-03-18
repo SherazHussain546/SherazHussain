@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -21,7 +20,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Trash2, Pencil } from 'lucide-react';
-import { Post } from '@/components/portfolio/posts-section';
+import { Post } from '@/types/database';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 
@@ -49,7 +48,6 @@ export default function ManagePosts() {
   const [postsSnapshot, postsLoading, postsError] = useCollection(postsQuery);
 
   useEffect(() => {
-    // Definitive permission check for administrative collection listing
     if (postsError && postsError.code === 'permission-denied' && !postsLoading && !authLoading && user) {
       const permissionError = new FirestorePermissionError({
         path: postsCollection.path,
