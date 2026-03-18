@@ -24,8 +24,11 @@ import {
   ShieldCheck,
   Zap,
   Search,
-  MapPin
+  MapPin,
+  Card as CardIcon
 } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const bebas = Bebas_Neue({
   subsets: ['latin'],
@@ -417,7 +420,8 @@ export default function ProjectCaseStudy({ params }: { params: Promise<{ slug: s
                             </span>
                           </td>
                         </tr>
-                      </tbody>
+                      ))}
+                    </tbody>
                   </table>
                 </div>
 
