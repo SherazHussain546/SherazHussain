@@ -128,13 +128,13 @@ export default function SupportPage() {
               transition={{ duration: 0.6 }}
             >
               <Badge variant="outline" className="mb-8 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.3em] border-primary/40 text-primary bg-primary/5">
-                Patron of Modern Engineering
+                Mission: Tech for Everyone
               </Badge>
               <h1 className="text-4xl font-extrabold tracking-tighter text-foreground md:text-8xl mb-8 leading-[1.1]">
-                Empower the <span className="text-primary italic">Future</span> of AI.
+                Empowering the <span className="text-primary italic">Community</span>.
               </h1>
               <p className="mt-8 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I dedicate my time to building high-performance AI tools and cloud infrastructure that helps the global tech community scale with integrity.
+                My main objective in IT is to empower users who aren't tech-savvy. I am building free, open-source platforms to make advanced technology accessible to everyone—a mission made possible through your support.
               </p>
             </motion.div>
           </div>

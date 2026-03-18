@@ -11,14 +11,14 @@ import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
 
 const summaries = [
-  "I am an elite First-Class Honors Software Engineer specializing in AI, Cloud, and High-Performance Web Applications. My focus is on delivering technical excellence through advanced engineering, strategic SEO, and scalable cloud architectures.",
-  "Expert in architecting modern, responsive digital ecosystems using Next.js, React, and Node.js. I prioritize sub-second performance and superior user experience, ensuring your brand dominates its niche.",
-  "Leading the frontier of Generative AI integration with Google Genkit and Gemini. I build intelligent agents and automated systems that transform complex data into strategic business assets.",
-  "Committed to the highest standards of digital integrity, implementing Zero Trust architectures, DevSecOps pipelines, and robust data encryption for enterprise-level security.",
-  "Mastering cross-platform mobile development with Ionic and Capacitor. I deliver high-fidelity, native-performance applications that bridge the gap between web and mobile ecosystems.",
-  "Driving global SEO dominance and digital growth through technical metadata engineering and high-conversion e-commerce strategies on WordPress and custom platforms.",
+  "I am an elite First-Class Honors Software Engineer specializing in AI, Cloud, and High-Performance Web Applications. My focus is on delivering technical excellence through advanced engineering and accessible innovation.",
+  "Expert in architecting modern, responsive digital ecosystems using Next.js and React. I prioritize sub-second performance and superior user experience, ensuring your brand dominates its niche.",
+  "Leading the frontier of Generative AI integration. I build intelligent agents and automated systems that transform complex data into strategic business assets for everyone.",
+  "Committed to the highest standards of digital integrity, implementing Zero Trust architectures and robust security while keeping the user experience simple and intuitive.",
+  "Mastering cross-platform mobile development with Ionic and Capacitor. I deliver high-fidelity applications that bridge the gap for users who aren't tech-savvy.",
+  "My objective in IT is to empower all users by building free, open-source platforms. I believe technology should be an asset, not a barrier, for every individual.",
   "Available for high-stakes technical consultations and collaborative engineering projects. I help visionary brands turn technical challenges into market-leading digital products.",
-  "Pushing the boundaries of what is possible in AI and Web development. I am an engineer driven by precision, innovation, and the pursuit of technological hegemony."
+  "Pushing the boundaries of what is possible in AI and Web development. I am an engineer driven by precision, innovation, and the pursuit of a more open digital future."
 ];
 
 export default function AboutSection() {
@@ -66,15 +66,15 @@ export default function AboutSection() {
                 () => setSummaryIndex(2),
                 'I am an AI Solutions Architect', 3000,
                 () => setSummaryIndex(3),
-                'I am a Cloud Infrastructure Expert', 3000,
+                'I Empower the Non-Tech Savvy', 3000,
                 () => setSummaryIndex(4),
-                'I am a Technical SEO Specialist', 3000,
+                'I Build Open Source Platforms', 3000,
                 () => setSummaryIndex(5),
-                'I am a Cybersecurity Strategist', 3000,
-                () => setSummaryIndex(6),
                 'I am your Strategic Tech Partner', 3000,
-                () => setSummaryIndex(7),
+                () => setSummaryIndex(6),
                 'I Engineer the Future of AI', 3000,
+                () => setSummaryIndex(7),
+                'Tech for Everyone, Everywhere', 3000,
                 ]}
                 wrapper="h1"
                 speed={50}
