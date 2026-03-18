@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Linkedin, Github, Heart } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ContactSection() {
@@ -15,7 +15,7 @@ export default function ContactSection() {
           </p>
         </div>
         
-        <div className="mx-auto mt-12 flex max-w-xl flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <div className="mx-auto mt-12 flex max-w-2xl flex-col items-center gap-4 sm:flex-row sm:justify-center flex-wrap">
           <Button asChild size="lg" className="w-full sm:w-auto">
             <Link href="mailto:sheraz@synctech.ie">
               <Mail className="mr-2 h-5 w-5" />
@@ -32,6 +32,12 @@ export default function ContactSection() {
             <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer">
               <Linkedin className="mr-2 h-5 w-5" />
               Connect on LinkedIn
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-primary/50 text-primary hover:bg-primary hover:text-white">
+            <Link href="https://github.com/sponsors/SherazHussain546" target="_blank" rel="noopener noreferrer">
+              <Heart className="mr-2 h-5 w-5 fill-red-500 text-red-500" />
+              Sponsor on GitHub
             </Link>
           </Button>
         </div>

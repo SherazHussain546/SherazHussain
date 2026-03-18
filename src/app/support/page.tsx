@@ -23,7 +23,8 @@ import {
   Building2,
   Info,
   CreditCard,
-  ArrowLeft
+  ArrowLeft,
+  Github
 } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { useState } from 'react';
@@ -58,6 +59,15 @@ export default function SupportPage() {
   };
 
   const supportMethods = [
+    {
+      title: 'GitHub Sponsors',
+      description: 'Support my open-source journey and technical research directly through GitHub Sponsors.',
+      icon: Github,
+      actionLabel: 'Become a Sponsor',
+      link: 'https://github.com/sponsors/SherazHussain546',
+      color: 'bg-slate-900/10 text-slate-900',
+      isSponsor: true
+    },
     {
       title: 'Buy Me a Coffee',
       description: 'The quickest way to support daily AI tool development and coffee-fueled coding sessions.',
@@ -191,7 +201,7 @@ export default function SupportPage() {
           </div>
 
           {/* Support Methods Grid */}
-          <div className="mx-auto mt-40 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-40 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
             {supportMethods.map((method, idx) => (
               <motion.div 
                 key={method.title}
@@ -215,6 +225,17 @@ export default function SupportPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="flex-1 space-y-4">
+                    {method.isSponsor && (
+                      <div className="flex justify-center py-4 bg-muted/5 rounded-xl border border-dashed">
+                        <iframe 
+                          src="https://github.com/sponsors/SherazHussain546/button" 
+                          title="Sponsor SherazHussain546" 
+                          height="32" 
+                          width="114" 
+                          style={{ border: 0, borderRadius: '6px' }}
+                        ></iframe>
+                      </div>
+                    )}
                     {method.badge && (
                       <div className="flex justify-center py-2">
                         <Link href={method.link!} target="_blank" className="transition-transform hover:scale-105 active:scale-95">
