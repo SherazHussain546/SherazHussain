@@ -354,13 +354,6 @@ export const allCertificates: CertificateType[] = [
     icon: Globe,
     skills: ['Professional Communication', 'Technical Documentation', 'Global Collaboration'],
   },
-  {
-    title: 'Azure Fundamentals (AZ-900)',
-    issuer: 'Microsoft',
-    date: 'Issued May 2024',
-    icon: ShieldCheck,
-    skills: ['Azure Services', 'Cloud Governance', 'Cloud Privacy'],
-  },
 ];
 
 export const projectGoals = [
