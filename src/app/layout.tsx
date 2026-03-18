@@ -13,9 +13,9 @@ import FirebaseErrorListener from '@/components/FirebaseErrorListener';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const siteConfig = {
-  name: 'Sheraz Hussain | Full-Stack Software Engineer & AI/Cloud Developer',
+  name: 'Sheraz Hussain | Elite Full-Stack Software Engineer & AI Architect',
   url: 'https://sheraz.synctech.ie',
-  description: 'Sheraz Hussain, a Freelancer working with SYNC TECH Solutions, is a top-tier Full-Stack Software Engineer, AI/Cloud Developer, and Technology Expert based in Dublin, Ireland. Explore expert projects in Next.js, AI, and Cloud Architecture.',
+  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Specialist based in Dublin, Ireland. Expert in Next.js, Google Genkit, Cloud Architecture, and Enterprise AI Solutions. Explore a portfolio of high-performance digital products engineered for global scale.',
   author: 'Sheraz Hussain',
   ogImage: 'https://sheraz.synctech.ie/og-image.png',
   links: {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    template: `%s | Sheraz Hussain`,
   },
   description: siteConfig.description,
   authors: [{
@@ -37,13 +37,21 @@ export const metadata: Metadata = {
   }],
   creator: siteConfig.author,
   publisher: siteConfig.author,
+  category: 'Technology',
   openGraph: {
     type: 'website',
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
-    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: 'Sheraz Hussain - Full-Stack & AI Engineering Portfolio',
+      }
+    ],
+    siteName: 'Sheraz Hussain Portfolio',
     locale: 'en_US'
   },
   twitter: {
@@ -55,26 +63,25 @@ export const metadata: Metadata = {
   },
   keywords: [
     'Sheraz Hussain',
-    'SYNC TECH Solutions',
-    'sherazhussain.pw',
-    'sheraz.synctech.ie',
-    'sherazhussain.synctech.ie',
-    'AI Developer Ireland',
-    'Cloud Infrastructure',
-    'Open-Source Software',
-    'Full-Stack Developer Dublin',
-    'Gemini 2.0 AI',
-    'Next.js Expert',
-    'Software Engineering Support',
-    'Web3 Identity',
-    'Unstoppable Domains',
-    'Tech Innovation Ireland',
-    'AI Tools Developer',
-    'Dublin Business School Alumnus',
-    'ATS Resume Optimizer',
-    'Market Genius AI',
-    'Software Architecture Consulting',
-    'Freelance Developer Dublin'
+    'Full-Stack Software Engineer',
+    'AI Solutions Architect',
+    'Next.js Expert Ireland',
+    'Google Genkit Specialist',
+    'Cloud Infrastructure Engineer',
+    'Dublin Software Developer',
+    'Enterprise AI Implementation',
+    'React Expert Developer',
+    'High-Performance Web Apps',
+    'Generative AI Developer',
+    'ATS Resume Optimization AI',
+    'Software Architecture Consultant',
+    'Firebase Expert',
+    'GCP & AWS Architect',
+    'First-Class Honors Engineer',
+    'Dublin Business School Computing',
+    'Tech Innovation Dublin',
+    'Elite Freelance Developer',
+    'Scalable Cloud Systems'
   ],
   robots: {
     index: true,
@@ -110,6 +117,16 @@ export default function RootLayout({
         siteConfig.links.linkedin,
       ],
       'jobTitle': 'Full-Stack Software Engineer & AI/Cloud Developer',
+      'knowsAbout': [
+        'Artificial Intelligence',
+        'Cloud Computing',
+        'Software Engineering',
+        'Next.js',
+        'React',
+        'Google Genkit',
+        'Cybersecurity',
+        'Full-Stack Development'
+      ],
       'worksFor': {
         '@type': 'Organization',
         'name': 'SYNC TECH Solutions',
@@ -159,8 +176,8 @@ export default function RootLayout({
             data-cfasync="false" 
             src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
             data-id="sherazhussain546" 
-            data-description="Support me on Buy me a coffee!" 
-            data-message="Thank you for visiting. I dedicate my time to building high-performance AI tools, open-source software, and cloud infrastructure that helps the global tech community." 
+            data-description="Support Sheraz Hussain's Innovation" 
+            data-message="Thank you for visiting. I dedicate my time to engineering elite AI tools and open-source infrastructure for the global tech community." 
             data-color="#FF813F" 
             data-position="Right" 
             data-x_margin="18" 

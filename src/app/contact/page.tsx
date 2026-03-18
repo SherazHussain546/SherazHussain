@@ -31,11 +31,10 @@ export default function ContactPage() {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Message Initiated",
-      description: "Redirecting to your mail client for secure transmission.",
+      title: "Connection Initiated",
+      description: "Directing your request to Sheraz's secure communication channel.",
     });
-    // In a real scenario, this would use a server action or redirect to mailto
-    window.location.href = "mailto:sheraz@synctech.ie?subject=Portfolio Inquiry";
+    window.location.href = "mailto:sheraz@synctech.ie?subject=High-Level Project Inquiry";
   };
 
   const contactMethods = [
@@ -54,15 +53,15 @@ export default function ContactPage() {
       color: 'bg-blue-500/10 text-blue-600',
     },
     {
-      title: 'GitHub Source',
+      title: 'GitHub Repositories',
       value: 'SherazHussain546',
       link: 'https://github.com/SherazHussain546',
       icon: Github,
       color: 'bg-slate-800/10 text-slate-800',
     },
     {
-      title: 'Community Support',
-      value: 'GitHub Sponsors',
+      title: 'GitHub Sponsorship',
+      value: 'Sponsor Profile',
       link: '/support',
       icon: Heart,
       color: 'bg-red-500/10 text-red-500',
@@ -87,7 +86,7 @@ export default function ContactPage() {
           <Button asChild variant="ghost" size="sm" className="mb-12 -ml-3 gap-2 text-muted-foreground hover:text-primary">
             <Link href="/">
               <ArrowLeft className="h-4 w-4" />
-              Back to Home
+              Back to Portfolio
             </Link>
           </Button>
 
@@ -101,13 +100,13 @@ export default function ContactPage() {
             >
               <div className="space-y-6">
                 <Badge variant="outline" className="px-4 py-1 text-[10px] font-bold uppercase tracking-widest border-primary/40 text-primary">
-                  Available for Collaboration
+                  Open for High-Impact Partnerships
                 </Badge>
                 <h1 className="text-5xl font-extrabold tracking-tighter text-foreground md:text-7xl leading-none">
-                  Let's <span className="text-primary italic">Engineer</span> the Future.
+                  Engineer Your <span className="text-primary italic">Dominance</span>.
                 </h1>
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-                  As a <span className="font-bold text-foreground">Freelancer working with SYNC TECH Solutions</span>, I specialize in architecting high-performance enterprise systems and AI-driven applications. Reach out to discuss your next strategic project.
+                  I am <span className="font-bold text-foreground">Sheraz Hussain</span>, an elite engineer focused on architecting the next generation of AI and Cloud systems. Connect with me to discuss strategic technical implementations and global-scale innovation.
                 </p>
               </div>
 
@@ -135,8 +134,8 @@ export default function ContactPage() {
                     <MapPin className="h-5 w-5 text-primary" />
                   </div>
                   <div className="text-sm">
-                    <p className="font-bold text-foreground uppercase tracking-widest text-[10px]">Location</p>
-                    <p>Dublin, Ireland</p>
+                    <p className="font-bold text-foreground uppercase tracking-widest text-[10px]">Command Center</p>
+                    <p>Dublin, Ireland (Global Delivery)</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-muted-foreground">
@@ -144,8 +143,8 @@ export default function ContactPage() {
                     <Globe className="h-5 w-5 text-primary" />
                   </div>
                   <div className="text-sm">
-                    <p className="font-bold text-foreground uppercase tracking-widest text-[10px]">Timezone</p>
-                    <p>GMT (UTC +0)</p>
+                    <p className="font-bold text-foreground uppercase tracking-widest text-[10px]">Availability</p>
+                    <p>International (Remote/Relocation Ready)</p>
                   </div>
                 </div>
               </div>
@@ -162,10 +161,10 @@ export default function ContactPage() {
                 <CardHeader className="relative z-10 border-b pb-8">
                   <div className="flex items-center gap-3 mb-2">
                     <MessageSquare className="h-5 w-5 text-primary" />
-                    <CardTitle className="text-2xl font-bold">Direct Inquiry</CardTitle>
+                    <CardTitle className="text-2xl font-bold">Strategic Briefing</CardTitle>
                   </div>
                   <CardDescription>
-                    Fill out the form below to initiate a technical consultation or project request.
+                    Provide your project details to initiate a high-fidelity technical consultation.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-8">
@@ -173,36 +172,36 @@ export default function ContactPage() {
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="space-y-2">
                         <Label htmlFor="name">Full Name</Label>
-                        <Input id="name" placeholder="John Doe" required className="bg-muted/5" />
+                        <Input id="name" placeholder="Lead Partner" required className="bg-muted/5" />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email Address</Label>
-                        <Input id="email" type="email" placeholder="john@example.com" required className="bg-muted/5" />
+                        <Label htmlFor="email">Work Email</Label>
+                        <Input id="email" type="email" placeholder="partner@enterprise.com" required className="bg-muted/5" />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="subject">Strategic Objective</Label>
-                      <Input id="subject" placeholder="e.g. AI Agent Implementation" required className="bg-muted/5" />
+                      <Label htmlFor="subject">Technical Objective</Label>
+                      <Input id="subject" placeholder="e.g. Next.js Migration & AI Integration" required className="bg-muted/5" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="message">Challenge Description</Label>
+                      <Label htmlFor="message">Project Blueprint</Label>
                       <Textarea 
                         id="message" 
-                        placeholder="Describe your project or technical bottleneck..." 
+                        placeholder="Describe the technical challenges or architectural requirements..." 
                         className="min-h-[150px] bg-muted/5" 
                         required 
                       />
                     </div>
                     <Button type="submit" className="w-full h-12 font-bold group">
                       <Send className="mr-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                      Initiate Contact
+                      Dispatch Request
                     </Button>
                   </form>
                 </CardContent>
                 <div className="p-6 bg-muted/5 border-t text-center">
                   <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium flex items-center justify-center gap-2">
                     <Sparkles className="h-3 w-3 text-primary" />
-                    Powered by SYNC TECH AI Workplace
+                    Sheraz Hussain | Engineering Technical Supremacy
                   </p>
                 </div>
               </Card>

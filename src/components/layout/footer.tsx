@@ -4,10 +4,10 @@ import { cn } from '@/lib/utils';
 
 const footerLinks = [
   { name: 'Skills', href: '/#skills' },
-  { name: 'Projects', href: '/#projects' },
+  { name: 'Portfolio', href: '/#projects' },
   { name: 'Certifications', href: '/#certifications' },
-  { name: 'Support my Work', href: '/support' },
-  { name: 'Forms & Surveys', href: '/forms' },
+  { name: 'Support', href: '/support' },
+  { name: 'Strategy Hub', href: '/forms' },
 ];
 
 export default function Footer() {
@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-primary">Sheraz Hussain</h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              First-Class Honors Software Engineer specializing in AI, Cloud, and Full-Stack development. Freelancer working with SYNC TECH Solutions, delivering innovative tech solutions.
+              Elite Full-Stack Software Engineer & AI Architect. Dedicated to technological excellence, high-fidelity engineering, and market dominance through innovation.
             </p>
             <div className="flex items-center gap-4 pt-2">
               <Link 
@@ -27,7 +27,7 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub"
+                aria-label="Sheraz Hussain GitHub"
               >
                 <Github className="h-5 w-5" />
               </Link>
@@ -36,14 +36,14 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
+                aria-label="Sheraz Hussain LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </Link>
               <Link 
                 href="mailto:sheraz@synctech.ie" 
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Email"
+                aria-label="Email Sheraz Hussain"
               >
                 <Mail className="h-5 w-5" />
               </Link>
@@ -52,7 +52,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-wider">Quick Links</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider">Engineering Map</h4>
             <nav className="flex flex-col gap-2">
               {footerLinks.map((link) => (
                 <Link
@@ -60,12 +60,12 @@ export default function Footer() {
                   href={link.href}
                   className={cn(
                     "text-sm transition-colors flex items-center gap-2 w-fit",
-                    link.name === 'Support my Work' 
+                    link.name === 'Support' 
                       ? "text-red-500 hover:text-red-600 font-medium" 
                       : "text-muted-foreground hover:text-primary"
                   )}
                 >
-                  {link.name === 'Support my Work' && <Heart className="h-3 w-3 text-red-500 fill-red-500" />}
+                  {link.name === 'Support' && <Heart className="h-3 w-3 text-red-500 fill-red-500" />}
                   {link.name}
                 </Link>
               ))}
@@ -74,7 +74,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-wider">Contact Info</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider">Direct Access</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary" />
@@ -84,7 +84,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span>Dublin, Ireland</span>
+                <span>Dublin, Ireland (GMT+0)</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-primary" />
@@ -98,18 +98,10 @@ export default function Footer() {
 
         <div className="mt-12 border-t pt-8 text-center md:flex md:items-center md:justify-between md:text-left">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Sheraz Hussain. All rights reserved.
+            &copy; {new Date().getFullYear()} Sheraz Hussain. Engineered for Global Excellence.
           </p>
-          <p className="mt-4 text-xs text-muted-foreground md:mt-0">
-            Freelancer working with{' '}
-            <Link
-              href="https://www.synctech.ie"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-foreground/80 hover:text-primary hover:underline transition-all"
-            >
-              SYNC TECH Solutions
-            </Link>
+          <p className="mt-4 text-xs text-muted-foreground md:mt-0 font-light italic">
+            First-Class Honors Software Engineer specializing in Next.js & AI.
           </p>
         </div>
       </div>

@@ -11,14 +11,14 @@ import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
 
 const summaries = [
-  "Highly motivated First-Class Honors graduate with a robust skill set in Software Engineering, AI/ML, and Cloud Computing. Proven ability to design, develop, and deploy innovative solutions using a full-stack approach as a Freelancer working with SYNC TECH Solutions.",
-  "Expert in building scalable, responsive web applications using modern frameworks like React, Angular, and Node.js, ensuring high performance and seamless user experiences across all devices.",
-  "Specializing in Generative AI with Google Genkit and Gemini, and architecting resilient, scalable cloud systems on AWS and Google Cloud Platform for mission-critical applications.",
-  "Dedicated to securing digital assets through penetration testing, implementing Zero Trust architectures, and integrating DevSecOps best practices into automated CI/CD pipelines.",
-  "Crafting high-performance cross-platform mobile applications using Ionic and Capacitor, bringing native-quality experiences to both iOS and Android users from a single codebase.",
-  "Empowering businesses to scale with high-performance E-Commerce solutions, custom marketing funnels on WordPress/WooCommerce, and data-driven digital growth strategies.",
-  "Available for freelance collaborations and technical consultations as a Freelancer working with SYNC TECH Solutions. I help businesses turn complex technical challenges into robust, scalable, and secure digital products.",
-  "Eager to contribute technical expertise and a collaborative spirit to a dynamic, forward-thinking engineering team. Seeking roles that push the boundaries of AI and Web development."
+  "I am an elite First-Class Honors Software Engineer specializing in AI, Cloud, and High-Performance Web Applications. My focus is on delivering technical excellence through advanced engineering, strategic SEO, and scalable cloud architectures.",
+  "Expert in architecting modern, responsive digital ecosystems using Next.js, React, and Node.js. I prioritize sub-second performance and superior user experience, ensuring your brand dominates its niche.",
+  "Leading the frontier of Generative AI integration with Google Genkit and Gemini. I build intelligent agents and automated systems that transform complex data into strategic business assets.",
+  "Committed to the highest standards of digital integrity, implementing Zero Trust architectures, DevSecOps pipelines, and robust data encryption for enterprise-level security.",
+  "Mastering cross-platform mobile development with Ionic and Capacitor. I deliver high-fidelity, native-performance applications that bridge the gap between web and mobile ecosystems.",
+  "Driving global SEO dominance and digital growth through technical metadata engineering and high-conversion e-commerce strategies on WordPress and custom platforms.",
+  "Available for high-stakes technical consultations and collaborative engineering projects. I help visionary brands turn technical challenges into market-leading digital products.",
+  "Pushing the boundaries of what is possible in AI and Web development. I am an engineer driven by precision, innovation, and the pursuit of technological hegemony."
 ];
 
 export default function AboutSection() {
@@ -42,11 +42,11 @@ export default function AboutSection() {
            ) : (
             <Image
                 src={founderImageUrl}
-                alt="Sheraz Hussain, Full-Stack Software Engineer & AI/Cloud Developer"
+                alt="Sheraz Hussain - Elite Full-Stack Software Engineer & AI Architect"
                 fill
                 priority
                 className="object-cover"
-                data-ai-hint="professional man"
+                data-ai-hint="professional engineer"
             />
            )}
         </motion.div>
@@ -62,19 +62,19 @@ export default function AboutSection() {
                 () => setSummaryIndex(0),
                 'Hi, I am Sheraz Hussain', 3000,
                 () => setSummaryIndex(1),
-                'I am a Full-Stack Software Engineer', 3000,
+                'I am an Elite Full-Stack Engineer', 3000,
                 () => setSummaryIndex(2),
-                'I am an AI/Cloud Developer', 3000,
+                'I am an AI Solutions Architect', 3000,
                 () => setSummaryIndex(3),
-                'I am a Cyber Security Specialist', 3000,
+                'I am a Cloud Infrastructure Expert', 3000,
                 () => setSummaryIndex(4),
-                'I am a Mobile Application Developer', 3000,
+                'I am a Technical SEO Specialist', 3000,
                 () => setSummaryIndex(5),
-                'I am an ECommerce Specialist', 3000,
+                'I am a Cybersecurity Strategist', 3000,
                 () => setSummaryIndex(6),
-                'I am Open to New Projects', 3000,
+                'I am your Strategic Tech Partner', 3000,
                 () => setSummaryIndex(7),
-                'I am Open to New Opportunities', 3000,
+                'I Engineer the Future of AI', 3000,
                 ]}
                 wrapper="h1"
                 speed={50}
@@ -83,18 +83,18 @@ export default function AboutSection() {
             />
           </div>
           <div className="min-h-[100px]">
-             <p className="text-lg text-foreground/80 md:text-xl transition-all duration-500 ease-in-out">
+             <p className="text-lg text-foreground/80 md:text-xl transition-all duration-500 ease-in-out font-light leading-relaxed">
                 {summaries[summaryIndex]}
             </p>
           </div>
           <div className="flex justify-center gap-6 pt-4 md:justify-start">
-            <Link href="mailto:sheraz@synctech.ie" aria-label="Email" className="transition-transform hover:scale-110">
+            <Link href="mailto:sheraz@synctech.ie" aria-label="Email Sheraz Hussain" className="transition-transform hover:scale-110">
               <Mail className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
-            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-transform hover:scale-110">
+            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="Sheraz Hussain GitHub" className="transition-transform hover:scale-110">
               <Github className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
-            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-transform hover:scale-110">
+            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="Sheraz Hussain LinkedIn" className="transition-transform hover:scale-110">
               <Linkedin className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
             </Link>
           </div>
