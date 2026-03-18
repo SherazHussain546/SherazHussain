@@ -327,13 +327,6 @@ export const allCertificates: CertificateType[] = [
     ],
   },
   {
-    title: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services',
-    date: 'Issued Mar 2024',
-    icon: Cloud,
-    skills: ['Cloud Infrastructure', 'Serverless Computing', 'Security & Compliance'],
-  },
-  {
     title: 'AI-Powered Performance Certification',
     issuer: 'Google',
     date: 'Jun 2023',
@@ -346,13 +339,6 @@ export const allCertificates: CertificateType[] = [
     date: 'Jan 2024',
     icon: Bitcoin,
     skills: ['Market Analysis', 'Asset Liquidity', 'Financial Signals'],
-  },
-  {
-    title: 'English Language Proficiency (Expert)',
-    issuer: 'Duolingo',
-    date: 'Issued Jan 2024',
-    icon: Globe,
-    skills: ['Professional Communication', 'Technical Documentation', 'Global Collaboration'],
   },
 ];
 
