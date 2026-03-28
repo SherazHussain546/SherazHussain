@@ -1,81 +1,34 @@
+'use client';
+
 import { allCertificates } from '@/lib/data';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Badge } from '../ui/badge';
-import Link from 'next/link';
 
 export default function CertificationsSection() {
   return (
-    <section id="certifications" className="bg-card py-20 md:py-32">
-      <div className="container mx-auto px-4 md:px-6">
-        <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-          <span className="text-primary">Certifications</span> & Programs
-        </h2>
-        <div className="mx-auto max-w-5xl">
-          <Accordion type="single" collapsible className="w-full space-y-4">
-            {allCertificates.map((cert, index) => {
-              const hasContent = (cert.points && cert.points.length > 0) || (cert.skills && cert.skills.length > 0);
+    <section id="certifications" className="bg-background py-12 md:py-20">
+      <div className="max-w-[860px] mx-auto px-6">
+        <p className="section-label">Credentials & Certifications</p>
+        <h2 className="text-3xl md:text-4xl font-bold mb-8">Formally Recognised, Continuously Verified</h2>
+        
+        <p className="text-lg font-light text-foreground/80 mb-12">
+          Professional certifications represent more than resume entries — they are proof that I hold myself accountable to external standards of competence.
+        </p>
 
-              if (hasContent) {
-                return (
-                  <AccordionItem key={cert.title + index} value={`item-${index}`} className="rounded-lg border bg-background/50 transition-all hover:shadow-lg hover:shadow-primary/20">
-                    <AccordionTrigger className="p-6 text-left hover:no-underline">
-                      <div className="flex flex-col items-start gap-4 sm:flex-row">
-                        <cert.icon className="h-10 w-10 flex-shrink-0 text-primary" />
-                        <div className="flex-1">
-                          <p className="font-semibold text-lg">{cert.title}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {cert.issuer} {cert.date && `• ${cert.date}`}
-                          </p>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="px-6 pb-6">
-                        {cert.credentialId && cert.credentialUrl && (
-                          <p className="mb-4 text-xs text-muted-foreground">
-                            Credential ID:{' '}
-                            <Link href={cert.credentialUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline">
-                              {cert.credentialId}
-                            </Link>
-                          </p>
-                        )}
-                        {cert.points && cert.points.length > 0 && (
-                          <ul className="list-disc space-y-2 pl-5 text-sm">
-                            {cert.points.map((point) => (
-                              <li key={point}>{point}</li>
-                            ))}
-                          </ul>
-                        )}
-                        {cert.skills && cert.skills.length > 0 && (
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {cert.skills.map((skill) => (
-                              <Badge key={skill} variant="secondary">{skill}</Badge>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              }
-
-              // Render as a non-collapsible item if no content
-              return (
-                 <div key={cert.title + index} className="rounded-lg border bg-background/50 p-6 transition-all hover:shadow-lg hover:shadow-primary/20">
-                    <div className="flex flex-col items-start gap-4 sm:flex-row">
-                        <cert.icon className="h-10 w-10 flex-shrink-0 text-primary" />
-                        <div className="flex-1">
-                            <p className="font-semibold text-lg">{cert.title}</p>
-                            <p className="text-sm text-muted-foreground">
-                                {cert.issuer} {cert.date && `• ${cert.date}`}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-              );
-            })}
-          </Accordion>
+        <div className="grid grid-cols-1 gap-px bg-border border border-border mb-12">
+          {allCertificates.map((cert, index) => (
+            <div key={index} className="bg-background p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-muted/5 transition-colors">
+              <span className="text-[15px] font-medium text-foreground/90">{cert.title}</span>
+              <span className="font-space-mono text-[10px] uppercase tracking-widest text-muted-foreground shrink-0">
+                {cert.issuer} · {cert.date}
+              </span>
+            </div>
+          ))}
         </div>
+
+        <p className="text-sm font-light text-muted-foreground leading-relaxed">
+          These programmes reflect my commitment to enterprise-grade standards in cybersecurity and data analytics — the disciplines that underpin trustworthy AI systems at scale.
+        </p>
+
+        <hr className="thick-rule" />
       </div>
     </section>
   );

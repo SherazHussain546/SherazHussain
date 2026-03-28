@@ -18,6 +18,9 @@ export default {
     extend: {
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],
+        playfair: ['var(--font-playfair)', 'serif'],
+        'dm-sans': ['var(--font-dm-sans)', 'sans-serif'],
+        'space-mono': ['var(--font-space-mono)', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',

@@ -1,51 +1,31 @@
-import { Button } from '@/components/ui/button';
-import { Mail, Linkedin, Github, Heart, Users } from 'lucide-react';
+'use client';
+
 import Link from 'next/link';
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-20 md:py-32">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Get In <span className="text-primary">Touch</span>
-          </h2>
-          <p className="text-muted-foreground md:text-lg">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Feel free to reach out to me via email or connect with me on LinkedIn.
-          </p>
-        </div>
+    <section id="contact" className="bg-background py-12 md:py-20">
+      <div className="max-w-[860px] mx-auto px-6">
+        <p className="section-label">Let's Build Together</p>
+        <h2 className="text-3xl md:text-4xl font-bold mb-8">Connect, Collaborate, Create</h2>
         
-        <div className="mx-auto mt-12 flex max-w-2xl flex-col items-center gap-4 sm:flex-row sm:justify-center flex-wrap">
-          <Button asChild size="lg" className="w-full sm:w-auto">
-            <Link href="mailto:sheraz@synctech.ie">
-              <Mail className="mr-2 h-5 w-5" />
-              Send an Email
-            </Link>
-          </Button>
-           <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
-            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer">
-              <Github className="mr-2 h-5 w-5" />
-              Follow on GitHub
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
-            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer">
-              <Linkedin className="mr-2 h-5 w-5" />
-              Connect on LinkedIn
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
-            <Link href="https://www.linkedin.com/groups/17913030/" target="_blank" rel="noopener noreferrer">
-              <Users className="mr-2 h-5 w-5" />
-              Join Creativity & Sheraz
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-primary/50 text-primary hover:bg-primary hover:text-white">
-            <Link href="https://github.com/sponsors/SherazHussain546" target="_blank" rel="noopener noreferrer">
-              <Heart className="mr-2 h-5 w-5 fill-red-500 text-red-500" />
-              Sponsor on GitHub
-            </Link>
-          </Button>
+        <p className="text-lg font-light text-foreground/80 mb-12">
+          I am based in <strong>Dublin, Ireland</strong>, and available for technical consulting, enterprise AI architecture engagements, and collaborative product development projects both locally and internationally.
+        </p>
+
+        <div className="flex flex-wrap gap-3">
+          <a href="https://github.com/SherazHussain546" className="font-space-mono text-[10px] uppercase tracking-widest px-6 py-3 bg-primary text-white hover:bg-primary/90 transition-all" target="_blank">
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/sherazhussain546" className="font-space-mono text-[10px] uppercase tracking-widest px-6 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all" target="_blank">
+            LinkedIn
+          </a>
+          <a href="https://www.synctech.ie" className="font-space-mono text-[10px] uppercase tracking-widest px-6 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all" target="_blank">
+            SYNC TECH
+          </a>
+          <a href="mailto:sheraz@synctech.ie" className="font-space-mono text-[10px] uppercase tracking-widest px-6 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all" target="_blank">
+            Email
+          </a>
         </div>
       </div>
     </section>

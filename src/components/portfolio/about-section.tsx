@@ -1,104 +1,69 @@
 'use client';
 import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Github, Linkedin, Mail } from 'lucide-react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { doc } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
-import { Skeleton } from '../ui/skeleton';
-import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
 
-const summaries = [
-  "I am an elite First-Class Honors Software Engineer and AI Solutions Architect. My mission is to deliver technical excellence through advanced engineering while making innovation accessible to everyone.",
-  "I specialize in architecting modern, responsive digital ecosystems using Next.js 15. I prioritize sub-second performance and a superior user experience, ensuring your brand dominates its market.",
-  "Leading the frontier of Generative AI integration, I build intelligent agents and automated systems that transform complex data into strategic business assets.",
-  "Committed to the highest standards of digital integrity, I implement Zero Trust architectures and robust security, keeping the user experience simple and intuitive.",
-  "I bridge the gap for users who aren't tech-savvy. My objective in IT is to empower every individual by building free, open-source platforms that make technology an asset, not a barrier.",
-  "Mastering cross-platform development with Next.js, Ionic, and Capacitor, I deliver high-fidelity applications that work seamlessly across all devices.",
-  "Available for high-stakes technical consultations and collaborative engineering. I help visionary brands turn complex challenges into market-leading digital products.",
-  "Pushing the boundaries of what's possible in AI and Web development, I am an engineer driven by precision, innovation, and the pursuit of an open digital future."
-];
-
 export default function AboutSection() {
-    const [summaryIndex, setSummaryIndex] = useState(0);
-    const settingsRef = doc(firestore, 'siteConfig', 'main');
-    const [settings, loading] = useDocumentData(settingsRef);
-
-    const founderImageUrl = settings?.founderImageUrl || "https://synctech.ie/_next/image?url=%2Ffounder.jpg&w=640&q=75";
+  const settingsRef = doc(firestore, 'siteConfig', 'main');
+  const [settings] = useDocumentData(settingsRef);
 
   return (
-    <section id="about" className="py-20 md:py-32 overflow-hidden">
-      <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 md:grid-cols-3 md:px-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative mx-auto h-48 w-48 overflow-hidden rounded-full border-4 border-primary md:h-64 md:w-64 ring-4 ring-primary/20 shadow-[0_0_20px_hsl(var(--primary)/0.6)] transition-all duration-500 hover:shadow-[0_0_40px_hsl(var(--primary)/0.8)] hover:scale-[1.02] will-change-transform"
+    <section id="about" className="overflow-hidden">
+      {/* ──────────────── MASTHEAD ──────────────── */}
+      <header className="bg-foreground text-background py-16 md:py-24 px-6 text-center relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="container mx-auto max-w-4xl relative z-10"
         >
-           {loading ? (
-             <Skeleton className="h-full w-full rounded-full" />
-           ) : (
-            <Image
-                src={founderImageUrl}
-                alt="Sheraz Hussain - Principal Software Engineer & AI Architect"
-                fill
-                priority
-                className="object-cover"
-                data-ai-hint="professional engineer"
-            />
-           )}
-        </motion.div>
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="space-y-4 text-center md:col-span-2 md:text-left"
-        >
-          <div className="min-h-[120px] md:min-h-[100px]">
-            <TypeAnimation
-                sequence={[
-                () => setSummaryIndex(0),
-                'Hi, I am Sheraz Hussain', 3000,
-                () => setSummaryIndex(1),
-                'I am an Elite Software Architect', 3000,
-                () => setSummaryIndex(2),
-                'I am an AI Solutions Engineer', 3000,
-                () => setSummaryIndex(3),
-                'I Secure Digital Ecosystems', 3000,
-                () => setSummaryIndex(4),
-                'I Empower the Non-Tech Savvy', 3000,
-                () => setSummaryIndex(5),
-                'I Build Open Source Platforms', 3000,
-                () => setSummaryIndex(6),
-                'I am Your Strategic Tech Partner', 3000,
-                () => setSummaryIndex(7),
-                'Engineering an Open Digital Future', 3000,
-                ]}
-                wrapper="h1"
-                speed={50}
-                className="text-4xl font-bold tracking-tight text-primary md:text-5xl"
-                repeat={Infinity}
-            />
+          <p className="font-space-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
+            Professional Profile &nbsp;·&nbsp; Technology & Engineering
+          </p>
+          <h1 className="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
+            From Dublin to the <br />
+            <em className="italic text-primary font-normal">Frontier</em> of AI Engineering
+          </h1>
+          <p className="font-playfair italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10">
+            How one First-Class Honours graduate is redefining what a software engineer can build — one AI-powered platform at a time.
+          </p>
+          <div className="flex items-center justify-center gap-6 flex-wrap font-space-mono text-[10px] tracking-widest uppercase text-background/55">
+            <span>By Sheraz Hussain</span>
+            <span className="text-primary">·</span>
+            <span>Dublin, Ireland</span>
+            <span className="text-primary">·</span>
+            <span>March 2026 Edition</span>
           </div>
-          <div className="min-h-[100px]">
-             <p className="text-lg text-foreground/80 md:text-xl transition-all duration-500 ease-in-out font-light leading-relaxed">
-                {summaries[summaryIndex]}
+        </motion.div>
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }} 
+        />
+      </header>
+
+      {/* ──────────────── OPENING NARRATIVE ──────────────── */}
+      <div className="max-w-[860px] mx-auto px-6 py-12 md:py-20">
+        <section className="opening">
+          <p className="location-tag">Dublin, Ireland</p>
+
+          <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
+            <p>
+              I never set out to be a builder of financial intelligence systems or AI recruitment platforms. I simply followed a question that refused to leave me alone: <em>what if software could think alongside us, not just execute for us?</em> That question led me from the lecture halls of Dublin Business School to the bleeding edge of generative AI, cloud architecture, and full-stack product engineering — and it continues to drive every line of code I write today.
+            </p>
+            <p>
+              My name is Sheraz Hussain. I am an elite Software Architect and AI Solutions Engineer based in Dublin, Ireland — a graduate with First-Class Honours who turned technical curiosity into deployable, production-grade realities. My mission is to engineer intelligent, cloud-native systems that solve real problems for real people.
+            </p>
+            <p>
+              This is not a CV. It is a story about curiosity, craft, and the relentless drive to turn abstract ideas into scalable systems. It is about what I have built, why I built it, and where I am taking it next.
             </p>
           </div>
-          <div className="flex justify-center gap-6 pt-4 md:justify-start">
-            <Link href="mailto:sheraz@synctech.ie" aria-label="Email Sheraz Hussain" className="transition-transform hover:scale-110">
-              <Mail className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
-            </Link>
-            <Link href="https://github.com/SherazHussain546" target="_blank" rel="noopener noreferrer" aria-label="Sheraz Hussain GitHub" className="transition-transform hover:scale-110">
-              <Github className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
-            </Link>
-            <Link href="https://linkedin.com/in/sherazhussain546/" target="_blank" rel="noopener noreferrer" aria-label="Sheraz Hussain LinkedIn" className="transition-transform hover:scale-110">
-              <Linkedin className="h-6 w-6 text-muted-foreground transition-colors hover:text-primary" />
-            </Link>
-          </div>
-        </motion.div>
+        </section>
+        
+        <hr className="thick-rule" />
       </div>
     </section>
   );

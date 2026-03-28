@@ -8,7 +8,7 @@ import { Playfair_Display, DM_Sans, Space_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ExternalLink, Github } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Github, Target, Cpu, ShieldCheck, TrendingUp, Code2 } from 'lucide-react';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -96,7 +96,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
       <main>
         {/* ──────────────── MASTHEAD ──────────────── */}
-        <header className="bg-foreground text-background py-16 md:py-24 px-6 text-center relative overflow-hidden">
+        <header className="bg-[#071739] text-white py-16 md:py-24 px-6 text-center relative overflow-hidden">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -110,15 +110,15 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
               {project.name.split('–')[0]} <br />
               <em className="italic text-primary font-normal">{project.name.split('–')[1] || ''}</em>
             </h1>
-            <p className="font-serif italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10">
+            <p className="font-serif italic text-lg md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed mb-10">
               {project.description}
             </p>
-            <div className="flex items-center justify-center gap-6 flex-wrap font-mono text-[10px] tracking-widest uppercase text-background/50">
+            <div className="flex items-center justify-center gap-6 flex-wrap font-mono text-[10px] tracking-widest uppercase text-white/50">
               <span>By Sheraz Hussain</span>
               <span className="text-primary">·</span>
-              <span>Technical Lead</span>
+              <span>Principal Architect</span>
               <span className="text-primary">·</span>
-              <span>{project.stack[0]} Architecture</span>
+              <span>Dublin, Ireland</span>
             </div>
           </motion.div>
           {/* Subtle grid overlay */}
@@ -144,7 +144,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           <section className="opening mb-16">
             <div className="location-tag font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-8 flex items-center gap-3">
               <span className="w-5 h-px bg-primary" />
-              Dublin, Ireland
+              Technical Report
             </div>
 
             <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
@@ -157,7 +157,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           {/* Challenges & Constraints */}
           <section className="mb-16">
             <p className="section-label">Technical Audit</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8">Identifying the Structural Bottlenecks</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
+              <Target className="h-8 w-8 text-primary" />
+              Identifying the Structural Bottlenecks
+            </h2>
             <div className="space-y-6">
               {project.challenges.map((challenge, i) => (
                 <div key={i} className="flex gap-6 items-start">
@@ -173,7 +176,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           {/* Engineering Response */}
           <section className="mb-16">
             <p className="section-label">Engineering Response</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8">Architecting for Resilience & Scale</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
+              <Cpu className="h-8 w-8 text-primary" />
+              Architecting for Resilience & Scale
+            </h2>
             <div className="grid sm:grid-cols-2 gap-px bg-border border border-border">
               {project.solutions.map((sol, i) => (
                 <div key={i} className="bg-background p-8 hover:bg-muted/30 transition-colors">
@@ -197,7 +203,10 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           {/* Infrastructure & Stack */}
           <section className="mb-16">
             <p className="section-label">Infrastructure Matrix</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8">The High-Fidelity Technical Ecosystem</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
+              <Code2 className="h-8 w-8 text-primary" />
+              The High-Fidelity Technical Ecosystem
+            </h2>
             <div className="flex flex-wrap gap-2">
               {project.stack.map(tech => (
                 <span key={tech} className="font-mono text-[10px] tracking-tight border border-border px-3 py-1.5 uppercase bg-muted/20">
@@ -212,26 +221,32 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           {/* Impact / Results */}
           <section className="mb-16">
             <p className="section-label">Measured Impact</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8">Verification of Success Metrics</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
+              <TrendingUp className="h-8 w-8 text-primary" />
+              Verification of Success Metrics
+            </h2>
             <div className="flex flex-col border border-border bg-muted/5">
               {project.results.map((result, i) => (
                 <div key={i} className="p-6 border-b last:border-none border-border flex justify-between items-center gap-4 hover:bg-muted/30 transition-all">
                   <span className="text-base font-medium">{result}</span>
-                  <span className="font-mono text-[10px] text-primary font-bold uppercase shrink-0">Verified 2025</span>
+                  <span className="font-mono text-[10px] text-primary font-bold uppercase shrink-0">Verified {new Date().getFullYear()}</span>
                 </div>
               ))}
             </div>
           </section>
 
           {/* Repository Access */}
-          <section className="mt-20 pt-12 border-t-4 border-foreground">
+          <section className="mt-20 pt-12 border-t-4 border-foreground bg-primary/5 p-8 rounded-lg">
             <p className="section-label text-primary">Secure Access</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6">Inspect the Source Integrity</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 flex items-center gap-4">
+              <ShieldCheck className="h-8 w-8 text-primary" />
+              Inspect the Source Integrity
+            </h2>
             <p className="text-lg font-light mb-10 leading-relaxed">
               True technical authority is built on transparency. I invite you to explore the architectural choices and implementation details of this project through the secure links below.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-mono text-[10px] uppercase tracking-[0.2em] px-8 h-14 rounded-none">
+              <Button asChild size="lg" className="bg-[#071739] hover:bg-[#0d214d] text-white font-mono text-[10px] uppercase tracking-[0.2em] px-8 h-14 rounded-none">
                 <Link href={project.link} target="_blank">
                   <Github className="mr-2 h-4 w-4" />
                   GitHub Repository

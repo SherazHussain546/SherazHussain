@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Inter } from 'next/font/google';
+import { Inter, Playfair_Display, DM_Sans, Space_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
@@ -11,12 +11,15 @@ import FeedbackPopup from '@/components/layout/feedback-popup';
 import FirebaseErrorListener from '@/components/FirebaseErrorListener';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
+const dmSans = DM_Sans({ subsets: ['latin'], weight: ['300', '400', '500'], variable: '--font-dm-sans' });
+const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-space-mono' });
 
 const siteConfig = {
   name: 'Sheraz Hussain | Elite Software Architect & AI Solutions Engineer',
   shortName: 'Sheraz Hussain Portfolio',
   url: 'https://sheraz.synctech.ie',
-  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems. Engineering an open digital future through inclusive, open-source innovation.',
+  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems.',
   author: 'Sheraz Hussain',
   ogImage: 'https://sheraz.synctech.ie/og-image.png',
   links: {
@@ -45,32 +48,14 @@ export const metadata: Metadata = {
     'AI Solutions Engineer',
     'Next.js 15 Expert',
     'Google Genkit Developer',
-    'Cloud Systems Architect',
-    'Elite Full-Stack Engineer',
-    'Open Source Developer Ireland',
-    'Inclusive Tech Innovation',
-    'Enterprise AI Implementation',
-    'React Technical Lead',
-    'High-Performance Web Engineering',
-    'ATS Resume Optimization AI',
-    'Software Architecture Consultant',
-    'Dublin Business School First Class Honors',
-    'Scalable Cloud Infrastructure'
+    'Cloud Systems Architect'
   ],
   openGraph: {
     type: 'website',
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: 'Sheraz Hussain - Elite Engineering & AI Architecture',
-        type: 'image/png',
-      }
-    ],
+    images: [{ url: siteConfig.ogImage }],
     siteName: siteConfig.shortName,
     locale: 'en_IE'
   },
@@ -81,23 +66,6 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
     creator: `@sherazhussain546`,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    }
-  },
-  verification: {
-    google: 'ivsgH4f4kTUg93hvzWW8YiN9dJfm4frxstgSViLz9qQ',
-  },
-  alternates: {
-    canonical: siteConfig.url,
-  }
 };
 
 export default function RootLayout({
@@ -121,31 +89,25 @@ export default function RootLayout({
         'Software Architecture',
         'Next.js 15',
         'React',
-        'Google Genkit',
-        'Cybersecurity',
-        'Inclusive Innovation'
+        'Google Genkit'
       ],
       'worksFor': {
         '@type': 'Organization',
         'name': 'Technical Consultancy & Open Source Initiative',
         'url': siteConfig.url
       },
-       "image": siteConfig.ogImage,
-       "description": siteConfig.description,
-       "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Dublin",
-        "addressCountry": "IE"
-      },
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Dublin Business School"
-      }
   };
 
   return (
     <html lang="en">
-      <body className={cn('font-sans antialiased', inter.variable)}>
+      <body className={cn(
+        'antialiased', 
+        inter.variable, 
+        playfair.variable, 
+        dmSans.variable, 
+        spaceMono.variable,
+        'font-sans bg-background text-foreground'
+      )}>
           <Script 
             id="usercentrics-cmp"
             src="https://app.usercentrics.eu/browser-ui/latest/loader.js"

@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-}
-
 @layer base {
   :root {
     --background: 204 18% 98%;
@@ -27,7 +23,7 @@ html {
     --border: 208 22% 85%;
     --input: 208 22% 85%;
     --ring: 40 31% 50%;
-    --radius: 0.75rem;
+    --radius: 0rem;
   }
   .dark {
     --background: 221 78% 10%;
@@ -58,28 +54,50 @@ html {
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-dm-sans), sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), serif;
+    @apply font-bold;
   }
 }
 
 @layer utilities {
-    .mask-gradient {
-        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    }
-    .hover\:pause:hover {
-        animation-play-state: paused;
-    }
-    .text-balance {
-      text-wrap: balance;
-    }
+  .drop-cap p:first-child::first-letter {
+    font-family: var(--font-playfair), serif;
+    @apply font-black float-left leading-[0.78] mr-[0.1em] mt-[0.06em] text-primary;
+    font-size: 5.2em;
+  }
+  .thick-rule {
+    @apply border-none border-t-[3px] border-double border-foreground my-12;
+  }
+  .rule {
+    @apply border-none border-t border-border my-12;
+  }
+  .section-label {
+    font-family: var(--font-space-mono), monospace;
+    @apply text-[10px] uppercase tracking-[0.3em] text-primary mb-4 flex items-center gap-2;
+  }
+  .section-label::after {
+    content: '';
+    @apply flex-1 h-px bg-border max-w-[60px];
+  }
+  .location-tag {
+    font-family: var(--font-space-mono), monospace;
+    @apply text-[10px] uppercase tracking-[0.25em] text-primary mb-8 flex items-center gap-2;
+  }
+  .location-tag::before {
+    content: '';
+    @apply inline-block w-5 h-px bg-primary;
+  }
+  .pull-quote {
+    @apply border-l-4 border-primary p-6 my-10 bg-primary/5 italic text-xl;
+    font-family: var(--font-playfair), serif;
+  }
 }
 
-/* Optimization for smooth transitions */
-.transition-all {
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.will-change-transform {
-  will-change: transform;
+html {
+  scroll-behavior: smooth;
 }
