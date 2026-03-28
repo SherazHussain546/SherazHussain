@@ -1,20 +1,29 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CreditCard, Zap, Loader2, ShieldCheck, Sparkles, AlertCircle } from 'lucide-react';
+import { CreditCard, Zap, Loader2, ShieldCheck, Sparkles, AlertCircle, X } from 'lucide-react';
 import { createCheckoutSession } from '@/app/actions/stripe';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  EmbeddedCheckoutProvider,
+  EmbeddedCheckout
+} from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function StripePaymentForm() {
   const [amount, setAmount] = useState<string>('25');
   const [loading, setLoading] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const handlePayment = async (e: React.FormEvent) => {
+  const handlePaymentInitiation = async (e: React.FormEvent) => {
     e.preventDefault();
     const numAmount = parseFloat(amount);
     
@@ -30,14 +39,14 @@ export default function StripePaymentForm() {
     setLoading(true);
     try {
       const response = await createCheckoutSession(numAmount);
-      if (response.url) {
-        window.location.href = response.url;
+      if (response.clientSecret) {
+        setClientSecret(response.clientSecret);
       }
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Pipeline Error',
-        description: error.message || 'Could not initiate Stripe checkout. Please try again later.',
+        description: error.message || 'Could not initiate Stripe checkout. Please verify keys.',
       });
     } finally {
       setLoading(false);
@@ -45,6 +54,27 @@ export default function StripePaymentForm() {
   };
 
   const quickAmounts = ['10', '25', '50', '100'];
+
+  if (clientSecret) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between border-b pb-4 mb-4">
+          <h3 className="font-playfair font-bold text-xl">Secure Checkout</h3>
+          <Button variant="ghost" size="icon" onClick={() => setClientSecret(null)}>
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+        <div id="checkout" className="min-h-[400px]">
+          <EmbeddedCheckoutProvider
+            stripe={stripePromise}
+            options={{ clientSecret }}
+          >
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -93,7 +123,7 @@ export default function StripePaymentForm() {
       </div>
 
       <Button 
-        onClick={handlePayment} 
+        onClick={handlePaymentInitiation} 
         disabled={loading}
         className="w-full h-14 rounded-none font-bold text-xs uppercase tracking-[0.2em] shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90 text-white transition-all hover:scale-[1.02] active:scale-95"
       >
@@ -102,7 +132,7 @@ export default function StripePaymentForm() {
         ) : (
           <Zap className="mr-3 h-5 w-5" />
         )}
-        {loading ? 'Processing...' : 'Deploy Contribution'}
+        {loading ? 'Initializing...' : 'Deploy Contribution'}
       </Button>
 
       <div className="flex items-center justify-center gap-4 opacity-30 grayscale hover:grayscale-0 transition-all pt-2">
