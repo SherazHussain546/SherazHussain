@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import placeholderImages from '@/lib/placeholder-images.json';
 
 const paymentMethods = [
@@ -44,9 +45,12 @@ export default function Footer() {
           <p className="font-space-mono text-[10px] uppercase tracking-[0.2em]">
             © {new Date().getFullYear()} <strong className="text-primary">Sheraz Hussain</strong> · Dublin, Ireland · First-Class Honours Software Engineer & AI Architect
           </p>
-          <p className="font-space-mono text-[9px] uppercase tracking-widest opacity-60">
-            github.com/SherazHussain546 · linkedin.com/in/sherazhussain546 · synctech.ie
-          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 font-space-mono text-[9px] uppercase tracking-widest opacity-60">
+            <Link href="https://github.com/SherazHussain546" target="_blank" className="hover:text-primary transition-colors">GitHub</Link>
+            <Link href="https://linkedin.com/in/sherazhussain546" target="_blank" className="hover:text-primary transition-colors">LinkedIn</Link>
+            <Link href="https://synctech.ie" target="_blank" className="hover:text-primary transition-colors">SYNC TECH</Link>
+            <Link href="/privacy" className="text-primary font-bold hover:underline">Privacy & Security</Link>
+          </div>
         </div>
       </div>
     </footer>

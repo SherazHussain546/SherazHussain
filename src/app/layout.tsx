@@ -19,7 +19,7 @@ const siteConfig = {
   name: 'Sheraz Hussain | Elite Software Architect & AI Solutions Engineer',
   shortName: 'Sheraz Hussain Portfolio',
   url: 'https://sheraz.synctech.ie',
-  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems.',
+  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems with Zero Trust Security.',
   author: 'Sheraz Hussain',
   ogImage: 'https://sheraz.synctech.ie/og-image.png',
   links: {
@@ -48,7 +48,11 @@ export const metadata: Metadata = {
     'AI Solutions Engineer',
     'Next.js 15 Expert',
     'Google Genkit Developer',
-    'Cloud Systems Architect'
+    'Cloud Systems Architect',
+    'Secure Stripe Payments',
+    'Zero Trust Architecture',
+    'Privacy First AI',
+    'Revolut Pay Ireland'
   ],
   openGraph: {
     type: 'website',
@@ -89,7 +93,9 @@ export default function RootLayout({
         'Software Architecture',
         'Next.js 15',
         'React',
-        'Google Genkit'
+        'Google Genkit',
+        'Cybersecurity',
+        'Stripe Integration'
       ],
       'worksFor': {
         '@type': 'Organization',
