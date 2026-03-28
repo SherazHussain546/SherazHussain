@@ -76,7 +76,7 @@ function SupportPageContent() {
       icon: Github,
       actionLabel: 'Sponsor Profile',
       link: 'https://github.com/sponsors/SherazHussain546',
-      color: 'bg-slate-900 text-slate-100',
+      color: 'bg-slate-900 text-slate-100', // GitHub Black
     },
     {
       title: 'Buy Me a Coffee',
@@ -84,7 +84,7 @@ function SupportPageContent() {
       icon: Coffee,
       actionLabel: 'Fuel the Code',
       link: 'https://www.buymeacoffee.com/sherazhussain546',
-      color: 'bg-[#FF813F]/10 text-[#FF813F]',
+      color: 'bg-[#FF813F] text-white', // BMC Orange
     },
     {
       title: 'GoFundMe Campaign',
@@ -92,7 +92,7 @@ function SupportPageContent() {
       icon: Heart,
       actionLabel: 'View Campaign',
       link: 'https://www.gofundme.com/f/be-a-part-of-my-new-projects', 
-      color: 'bg-emerald-500/10 text-emerald-600',
+      color: 'bg-emerald-600 text-white', // GFM Green
     }
   ];
 
@@ -167,7 +167,7 @@ function SupportPageContent() {
         </div>
 
         {/* Right: Stripe & Contribution (5 cols) */}
-        <div className="lg:col-span-5 space-y-8">
+        <div className="lg:col-span-5 space-y-16">
           <Card className="shadow-2xl border-primary/20 bg-white sticky top-24 rounded-none">
             <CardHeader className="border-b pb-6">
               <div className="flex items-center justify-between">
@@ -211,13 +211,16 @@ function SupportPageContent() {
           </Card>
 
           {/* Other methods */}
-          <div className="grid gap-4">
+          <div className="grid gap-6">
             {supportMethods.map((method, idx) => (
               <Link key={idx} href={method.link} target="_blank">
                 <Card className="group border-border/40 hover:border-primary/30 transition-all hover:shadow-lg bg-card/50 backdrop-blur-sm rounded-none">
                   <CardHeader className="flex flex-row items-center gap-4 p-4">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-none ${method.color}`}>
-                      <method.icon className="h-5 w-5" />
+                    <div className={cn(
+                      "flex h-12 w-12 shrink-0 items-center justify-center rounded-none shadow-md transition-transform group-hover:scale-110",
+                      method.color
+                    )}>
+                      <method.icon className="h-6 w-6" />
                     </div>
                     <div className="flex-1">
                       <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-muted-foreground">{method.title}</p>
