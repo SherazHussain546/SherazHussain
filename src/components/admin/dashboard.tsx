@@ -1,5 +1,5 @@
-
 'use client';
+
 import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase/client';
 import { Button } from '@/components/ui/button';

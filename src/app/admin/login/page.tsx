@@ -59,7 +59,7 @@ export default function LoginPage() {
           {!auth ? (
             <Alert variant="destructive" className="mb-6">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>System Alert</AlertTitle>
+              <AlertTitle>Configuration Error</AlertTitle>
               <AlertDescription>
                 Firebase variables are missing. Deployment of the authentication module is incomplete.
               </AlertDescription>
