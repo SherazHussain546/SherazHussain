@@ -1,5 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import placeholderImages from '@/lib/placeholder-images.json';
 
 export default function AboutSection() {
   return (
@@ -43,16 +45,40 @@ export default function AboutSection() {
         <section className="opening">
           <p className="location-tag">Dublin, Ireland</p>
 
-          <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
-            <p>
-              I never set out to be a builder of financial intelligence systems or AI recruitment platforms. I simply followed a question that refused to leave me alone: <em>what if software could think alongside us, not just execute for us?</em> That question led me from the lecture halls of Dublin Business School to the bleeding edge of generative AI, cloud architecture, and full-stack product engineering — and it continues to drive every line of code I write today.
-            </p>
-            <p>
-              My name is Sheraz Hussain. I am an elite Software Architect and AI Solutions Engineer based in Dublin, Ireland — a graduate with First-Class Honours who turned technical curiosity into deployable, production-grade realities. My mission is to engineer intelligent, cloud-native systems that solve real problems for real people.
-            </p>
-            <p>
-              This is not a CV. It is a story about curiosity, craft, and the relentless drive to turn abstract ideas into scalable systems. It is about what I have built, why I built it, and where I am taking it next.
-            </p>
+          <div className="grid md:grid-cols-[1fr_300px] gap-12 items-start">
+            <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
+              <p>
+                I never set out to be a builder of financial intelligence systems or AI recruitment platforms. I simply followed a question that refused to leave me alone: <em>what if software could think alongside us, not just execute for us?</em> That question led me from the lecture halls of Dublin Business School to the bleeding edge of generative AI, cloud architecture, and full-stack product engineering — and it continues to drive every line of code I write today.
+              </p>
+              <p>
+                My name is Sheraz Hussain. I am an elite Software Architect and AI Solutions Engineer based in Dublin, Ireland — a graduate with First-Class Honours who turned technical curiosity into deployable, production-grade realities. My mission is to engineer intelligent, cloud-native systems that solve real problems for real people.
+              </p>
+              <p>
+                This is not a CV. It is a story about curiosity, craft, and the relentless drive to turn abstract ideas into scalable systems. It is about what I have built, why I built it, and where I am taking it next.
+              </p>
+            </div>
+
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-4"
+            >
+              <div className="relative aspect-[3/4] w-full border-4 border-double border-foreground p-1 bg-background shadow-2xl overflow-hidden group">
+                <Image 
+                  src={placeholderImages.about.src} 
+                  alt={placeholderImages.about.alt} 
+                  fill 
+                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100" 
+                  data-ai-hint={placeholderImages.about.hint}
+                  priority
+                />
+              </div>
+              <div className="text-center space-y-1">
+                <p className="font-space-mono text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Sheraz Hussain</p>
+                <p className="font-space-mono text-[8px] uppercase tracking-widest text-muted-foreground">Principal AI Architect · SYNC TECH</p>
+              </div>
+            </motion.div>
           </div>
         </section>
         
