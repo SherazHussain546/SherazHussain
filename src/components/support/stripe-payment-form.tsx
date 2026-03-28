@@ -5,12 +5,12 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CreditCard, Sparkles, Loader2 } from 'lucide-react';
+import { CreditCard, Sparkles, Loader2, Zap } from 'lucide-react';
 import { createCheckoutSession } from '@/app/actions/stripe';
 import { useToast } from '@/hooks/use-toast';
 
 export default function StripePaymentForm() {
-  const [amount, setAmount] = useState<string>('10');
+  const [amount, setAmount] = useState<string>('25');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -37,23 +37,24 @@ export default function StripePaymentForm() {
       toast({
         variant: 'destructive',
         title: 'Payment Error',
-        description: 'Could not initiate Stripe checkout. Please try again later.',
+        description: 'Could not initiate Stripe checkout. Please verify environment variables or try again later.',
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const quickAmounts = ['5', '10', '25', '50'];
+  const quickAmounts = ['10', '25', '50', '100'];
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="amount" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-          Custom Amount (EUR)
+    <div className="space-y-8">
+      <div className="space-y-4">
+        <Label htmlFor="amount" className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
+          <CreditCard className="h-3 w-3" />
+          Contribution Amount (EUR)
         </Label>
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">€</span>
+        <div className="relative group">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold text-primary group-focus-within:text-primary transition-colors">€</span>
           <Input
             id="amount"
             type="number"
@@ -61,21 +62,22 @@ export default function StripePaymentForm() {
             step="1"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="pl-8 h-12 rounded-xl border-2 focus:border-primary/50 transition-all font-bold text-lg"
+            className="pl-10 h-16 rounded-2xl border-2 border-primary/10 focus:border-primary transition-all font-bold text-2xl shadow-inner bg-muted/5"
             placeholder="0.00"
           />
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-4 gap-3">
         {quickAmounts.map((q) => (
           <Button
             key={q}
             variant="outline"
-            size="sm"
             onClick={() => setAmount(q)}
-            className={`rounded-lg font-bold border-2 transition-all ${
-              amount === q ? 'border-primary bg-primary/5 text-primary' : 'hover:border-primary/30'
+            className={`h-12 rounded-xl font-bold border-2 transition-all ${
+              amount === q 
+                ? 'border-primary bg-primary text-white hover:bg-primary hover:text-white' 
+                : 'hover:border-primary/30 hover:bg-primary/5 text-muted-foreground'
             }`}
           >
             €{q}
@@ -86,20 +88,26 @@ export default function StripePaymentForm() {
       <Button 
         onClick={handlePayment} 
         disabled={loading}
-        className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20 bg-[#635BFF] hover:bg-[#5851e5] text-white"
+        className="w-full h-16 rounded-2xl font-bold text-lg tracking-wide shadow-2xl shadow-primary/20 bg-primary hover:bg-primary/90 text-white transition-all hover:scale-[1.02] active:scale-95"
       >
         {loading ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2 className="mr-3 h-6 w-6 animate-spin" />
         ) : (
-          <CreditCard className="mr-2 h-4 w-4" />
+          <Zap className="mr-3 h-6 w-6" />
         )}
-        {loading ? 'Processing...' : 'Secure Pay with Stripe'}
+        {loading ? 'Processing...' : 'Deploy Contribution'}
       </Button>
 
-      <p className="text-[9px] text-center text-muted-foreground uppercase tracking-widest flex items-center justify-center gap-2">
-        <Sparkles className="h-3 w-3" />
-        Powered by Stripe Secure Engineering
-      </p>
+      <div className="flex items-center justify-center gap-6 opacity-40 grayscale group-hover:grayscale-0 transition-all">
+        <p className="text-[9px] font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+          <ShieldCheck className="h-3 w-3" />
+          Stripe Verified
+        </p>
+        <p className="text-[9px] font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+          <Sparkles className="h-3 w-3" />
+          Elite Engineering
+        </p>
+      </div>
     </div>
   );
 }
