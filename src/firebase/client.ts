@@ -1,6 +1,6 @@
-import { initializeApp, getApps, getApp, FirebaseOptions } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, getApps, getApp, FirebaseOptions, FirebaseApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,8 +11,25 @@ const firebaseConfig: FirebaseOptions = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
-const firestore = getFirestore(app);
+let app: FirebaseApp | undefined;
+let auth: Auth | undefined;
+let firestore: Firestore | undefined;
+
+// Helper to detect if the config is actually populated with valid-looking strings
+const isConfigValid = (config: FirebaseOptions) => {
+  return config.apiKey && 
+         config.apiKey !== 'YOUR_FIREBASE_API_KEY' && 
+         !config.apiKey.startsWith('YOUR_');
+};
+
+try {
+  if (typeof window !== 'undefined' && isConfigValid(firebaseConfig)) {
+    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    auth = getAuth(app);
+    firestore = getFirestore(app);
+  }
+} catch (error) {
+  console.error("Firebase initialization failed during module load:", error);
+}
 
 export { app, auth, firestore };

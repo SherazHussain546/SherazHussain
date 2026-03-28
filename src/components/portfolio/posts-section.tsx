@@ -41,8 +41,9 @@ export default function PostsSection({
   showImages = true
 }: PostsSectionProps) {
   const [api, setApi] = useState<CarouselApi>();
-  const postsCollection = collection(firestore, 'posts');
-  const postsQuery = query(postsCollection, orderBy('createdAt', 'desc'));
+  
+  const postsCollection = firestore ? collection(firestore, 'posts') : null;
+  const postsQuery = postsCollection ? query(postsCollection, orderBy('createdAt', 'desc')) : null;
   const [postsSnapshot, loading, error] = useCollection(postsQuery);
 
   const firestorePosts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
@@ -51,11 +52,11 @@ export default function PostsSection({
     id: 'static-github-post',
     platform: 'GitHub',
     title: 'Explore My Code on GitHub!',
-    description: 'Curious about how I build things? Dive into my GitHub profile to see my latest projects, contributions to open-source, and the code behind my portfolio. Follow me for updates!',
+    description: 'Curious about how I build things? Dive into my GitHub profile to see my latest projects, contributions to open-source, and the code behind my portfolio.',
     link: 'https://github.com/SherazHussain546',
     image: 'https://picsum.photos/seed/github-post/600/400',
     imageHint: 'github code',
-    hashtags: '#OpenSource, #Developer, #Coding, #Portfolio, #NextJS, #React',
+    hashtags: '#OpenSource, #Developer, #Coding',
     createdAt: Timestamp.now(),
   };
 
@@ -67,7 +68,7 @@ export default function PostsSection({
 
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [api]);
@@ -75,13 +76,13 @@ export default function PostsSection({
   if (loading) {
     return (
       <section id="posts" className="bg-card py-20 md:py-32">
-        <div className="container mx-auto px-4 md:px-6">
-           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+           <h2 className="mb-12 text-3xl font-bold tracking-tight md:text-4xl">
             {title}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex justify-center gap-6 overflow-hidden">
             {[...Array(3)].map((_, i) => (
-              <Skeleton key={i} className="h-[400px] w-full" />
+              <Skeleton key={i} className="h-[400px] w-full max-w-sm" />
             ))}
           </div>
         </div>
@@ -101,22 +102,21 @@ export default function PostsSection({
           </p>
         </div>
         
-        {error && (
-            <p className="text-center text-destructive">Failed to load posts. Please try again later.</p>
+        {error && !firestore && (
+            <div className="max-w-md mx-auto p-6 rounded-xl border border-primary/10 bg-primary/5 text-center">
+              <p className="text-sm text-muted-foreground italic">Connect Firebase to synchronize your dynamic global updates.</p>
+            </div>
         )}
 
-        {!loading && !error && allPosts.length === 0 ? (
-            <p className="text-center text-muted-foreground">No posts have been featured yet. Check back soon!</p>
-        ) : (
-           <div className="mx-auto max-w-md">
-              <Carousel
-                setApi={setApi}
-                opts={{
-                    align: 'start',
-                    loop: true,
-                }}
-                className="w-full"
-            >
+        <div className="mx-auto max-w-md mt-12">
+          <Carousel
+            setApi={setApi}
+            opts={{
+                align: 'start',
+                loop: true,
+            }}
+            className="w-full"
+          >
             <CarouselContent>
               {allPosts.map((post) => {
                 const Icon = platformIcons[post.platform] || Rss;
@@ -148,7 +148,7 @@ export default function PostsSection({
                               </div>
                             </div>
                           )}
-                          <h3 className="line-clamp-2 text-lg font-bold text-foreground">{post.title}</h3>
+                          <h3 className="line-clamp-2 text-lg font-bold text-foreground font-serif">{post.title}</h3>
                           <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed italic">"{post.description}"</p>
                            {post.hashtags && (
                             <div className="flex flex-wrap justify-center gap-1.5 pt-2">
@@ -168,7 +168,7 @@ export default function PostsSection({
                               rel="noopener noreferrer"
                               className="flex items-center justify-center gap-2 w-full"
                             >
-                              <span>Read on {post.platform}</span>
+                              <span className="font-mono text-[10px] uppercase tracking-widest">Read on {post.platform}</span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </Link>
                           </Button>
@@ -184,9 +184,7 @@ export default function PostsSection({
               <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
             </div>
           </Carousel>
-           </div>
-        )}
-
+        </div>
       </div>
     </section>
   );

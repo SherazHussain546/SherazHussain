@@ -1,7 +1,6 @@
 'use client';
 
 import { skills } from '@/lib/data';
-import { motion } from 'framer-motion';
 
 export default function SkillsSection() {
   return (

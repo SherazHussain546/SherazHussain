@@ -1,7 +1,6 @@
 'use client';
 
 import { experiences } from '@/lib/data';
-import { motion } from 'framer-motion';
 
 export default function ExperienceSection() {
   return (

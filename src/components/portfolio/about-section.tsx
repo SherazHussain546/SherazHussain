@@ -1,14 +1,7 @@
 'use client';
-import { useState } from 'react';
-import { useDocumentData } from 'react-firebase-hooks/firestore';
-import { doc } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
 import { motion } from 'framer-motion';
 
 export default function AboutSection() {
-  const settingsRef = doc(firestore, 'siteConfig', 'main');
-  const [settings] = useDocumentData(settingsRef);
-
   return (
     <section id="about" className="overflow-hidden">
       {/* ──────────────── MASTHEAD ──────────────── */}
