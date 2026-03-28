@@ -1,18 +1,30 @@
-
 'use server';
 
 import Stripe from 'stripe';
 import { headers } from 'next/headers';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia' as any,
-});
+let stripeInstance: Stripe | null = null;
+
+function getStripe() {
+  const apiKey = process.env.STRIPE_SECRET_KEY;
+  if (!apiKey) {
+    throw new Error('STRIPE_SECRET_KEY is missing. Please configure it in your environment variables.');
+  }
+  
+  if (!stripeInstance) {
+    stripeInstance = new Stripe(apiKey, {
+      apiVersion: '2024-12-18.acacia' as any,
+    });
+  }
+  return stripeInstance;
+}
 
 export async function createCheckoutSession(amount: number) {
   const headersList = await headers();
   const origin = headersList.get('origin');
 
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -36,6 +48,6 @@ export async function createCheckoutSession(amount: number) {
     return { url: session.url };
   } catch (error: any) {
     console.error('Stripe Error:', error);
-    throw new Error('Failed to create checkout session');
+    throw new Error(error.message || 'Failed to create checkout session');
   }
 }
