@@ -64,14 +64,22 @@ export default function AboutSection() {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <div className="relative aspect-[3/4] w-full border-4 border-double border-foreground p-1 bg-background shadow-2xl overflow-hidden group">
+              <div className="relative aspect-[3/4] w-full border-4 border-double border-foreground p-1 bg-background shadow-2xl overflow-hidden group cursor-crosshair">
+                {/* Primary Identity Image */}
                 <Image 
                   src={placeholderImages.about.src} 
                   alt={placeholderImages.about.alt} 
                   fill 
-                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100" 
+                  className="object-cover grayscale transition-all duration-700 ease-in-out group-hover:opacity-0" 
                   data-ai-hint={placeholderImages.about.hint}
                   priority
+                />
+                {/* AI Transformation Image (Hover) */}
+                <Image 
+                  src={placeholderImages.about.hoverSrc || '/sherazcyborg.png'} 
+                  alt="Sheraz Hussain - AI Cyborg Transformation" 
+                  fill 
+                  className="object-cover opacity-0 transition-all duration-700 ease-in-out group-hover:opacity-100 scale-110 group-hover:scale-100" 
                 />
               </div>
               <div className="text-center space-y-1">

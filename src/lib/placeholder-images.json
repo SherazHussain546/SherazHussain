@@ -1,6 +1,7 @@
 {
   "about": {
     "src": "/founder.jpg",
+    "hoverSrc": "/sherazcyborg.png",
     "alt": "Sheraz Hussain - AI Solutions Architect and First-Class Honors Software Engineer in Dublin, Ireland",
     "width": 800,
     "height": 1000,
