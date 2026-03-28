@@ -188,7 +188,7 @@ function SupportPageContent() {
             <CardContent className="pt-8 space-y-8">
               <StripePaymentForm />
               
-              <div className="pt-6 border-t border-dashed">
+              <div className="mt-12 pt-8 border-t border-dashed">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4 font-mono">Enterprise Tiers (Future)</p>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 rounded-none border border-border/50 opacity-50 grayscale cursor-not-allowed">
