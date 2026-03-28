@@ -83,6 +83,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const usercentricsId = process.env.NEXT_PUBLIC_USERCENTRICS_ID;
+
   const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Person',
@@ -124,24 +127,30 @@ export default function RootLayout({
         spaceMono.variable,
         'font-sans bg-background text-foreground'
       )}>
-          <Script 
-            id="usercentrics-cmp"
-            src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
-            data-settings-id="4uTD-bP9QRDJKY"
-            strategy="afterInteractive"
-          />
-          <Script 
-            src="https://www.googletagmanager.com/gtag/js?id=G-CX3V7SF35L" 
-            strategy="afterInteractive" 
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-CX3V7SF35L');
-            `}
-          </Script>
+          {usercentricsId && (
+            <Script 
+              id="usercentrics-cmp"
+              src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
+              data-settings-id={usercentricsId}
+              strategy="afterInteractive"
+            />
+          )}
+          {gaId && (
+            <>
+              <Script 
+                src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} 
+                strategy="afterInteractive" 
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}');
+                `}
+              </Script>
+            </>
+          )}
            <Script
             id="json-ld"
             type="application/ld+json"
