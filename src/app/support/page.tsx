@@ -168,7 +168,7 @@ function SupportPageContent() {
 
         {/* Right: Stripe & Contribution (5 cols) */}
         <div className="lg:col-span-5 space-y-16">
-          <Card className="shadow-2xl border-primary/20 bg-white sticky top-24 rounded-none">
+          <Card className="shadow-2xl border-primary/20 bg-white rounded-none">
             <CardHeader className="border-b pb-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -210,8 +210,9 @@ function SupportPageContent() {
             </CardContent>
           </Card>
 
-          {/* Other methods */}
+          {/* Other methods - Moved to a dedicated div to prevent overlap */}
           <div className="grid gap-6">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground mb-2 font-mono">Alternative Channels</p>
             {supportMethods.map((method, idx) => (
               <Link key={idx} href={method.link} target="_blank">
                 <Card className="group border-border/40 hover:border-primary/30 transition-all hover:shadow-lg bg-card/50 backdrop-blur-sm rounded-none">
