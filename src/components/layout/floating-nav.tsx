@@ -28,7 +28,8 @@ const NavItem = ({ href, label, icon: Icon, imageSrc, target, bgColor }: NavItem
         bgColor
       )}
     >
-      <div className="absolute left-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:-translate-x-full">
+      {/* Icon container - anchored to the right for right-side placement */}
+      <div className="absolute right-0 flex h-full w-12 items-center justify-center transition-transform duration-300 group-hover:translate-x-full">
         {Icon ? (
           <Icon className="h-5 w-5 flex-shrink-0 text-white" />
         ) : imageSrc ? (
@@ -37,7 +38,8 @@ const NavItem = ({ href, label, icon: Icon, imageSrc, target, bgColor }: NavItem
           </div>
         ) : null}
       </div>
-      <span className="absolute left-0 pl-4 pr-4 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 translate-x-full w-full text-left">
+      {/* Label - anchored right, hidden to the left, slides in from left on hover */}
+      <span className="absolute right-0 pr-4 pl-4 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-full w-full text-right">
         {label}
       </span>
     </Link>
@@ -123,8 +125,8 @@ export default function FloatingNav() {
   }
 
   return (
-    <div className="fixed top-1/2 left-4 z-50 -translate-y-1/2 hidden md:flex">
-      <div className="flex flex-col items-start gap-3">
+    <div className="fixed top-1/2 right-4 z-50 -translate-y-1/2 hidden md:flex">
+      <div className="flex flex-col items-end gap-3">
         {navItems.map((item) => (
           <NavItem key={item.label} {...item} />
         ))}
