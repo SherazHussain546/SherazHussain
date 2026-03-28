@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!project) return { title: 'Project Not Found' };
 
-  const title = `${project.name} | Sheraz Hussain Case Study`;
+  const title = `${project.name} | Sheraz Hussain Engineering Case Study`;
   const description = project.description;
   const url = `https://sheraz.synctech.ie/projects/${slug}`;
 
@@ -37,10 +37,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: project.image,
           width: 1200,
           height: 630,
-          alt: project.name,
+          alt: `${project.name} - Engineering Case Study by Sheraz Hussain`,
         },
       ],
-      siteName: 'Sheraz Hussain Portfolio',
+      siteName: 'Sheraz Hussain Professional Portfolio',
+      publishedTime: new Date().toISOString(),
+      authors: ['Sheraz Hussain'],
+      section: 'Technology',
+      tags: [...project.stack, 'Software Architecture', 'AI Solutions'],
     },
     twitter: {
       card: 'summary_large_image',
@@ -49,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [project.image],
       creator: '@sherazhussain546',
     },
-    keywords: [...project.stack, 'Sheraz Hussain', 'Engineering Case Study', 'Software Architecture'],
+    keywords: [...project.stack, 'Sheraz Hussain', 'Engineering Case Study', 'Software Architecture', 'Cloud Infrastructure', 'AI Optimization'],
   };
 }
 

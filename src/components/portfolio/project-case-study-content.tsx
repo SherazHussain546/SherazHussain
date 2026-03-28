@@ -31,7 +31,7 @@ const spaceMono = Space_Mono({
 
 export default function ProjectCaseStudyContent({ project }: { project: Project }) {
   return (
-    <div className={cn(
+    <article className={cn(
       "min-h-screen bg-background text-foreground",
       playfair.variable,
       dmSans.variable,
@@ -133,19 +133,21 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
         {/* ──────────────── ARTICLE BODY ──────────────── */}
         <div className="max-w-[860px] mx-auto px-6 py-12 md:py-20">
           
-          <Button asChild variant="ghost" size="sm" className="mb-12 -ml-3 gap-2 text-muted-foreground hover:text-primary font-mono text-[10px] uppercase tracking-widest">
-            <Link href="/projects">
-              <ArrowLeft className="h-3 w-3" />
-              Return to Archives
-            </Link>
-          </Button>
+          <nav aria-label="Breadcrumb">
+            <Button asChild variant="ghost" size="sm" className="mb-12 -ml-3 gap-2 text-muted-foreground hover:text-primary font-mono text-[10px] uppercase tracking-widest">
+              <Link href="/projects">
+                <ArrowLeft className="h-3 w-3" />
+                Return to Archives
+              </Link>
+            </Button>
+          </nav>
 
           {/* Opening Narrative */}
           <section className="opening mb-16">
-            <div className="location-tag font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-8 flex items-center gap-3">
+            <header className="location-tag font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-8 flex items-center gap-3">
               <span className="w-5 h-px bg-primary" />
-              Technical Report
-            </div>
+              High-Fidelity Technical Report
+            </header>
 
             <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
               <p>{project.fullDescription}</p>
@@ -156,7 +158,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
           {/* Challenges & Constraints */}
           <section className="mb-16">
-            <p className="section-label">Technical Audit</p>
+            <p className="section-label" aria-hidden="true">Technical Audit</p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
               <Target className="h-8 w-8 text-primary" />
               Identifying the Structural Bottlenecks
@@ -175,7 +177,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
           {/* Engineering Response */}
           <section className="mb-16">
-            <p className="section-label">Engineering Response</p>
+            <p className="section-label" aria-hidden="true">Engineering Response</p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
               <Cpu className="h-8 w-8 text-primary" />
               Architecting for Resilience & Scale
@@ -191,18 +193,18 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           </section>
 
           {/* Pull Quote */}
-          <div className="pull-quote">
+          <aside className="pull-quote">
             <blockquote className="font-serif italic text-xl md:text-2xl leading-snug mb-4">
               "The gap between a working prototype and a production-grade system is where most engineers stop. I am interested in closing that gap — every time."
             </blockquote>
             <cite className="font-mono text-[10px] tracking-widest uppercase text-muted-foreground">
               — Sheraz Hussain, Principal Architect
             </cite>
-          </div>
+          </aside>
 
           {/* Infrastructure & Stack */}
           <section className="mb-16">
-            <p className="section-label">Infrastructure Matrix</p>
+            <p className="section-label" aria-hidden="true">Infrastructure Matrix</p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
               <Code2 className="h-8 w-8 text-primary" />
               The High-Fidelity Technical Ecosystem
@@ -220,7 +222,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
           {/* Impact / Results */}
           <section className="mb-16">
-            <p className="section-label">Measured Impact</p>
+            <p className="section-label" aria-hidden="true">Measured Impact</p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 flex items-center gap-4">
               <TrendingUp className="h-8 w-8 text-primary" />
               Verification of Success Metrics
@@ -237,7 +239,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
 
           {/* Repository Access */}
           <section className="mt-20 pt-12 border-t-4 border-foreground bg-primary/5 p-8 rounded-lg">
-            <p className="section-label text-primary">Secure Access</p>
+            <p className="section-label text-primary" aria-hidden="true">Secure Access</p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 flex items-center gap-4">
               <ShieldCheck className="h-8 w-8 text-primary" />
               Inspect the Source Integrity
@@ -247,14 +249,14 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="bg-[#071739] hover:bg-[#0d214d] text-white font-mono text-[10px] uppercase tracking-[0.2em] px-8 h-14 rounded-none">
-                <Link href={project.link} target="_blank">
+                <Link href={project.link} target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-4 w-4" />
                   GitHub Repository
                 </Link>
               </Button>
               {project.liveLink && (
                 <Button asChild variant="outline" size="lg" className="border-foreground text-foreground hover:bg-foreground hover:text-background font-mono text-[10px] uppercase tracking-[0.2em] px-8 h-14 rounded-none transition-all">
-                  <Link href={project.liveLink} target="_blank">
+                  <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" />
                     Live Deployment
                   </Link>
@@ -264,7 +266,7 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
           </section>
 
           {/* Footer Navigation */}
-          <div className="mt-32 pt-16 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
+          <footer className="mt-32 pt-16 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8">
             <Button asChild variant="ghost" className="group">
               <Link href="/projects" className="flex items-center gap-4 text-left">
                 <div className="h-12 w-12 rounded-full border border-border flex items-center justify-center transition-colors group-hover:bg-primary group-hover:border-primary">
@@ -288,11 +290,11 @@ export default function ProjectCaseStudyContent({ project }: { project: Project 
                 </div>
               </Link>
             </Button>
-          </div>
+          </footer>
         </div>
       </main>
 
       <Footer />
-    </div>
+    </article>
   );
 }

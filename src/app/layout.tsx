@@ -52,7 +52,12 @@ export const metadata: Metadata = {
     'Secure Stripe Payments',
     'Zero Trust Architecture',
     'Privacy First AI',
-    'Revolut Pay Ireland'
+    'Revolut Pay Ireland',
+    'High-Fidelity Engineering',
+    'Enterprise AI Solutions',
+    'Full-Stack Developer Dublin',
+    'Cloud-Native Systems',
+    'SaaS Architect'
   ],
   openGraph: {
     type: 'website',
@@ -95,13 +100,17 @@ export default function RootLayout({
         'React',
         'Google Genkit',
         'Cybersecurity',
-        'Stripe Integration'
+        'Stripe Integration',
+        'Machine Learning',
+        'Data Sovereignty'
       ],
       'worksFor': {
         '@type': 'Organization',
-        'name': 'Technical Consultancy & Open Source Initiative',
-        'url': siteConfig.url
+        'name': 'SYNC TECH Solutions',
+        'url': 'https://synctech.ie'
       },
+      'description': siteConfig.description,
+      'image': 'https://synctech.ie/_next/image?url=%2Ffounder.jpg&w=640&q=75'
   };
 
   return (
