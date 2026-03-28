@@ -22,7 +22,8 @@ import {
   Sparkles,
   ChevronRight,
   TrendingUp,
-  Cpu
+  Cpu,
+  Leaf
 } from 'lucide-react';
 import { useState, useEffect, Suspense } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -164,6 +165,30 @@ function SupportPageContent() {
               </div>
             </div>
           </div>
+
+          {/* Climate Integrity Card */}
+          <Card className="rounded-none border-primary/20 bg-primary/5">
+            <CardHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <Leaf className="h-5 w-5 text-emerald-600" />
+                <CardTitle className="text-xl font-playfair font-bold">Climate Sovereignty</CardTitle>
+              </div>
+              <CardDescription className="text-sm font-light leading-relaxed">
+                As part of my commitment to technical integrity, 1% of every contribution is automatically directed toward high-impact carbon removal technologies via Stripe Climate. We engineer for a safe and sustainable climate future.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+               <div className="flex justify-start overflow-hidden pt-2">
+                <iframe 
+                  width="380" 
+                  height="38" 
+                  style={{ border: 0 }} 
+                  src="https://climate.stripe.com/badge/cE1BHT?theme=light&size=small&locale=en-US" 
+                  title="Stripe Climate Badge"
+                />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Right: Stripe & Contribution (5 cols) */}

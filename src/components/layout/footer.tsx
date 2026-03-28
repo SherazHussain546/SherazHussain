@@ -16,7 +16,7 @@ const paymentMethods = [
 export default function Footer() {
   return (
     <footer className="bg-foreground text-background/50 py-12 px-6 text-center border-t">
-      <div className="max-w-[860px] mx-auto space-y-8">
+      <div className="max-w-[860px] mx-auto space-y-10">
         
         {/* Payment Methods Section */}
         <div className="space-y-4">
@@ -37,6 +37,31 @@ export default function Footer() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Stripe Climate Contribution */}
+        <div className="space-y-4 pt-4">
+          <p className="font-space-mono text-[8px] uppercase tracking-[0.3em] text-white opacity-60">
+            Committed to Carbon Removal
+          </p>
+          <div className="flex justify-center overflow-hidden">
+            <div className="w-full max-w-[380px] overflow-x-auto">
+               <iframe 
+                width="380" 
+                height="38" 
+                style={{ border: 0 }} 
+                src="https://climate.stripe.com/badge/cE1BHT?theme=light&size=small&locale=en-US" 
+                title="Stripe Climate Contribution Badge"
+              />
+            </div>
+          </div>
+          <Link 
+            href="https://climate.stripe.com/iReCm9" 
+            target="_blank" 
+            className="block font-space-mono text-[8px] uppercase tracking-widest text-primary hover:underline"
+          >
+            View our Carbon Removal Portfolio
+          </Link>
         </div>
 
         <div className="thick-rule !my-8 opacity-10" />
