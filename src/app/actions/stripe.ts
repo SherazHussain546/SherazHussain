@@ -8,7 +8,7 @@ let stripeInstance: Stripe | null = null;
 
 function getStripe() {
   const apiKey = process.env.STRIPE_SECRET_KEY;
-  // resiliant check for placeholders
+  // Resilient check for placeholders
   if (!apiKey || apiKey.startsWith('YOUR_') || apiKey === 'sk_test_...') {
     throw new Error('STRIPE_SECRET_KEY is not configured with a valid key.');
   }
@@ -60,5 +60,22 @@ export async function createCheckoutSession(amount: number) {
   } catch (error: any) {
     console.error('Stripe Error:', error);
     throw new Error(error.message || 'Failed to create checkout session');
+  }
+}
+
+/**
+ * Retrieves the status of a checkout session.
+ */
+export async function getSessionStatus(sessionId: string) {
+  try {
+    const stripe = getStripe();
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    return {
+      status: session.status,
+      customer_email: session.customer_details?.email
+    };
+  } catch (error: any) {
+    console.error('Stripe Retrieve Error:', error);
+    throw new Error('Failed to retrieve session status');
   }
 }

@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,7 +15,8 @@ import {
   EmbeddedCheckout
 } from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+// Publishable key must start with pk_
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function StripePaymentForm() {
   const [amount, setAmount] = useState<string>('25');
@@ -57,14 +58,17 @@ export default function StripePaymentForm() {
 
   if (clientSecret) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6 animate-in fade-in zoom-in duration-300">
         <div className="flex items-center justify-between border-b pb-4 mb-4">
-          <h3 className="font-playfair font-bold text-xl">Secure Checkout</h3>
-          <Button variant="ghost" size="icon" onClick={() => setClientSecret(null)}>
+          <div>
+            <h3 className="font-playfair font-bold text-xl">Secure Checkout</h3>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Contribution: €{amount}</p>
+          </div>
+          <Button variant="ghost" size="icon" onClick={() => setClientSecret(null)} className="hover:bg-destructive/10 hover:text-destructive">
             <X className="h-4 w-4" />
           </Button>
         </div>
-        <div id="checkout" className="min-h-[400px]">
+        <div id="checkout" className="min-h-[400px] rounded-lg overflow-hidden border border-primary/10">
           <EmbeddedCheckoutProvider
             stripe={stripePromise}
             options={{ clientSecret }}
