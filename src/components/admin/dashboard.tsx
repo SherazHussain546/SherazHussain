@@ -1,6 +1,7 @@
+
 'use client';
-import { getAuth, signOut } from 'firebase/auth';
-import { app } from '@/firebase/client';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
@@ -10,12 +11,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
 import SiteSettings from './site-settings';
 
-const auth = getAuth(app);
-
 export default function Dashboard() {
   const { toast } = useToast();
   
   const handleLogout = async () => {
+    if (!auth) {
+      toast({
+        variant: 'destructive',
+        title: 'System Error',
+        description: 'Firebase Authentication is not initialized. Please verify your environment variables.',
+      });
+      return;
+    }
+
     try {
       await signOut(auth);
       toast({
