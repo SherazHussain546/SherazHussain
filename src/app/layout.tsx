@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Playfair_Display, DM_Sans, Space_Mono } from 'next/font/google';
@@ -21,7 +22,7 @@ const siteConfig = {
   url: 'https://sheraz.synctech.ie',
   description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems with Zero Trust Security.',
   author: 'Sheraz Hussain',
-  ogImage: 'https://sheraz.synctech.ie/og-image.png',
+  ogImage: 'https://sheraz.synctech.ie/founder.jpg',
   links: {
     github: 'https://github.com/SherazHussain546',
     linkedin: 'https://linkedin.com/in/sherazhussain546/',
@@ -110,7 +111,7 @@ export default function RootLayout({
         'url': 'https://synctech.ie'
       },
       'description': siteConfig.description,
-      'image': 'https://synctech.ie/_next/image?url=%2Ffounder.jpg&w=640&q=75'
+      'image': 'https://sheraz.synctech.ie/founder.jpg'
   };
 
   return (

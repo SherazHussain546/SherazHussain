@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -34,7 +35,7 @@ export default function SiteSettings() {
       founderImageUrl: settings?.founderImageUrl || '',
     },
     defaultValues: {
-      founderImageUrl: 'https://synctech.ie/_next/image?url=%2Ffounder.jpg&w=640&q=75',
+      founderImageUrl: '/founder.jpg',
     }
   });
 
