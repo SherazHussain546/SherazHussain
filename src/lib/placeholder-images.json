@@ -70,5 +70,56 @@
       "height": 600,
       "hint": "affiliate marketing tech"
     }
+  },
+  "payments": {
+    "applePay": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficonape.com%2Fwp-content%2Fuploads%2F1%2F12%2FApple-Pay-Logo-0%25D9%25A4.png&f=1&nofb=1&ipt=d0ec90800ea4aa309ecdeacd70e823ed05624b21171d56db29d818c1cce98d62",
+      "alt": "Apple Pay",
+      "width": 80,
+      "height": 32,
+      "hint": "apple pay"
+    },
+    "googlePay": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngate.com%2Fwp-content%2Fuploads%2F2025%2F06%2Fgoogle-pay-main-horizontal-brand-logo-colorful-letter-g-modern-design-1.png&f=1&nofb=1&ipt=e50ecaa03d554b2ec461fc5d99bcd062531b3d46667cc32844e8497e431b29f6",
+      "alt": "Google Pay",
+      "width": 80,
+      "height": 32,
+      "hint": "google pay"
+    },
+    "visa": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogos-world.net%2Fwp-content%2Fuploads%2F2020%2F04%2FVisa-Emblem.jpg&f=1&nofb=1&ipt=8889b4e8be5d8e6b956110c915bb05eaccde0659be35c86b9710e667345b378e",
+      "alt": "Visa",
+      "width": 80,
+      "height": 32,
+      "hint": "visa logo"
+    },
+    "mastercard": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogospng.org%2Fwp-content%2Fuploads%2Fmastercard.jpg&f=1&nofb=1&ipt=9e1c3bae826fd0399ba619420ab147254919e3f798fd9544b43fdd2244758c82",
+      "alt": "Mastercard",
+      "width": 80,
+      "height": 32,
+      "hint": "mastercard logo"
+    },
+    "amex": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvectorseek.com%2Fwp-content%2Fuploads%2F2023%2F08%2FAMEX-American-Express-Logo-Vector.svg-.png&f=1&nofb=1&ipt=69a408ba646991313163d80dbd6c9e96d2e52da5448e8afdde48be3fd2fc4370",
+      "alt": "American Express",
+      "width": 80,
+      "height": 32,
+      "hint": "amex logo"
+    },
+    "klarna": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.brandfetch.io%2FidgyTV31vU%2Fw%2F400%2Fh%2F400%2Ftheme%2Fdark%2Ficon.jpeg%3Fc%3D1bxid64Mup7aczewSAYMX%26t%3D1720165036392&f=1&nofb=1&ipt=d4cf9ab57b476162f7f4548d6dda7d98553ca514ec47bc31979d958392dad1b0",
+      "alt": "Klarna",
+      "width": 80,
+      "height": 32,
+      "hint": "klarna logo"
+    },
+    "revolutPay": {
+      "src": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fassets.revolut.com%2Fpublished-assets-v3%2F0c53f02a-1776-407b-acf6-6ab189dbf7ea%2F2cf60cdf-110f-4ccc-a2fd-49b3a8d8d479.png&f=1&nofb=1&ipt=55ac882c10c18ca93e45d404731dc0b42ad6371ac38a501ae75982494f0ec1af",
+      "alt": "Revolut Pay",
+      "width": 80,
+      "height": 32,
+      "hint": "revolut pay"
+    }
   }
 }
