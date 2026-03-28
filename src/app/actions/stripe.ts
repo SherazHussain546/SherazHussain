@@ -56,21 +56,14 @@ export async function createCheckoutSession(amount: number) {
       mode: 'payment',
       return_url: `${origin}/support?success=true&session_id={CHECKOUT_SESSION_ID}`,
       
-      // Advanced Global Configuration
+      // Advanced Global Configuration for international tax compliance
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },
       
-      // Dynamic Identity Management
-      customer_update: {
-        address: 'auto',
-        name: 'auto',
-      },
-      
       // Payment Integrity Options
-      payment_method_collection: 'if_required',
       submit_type: 'donate',
       
-      // Custom Billing Info Collection
+      // Custom Billing Info Collection to satisfy KYC/AML requirements
       billing_address_collection: 'required',
       
       // Phone number collection for high-trust verification
