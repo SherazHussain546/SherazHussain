@@ -1,11 +1,10 @@
-
 'use client';
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CreditCard, Sparkles, Loader2, Zap } from 'lucide-react';
+import { CreditCard, Sparkles, Loader2, Zap, ShieldCheck } from 'lucide-react';
 import { createCheckoutSession } from '@/app/actions/stripe';
 import { useToast } from '@/hooks/use-toast';
 
