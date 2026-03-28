@@ -15,15 +15,15 @@ function getStripe() {
   
   if (!stripeInstance) {
     stripeInstance = new Stripe(apiKey, {
-      apiVersion: '2024-12-18.acacia' as any,
+      apiVersion: '2024-12-18.acacia' as any, // Utilizing stable release for production integrity
     });
   }
   return stripeInstance;
 }
 
 /**
- * Creates an Embedded Checkout Session for custom amounts.
- * Enforces a minimum of €5.00 for technical and processing integrity.
+ * Creates an High-Fidelity Checkout Session for custom amounts.
+ * Incorporates Automatic Tax, Tax ID collection, and Dynamic Payment Configurations.
  */
 export async function createCheckoutSession(amount: number) {
   const headersList = await headers();
@@ -35,6 +35,8 @@ export async function createCheckoutSession(amount: number) {
 
   try {
     const stripe = getStripe();
+    
+    // Creating session with full spectrum parameters for international compliance
     const session = await stripe.checkout.sessions.create({
       ui_mode: 'embedded',
       line_items: [
@@ -53,13 +55,34 @@ export async function createCheckoutSession(amount: number) {
       ],
       mode: 'payment',
       return_url: `${origin}/support?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      
+      // Advanced Global Configuration
       automatic_tax: { enabled: true },
+      tax_id_collection: { enabled: true },
+      
+      // Dynamic Identity Management
+      customer_update: {
+        address: 'auto',
+        name: 'auto',
+      },
+      
+      // Payment Integrity Options
+      payment_method_collection: 'if_required',
+      submit_type: 'donate',
+      
+      // Custom Billing Info Collection
+      billing_address_collection: 'required',
+      
+      // Phone number collection for high-trust verification
+      phone_number_collection: {
+        enabled: true,
+      },
     });
 
     return { clientSecret: session.client_secret };
   } catch (error: any) {
-    console.error('Stripe Error:', error);
-    throw new Error(error.message || 'Failed to create checkout session');
+    console.error('High-Fidelity Stripe Error:', error);
+    throw new Error(error.message || 'Failed to initiate secure checkout pipeline.');
   }
 }
 

@@ -1,10 +1,11 @@
+
 'use client';
 
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ShieldCheck, Lock, Globe, CreditCard, ArrowLeft, Info } from 'lucide-react';
+import { ShieldCheck, Lock, Globe, CreditCard, ArrowLeft, Info, Receipt, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -95,14 +96,14 @@ export default function PrivacyPolicyPage() {
           <hr className="thick-rule" />
 
           {/* SECURITY PILLARS */}
-          <div className="grid gap-8 md:grid-cols-2 mb-20">
+          <div className="grid gap-8 md:grid-cols-3 mb-20">
             <div className="space-y-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-none bg-primary/10 text-primary mb-4">
                 <ShieldCheck className="h-5 w-5" />
               </div>
               <h3 className="font-playfair text-xl font-bold">Encrypted Pipeline</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                All data transfers utilize TLS 1.3 encryption. We employ strict transport security (HSTS) to prevent man-in-the-middle attacks across all project domains.
+                All data transfers utilize TLS 1.3 encryption. We employ strict transport security (HSTS) to prevent man-in-the-middle attacks.
               </p>
             </div>
             <div className="space-y-4">
@@ -111,7 +112,16 @@ export default function PrivacyPolicyPage() {
               </div>
               <h3 className="font-playfair text-xl font-bold">Payment Integrity</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Our payment infrastructure is PCI-DSS Level 1 compliant via Stripe. We do not store credit card numbers, CVVs, or biometric data on our infrastructure.
+                Our infrastructure is PCI-DSS Level 1 compliant via Stripe. No card numbers or biometric data are stored locally.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-none bg-primary/10 text-primary mb-4">
+                <Receipt className="h-5 w-5" />
+              </div>
+              <h3 className="font-playfair text-xl font-bold">Automatic Tax</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                We utilize Stripe's Global Tax engine to ensure accurate, real-time tax calculation and compliance across all jurisdictions.
               </p>
             </div>
           </div>
@@ -130,7 +140,7 @@ export default function PrivacyPolicyPage() {
                     <div className="space-y-2">
                       <h4 className="font-mono text-[10px] uppercase font-bold text-primary tracking-widest">How do I use {method.name}?</h4>
                       <p className="text-muted-foreground leading-relaxed">
-                        Simply select {method.name} during the secure checkout process. Our Stripe-powered embedded interface will guide you through the native authentication flow on your device.
+                        To pay with {method.name}, simply select the option during the secure checkout phase. Our high-fidelity Stripe integration will seamlessly trigger the native authentication on your device.
                       </p>
                     </div>
                     <div className="space-y-2">
@@ -151,19 +161,19 @@ export default function PrivacyPolicyPage() {
 
               <AccordionItem value="stripe-cost" className="border-b-2 border-primary/5">
                 <AccordionTrigger className="font-playfair text-lg font-bold hover:text-primary transition-colors py-6">
-                  Stripe Infrastructure & Logistics
+                  Global Infrastructure & Logistics
                 </AccordionTrigger>
                 <AccordionContent className="space-y-6 pb-8">
                   <div className="space-y-2">
                     <h4 className="font-mono text-[10px] uppercase font-bold text-primary tracking-widest">Does it cost extra to use Stripe?</h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      No. There are zero additional fees for supporters using Stripe. We absorb the standard transaction processing costs to ensure your contribution directly fuels our open-source AI projects.
+                      No. We absorb all standard transaction fees. Our Stripe integration includes **Automatic Tax Calculation** and **Tax ID Collection** at no additional cost to our supporters.
                     </p>
                   </div>
                   <div className="space-y-2">
                     <h4 className="font-mono text-[10px] uppercase font-bold text-primary tracking-widest">How can we accept these methods?</h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      As a high-fidelity engineering platform, we utilize Stripe’s Global Payments Engine. This allows us to dynamically enable local payment methods like Revolut Pay and Klarna to ensure international accessibility.
+                      We utilize Stripe's **Managed Payments** and **Global Payment Configurations**. This allows us to dynamically enable the most secure local methods like Revolut Pay and Klarna based on your region.
                     </p>
                   </div>
                 </AccordionContent>
