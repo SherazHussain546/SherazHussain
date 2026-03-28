@@ -1,3 +1,4 @@
+
 'use client';
 
 import Header from '@/components/layout/header';
@@ -27,17 +28,36 @@ import {
   Github
 } from 'lucide-react';
 import * as Icons from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Script from 'next/script';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { projectGoals } from '@/lib/data';
+import StripePaymentForm from '@/components/support/stripe-payment-form';
+import { useSearchParams } from 'next/navigation';
 
 export default function SupportPage() {
   const { toast } = useToast();
   const [copied, setCopied] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('success')) {
+      toast({
+        title: 'Mission Supported!',
+        description: 'Thank you for your generous contribution to inclusive innovation.',
+      });
+    }
+    if (searchParams.get('canceled')) {
+      toast({
+        variant: 'destructive',
+        title: 'Payment Canceled',
+        description: 'The transaction was not completed.',
+      });
+    }
+  }, [searchParams, toast]);
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -75,6 +95,13 @@ export default function SupportPage() {
       link: 'https://www.buymeacoffee.com/sherazhussain546',
       color: 'bg-orange-500/10 text-orange-600',
       badge: true
+    },
+    {
+      title: 'Stripe Secure',
+      description: 'Direct, high-fidelity contributions with custom amounts and instant card processing.',
+      icon: CreditCard,
+      color: 'bg-indigo-500/10 text-indigo-600',
+      isStripe: true
     },
     {
       title: 'Web3 & Decentralized',
@@ -221,6 +248,9 @@ export default function SupportPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="flex-1 space-y-4">
+                    {method.isStripe && (
+                      <StripePaymentForm />
+                    )}
                     {method.badge && (
                       <div className="flex justify-center py-2">
                         <Link href={method.link!} target="_blank" className="transition-transform hover:scale-105 active:scale-95">
@@ -248,70 +278,72 @@ export default function SupportPage() {
                       </div>
                     )}
                   </CardContent>
-                  <div className="p-6 pt-0 mt-auto flex flex-col gap-2">
-                    {method.isEnterprise ? (
-                      <>
-                        <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20 bg-primary hover:bg-primary/90">
-                          <Link href={method.link!} target="_blank">
-                             <CreditCard className="mr-2 h-4 w-4" />
-                             {method.actionLabel}
-                          </Link>
-                        </Button>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2">
-                              View Details
-                              <Building2 className="ml-2 h-4 w-4" />
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-md w-[95vw] md:w-full bg-white rounded-2xl">
-                            <DialogHeader>
-                              <DialogTitle className="flex items-center gap-2">
-                                <Building2 className="h-5 w-5 text-primary" />
-                                Professional Transfer
-                              </DialogTitle>
-                              <DialogDescription>
-                                Use these credentials for strategic contributions or consulting payments.
-                              </DialogDescription>
-                            </DialogHeader>
-                            <div className="space-y-4 mt-4">
-                              <div className="rounded-2xl border p-4 bg-muted/5 space-y-3">
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Beneficiary</span>
-                                  <span className="text-sm font-semibold">{bankDetails.beneficiary}</span>
-                                </div>
-                                <div className="flex flex-col gap-1 relative group">
-                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (EUR)</span>
-                                  <div className="flex items-center justify-between gap-2">
-                                    <span className="text-[11px] md:text-sm font-mono font-bold text-primary break-all">{bankDetails.iban}</span>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => copyToClipboard(bankDetails.iban, 'IBAN')}>
-                                      <Copy className="h-3 w-3" />
-                                    </Button>
+                  {!method.isStripe && (
+                    <div className="p-6 pt-0 mt-auto flex flex-col gap-2">
+                      {method.isEnterprise ? (
+                        <>
+                          <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20 bg-primary hover:bg-primary/90">
+                            <Link href={method.link!} target="_blank">
+                               <CreditCard className="mr-2 h-4 w-4" />
+                               {method.actionLabel}
+                            </Link>
+                          </Button>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" className="w-full h-12 rounded-xl font-bold border-2">
+                                View Details
+                                <Building2 className="ml-2 h-4 w-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md w-[95vw] md:w-full bg-white rounded-2xl">
+                              <DialogHeader>
+                                <DialogTitle className="flex items-center gap-2">
+                                  <Building2 className="h-5 w-5 text-primary" />
+                                  Professional Transfer
+                                </DialogTitle>
+                                <DialogDescription>
+                                  Use these credentials for strategic contributions or consulting payments.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-4 mt-4">
+                                <div className="rounded-2xl border p-4 bg-muted/5 space-y-3">
+                                  <div className="flex flex-col gap-1">
+                                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Beneficiary</span>
+                                    <span className="text-sm font-semibold">{bankDetails.beneficiary}</span>
                                   </div>
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">BIC / SWIFT</span>
-                                  <div className="flex items-center justify-between gap-2">
-                                    <span className="text-sm font-mono font-bold text-primary">{bankDetails.bic}</span>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => copyToClipboard(bankDetails.bic, 'BIC')}>
-                                      <Copy className="h-3 w-3" />
-                                    </Button>
+                                  <div className="flex flex-col gap-1 relative group">
+                                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">IBAN (EUR)</span>
+                                    <div className="flex items-center justify-between gap-2">
+                                      <span className="text-[11px] md:text-sm font-mono font-bold text-primary break-all">{bankDetails.iban}</span>
+                                      <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => copyToClipboard(bankDetails.iban, 'IBAN')}>
+                                        <Copy className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col gap-1">
+                                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">BIC / SWIFT</span>
+                                    <div className="flex items-center justify-between gap-2">
+                                      <span className="text-sm font-mono font-bold text-primary">{bankDetails.bic}</span>
+                                      <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => copyToClipboard(bankDetails.bic, 'BIC')}>
+                                        <Copy className="h-3 w-3" />
+                                      </Button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </>
-                    ) : (
-                      <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
-                        <Link href={method.link!} target={method.link!.startsWith('mailto') ? '_self' : '_blank'}>
-                          {method.actionLabel}
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    )}
-                  </div>
+                            </DialogContent>
+                          </Dialog>
+                        </>
+                      ) : (
+                        <Button asChild className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg hover:shadow-primary/20">
+                          <Link href={method.link!} target={method.link!.startsWith('mailto') ? '_self' : '_blank'}>
+                            {method.actionLabel}
+                            <ExternalLink className="ml-2 h-4 w-4" />
+                          </Link>
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </Card>
               </motion.div>
             ))}
