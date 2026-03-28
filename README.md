@@ -6,39 +6,49 @@ This is the repository for the personal portfolio of Sheraz Hussain, a Freelance
 - **AI Resume Analyzer**: Tailors your portfolio content to specific job descriptions using Gemini 2.0 Flash.
 - **Portfolio Analytics**: Private dashboard tracking visitor metrics via Firestore.
 - **Support Hub**: Multi-channel support (BuyMeACoffee, Web3, GoFundMe, GitHub Sponsors) for community-driven innovation.
+- **Stripe Global Checkout**: Secure, tax-compliant one-time contributions via Embedded Checkout.
 - **Responsive Design**: Built with Next.js 15, Tailwind CSS, and ShadCN UI.
-
-## Social Media Assets (For Reference)
-
-### Medium / LinkedIn Professional Bio
-"Sheraz Hussain is a First-Class Honors Software Engineer and AI/Cloud Developer based in Dublin, Ireland. Working as a Freelancer with SYNC TECH Solutions, he specializes in architecting high-performance enterprise systems and scalable AI-driven applications. With a passion for technical integrity and innovation, Sheraz bridges the gap between complex engineering and strategic business growth. Graduate of Dublin Business School and developer of high-fidelity tools for the global tech community."
 
 ## Tech Stack
 - Next.js 15 (App Router)
 - Google Genkit (Gemini 2.0 Flash)
 - Firebase (Auth, Firestore)
+- Stripe (Payments, Automatic Tax)
 - Netlify (Hosting)
 
-## Deployment & Maintenance
+## Production Deployment Checklist
 
-### 1. Firebase Setup
-- Create a Firebase project.
+### 1. Stripe Production Configuration
+To enable live payments, follow these steps in your [Stripe Dashboard](https://dashboard.stripe.com):
+- **API Keys**: Copy your `Live Secret Key` and `Live Publishable Key`.
+- **Environment Variables**: Add them to your Netlify Environment:
+  - `STRIPE_SECRET_KEY`: Your live secret key (Keep private).
+  - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Your live publishable key.
+- **Domain Verification**: Add `sheraz.synctech.ie` to your "Allowed Domains" in Stripe → Settings → Checkout and Payment Links.
+
+### 2. Firebase Setup
+- Ensure your Firebase project is on the "Blaze" plan for production-grade scaling (GCP quotas).
 - Enable Email/Password Authentication.
-- Provision a Firestore database.
+- Verify Firestore Security Rules are deployed (see `firestore.rules`).
 
-### 2. Environment Variables
-- Add your Firebase config and `GOOGLE_GENAI_API_KEY` to your deployment environment (e.g., Netlify).
-- **CRITICAL**: Never commit your `.env` file. It is now ignored by `.gitignore`.
+### 3. Netlify Environment Variables
+Ensure the following variables are set in your Netlify site settings:
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
+- `GOOGLE_GENAI_API_KEY` (For Gemini 2.0 Flash)
+- `STRIPE_SECRET_KEY`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 
-### 3. Git Workflow
-To keep your repository in sync and secure, use the following commands:
+## Git Workflow
+To keep your repository secure, `.env` files are ignored. Use the following to sync:
 
 ```bash
 # Pull latest changes
 git pull origin main
-
-# If .env was previously committed, remove it from the index:
-git rm --cached .env
 
 # Add and commit your updates
 git add .
@@ -49,4 +59,4 @@ git push origin main
 ```
 
 ## Security Note
-If your API keys have been leaked, please **rotate them immediately** in the Firebase Console and update your Netlify environment variables. The `.gitignore` file is configured to prevent future leaks of your `.env` file.
+If your API keys have been leaked, rotate them immediately in the respective consoles. The `.gitignore` file and `netlify.toml` are configured to prevent exposure of sensitive keys.

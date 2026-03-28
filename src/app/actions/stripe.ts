@@ -1,4 +1,3 @@
-
 'use server';
 
 import Stripe from 'stripe';
@@ -6,37 +5,46 @@ import { headers } from 'next/headers';
 
 let stripeInstance: Stripe | null = null;
 
+/**
+ * Initializes and returns a singleton instance of the Stripe client.
+ * Configured with the latest stable API version for technical integrity.
+ */
 function getStripe() {
   const apiKey = process.env.STRIPE_SECRET_KEY;
-  // Resilient check for placeholders
+  
+  // Production Integrity Check: Ensure key exists and is not a placeholder
   if (!apiKey || apiKey.startsWith('YOUR_') || apiKey === 'sk_test_...') {
-    throw new Error('STRIPE_SECRET_KEY is not configured with a valid key.');
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('CRITICAL: STRIPE_SECRET_KEY is missing or invalid in production environment.');
+    }
   }
   
-  if (!stripeInstance) {
+  if (!stripeInstance && apiKey) {
     stripeInstance = new Stripe(apiKey, {
-      apiVersion: '2024-12-18.acacia' as any, // Utilizing stable release for production integrity
+      apiVersion: '2024-12-18.acacia' as any,
     });
   }
   return stripeInstance;
 }
 
 /**
- * Creates an High-Fidelity Checkout Session for custom amounts.
- * Incorporates Automatic Tax, Tax ID collection, and Dynamic Payment Configurations.
+ * Creates a High-Fidelity Embedded Checkout Session.
+ * Incorporates Global Tax Compliance, Tax ID collection, and Dynamic Payment Configurations.
  */
 export async function createCheckoutSession(amount: number) {
   const headersList = await headers();
   const origin = headersList.get('origin');
 
   if (amount < 5) {
-    throw new Error('Minimum contribution is €5.00');
+    throw new Error('Minimum contribution threshold is €5.00');
+  }
+
+  const stripe = getStripe();
+  if (!stripe) {
+    throw new Error('Stripe infrastructure is not initialized. Verify server-side environment variables.');
   }
 
   try {
-    const stripe = getStripe();
-    
-    // Creating session with full spectrum parameters for international compliance
     const session = await stripe.checkout.sessions.create({
       ui_mode: 'embedded',
       line_items: [
@@ -56,20 +64,23 @@ export async function createCheckoutSession(amount: number) {
       mode: 'payment',
       return_url: `${origin}/support?success=true&session_id={CHECKOUT_SESSION_ID}`,
       
-      // Advanced Global Configuration for international tax compliance
+      // Global Compliance & Security Architecture
       automatic_tax: { enabled: true },
       tax_id_collection: { enabled: true },
-      
-      // Payment Integrity Options
       submit_type: 'donate',
-      
-      // Custom Billing Info Collection to satisfy KYC/AML requirements
       billing_address_collection: 'required',
       
       // Phone number collection for high-trust verification
       phone_number_collection: {
         enabled: true,
       },
+
+      // Custom metadata for tracking and analytics integrity
+      metadata: {
+        type: 'portfolio_support',
+        source: 'sheraz.synctech.ie',
+        timestamp: new Date().toISOString(),
+      }
     });
 
     return { clientSecret: session.client_secret };
@@ -80,11 +91,13 @@ export async function createCheckoutSession(amount: number) {
 }
 
 /**
- * Retrieves the status of a checkout session.
+ * Retrieves the status of a specific checkout session.
  */
 export async function getSessionStatus(sessionId: string) {
+  const stripe = getStripe();
+  if (!stripe) throw new Error('Stripe not initialized');
+  
   try {
-    const stripe = getStripe();
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     return {
       status: session.status,
@@ -92,6 +105,6 @@ export async function getSessionStatus(sessionId: string) {
     };
   } catch (error: any) {
     console.error('Stripe Retrieve Error:', error);
-    throw new Error('Failed to retrieve session status');
+    throw new Error('Failed to verify session status.');
   }
 }

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -15,7 +14,8 @@ import {
   EmbeddedCheckout
 } from '@stripe/react-stripe-js';
 
-// Publishable key must start with pk_
+// Publishable key must be provided via NEXT_PUBLIC_ env var.
+// It is safe to be public as it only identifies your account.
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function StripePaymentForm() {
@@ -47,7 +47,7 @@ export default function StripePaymentForm() {
       toast({
         variant: 'destructive',
         title: 'Pipeline Error',
-        description: error.message || 'Could not initiate Stripe checkout. Please verify keys.',
+        description: error.message || 'Could not initiate secure checkout. Verify configuration.',
       });
     } finally {
       setLoading(false);
@@ -68,7 +68,7 @@ export default function StripePaymentForm() {
             <X className="h-4 w-4" />
           </Button>
         </div>
-        <div id="checkout" className="min-h-[400px] rounded-lg overflow-hidden border border-primary/10">
+        <div id="checkout" className="min-h-[400px] rounded-none overflow-hidden border border-primary/10 bg-muted/5">
           <EmbeddedCheckoutProvider
             stripe={stripePromise}
             options={{ clientSecret }}
