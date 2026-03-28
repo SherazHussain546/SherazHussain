@@ -19,7 +19,7 @@ export default function Footer() {
         
         {/* Payment Methods Section */}
         <div className="space-y-4">
-          <p className="font-space-mono text-[8px] uppercase tracking-[0.3em] opacity-40">
+          <p className="font-space-mono text-[8px] uppercase tracking-[0.3em] text-white opacity-60">
             Secure Payments Accepted Via
           </p>
           <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 transition-all duration-500">
