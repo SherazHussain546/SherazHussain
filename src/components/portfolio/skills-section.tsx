@@ -15,9 +15,9 @@ export default function SkillsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground border border-foreground mb-12">
           {Object.entries(skills).map(([category, data]) => (
-            <div key={category} className="bg-background p-6 hover:bg-muted/5 transition-colors">
-              <p className="font-space-mono text-[9px] uppercase tracking-widest text-primary mb-3">{category}</p>
-              <p className="text-sm font-light text-foreground/90 leading-relaxed">
+            <div key={category} className="group bg-background p-6 hover:bg-primary transition-all duration-300 cursor-default">
+              <p className="font-space-mono text-[9px] uppercase tracking-widest text-primary mb-3 group-hover:text-white transition-colors">{category}</p>
+              <p className="text-sm font-light text-foreground/90 leading-relaxed group-hover:text-white transition-colors">
                 {data.items.join(' · ')}
               </p>
             </div>
