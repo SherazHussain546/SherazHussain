@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Image from 'next/image';
 import placeholderImages from '@/lib/placeholder-images.json';
@@ -23,15 +22,15 @@ export default function Footer() {
           <p className="font-space-mono text-[8px] uppercase tracking-[0.3em] opacity-40">
             Secure Payments Accepted Via
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 opacity-40 grayscale hover:opacity-100 transition-all duration-500 hover:grayscale-0">
+          <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 transition-all duration-500">
             {paymentMethods.map((method) => (
-              <div key={method.name} className="relative h-8 w-20 flex items-center justify-center">
+              <div key={method.name} className="relative h-6 w-14 md:h-8 md:w-16 flex items-center justify-center">
                 <Image
                   src={method.data.src}
                   alt={method.name}
                   fill
                   className="object-contain"
-                  sizes="80px"
+                  sizes="(max-width: 768px) 56px, 64px"
                   data-ai-hint={method.data.hint}
                 />
               </div>
