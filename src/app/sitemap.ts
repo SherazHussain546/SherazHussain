@@ -4,7 +4,7 @@ import { projects } from '@/lib/data'
 /**
  * Next.js sitemap configuration.
  * Using 'force-static' ensures the sitemap is generated as a static XML file during the build process,
- * which is the most reliable method for Netlify deployments.
+ * which is the most reliable method for Netlify deployments and fast indexing.
  */
 export const dynamic = 'force-static'
  
@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: (route === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly',
+    changeFrequency: (route === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly' | 'always' | 'hourly' | 'daily' | 'yearly' | 'never',
     priority: route === '' ? 1.0 : (route === '/privacy' ? 0.5 : 0.8),
   }));
 
