@@ -1,9 +1,8 @@
-
 'use client';
 
 import { useEffect, useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection, query, orderBy } from 'firebase/firestore';
+import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { 
@@ -12,7 +11,8 @@ import {
   MousePointer2, 
   TrendingUp, 
   Globe,
-  ArrowUpRight
+  ArrowUpRight,
+  AlertCircle
 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { 
@@ -29,23 +29,43 @@ import { formatDistanceToNow } from 'date-fns';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import { useAuth } from '@/hooks/use-auth';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function AnalyticsDashboard() {
   const { user, loading: authLoading } = useAuth();
-  const analyticsCollection = useMemo(() => collection(firestore, 'analyticsEvents'), []);
-  const analyticsQuery = useMemo(() => query(analyticsCollection, orderBy('timestamp', 'desc')), [analyticsCollection]);
+  
+  // High-Fidelity Guard: Ensure firestore is initialized before creating collection reference
+  const analyticsCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'analyticsEvents') as CollectionReference<DocumentData> : null;
+  }, []);
+
+  const analyticsQuery = useMemo(() => {
+    return analyticsCollection ? query(analyticsCollection, orderBy('timestamp', 'desc')) : null;
+  }, [analyticsCollection]);
+
   const [snapshot, loading, error] = useCollection(analyticsQuery);
 
   useEffect(() => {
-    // Only report permission errors once all loading states are resolved and user is definitely authenticated
-    if (error && error.code === 'permission-denied' && !loading && !authLoading && user) {
+    if (error && error.code === 'permission-denied' && !loading && !authLoading && user && analyticsCollection) {
       const permissionError = new FirestorePermissionError({
         path: analyticsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [error, loading, authLoading, analyticsCollection.path, user]);
+  }, [error, loading, authLoading, analyticsCollection, user]);
+
+  if (!firestore) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Configuration Missing</AlertTitle>
+        <AlertDescription>
+          Firebase is not configured. Analytics tracking is currently offline.
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   if (loading) {
     return (
@@ -78,12 +98,10 @@ export default function AnalyticsDashboard() {
     ...(doc.data() as any)
   })) || [];
 
-  // 1. Basic Metrics
   const totalViews = events.length;
   const sessions = new Set(events.map(e => e.sessionId)).size;
   const viewsPerSession = sessions > 0 ? (totalViews / sessions).toFixed(1) : 0;
 
-  // 2. Page Popularity Data (for Chart)
   const pathCounts = events.reduce((acc: { [key: string]: number }, event: any) => {
     const path = event.path || '/';
     acc[path] = (acc[path] || 0) + 1;
@@ -93,14 +111,12 @@ export default function AnalyticsDashboard() {
   const chartData = Object.entries(pathCounts)
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value)
-    .slice(0, 5); // Top 5 pages
+    .slice(0, 5);
 
-  // 3. Recent Events
   const recentEvents = events.slice(0, 10);
 
   return (
     <div className="space-y-6">
-      {/* Metrics Row */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-card shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -153,14 +169,13 @@ export default function AnalyticsDashboard() {
               {chartData[0]?.name || '/'}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              {chartData[0]?.value || 0} views today
+              {chartData[0]?.value || 0} views total
             </p>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        {/* Page Views Chart */}
         <Card className="lg:col-span-4">
           <CardHeader>
             <CardTitle>Content Distribution</CardTitle>
@@ -192,7 +207,6 @@ export default function AnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        {/* Recent Events List */}
         <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle>Real-time Feed</CardTitle>

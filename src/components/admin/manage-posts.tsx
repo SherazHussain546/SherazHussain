@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc, CollectionReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuth } from '@/hooks/use-auth';
@@ -19,10 +19,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil } from 'lucide-react';
+import { Trash2, Pencil, AlertCircle } from 'lucide-react';
 import { Post } from '@/types/database';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const postSchema = z.object({
   platform: z.enum(['LinkedIn', 'Instagram', 'Facebook', 'GitHub', 'Other']),
@@ -43,19 +44,26 @@ export default function ManagePosts() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
-  const postsCollection = useMemo(() => collection(firestore, 'posts'), []);
-  const postsQuery = useMemo(() => query(postsCollection, orderBy('createdAt', 'desc')), [postsCollection]);
+  // High-Fidelity Guard: Ensure firestore is initialized before creating references
+  const postsCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'posts') as CollectionReference<DocumentData> : null;
+  }, []);
+
+  const postsQuery = useMemo(() => {
+    return postsCollection ? query(postsCollection, orderBy('createdAt', 'desc')) : null;
+  }, [postsCollection]);
+
   const [postsSnapshot, postsLoading, postsError] = useCollection(postsQuery);
 
   useEffect(() => {
-    if (postsError && postsError.code === 'permission-denied' && !postsLoading && !authLoading && user) {
+    if (postsError && postsError.code === 'permission-denied' && !postsLoading && !authLoading && user && postsCollection) {
       const permissionError = new FirestorePermissionError({
         path: postsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [postsError, postsLoading, authLoading, postsCollection.path, user]);
+  }, [postsError, postsLoading, authLoading, postsCollection, user]);
 
   const form = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
@@ -84,6 +92,7 @@ export default function ManagePosts() {
   });
 
   const onSubmit: SubmitHandler<PostFormValues> = async (data) => {
+    if (!postsCollection) return;
     setLoading(true);
     addDoc(postsCollection, {
       ...data,
@@ -110,7 +119,7 @@ export default function ManagePosts() {
   };
 
   const onEditSubmit: SubmitHandler<PostFormValues> = async (data) => {
-    if (!editingPost) return;
+    if (!editingPost || !firestore) return;
     setLoading(true);
     const postRef = doc(firestore, 'posts', editingPost.id);
     updateDoc(postRef, data)
@@ -136,6 +145,7 @@ export default function ManagePosts() {
   };
 
   const deletePost = async (id: string) => {
+    if (!firestore) return;
     const postRef = doc(firestore, 'posts', id);
     deleteDoc(postRef)
     .catch(async (serverError) => {
@@ -164,6 +174,18 @@ export default function ManagePosts() {
         hashtags: post.hashtags || '',
     });
     setIsEditDialogOpen(true);
+  }
+
+  if (!firestore) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Configuration Missing</AlertTitle>
+        <AlertDescription>
+          Firebase is not configured. Post management is currently offline.
+        </AlertDescription>
+      </Alert>
+    );
   }
 
   const posts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];

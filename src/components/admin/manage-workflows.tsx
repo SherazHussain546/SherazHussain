@@ -1,11 +1,10 @@
-
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
@@ -17,7 +16,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { BrainCircuit, Trash2, FileJson, Play, Terminal } from 'lucide-react';
+import { BrainCircuit, Trash2, FileJson, Play, Terminal, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const workflowSchema = z.object({
   name: z.string().min(1, 'Name is required.'),
@@ -39,8 +39,15 @@ export default function ManageWorkflows() {
   const [loading, setLoading] = useState(false);
   const [selectedJson, setSelectedJson] = useState<any>(null);
 
-  const workflowsCollection = collection(firestore, 'workflows');
-  const workflowsQuery = query(workflowsCollection, orderBy('createdAt', 'desc'));
+  // High-Fidelity Guard: Ensure firestore is initialized before creating references
+  const workflowsCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'workflows') as CollectionReference<DocumentData> : null;
+  }, []);
+
+  const workflowsQuery = useMemo(() => {
+    return workflowsCollection ? query(workflowsCollection, orderBy('createdAt', 'desc')) : null;
+  }, [workflowsCollection]);
+
   const [snapshot, workflowsLoading] = useCollection(workflowsQuery);
 
   const form = useForm<WorkflowFormValues>({
@@ -53,6 +60,7 @@ export default function ManageWorkflows() {
   });
 
   const onSubmit = async (data: WorkflowFormValues) => {
+    if (!workflowsCollection) return;
     setLoading(true);
     try {
       await addDoc(workflowsCollection, {
@@ -77,9 +85,22 @@ export default function ManageWorkflows() {
   };
 
   const deleteWorkflow = async (id: string) => {
+    if (!firestore) return;
     await deleteDoc(doc(firestore, 'workflows', id));
     toast({ title: 'Workflow Deleted' });
   };
+
+  if (!firestore) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Configuration Missing</AlertTitle>
+        <AlertDescription>
+          Firebase is not configured. Workflow management is currently offline.
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   const workflows = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() })) || [];
 

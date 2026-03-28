@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc, CollectionReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuth } from '@/hooks/use-auth';
@@ -19,9 +19,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil } from 'lucide-react';
+import { Trash2, Pencil, AlertCircle } from 'lucide-react';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const goalSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
@@ -39,21 +40,26 @@ export default function ManageGoals() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<any>(null);
 
-  const goalsCollection = useMemo(() => collection(firestore, 'projectGoals'), []);
-  const goalsQuery = useMemo(() => query(goalsCollection, orderBy('order', 'asc')), [goalsCollection]);
+  // High-Fidelity Guard: Ensure firestore is initialized before creating collection reference
+  const goalsCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'projectGoals') as CollectionReference<DocumentData> : null;
+  }, []);
+
+  const goalsQuery = useMemo(() => {
+    return goalsCollection ? query(goalsCollection, orderBy('order', 'asc')) : null;
+  }, [goalsCollection]);
+
   const [goalsSnapshot, goalsLoading, goalsError] = useCollection(goalsQuery);
 
   useEffect(() => {
-    // Only emit permission error if we are definitively seeing a permission-denied code 
-    // from the server after the initial loading state has resolved.
-    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && !authLoading) {
+    if (goalsError && goalsError.code === 'permission-denied' && !goalsLoading && !authLoading && goalsCollection) {
       const permissionError = new FirestorePermissionError({
         path: goalsCollection.path,
         operation: 'list',
       } satisfies SecurityRuleContext);
       errorEmitter.emit('permission-error', permissionError);
     }
-  }, [goalsError, goalsLoading, authLoading, goalsCollection.path]);
+  }, [goalsError, goalsLoading, authLoading, goalsCollection]);
 
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(goalSchema),
@@ -76,6 +82,7 @@ export default function ManageGoals() {
   });
 
   const onSubmit: SubmitHandler<GoalFormValues> = async (data) => {
+    if (!goalsCollection) return;
     setLoading(true);
     addDoc(goalsCollection, {
       ...data,
@@ -102,7 +109,7 @@ export default function ManageGoals() {
   };
 
   const onEditSubmit: SubmitHandler<GoalFormValues> = async (data) => {
-    if (!editingGoal) return;
+    if (!editingGoal || !firestore) return;
     setLoading(true);
     const goalRef = doc(firestore, 'projectGoals', editingGoal.id);
     updateDoc(goalRef, data)
@@ -128,6 +135,7 @@ export default function ManageGoals() {
   };
 
   const deleteGoal = async (id: string) => {
+    if (!firestore) return;
     const goalRef = doc(firestore, 'projectGoals', id);
     deleteDoc(goalRef)
     .catch(async (serverError) => {
@@ -150,6 +158,18 @@ export default function ManageGoals() {
         ...goal,
     });
     setIsEditDialogOpen(true);
+  }
+
+  if (!firestore) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Configuration Missing</AlertTitle>
+        <AlertDescription>
+          Firebase is not configured. Goal management is currently offline.
+        </AlertDescription>
+      </Alert>
+    );
   }
 
   const goals = goalsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() })) || [];

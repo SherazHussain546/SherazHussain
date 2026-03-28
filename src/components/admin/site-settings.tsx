@@ -1,11 +1,10 @@
-
 'use client';
 
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, DocumentReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
@@ -15,6 +14,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '../ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 const settingsSchema = z.object({
   founderImageUrl: z.string().url('Please enter a valid URL.'),
@@ -26,7 +27,8 @@ export default function SiteSettings() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  const settingsRef = doc(firestore, 'siteConfig', 'main');
+  // High-Fidelity Guard: Ensure firestore is initialized before creating reference
+  const settingsRef = firestore ? doc(firestore, 'siteConfig', 'main') as DocumentReference<DocumentData> : null;
   const [settings, settingsLoading, settingsError] = useDocumentData(settingsRef);
 
   const form = useForm<SettingsFormValues>({
@@ -40,6 +42,7 @@ export default function SiteSettings() {
   });
 
   const onSubmit: SubmitHandler<SettingsFormValues> = async (data) => {
+    if (!settingsRef) return;
     setLoading(true);
     try {
       await setDoc(settingsRef, data, { merge: true });
@@ -58,6 +61,18 @@ export default function SiteSettings() {
       setLoading(false);
     }
   };
+
+  if (!firestore) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Configuration Missing</AlertTitle>
+        <AlertDescription>
+          Firebase is not configured. Site settings are currently offline.
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   if (settingsLoading) {
     return (
