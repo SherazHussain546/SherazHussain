@@ -1,23 +1,25 @@
 
 import { MetadataRoute } from 'next'
-import { projects } from '@/lib/data'
+import { projects as staticProjects } from '@/lib/data'
 import fs from 'fs';
 import path from 'path';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { initializeFirebase } from '@/firebase';
 
 /**
  * Next.js sitemap configuration.
- * Using 'force-static' ensures the sitemap is generated as a static XML file during the build process,
- * which is the most reliable method for Netlify deployments and fast indexing.
+ * Dynamically synchronizes static system routes with Firestore registry assets.
  */
-export const dynamic = 'force-static'
- 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://sheraz.synctech.ie';
+  const { firestore } = initializeFirebase();
 
-  // Define the core static routes of the portfolio
+  // 1. Core Strategic Routes
   const staticRoutes = [
     '',
     '/projects',
+    '/archives',
+    '/posts',
     '/survey',
     '/forms',
     '/support',
@@ -25,37 +27,74 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/ai-architect',
     '/contact',
     '/privacy',
+    '/archives/category/Project',
+    '/archives/category/Study',
+    '/archives/category/Course',
+    '/archives/category/CaseStudy',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: (route === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly' | 'always' | 'hourly' | 'daily' | 'yearly' | 'never',
+    changeFrequency: (route === '' ? 'weekly' : 'monthly') as any,
     priority: route === '' ? 1.0 : (route === '/privacy' ? 0.5 : 0.8),
   }));
 
-  // Dynamically generate entries for each project case study
-  const projectEntries = projects.map((project) => ({
+  // 2. Resolve Dynamic Projects (Static + Firestore)
+  let projectEntries: MetadataRoute.Sitemap = staticProjects.map((project) => ({
     url: `${baseUrl}/projects/${project.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
+    changeFrequency: 'monthly',
     priority: 0.7,
   }));
 
-  // Fetch all .md files from /docs to include in sitemap
-  const docsDir = path.join(process.cwd(), 'docs');
+  if (firestore) {
+    try {
+      const projSnap = await getDocs(query(collection(firestore, 'projects'), where('isPublished', '==', true)));
+      const dynamicProjEntries = projSnap.docs.map(doc => ({
+        url: `${baseUrl}/projects/${doc.data().slug}`,
+        lastModified: doc.data().createdAt?.toDate() || new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      }));
+      projectEntries = [...projectEntries, ...dynamicProjEntries];
+    } catch (e) {
+      console.warn('Sitemap Project Resolution Failed:', e);
+    }
+  }
+
+  // 3. Resolve Dynamic Archives (Local Files + Firestore Articles)
   let archiveEntries: MetadataRoute.Sitemap = [];
   
+  // Local .md files
+  const docsDir = path.join(process.cwd(), 'docs');
   if (fs.existsSync(docsDir)) {
     const files = fs.readdirSync(docsDir);
-    archiveEntries = files
+    const localEntries = files
       .filter(file => file.endsWith('.md'))
       .map(file => ({
         url: `${baseUrl}/archives/${file.replace('.md', '')}`,
-        lastModified: new Date(),
+        lastModified: fs.statSync(path.join(docsDir, file)).mtime,
         changeFrequency: 'monthly' as const,
         priority: 0.6,
       }));
+    archiveEntries = [...archiveEntries, ...localEntries];
+  }
+
+  // Firestore Articles
+  if (firestore) {
+    try {
+      const artSnap = await getDocs(query(collection(firestore, 'articles'), where('isPublished', '==', true)));
+      const dynamicArtEntries = artSnap.docs.map(doc => ({
+        url: `${baseUrl}/archives/${doc.data().slug}`,
+        lastModified: doc.data().publishDate?.toDate() || new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      }));
+      archiveEntries = [...archiveEntries, ...dynamicArtEntries];
+    } catch (e) {
+      console.warn('Sitemap Article Resolution Failed:', e);
+    }
   }
 
   return [...staticEntries, ...projectEntries, ...archiveEntries];
