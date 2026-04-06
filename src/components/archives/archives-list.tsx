@@ -1,13 +1,13 @@
-
 'use client';
 
 import { useMemo } from 'react';
 import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, AlertCircle } from 'lucide-react';
+import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, AlertCircle, Database } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface ArchiveDoc {
   slug: string;
@@ -89,7 +89,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
   const allDocuments = [...filteredLocalDocs, ...remoteDocs];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between border-b pb-4">
         <div className="flex items-center gap-3">
           <Archive className="h-5 w-5 text-primary" />
@@ -106,23 +106,24 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
       </div>
 
       {error && (
-        <div className="p-6 rounded-xl border border-destructive/20 bg-destructive/5 flex flex-col gap-2 text-destructive">
-          <div className="flex items-center gap-4">
-            <AlertCircle className="h-5 w-5 shrink-0" />
-            <p className="text-sm font-bold">Technical Registry Synchronization Error</p>
-          </div>
-          <p className="text-xs opacity-80 leading-relaxed font-mono whitespace-pre-wrap">
-            {error.message || 'A connection to the remote repository could not be established.'}
-          </p>
-          {error.message?.includes('index') && (
-            <p className="text-[10px] uppercase tracking-widest font-bold mt-2">
-              Note: A Firestore composite index may be required. Please follow the link in the error message if provided in your console.
+        <Alert variant="destructive" className="bg-destructive/5 border-destructive/20 text-destructive">
+          <Database className="h-4 w-4" />
+          <AlertTitle className="font-bold">Database Index Required</AlertTitle>
+          <AlertDescription className="mt-2 space-y-4">
+            <p className="text-xs leading-relaxed opacity-90">
+              The dynamic categorization engine requires a composite index to synchronize correctly. This is a standard security and performance requirement.
             </p>
-          )}
-        </div>
+            <div className="p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap">
+              {error.message}
+            </div>
+            <p className="text-[10px] uppercase font-bold tracking-widest">
+              Action Required: Please follow the link provided above in your Firebase Console to authorize this query.
+            </p>
+          </AlertDescription>
+        </Alert>
       )}
 
-      {allDocuments.length === 0 && !isLoading ? (
+      {allDocuments.length === 0 && !isLoading && !error ? (
         <div className="p-20 text-center border-2 border-dashed rounded-[2rem] opacity-40">
           <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
           <p className="font-space-mono text-[10px] uppercase tracking-widest">
