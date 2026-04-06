@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { education as staticEdu } from '@/lib/data';
 import { Education } from '@/types/database';
@@ -22,7 +23,8 @@ export default function EducationSection() {
   }, [firestore]);
 
   const eduQuery = useMemoFirebase(() => {
-    return eduCollection ? query(eduCollection, orderBy('createdAt', 'desc')) : null;
+    // Only show published entries to public visitors
+    return eduCollection ? query(eduCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [eduCollection]);
 
   const { data: dynamicEducations, isLoading } = useCollection<Education>(eduQuery);
@@ -34,6 +36,7 @@ export default function EducationSection() {
       university: staticEdu.university,
       graduationDate: staticEdu.graduationDate,
       awards: staticEdu.awards,
+      isPublished: true,
       createdAt: null
     }];
     return [...(dynamicEducations || []), ...formattedStatic];

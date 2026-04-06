@@ -15,9 +15,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { FolderKanban, Trash2, Pencil, Globe, Code2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { FolderKanban, Trash2, Pencil, Eye, EyeOff, Code2 } from 'lucide-react';
 import { Project } from '@/types/database';
 
 const projectSchema = z.object({
@@ -30,6 +32,7 @@ const projectSchema = z.object({
   liveLink: z.string().url('Invalid Live URL').optional().or(z.literal('')),
   image: z.string().url('Invalid Image URL'),
   imageHint: z.string().min(1, 'Image hint required for AI.'),
+  isPublished: z.boolean().default(true),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
@@ -37,6 +40,8 @@ type ProjectFormValues = z.infer<typeof projectSchema>;
 export default function ManageProjects() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingProj, setEditingProj] = useState<Project | null>(null);
 
   const projCollection = useMemo(() => {
     return firestore ? collection(firestore, 'projects') as CollectionReference<DocumentData> : null;
@@ -46,11 +51,16 @@ export default function ManageProjects() {
     return projCollection ? query(projCollection, orderBy('createdAt', 'desc')) : null;
   }, [projCollection]);
 
-  const [snapshot] = useCollection(projQuery);
+  const [snapshot, projectsLoading] = useCollection(projQuery);
 
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
-    defaultValues: { name: '', slug: '', description: '', fullDescription: '', stack: '', link: '', liveLink: '', image: '', imageHint: '' },
+    defaultValues: { name: '', slug: '', description: '', fullDescription: '', stack: '', link: '', liveLink: '', image: '', imageHint: '', isPublished: true },
+  });
+
+  const editForm = useForm<ProjectFormValues>({
+    resolver: zodResolver(projectSchema),
+    defaultValues: { name: '', slug: '', description: '', fullDescription: '', stack: '', link: '', liveLink: '', image: '', imageHint: '', isPublished: true },
   });
 
   const onSubmit: SubmitHandler<ProjectFormValues> = async (data) => {
@@ -60,7 +70,7 @@ export default function ManageProjects() {
       await addDoc(projCollection, {
         ...data,
         stack: data.stack.split(',').map(s => s.trim()),
-        challenges: [], // Default empty, can be expanded later
+        challenges: [],
         solutions: [],
         results: [],
         createdAt: serverTimestamp(),
@@ -74,17 +84,56 @@ export default function ManageProjects() {
     }
   };
 
+  const onEditSubmit: SubmitHandler<ProjectFormValues> = async (data) => {
+    if (!editingProj || !firestore) return;
+    setLoading(true);
+    const projRef = doc(firestore, 'projects', editingProj.id);
+    try {
+      await updateDoc(projRef, {
+        ...data,
+        stack: data.stack.split(',').map(s => s.trim()),
+      });
+      toast({ title: 'Case Study Updated!' });
+      setIsEditDialogOpen(false);
+      setEditingProj(null);
+    } catch (e) {
+      toast({ variant: 'destructive', title: 'Update Failed' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleVisibility = async (proj: Project) => {
+    if (!firestore) return;
+    const projRef = doc(firestore, 'projects', proj.id);
+    try {
+      await updateDoc(projRef, { isPublished: !proj.isPublished });
+      toast({ title: proj.isPublished ? 'Project Unpublished' : 'Project Published' });
+    } catch (e) {
+      toast({ variant: 'destructive', title: 'Error updating visibility' });
+    }
+  };
+
   const deleteProj = async (id: string) => {
     if (!firestore) return;
     await deleteDoc(doc(firestore, 'projects', id));
     toast({ title: 'Project Archived' });
   };
 
+  const openEditDialog = (proj: Project) => {
+    setEditingProj(proj);
+    editForm.reset({
+      ...proj,
+      stack: proj.stack?.join(', ') || '',
+    });
+    setIsEditDialogOpen(true);
+  };
+
   const projects = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project)) || [];
 
   return (
     <div className="grid gap-8">
-      <Card>
+      <Card className="border-primary/20 shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2"><Code2 className="h-5 w-5 text-primary" />New Engineering Showcase</CardTitle>
           <CardDescription>Archive a production-grade repository and generate a high-fidelity case study.</CardDescription>
@@ -94,35 +143,35 @@ export default function ManageProjects() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <FormField control={form.control} name="name" render={({ field }) => (
-                  <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input placeholder="Market Genius" {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input placeholder="Market Genius" {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
                 <FormField control={form.control} name="slug" render={({ field }) => (
-                  <FormItem><FormLabel>URL Slug</FormLabel><FormControl><Input placeholder="market-genius" {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>URL Slug</FormLabel><FormControl><Input placeholder="market-genius" {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
               </div>
               <FormField control={form.control} name="description" render={({ field }) => (
-                <FormItem><FormLabel>One-Line Excerpt</FormLabel><FormControl><Input placeholder="AI-powered financial signal generator..." {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>One-Line Excerpt</FormLabel><FormControl><Input placeholder="AI-powered financial signal generator..." {...field} className="bg-muted/5" /></FormControl></FormItem>
               )} />
               <FormField control={form.control} name="fullDescription" render={({ field }) => (
-                <FormItem><FormLabel>Case Study Narrative</FormLabel><FormControl><Textarea className="h-40" placeholder="Describe the problem, approach, and engineering impact..." {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Case Study Narrative</FormLabel><FormControl><Textarea className="h-40 bg-muted/5" placeholder="Describe the problem, approach, and engineering impact..." {...field} /></FormControl></FormItem>
               )} />
               <div className="grid md:grid-cols-3 gap-4">
                 <FormField control={form.control} name="stack" render={({ field }) => (
-                  <FormItem><FormLabel>Stack (CSV)</FormLabel><FormControl><Input placeholder="Next.js, Genkit, AWS" {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>Stack (CSV)</FormLabel><FormControl><Input placeholder="Next.js, Genkit, AWS" {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
                 <FormField control={form.control} name="link" render={({ field }) => (
-                  <FormItem><FormLabel>GitHub URL</FormLabel><FormControl><Input placeholder="https://github.com/..." {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>GitHub URL</FormLabel><FormControl><Input placeholder="https://github.com/..." {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
                 <FormField control={form.control} name="liveLink" render={({ field }) => (
-                  <FormItem><FormLabel>Deployment URL</FormLabel><FormControl><Input placeholder="https://..." {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>Deployment URL</FormLabel><FormControl><Input placeholder="https://..." {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <FormField control={form.control} name="image" render={({ field }) => (
-                  <FormItem><FormLabel>Cover Image URL</FormLabel><FormControl><Input placeholder="https://picsum.photos/..." {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>Cover Image URL</FormLabel><FormControl><Input placeholder="https://picsum.photos/..." {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
                 <FormField control={form.control} name="imageHint" render={({ field }) => (
-                  <FormItem><FormLabel>AI Accessibility Hint</FormLabel><FormControl><Input placeholder="financial dashboard" {...field} /></FormControl></FormItem>
+                  <FormItem><FormLabel>AI Accessibility Hint</FormLabel><FormControl><Input placeholder="financial dashboard" {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
               </div>
               <Button type="submit" disabled={loading} className="w-full h-12 font-bold">Synchronize Project</Button>
@@ -131,24 +180,39 @@ export default function ManageProjects() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-border/40 shadow-sm">
         <CardHeader><CardTitle>Showcase Inventory</CardTitle></CardHeader>
         <CardContent>
+          {projectsLoading && <p className="text-sm text-muted-foreground animate-pulse font-mono uppercase tracking-widest">Scanning Repository...</p>}
           <Table>
-            <TableHeader><TableRow><TableHead>Project</TableHead><TableHead>Slug</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
+            <TableHeader><TableRow><TableHead className="text-[10px] uppercase tracking-widest">Project</TableHead><TableHead className="text-[10px] uppercase tracking-widest">Status</TableHead><TableHead className="text-right text-[10px] uppercase tracking-widest">Actions</TableHead></TableRow></TableHeader>
             <TableBody>
               {projects.map(p => (
-                <TableRow key={p.id}>
+                <TableRow key={p.id} className="group hover:bg-muted/30 transition-colors">
                   <TableCell className="font-bold">{p.name}</TableCell>
-                  <TableCell className="font-mono text-xs">{p.slug}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => toggleVisibility(p)}
+                      className={p.isPublished ? "text-emerald-600" : "text-amber-600"}
+                    >
+                      {p.isPublished ? <Eye className="h-4 w-4 mr-1" /> : <EyeOff className="h-4 w-4 mr-1" />}
+                      <span className="text-[9px] uppercase font-bold">{p.isPublished ? 'Live' : 'Draft'}</span>
+                    </Button>
+                  </TableCell>
+                  <TableCell className="text-right flex justify-end gap-1">
+                    <Button variant="ghost" size="icon" onClick={() => openEditDialog(p)} className="h-8 w-8 hover:text-primary"><Pencil className="h-4 w-4" /></Button>
                     <AlertDialog>
-                      <AlertDialogTrigger asChild><Button variant="ghost" size="icon"><Trash2 className="h-4 w-4 text-destructive" /></Button></AlertDialogTrigger>
+                      <AlertDialogTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive/10"><Trash2 className="h-4 w-4" /></Button></AlertDialogTrigger>
                       <AlertDialogContent>
-                        <AlertDialogTitle>Archive this showcase?</AlertDialogTitle>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Archive this showcase?</AlertDialogTitle>
+                          <AlertDialogDescription>This will remove the project case study from your public gallery.</AlertDialogDescription>
+                        </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => deleteProj(p.id)}>Archive</AlertDialogAction>
+                          <AlertDialogAction onClick={() => deleteProj(p.id)} className="bg-destructive hover:bg-destructive/90">Archive</AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -159,6 +223,54 @@ export default function ManageProjects() {
           </Table>
         </CardContent>
       </Card>
+
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-2xl bg-white border-primary/20 shadow-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader><DialogTitle className="text-2xl font-bold font-playfair">Edit Case Study</DialogTitle></DialogHeader>
+          <Form {...editForm}>
+            <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-4 py-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                <FormField control={editForm.control} name="name" render={({ field }) => (
+                  <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
+                )} />
+                <FormField control={editForm.control} name="slug" render={({ field }) => (
+                  <FormItem><FormLabel>Slug</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
+                )} />
+              </div>
+              <FormField control={editForm.control} name="description" render={({ field }) => (
+                <FormItem><FormLabel>Short Description</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
+              )} />
+              <FormField control={editForm.control} name="fullDescription" render={({ field }) => (
+                <FormItem><FormLabel>Case Study Narrative</FormLabel><FormControl><Textarea className="h-40 bg-muted/5" {...field} /></FormControl></FormItem>
+              )} />
+              <div className="grid md:grid-cols-3 gap-4">
+                <FormField control={editForm.control} name="stack" render={({ field }) => (
+                  <FormItem><FormLabel>Stack</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
+                )} />
+                <FormField control={editForm.control} name="link" render={({ field }) => (
+                  <FormItem><FormLabel>GitHub</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
+                )} />
+                <FormField control={editForm.control} name="liveLink" render={({ field }) => (
+                  <FormItem><FormLabel>Live URL</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
+                )} />
+              </div>
+              <FormField control={editForm.control} name="isPublished" render={({ field }) => (
+                <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-primary/5">
+                  <div>
+                    <FormLabel className="text-base">Public Visibility</FormLabel>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Live in the Project Gallery</p>
+                  </div>
+                  <FormControl><Switch checked={field.value} onCheckedChange={field.onChange} /></FormControl>
+                </FormItem>
+              )} />
+              <DialogFooter className="gap-2 sm:gap-0">
+                <DialogClose asChild><Button type="button" variant="secondary" className="font-bold">Cancel</Button></DialogClose>
+                <Button type="submit" disabled={loading} className="font-bold">{loading ? 'Saving...' : 'Update Showcase'}</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

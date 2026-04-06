@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { allCertificates as staticCerts } from '@/lib/data';
 import { Certification } from '@/types/database';
@@ -33,7 +34,8 @@ export default function CertificationsSection() {
   }, [firestore]);
 
   const certsQuery = useMemoFirebase(() => {
-    return certsCollection ? query(certsCollection, orderBy('createdAt', 'desc')) : null;
+    // Only show published entries to public visitors
+    return certsCollection ? query(certsCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [certsCollection]);
 
   const { data: dynamicCerts, isLoading } = useCollection<Certification>(certsQuery);
@@ -44,7 +46,8 @@ export default function CertificationsSection() {
       id: `static-${i}`, 
       iconName: (c.icon as any).name || 'Award',
       skills: c.skills || [],
-      points: c.points || []
+      points: c.points || [],
+      isPublished: true
     }));
     return [...(dynamicCerts || []), ...formattedStatic];
   }, [dynamicCerts]);

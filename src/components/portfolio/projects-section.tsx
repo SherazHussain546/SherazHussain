@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { projects as staticProjects } from '@/lib/data';
 import { Project } from '@/types/database';
@@ -23,13 +24,14 @@ export default function ProjectsSection() {
   }, [firestore]);
 
   const projQuery = useMemoFirebase(() => {
-    return projCollection ? query(projCollection, orderBy('createdAt', 'desc')) : null;
+    // Only show published entries to public visitors
+    return projCollection ? query(projCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [projCollection]);
 
   const { data: dynamicProjects, isLoading } = useCollection<Project>(projQuery);
 
   const allProjects = useMemo(() => {
-    const formattedStatic = staticProjects.map((p, i) => ({ ...p, id: `static-${i}` }));
+    const formattedStatic = staticProjects.map((p, i) => ({ ...p, id: `static-${i}`, isPublished: true }));
     return [...(dynamicProjects || []), ...formattedStatic];
   }, [dynamicProjects]);
 

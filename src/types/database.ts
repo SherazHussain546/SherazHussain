@@ -42,6 +42,7 @@ export interface Experience {
   period: string;
   description: string;
   points: string[];
+  isPublished: boolean;
   createdAt: Timestamp;
 }
 
@@ -51,6 +52,7 @@ export interface Education {
   university: string;
   graduationDate: string;
   awards: string[];
+  isPublished: boolean;
   createdAt: Timestamp;
 }
 
@@ -63,6 +65,7 @@ export interface Certification {
   skills: string[];
   points: string[];
   iconName: string;
+  isPublished: boolean;
   createdAt: Timestamp;
 }
 
@@ -80,6 +83,7 @@ export interface Project {
   liveLink?: string;
   image: string;
   imageHint: string;
+  isPublished: boolean;
   createdAt: Timestamp;
 }
 

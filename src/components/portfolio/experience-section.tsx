@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { experiences as staticExps } from '@/lib/data';
 import { Experience } from '@/types/database';
@@ -19,13 +20,14 @@ export default function ExperienceSection() {
   }, [firestore]);
 
   const expQuery = useMemoFirebase(() => {
-    return expCollection ? query(expCollection, orderBy('createdAt', 'desc')) : null;
+    // Only show published entries to public visitors
+    return expCollection ? query(expCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [expCollection]);
 
   const { data: dynamicExps, isLoading } = useCollection<Experience>(expQuery);
   
   const allExperiences = useMemo(() => {
-    const formattedStatic = staticExps.map((e, i) => ({ ...e, id: `static-${i}` }));
+    const formattedStatic = staticExps.map((e, i) => ({ ...e, id: `static-${i}`, isPublished: true }));
     return [...(dynamicExps || []), ...formattedStatic];
   }, [dynamicExps]);
 
