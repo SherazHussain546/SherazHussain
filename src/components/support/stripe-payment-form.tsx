@@ -1,152 +1,53 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { CreditCard, Zap, Loader2, ShieldCheck, Sparkles, AlertCircle, X } from 'lucide-react';
-import { createCheckoutSession } from '@/app/actions/stripe';
-import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import { loadStripe } from '@stripe/stripe-js';
-import {
-  EmbeddedCheckoutProvider,
-  EmbeddedCheckout
-} from '@stripe/react-stripe-js';
+import { Zap, ShieldCheck, Sparkles, Heart } from 'lucide-react';
+import Link from 'next/link';
 
-// Publishable key must be provided via NEXT_PUBLIC_ env var.
-// It is safe to be public as it only identifies your account.
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
-
+/**
+ * StripePaymentForm - The High-Fidelity Engagement Layer.
+ * Re-engineered to utilize a direct Stripe Payment Link for global scalability and maximum security.
+ */
 export default function StripePaymentForm() {
-  const [amount, setAmount] = useState<string>('25');
-  const [loading, setLoading] = useState(false);
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const { toast } = useToast();
-
-  const handlePaymentInitiation = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const numAmount = parseFloat(amount);
-    
-    if (isNaN(numAmount) || numAmount < 5) {
-      toast({
-        variant: 'destructive',
-        title: 'Threshold Not Met',
-        description: 'Please enter an amount of at least €5.00 to support the mission.',
-      });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await createCheckoutSession(numAmount);
-      if (response.clientSecret) {
-        setClientSecret(response.clientSecret);
-      }
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Pipeline Error',
-        description: error.message || 'Could not initiate secure checkout. Verify configuration.',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const quickAmounts = ['10', '25', '50', '100'];
-
-  if (clientSecret) {
-    return (
-      <div className="space-y-6 animate-in fade-in zoom-in duration-300">
-        <div className="flex items-center justify-between border-b pb-4 mb-4">
-          <div>
-            <h3 className="font-playfair font-bold text-xl">Secure Checkout</h3>
-            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Contribution: €{amount}</p>
-          </div>
-          <Button variant="ghost" size="icon" onClick={() => setClientSecret(null)} className="hover:bg-destructive/10 hover:text-destructive">
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-        <div id="checkout" className="min-h-[400px] rounded-none overflow-hidden border border-primary/10 bg-muted/5">
-          <EmbeddedCheckoutProvider
-            stripe={stripePromise}
-            options={{ clientSecret }}
-          >
-            <EmbeddedCheckout />
-          </EmbeddedCheckoutProvider>
-        </div>
-      </div>
-    );
-  }
+  const stripeLink = "https://donate.stripe.com/3cI9ATfTL8112VB0pBbMQ00";
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-3">
-        <Label htmlFor="amount" className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
-          <CreditCard className="h-3 w-3" />
-          Contribution (EUR)
-        </Label>
-        <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-primary">€</span>
-          <Input
-            id="amount"
-            type="number"
-            min="5"
-            step="1"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="pl-10 h-14 rounded-none border-2 border-primary/10 focus:border-primary transition-all font-bold text-xl bg-muted/5 font-sans"
-            placeholder="5.00"
-          />
+    <div className="space-y-8 py-4">
+      <div className="space-y-4 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+          <Heart className="h-8 w-8 text-primary fill-primary/20" />
         </div>
-        <p className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground flex items-center gap-1.5 opacity-60">
-          <AlertCircle className="h-3 w-3" />
-          Minimum support threshold: €5.00
-        </p>
-      </div>
-
-      <div className="grid grid-cols-4 gap-2">
-        {quickAmounts.map((q) => (
-          <Button
-            key={q}
-            variant="outline"
-            size="sm"
-            type="button"
-            onClick={() => setAmount(q)}
-            className={cn(
-              "h-10 rounded-none font-bold transition-all font-mono text-[10px]",
-              amount === q 
-                ? "border-primary bg-primary text-white hover:bg-primary" 
-                : "hover:border-primary/30 hover:bg-primary/5"
-            )}
-          >
-            €{q}
-          </Button>
-        ))}
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold font-playfair">Strategic Contribution</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed px-4">
+            Direct your support through our verified global pipeline. You will be redirected to our secure Stripe payment portal to complete your transaction.
+          </p>
+        </div>
       </div>
 
       <Button 
-        onClick={handlePaymentInitiation} 
-        disabled={loading}
-        className="w-full h-14 rounded-none font-bold text-xs uppercase tracking-[0.2em] shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90 text-white transition-all hover:scale-[1.02] active:scale-95"
+        asChild
+        className="w-full h-16 rounded-none font-bold text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90 text-white transition-all hover:scale-[1.02] active:scale-95 group"
       >
-        {loading ? (
-          <Loader2 className="mr-3 h-5 w-5 animate-spin" />
-        ) : (
-          <Zap className="mr-3 h-5 w-5" />
-        )}
-        {loading ? 'Initializing...' : 'Deploy Contribution'}
+        <Link href={stripeLink} target="_blank">
+          <Zap className="mr-3 h-5 w-5 transition-transform group-hover:scale-110" />
+          Initiate Secure Support
+        </Link>
       </Button>
 
-      <div className="flex items-center justify-center gap-4 opacity-30 grayscale hover:grayscale-0 transition-all pt-2">
-        <p className="text-[8px] font-mono font-bold uppercase tracking-widest flex items-center gap-1.5">
-          <ShieldCheck className="h-2.5 w-2.5" />
-          Stripe Secured
-        </p>
-        <p className="text-[8px] font-mono font-bold uppercase tracking-widest flex items-center gap-1.5">
-          <Sparkles className="h-2.5 w-2.5" />
-          Verified Integrity
+      <div className="flex flex-col items-center gap-4 pt-4">
+        <div className="flex items-center justify-center gap-6 opacity-40 grayscale hover:grayscale-0 transition-all">
+          <p className="text-[9px] font-mono font-bold uppercase tracking-widest flex items-center gap-2">
+            <ShieldCheck className="h-3 w-3 text-emerald-600" />
+            Stripe Secured
+          </p>
+          <p className="text-[9px] font-mono font-bold uppercase tracking-widest flex items-center gap-2">
+            <Sparkles className="h-3 w-3 text-primary" />
+            Verified Integrity
+          </p>
+        </div>
+        <p className="text-[8px] font-mono uppercase tracking-[0.2em] text-muted-foreground/60 text-center max-w-[200px]">
+          By clicking, you agree to our privacy protocols and high-fidelity transaction standards.
         </p>
       </div>
     </div>
