@@ -7,6 +7,9 @@ import { projects as staticProjects } from '@/lib/data';
 import { Project } from '@/types/database';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Code2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 /**
  * ProjectsSection - Engineering Showcase Component.
@@ -46,35 +49,51 @@ export default function ProjectsSection() {
             <Skeleton className="h-64 w-full" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border mb-16">
-            {allProjects.slice(0, 4).map((project) => (
-              <Link key={project.id} href={`/projects/${project.slug}`} className="group">
-                <div className="bg-background h-full p-8 transition-colors group-hover:bg-muted/5">
-                  <p className="font-space-mono text-[9px] uppercase tracking-widest text-primary mb-3">
-                    {project.stack[0]} · {project.stack[1] || 'AI'}
-                  </p>
-                  <h4 className="font-playfair text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-                    {project.name.split('–')[0]}
-                  </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.stack.slice(0, 3).map(tech => (
-                      <span key={tech} className="font-space-mono text-[8px] px-2 py-1 border border-border uppercase">
-                        {tech}
-                      </span>
-                    ))}
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border mb-12">
+              {allProjects.slice(0, 4).map((project) => (
+                <Link key={project.id} href={`/projects/${project.slug}`} className="group">
+                  <div className="bg-background h-full p-8 transition-colors group-hover:bg-muted/5">
+                    <p className="font-space-mono text-[9px] uppercase tracking-widest text-primary mb-3">
+                      {project.stack[0]} · {project.stack[1] || 'AI'}
+                    </p>
+                    <h4 className="font-playfair text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                      {project.name.split('–')[0]}
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.stack.slice(0, 3).map(tech => (
+                        <span key={tech} className="font-space-mono text-[8px] px-2 py-1 border border-border uppercase">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="flex justify-center mb-16">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button asChild variant="outline" size="lg" className="h-14 px-10 font-space-mono text-[10px] uppercase tracking-[0.25em] border-foreground text-foreground hover:bg-foreground hover:text-background transition-all rounded-none group">
+                  <Link href="/projects">
+                    Explore Full Project Gallery
+                    <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
+          </>
         )}
 
         <div className="pull-quote">
-          <blockquote>"The gap between a working prototype and a production-grade system is where most engineers stop. I am interested in closing that gap — every time."</blockquote>
-          <cite>— Sheraz Hussain, Principal Architect</cite>
+          <blockquote className="font-playfair italic text-xl md:text-2xl leading-snug">"The gap between a working prototype and a production-grade system is where most engineers stop. I am interested in closing that gap — every time."</blockquote>
+          <cite className="font-space-mono text-[10px] tracking-widest uppercase text-muted-foreground mt-4 block">— Sheraz Hussain, Principal Architect</cite>
         </div>
 
         <hr className="thick-rule" />
