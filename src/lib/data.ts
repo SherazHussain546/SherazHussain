@@ -268,6 +268,18 @@ export const education = {
 
 export const allCertificates: CertificateType[] = [
   {
+    title: 'Mastercard Cybersecurity Virtual Experience Program',
+    issuer: 'Forage',
+    date: 'March 2026',
+    icon: ShieldCheck,
+    skills: ['Communication', 'Cybersecurity', 'Data Analysis', 'Data Visualization', 'Design Thinking', 'Problem Solving', 'Security Awareness', 'Security Training', 'Strategy'],
+    points: [
+      'Completed a job simulation where I served as an analyst on Mastercard’s Security Awareness Team',
+      'Helped identify and report security threats such as phishing',
+      'Analyzed and identified which areas of the business needed more robust security training and implemented training courses and procedures for those teams',
+    ],
+  },
+  {
     title: 'EA Software Engineering Virtual Experience',
     issuer: 'Forage',
     date: 'Aug 31, 2025',
@@ -312,18 +324,6 @@ export const allCertificates: CertificateType[] = [
       'Completed a job simulation involving reading web activity logs',
       'Supported a client in a cyber security breach',
       'Answered questions to identify suspicious user activity',
-    ],
-  },
-  {
-    title: 'Mastercard Cybersecurity Virtual Experience Program',
-    issuer: 'Forage',
-    date: 'Feb 17, 2025',
-    icon: ShieldCheck,
-    skills: ['Communication', 'Cybersecurity', 'Data Analysis', 'Data Visualization', 'Design Thinking', 'Problem Solving', 'Security Awareness', 'Security Training', 'Strategy'],
-    points: [
-      'Completed a job simulation where I served as an analyst on Mastercard’s Security Awareness Team',
-      'Helped identify and report security threats such as phishing',
-      'Analyzed and identified which areas of the business needed more robust security training and implemented training courses and procedures for those teams',
     ],
   },
   {
