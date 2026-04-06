@@ -7,13 +7,12 @@ import remarkGfm from 'remark-gfm';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, FileText, Calendar, User } from 'lucide-react';
+import { ArrowLeft, FileText, Calendar, User, BookOpen, Share2 } from 'lucide-react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 
 /**
  * ArchivePage - High-Fidelity Markdown Document Viewer.
- * Dynamically fetches and renders documents from the /docs directory.
+ * Re-engineered with a "GitHub-esque" clean repository aesthetic.
  */
 export default async function ArchivePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -38,20 +37,28 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
       
       <main className="flex-1">
         {/* ──────────────── MASTHEAD ──────────────── */}
-        <header className="bg-[#071739] text-white py-16 md:py-24 px-6 text-center relative overflow-hidden">
-          <div className="container mx-auto max-w-4xl relative z-10">
-            <p className="font-space-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-              Technical Documentation Archive &nbsp;·&nbsp; Restricted Access
-            </p>
-            <h1 className="font-playfair text-[clamp(2.5rem,6vw,4rem)] font-black leading-[1.1] tracking-tight mb-6 capitalize">
-              {slug.replace(/-/g, ' ')}
-            </h1>
-            <div className="flex items-center justify-center gap-6 flex-wrap font-space-mono text-[10px] tracking-widest uppercase text-white/50">
-              <span className="flex items-center gap-2"><User className="h-3 w-3" /> Sheraz Hussain</span>
-              <span className="text-primary">·</span>
-              <span className="flex items-center gap-2"><Calendar className="h-3 w-3" /> Updated {lastModified}</span>
-              <span className="text-primary">·</span>
-              <span className="flex items-center gap-2"><FileText className="h-3 w-3" /> Markdown Source</span>
+        <header className="bg-[#071739] text-white py-12 md:py-16 px-6 relative overflow-hidden">
+          <div className="container mx-auto max-w-5xl">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4">
+                <nav className="flex items-center gap-2 font-space-mono text-[10px] tracking-[0.2em] uppercase text-primary/80">
+                  <Link href="/archives" className="hover:text-white transition-colors">Archives</Link>
+                  <span className="text-white/20">/</span>
+                  <span className="text-white">{slug}.md</span>
+                </nav>
+                <h1 className="font-playfair text-[clamp(2rem,5vw,3.5rem)] font-black leading-tight tracking-tight capitalize">
+                  {slug.replace(/-/g, ' ')}
+                </h1>
+                <div className="flex items-center gap-6 font-space-mono text-[9px] tracking-widest uppercase text-white/40">
+                  <span className="flex items-center gap-2"><User className="h-3 w-3 text-primary" /> Sheraz Hussain</span>
+                  <span className="flex items-center gap-2"><Calendar className="h-3 w-3 text-primary" /> Updated {lastModified}</span>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <Button variant="outline" size="sm" className="bg-white/5 border-white/10 text-white hover:bg-white/10 font-mono text-[10px] uppercase tracking-widest">
+                  <Share2 className="h-3 w-3 mr-2" /> Share
+                </Button>
+              </div>
             </div>
           </div>
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
@@ -62,30 +69,56 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
           />
         </header>
 
-        {/* ──────────────── CONTENT BODY ──────────────── */}
-        <div className="max-w-[860px] mx-auto px-6 py-12 md:py-20">
-          <Button asChild variant="ghost" size="sm" className="mb-12 -ml-3 gap-2 text-muted-foreground hover:text-primary font-mono text-[10px] uppercase tracking-widest">
-            <Link href="/">
+        {/* ──────────────── GITHUB-STYLE CONTENT BOX ──────────────── */}
+        <div className="max-w-[1000px] mx-auto px-6 py-12 md:py-16">
+          <Button asChild variant="ghost" size="sm" className="mb-8 -ml-3 gap-2 text-muted-foreground hover:text-primary font-mono text-[10px] uppercase tracking-widest">
+            <Link href="/archives">
               <ArrowLeft className="h-3 w-3" />
-              Return to Control Center
+              Browse Repository
             </Link>
           </Button>
 
-          <article className="prose prose-lg lg:prose-xl max-w-none prose-headings:font-playfair prose-headings:tracking-tight prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:px-6 prose-a:font-bold prose-img:rounded-[2rem] prose-img:shadow-2xl">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {content}
-            </ReactMarkdown>
-          </article>
+          <div className="rounded-xl border border-border bg-white shadow-xl overflow-hidden">
+            {/* Box Header (GitHub Style) */}
+            <div className="bg-muted/30 border-b px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-3 font-space-mono text-[10px] tracking-widest uppercase text-muted-foreground font-bold">
+                <BookOpen className="h-4 w-4 text-primary" />
+                Technical Assets / {slug}.md
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="font-space-mono text-[8px] uppercase tracking-widest text-muted-foreground">Source Verified</span>
+              </div>
+            </div>
 
-          <hr className="thick-rule" />
+            {/* Markdown Body */}
+            <div className="p-8 md:p-12 lg:p-16">
+              <article className="prose prose-slate lg:prose-lg max-w-none 
+                prose-headings:font-playfair prose-headings:tracking-tight prose-headings:font-bold
+                prose-h1:text-4xl prose-h1:border-b prose-h1:pb-4 prose-h1:mb-8
+                prose-h2:text-2xl prose-h2:mt-12 prose-h2:border-b prose-h2:pb-2
+                prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:font-playfair prose-blockquote:italic
+                prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
+                prose-img:rounded-2xl prose-img:shadow-2xl
+                prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+                prose-pre:bg-[#071739] prose-pre:text-white prose-pre:rounded-xl">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {content}
+                </ReactMarkdown>
+              </article>
+            </div>
+          </div>
 
-          <div className="pull-quote mt-20">
-            <blockquote className="font-playfair italic text-xl md:text-2xl leading-snug">
-              "Documentation is the blueprint of technical integrity. We publish our assets to maintain transparency in every high-stakes innovation."
-            </blockquote>
-            <cite className="font-space-mono text-[10px] tracking-widest uppercase text-muted-foreground mt-4 block">
-              — Sheraz Hussain, Knowledge Management Archive
-            </cite>
+          <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t pt-12">
+            <div className="space-y-2">
+              <p className="font-space-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold">Sheraz Hussain</p>
+              <p className="text-sm text-muted-foreground font-light">Engineering technical supremacy through absolute transparency.</p>
+            </div>
+            <Button asChild size="lg" className="bg-[#071739] hover:bg-primary text-white font-mono text-[10px] uppercase tracking-[0.2em] px-8 h-14 rounded-none transition-all">
+              <Link href="/contact">
+                Initiate Partnership Inquiry
+              </Link>
+            </Button>
           </div>
         </div>
       </main>
@@ -97,7 +130,7 @@ export default async function ArchivePage({ params }: { params: Promise<{ slug: 
 
 /**
  * Generate static params for all .md files in the /docs directory.
- * This ensures sub-second navigation and full SEO indexing.
+ * Ensures all documentation is pre-rendered for sub-second performance.
  */
 export async function generateStaticParams() {
   const docsDir = path.join(process.cwd(), 'docs');
