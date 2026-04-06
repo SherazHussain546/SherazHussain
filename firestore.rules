@@ -24,12 +24,13 @@ service cloud.firestore {
 
     /**
      * @description Checks if the authenticated user is registered as an administrator.
-     * Uses a direct existence check for isolation, with a verified email fallback for Sheraz.
+     * Includes a verified email fallback and specific UID recognition for Sheraz.
      */
     function isAdmin() {
       return isSignedIn() && (
-        exists(/databases/$(database)/documents/admin_users/$(request.auth.uid)) ||
-        request.auth.token.email in ["me@sherazhussain546.com", "sheraz@synctech.ie", "admin@synctech.ie"]
+        request.auth.token.email in ["me@sherazhussain546.com", "sheraz@synctech.ie", "admin@synctech.ie"] ||
+        request.auth.uid == "wF7mnAaDTqd0sreQTvfc2K5qpZD3" ||
+        exists(/databases/$(database)/documents/admin_users/$(request.auth.uid))
       );
     }
 

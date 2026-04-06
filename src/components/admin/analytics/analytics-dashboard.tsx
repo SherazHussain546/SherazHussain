@@ -1,9 +1,8 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
+import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { 
   Activity, 
@@ -27,35 +26,24 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AnalyticsEvent } from '@/types/database';
 
 /**
  * AnalyticsDashboard - High-Fidelity Visitor Tracking Visualization.
- * Uses real-time Firestore listeners to display system-wide engagement metrics.
+ * Uses real-time Firestore synchronization to display system-wide engagement metrics.
  */
 export default function AnalyticsDashboard() {
-  // Memoize Firestore references to ensure stable technical integrity during re-renders
+  const firestore = useFirestore();
+
   const analyticsCollection = useMemo(() => {
     return firestore ? collection(firestore, 'analyticsEvents') as CollectionReference<DocumentData> : null;
-  }, []);
+  }, [firestore]);
 
-  const analyticsQuery = useMemo(() => {
+  const analyticsQuery = useMemoFirebase(() => {
     return analyticsCollection ? query(analyticsCollection, orderBy('timestamp', 'desc')) : null;
   }, [analyticsCollection]);
 
-  // Hook handles permission error emission internally via custom useCollection logic
-  const [snapshot, loading, error] = useCollection(analyticsQuery);
-
-  if (!firestore) {
-    return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Configuration Missing</AlertTitle>
-        <AlertDescription>
-          Firebase is not configured. Analytics tracking is currently offline.
-        </AlertDescription>
-      </Alert>
-    );
-  }
+  const { data: events, isLoading: loading, error } = useCollection<AnalyticsEvent>(analyticsQuery);
 
   if (loading) {
     return (
@@ -91,16 +79,12 @@ export default function AnalyticsDashboard() {
     );
   }
 
-  const events = snapshot?.docs.map(doc => ({
-    id: doc.id,
-    ...(doc.data() as any)
-  })) || [];
-
-  const totalViews = events.length;
-  const sessions = new Set(events.map(e => e.sessionId)).size;
+  const allEvents = events || [];
+  const totalViews = allEvents.length;
+  const sessions = new Set(allEvents.map(e => e.sessionId)).size;
   const viewsPerSession = sessions > 0 ? (totalViews / sessions).toFixed(1) : 0;
 
-  const pathCounts = events.reduce((acc: { [key: string]: number }, event: any) => {
+  const pathCounts = allEvents.reduce((acc: { [key: string]: number }, event: AnalyticsEvent) => {
     const path = event.path || '/';
     acc[path] = (acc[path] || 0) + 1;
     return acc;
@@ -111,7 +95,7 @@ export default function AnalyticsDashboard() {
     .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 
-  const recentEvents = events.slice(0, 10);
+  const recentEvents = allEvents.slice(0, 10);
 
   return (
     <div className="space-y-6">
@@ -219,7 +203,7 @@ export default function AnalyticsDashboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentEvents.map((event: any) => (
+                {recentEvents.map((event: AnalyticsEvent) => (
                   <TableRow key={event.id} className="hover:bg-muted/30 transition-colors">
                     <TableCell className="font-mono text-[11px] max-w-[150px] truncate">
                       {event.path}
