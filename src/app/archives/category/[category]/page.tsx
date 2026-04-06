@@ -7,11 +7,31 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import ArchivesList from '@/components/archives/archives-list';
 
+const categoryDisplayMap: { [key: string]: { title: string; subtitle: string } } = {
+  Project: {
+    title: 'Engineering Projects',
+    subtitle: 'Production-grade repositories and high-fidelity system architectures managed via the command center.'
+  },
+  Study: {
+    title: 'Technical Studies',
+    subtitle: 'Deep-dive analysis, research papers, and strategic case studies synchronized from global repositories.'
+  },
+  Course: {
+    title: 'Learning Courses',
+    subtitle: 'Curated technical modules and educational assets designed to empower the next generation of engineers.'
+  },
+  Other: {
+    title: 'Miscellaneous',
+    subtitle: 'Uncategorized technical briefings, system updates, and architectural notes.'
+  }
+};
+
 /**
  * CategorizedArchives - Dynamic Filtering for Technical Assets.
  */
 export default async function CategorizedArchives({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
+  const meta = categoryDisplayMap[category] || { title: category, subtitle: 'Filtered technical registry.' };
   
   // 1. Fetch Local Files (Filtering logic)
   const docsDir = path.join(process.cwd(), 'docs');
@@ -48,10 +68,10 @@ export default async function CategorizedArchives({ params }: { params: Promise<
               Categorized Registry &nbsp;·&nbsp; {category}
             </p>
             <h1 className="font-playfair text-[clamp(2.5rem,6vw,4rem)] font-black leading-[1.1] tracking-tight mb-6">
-              The <span className="italic text-primary font-normal">{category}</span> Archives
+              The <span className="italic text-primary font-normal">{meta.title}</span> Archives
             </h1>
             <p className="font-playfair italic text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
-              Filtered technical documentation, case studies, and learning modules categorized under {category}.
+              {meta.subtitle}
             </p>
           </div>
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 

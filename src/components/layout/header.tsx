@@ -25,7 +25,7 @@ const navLinks = [
 ];
 
 const libraryLinks = [
-  { name: 'Posts', href: '/posts', icon: Rss },
+  { name: 'Post', href: '/posts', icon: Rss },
   { name: 'Engineering Project', href: '/archives/category/Project', icon: Cpu },
   { name: 'Technical Study', href: '/archives/category/Study', icon: BookOpen },
   { name: 'Learning Course', href: '/archives/category/Course', icon: GraduationCap },

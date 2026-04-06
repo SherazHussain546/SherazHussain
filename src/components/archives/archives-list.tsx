@@ -30,11 +30,23 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
 
   const articlesQuery = useMemo(() => {
     if (!articlesCollection) return null;
-    let q = query(articlesCollection, where('isPublished', '==', true), orderBy('publishDate', 'desc'));
+    
+    // Core constraint: only published assets
     if (categoryFilter) {
-      q = query(articlesCollection, where('isPublished', '==', true), where('category', '==', categoryFilter), orderBy('publishDate', 'desc'));
+      // High-fidelity filtering for specific technical classifications
+      return query(
+        articlesCollection, 
+        where('isPublished', '==', true), 
+        where('category', '==', categoryFilter),
+        orderBy('publishDate', 'desc')
+      );
     }
-    return q;
+    
+    return query(
+      articlesCollection, 
+      where('isPublished', '==', true), 
+      orderBy('publishDate', 'desc')
+    );
   }, [articlesCollection, categoryFilter]);
 
   const [snapshot, loading] = useCollection(articlesQuery);
@@ -56,12 +68,13 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
   }) || [];
 
   // Filter local docs if categoryFilter is present
-  // For local docs, we assume a mapping or we just show them in the general view
   const filteredLocalDocs = useMemo(() => {
     if (!categoryFilter) return localDocs;
-    // Local docs in /docs are mostly 'System' or 'Study' by default. 
-    // We can add a mapping if needed, but for now we'll only filter remote ones strictly.
-    return localDocs.filter(d => d.category === categoryFilter || (categoryFilter === 'Study' && d.category === 'System'));
+    // For local docs, we align 'System' with 'Study' or allow explicit category matches if extended
+    return localDocs.filter(d => 
+      d.category === categoryFilter || 
+      (categoryFilter === 'Study' && d.category === 'System')
+    );
   }, [localDocs, categoryFilter]);
 
   const allDocuments = [...filteredLocalDocs, ...remoteDocs];
@@ -72,13 +85,13 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
         <div className="flex items-center gap-3">
           <Archive className="h-5 w-5 text-primary" />
           <h2 className="font-playfair text-2xl font-bold">
-            {categoryFilter ? `${categoryFilter} Registry` : 'Document Index'}
+            {categoryFilter ? 'Registry Segment' : 'Document Index'}
           </h2>
         </div>
         <div className="flex items-center gap-2">
           {loading && <Sparkles className="h-3 w-3 text-primary animate-spin" />}
           <span className="font-space-mono text-[10px] text-muted-foreground uppercase tracking-widest">
-            {allDocuments.length} Assets Verified
+            {allDocuments.length} High-Fidelity Assets
           </span>
         </div>
       </div>
@@ -87,7 +100,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
         <div className="p-20 text-center border-2 border-dashed rounded-[2rem] opacity-40">
           <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
           <p className="font-space-mono text-[10px] uppercase tracking-widest">
-            {loading ? 'Scanning Repository...' : `No ${categoryFilter || ''} assets found.`}
+            {loading ? 'Scanning Registry...' : `No assets found in ${categoryFilter || 'repository'}.`}
           </p>
         </div>
       ) : (
