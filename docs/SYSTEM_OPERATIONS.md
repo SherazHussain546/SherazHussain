@@ -13,9 +13,16 @@ To utilize the dynamic narrative engine, you must define parameters in the cloud
    - `cta_button_color` (String): Default `primary`.
    - `show_support_popup` (Boolean): Default `true`.
 4. **CRITICAL**: Click **Publish changes** at the top of the console.
-5. **Start an Experiment**: Click **Create experiment** > **Remote Config**. Target `hero_narrative_style` to compare "Frontier" vs "Supremacy" conversion rates.
 
-### B. Cloud Messaging (Push Notifications)
+### B. Unified Campaigns Experience (New)
+Firebase now provides a single interface to manage both Messaging and Remote Config experiments:
+1. Go to **Firebase Console** > **Engage** > **Messaging**.
+2. You will see the **Campaigns** tab. Click **New Campaign**.
+3. Choose **Notifications** or **Remote Config experiment**.
+4. **Targeting**: You can target "User Segments." Because the app uses the `testGroup` (A/B) property in analytics, you can send notifications specifically to "Group B" users to test conversion.
+5. **Scheduling**: Use the unified scheduler to trigger messages based on user timezones.
+
+### C. Cloud Messaging (Push Notifications)
 1. Go to **Project Settings** > **Cloud Messaging**.
 2. Under **Web configuration**, generate a **Web Push certificate (VAPID Key)**.
 3. Copy this key and update it in `src/components/admin/system-strategy.tsx`.
@@ -48,4 +55,4 @@ To utilize the dynamic narrative engine, you must define parameters in the cloud
 
 - **Stripe**: Contributions are processed via secure Embedded Checkout.
 - **Carbon Removal**: 1% of every transaction is automatically directed to carbon removal via Stripe Climate.
-- Ensure `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` are set in your hosting environment (Netlify).
+- Ensure `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` are set in your hosting environment.
