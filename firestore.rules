@@ -13,17 +13,11 @@
  * - /skills, /experiences, /projects, /education: Top-level collections for portfolio content.
  * - /articles: Metadata for long-form content, studies, and courses linked to external Markdown.
  * - /admin_users: A private collection mapping Firebase UIDs to administrative privileges.
- *
- * Key Security Decisions:
- * - Admin Bypass: Users verified in the /admin_users collection gain full write access to all content.
- * - Public Visibility: Portfolio sections are readable by anyone (including anonymous users).
- * - Draft Protection: Articles use an `isPublished` flag; non-admins can only see published articles.
- * - Structural Integrity: Resource existence is strictly enforced for all destructive operations.
- *
- * Denormalization for Authorization:
- * - Admin status is verified via the existence of a document in `/admin_users/{uid}`. This 
- *   removes the need to fetch and check fields within the UserProfile, ensuring high performance 
- *   and clear separation of concerns.
+ * - /analyticsEvents: High-fidelity event logging for visitor metrics.
+ * - /posts: Synchronized social updates and news.
+ * - /projectGoals: Strategic technical milestones for the support page.
+ * - /siteConfig: Global platform parameters.
+ * - /workflows: Private n8n/AI logic definitions.
  */
 
 rules_version = '2';
@@ -65,10 +59,6 @@ service cloud.firestore {
 
     /**
      * @description Rules for the portfolio owner's profile information.
-     * @path /user_profile/{profileId}
-     * @allow Public read (get, list); Admin create/update/delete.
-     * @deny Non-admin writes.
-     * @principle Public consumption with administrative control.
      */
     match /user_profile/{profileId} {
       allow get, list: if true;
@@ -77,11 +67,7 @@ service cloud.firestore {
     }
 
     /**
-     * @description Rules for skills, experiences, projects, and education.
-     * @path /{collectionName}/{docId}
-     * @allow Public read (get, list); Admin create/update/delete.
-     * @deny Non-admin writes.
-     * @principle Global visibility for portfolio data; restricted modifications.
+     * @description Rules for portfolio sections.
      */
     match /skills/{skillId} {
       allow get, list: if true;
@@ -109,15 +95,53 @@ service cloud.firestore {
 
     /**
      * @description Rules for Articles (Project studies, courses, .md links).
-     * @path /articles/{articleId}
-     * @allow Admin full access; Public read only if 'isPublished' is true.
-     * @deny Public read of drafts; Any non-admin writes.
-     * @principle Explicit state modeling for draft vs. published content.
      */
     match /articles/{articleId} {
       allow get, list: if isAdmin() || resource.data.isPublished == true;
       allow create: if isAdmin();
       allow update, delete: if existsAndAdmin();
+    }
+
+    /**
+     * @description Rules for Analytics. Allow public create for logging; Admin only for viewing.
+     */
+    match /analyticsEvents/{eventId} {
+      allow create: if true;
+      allow get, list: if isAdmin();
+    }
+
+    /**
+     * @description Rules for Social Posts and Updates.
+     */
+    match /posts/{postId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    /**
+     * @description Rules for Project Goals / Milestones.
+     */
+    match /projectGoals/{goalId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    /**
+     * @description Rules for Global Site Configuration.
+     */
+    match /siteConfig/{configId} {
+      allow get: if true;
+      allow list: if isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    /**
+     * @description Rules for Workflows. These are private to the admin.
+     */
+    match /workflows/{workflowId} {
+      allow get, list, create, update, delete: if isAdmin();
     }
 
     /**

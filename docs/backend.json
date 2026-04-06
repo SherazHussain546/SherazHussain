@@ -1,299 +1,48 @@
-
 {
   "entities": {
     "UserProfile": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "UserProfile",
       "type": "object",
-      "description": "Stores general information about the portfolio owner, including the 'About' section content, professional title, and contact details. This entity is designed to hold static content easily editable via the admin portal.",
+      "description": "Stores general information about the portfolio owner.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the UserProfile entity. This is typically a fixed value (e.g., 'portfolioOwner') as there is only one user profile."
-        },
-        "name": {
-          "type": "string",
-          "description": "The full name of the portfolio owner."
-        },
-        "professionalTitle": {
-          "type": "string",
-          "description": "The professional title or designation of the portfolio owner (e.g., 'Full-Stack Software Engineer & AI/Cloud Developer')."
-        },
-        "summary": {
-          "type": "string",
-          "description": "A professional summary of skills and experience to be displayed in the 'About' section of the public website."
-        },
-        "contactEmail": {
-          "type": "string",
-          "description": "The primary contact email address for the portfolio owner.",
-          "format": "email"
-        },
-        "contactPhone": {
-          "type": "string",
-          "description": "The primary contact phone number for the portfolio owner. (Optional)"
-        },
-        "githubProfileUrl": {
-          "type": "string",
-          "description": "URL to the portfolio owner's GitHub profile.",
-          "format": "uri"
-        },
-        "linkedinProfileUrl": {
-          "type": "string",
-          "description": "URL to the portfolio owner's LinkedIn profile.",
-          "format": "uri"
-        }
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "professionalTitle": { "type": "string" },
+        "summary": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "contactPhone": { "type": "string" },
+        "githubProfileUrl": { "type": "string", "format": "uri" },
+        "linkedinProfileUrl": { "type": "string", "format": "uri" }
       },
-      "required": [
-        "id",
-        "name",
-        "professionalTitle",
-        "summary",
-        "contactEmail"
-      ]
+      "required": ["id", "name", "professionalTitle", "summary", "contactEmail"]
     },
     "Skill": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Skill",
       "type": "object",
-      "description": "Represents a technical skill or technology used by the portfolio owner. Skills are categorized for dynamic display and filtering on the public website.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Skill entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the skill or technology (e.g., 'Angular', 'Firestore', 'Python')."
-        },
-        "category": {
-          "type": "string",
-          "description": "The category the skill belongs to (e.g., 'Languages', 'Frameworks', 'Cloud', 'Databases')."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief description or context for the skill, or its proficiency level."
-        }
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" }
       },
-      "required": [
-        "id",
-        "name",
-        "category",
-        "description"
-      ]
+      "required": ["id", "name", "category", "description"]
     },
-    "Experience": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Experience",
+    "AnalyticsEvent": {
+      "title": "AnalyticsEvent",
       "type": "object",
-      "description": "Details a work experience entry for the portfolio owner, including the role, company, duration, and key responsibilities/achievements.",
+      "description": "High-fidelity visitor tracking data.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Experience entity."
-        },
-        "title": {
-          "type": "string",
-          "description": "The job title or role held (e.g., 'Senior Software Engineer')."
-        },
-        "company": {
-          "type": "string",
-          "description": "The name of the company or organization where the experience took place."
-        },
-        "location": {
-          "type": "string",
-          "description": "The geographical location of the work experience (e.g., 'San Francisco, CA', 'Remote')."
-        },
-        "startDate": {
-          "type": "string",
-          "description": "The start date of the experience.",
-          "format": "date"
-        },
-        "endDate": {
-          "type": "string",
-          "description": "The end date of the experience. This field can be null if the role is current.",
-          "format": "date"
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief summary of the role and overall achievements."
-        },
-        "responsibilities": {
-          "type": "array",
-          "description": "An array of key bullet points detailing specific responsibilities and accomplishments in the role.",
-          "items": {
-            "type": "string"
-          }
-        }
+        "type": { "type": "string", "enum": ["page_view"] },
+        "path": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
       },
-      "required": [
-        "id",
-        "title",
-        "company",
-        "startDate",
-        "description",
-        "responsibilities"
-      ]
-    },
-    "Project": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Project",
-      "type": "object",
-      "description": "Represents a significant project undertaken by the portfolio owner, showcasing their work and technical abilities. Projects are linked to specific skills used.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Project entity."
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the project."
-        },
-        "description": {
-          "type": "string",
-          "description": "A short description or summary of the project."
-        },
-        "githubUrl": {
-          "type": "string",
-          "description": "URL to the GitHub repository for the project, where the code can be viewed.",
-          "format": "uri"
-        },
-        "demoUrl": {
-          "type": "string",
-          "description": "Optional URL to a live demo or deployed version of the project.",
-          "format": "uri"
-        },
-        "skillIds": {
-          "type": "array",
-          "description": "An array of IDs referencing the Skill entities that represent the technologies or skills used in this project. (Relationship: Skill N:N Project)",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "id",
-        "name",
-        "description",
-        "githubUrl",
-        "skillIds"
-      ]
-    },
-    "Education": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Education",
-      "type": "object",
-      "description": "Details an educational qualification, degree, or significant certification obtained by the portfolio owner.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Education entity."
-        },
-        "degree": {
-          "type": "string",
-          "description": "The degree obtained (e.g., 'Master of Science in Computer Science', 'Bachelor of Engineering')."
-        },
-        "university": {
-          "type": "string",
-          "description": "The name of the university or educational institution."
-        },
-        "graduationDate": {
-          "type": "string",
-          "description": "The date of graduation or completion.",
-          "format": "date"
-        },
-        "awards": {
-          "type": "array",
-          "description": "An array of notable awards, honors, or distinctions received during this educational period.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "certifications": {
-          "type": "array",
-          "description": "An array of relevant certifications obtained related to this education.",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "id",
-        "degree",
-        "university",
-        "graduationDate"
-      ]
-    },
-    "Article": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "Article",
-      "type": "object",
-      "description": "Represents a detailed study, course, or in-depth project write-up. Content is sourced from an external Markdown file, allowing for easy updates and enhanced online visibility, manageable from the admin portal.",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Article entity."
-        },
-        "title": {
-          "type": "string",
-          "description": "The main title of the article, study, or course."
-        },
-        "slug": {
-          "type": "string",
-          "description": "A URL-friendly string used as a unique identifier in the public URL path for the article (e.g., 'my-great-project-deep-dive')."
-        },
-        "category": {
-          "type": "string",
-          "description": "The classification of the content.",
-          "enum": ["Project", "Study", "Course", "Other"]
-        },
-        "shortDescription": {
-          "type": "string",
-          "description": "A brief summary or excerpt of the article's content, suitable for display in a listing."
-        },
-        "mdFileUrl": {
-          "type": "string",
-          "description": "The URL pointing to the Markdown (.md) file hosted externally (e.g., on GitHub), which contains the full content of the article.",
-          "format": "uri"
-        },
-        "imageUrl": {
-          "type": "string",
-          "description": "Optional URL to a cover image or thumbnail for the article, used for visual appeal in listings.",
-          "format": "uri"
-        },
-        "publishDate": {
-          "type": "string",
-          "description": "The date and time when the article was published.",
-          "format": "date-time"
-        },
-        "tagIds": {
-          "type": "array",
-          "description": "An array of IDs referencing Skill entities or general tags relevant to the article's content. (Relationship: Skill N:N Article)",
-          "items": {
-            "type": "string"
-          }
-        },
-        "isPublished": {
-          "type": "boolean",
-          "description": "A flag indicating whether the article is publicly visible on the website. Set to true to publish, false for drafts."
-        }
-      },
-      "required": [
-        "id",
-        "title",
-        "slug",
-        "category",
-        "shortDescription",
-        "mdFileUrl",
-        "publishDate",
-        "isPublished"
-      ]
+      "required": ["type", "path", "sessionId", "timestamp"]
     }
   },
   "auth": {
-    "providers": [
-      "password",
-      "anonymous"
-    ]
+    "providers": ["password", "anonymous"]
   },
   "firestore": {
     "structure": [
@@ -301,109 +50,19 @@
         "path": "/user_profile/{profileId}",
         "definition": {
           "entityName": "UserProfile",
-          "schema": {
-            "$ref": "#/backend/entities/UserProfile"
-          },
-          "description": "Stores the single UserProfile document for the portfolio owner. This collection will typically contain one document, identified by a fixed 'profileId' (e.g., 'owner'). Publicly readable, Admin writeable."
+          "schema": { "$ref": "#/backend/entities/UserProfile" },
+          "description": "Owner metadata."
         }
       },
       {
-        "path": "/skills/{skillId}",
+        "path": "/analyticsEvents/{eventId}",
         "definition": {
-          "entityName": "Skill",
-          "schema": {
-            "$ref": "#/backend/entities/Skill"
-          },
-          "description": "Collection for all Skill entities. Publicly readable, Admin writeable.",
-          "params": [
-            {
-              "name": "skillId",
-              "description": "Unique identifier for the skill."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/experiences/{experienceId}",
-        "definition": {
-          "entityName": "Experience",
-          "schema": {
-            "$ref": "#/backend/entities/Experience"
-          },
-          "description": "Collection for all Experience entities. Publicly readable, Admin writeable.",
-          "params": [
-            {
-              "name": "experienceId",
-              "description": "Unique identifier for the experience entry."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/projects/{projectId}",
-        "definition": {
-          "entityName": "Project",
-          "schema": {
-            "$ref": "#/backend/entities/Project"
-          },
-          "description": "Collection for all Project entities. Publicly readable, Admin writeable.",
-          "params": [
-            {
-              "name": "projectId",
-              "description": "Unique identifier for the project."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/education/{educationId}",
-        "definition": {
-          "entityName": "Education",
-          "schema": {
-            "$ref": "#/backend/entities/Education"
-          },
-          "description": "Collection for all Education entities. Publicly readable, Admin writeable.",
-          "params": [
-            {
-              "name": "educationId",
-              "description": "Unique identifier for the education entry."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/articles/{articleId}",
-        "definition": {
-          "entityName": "Article",
-          "schema": {
-            "$ref": "#/backend/entities/Article"
-          },
-          "description": "Collection for all Article entities, storing metadata and links to external Markdown files. Publicly readable only if 'isPublished' is true. Admin writeable (and readable for all articles).",
-          "params": [
-            {
-              "name": "articleId",
-              "description": "Unique identifier for the article."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/admin_users/{userId}",
-        "definition": {
-          "entityName": "admin_user",
-          "schema": {
-            "$ref": "#/backend/entities/UserProfile"
-          },
-          "description": "Dedicated collection for identifying users with administrative privileges. A document's existence at '/admin_users/{request.auth.uid}' grants admin rights. This supports Authorization Independence by avoiding 'get()' calls in rules to verify roles. Only the authenticated user matching 'userId' can read/write their own admin document.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The Firebase Authentication UID of the administrator."
-            }
-          ]
+          "entityName": "AnalyticsEvent",
+          "schema": { "$ref": "#/backend/entities/AnalyticsEvent" },
+          "description": "Visitor analytics events."
         }
       }
     ],
-    "reasoning": "The recommended Firestore structure is designed with a strong emphasis on authorization independence, structural segregation, and clear access modeling, aligning with the specified core design principles. For the public-facing portfolio data (UserProfile, Skill, Experience, Project, Education, and the new Article entity), all documents reside in top-level collections. This ensures that their access permissions are homogeneous and straightforward: all documents in these collections are publicly readable. Write access to these collections is restricted to an authenticated administrator.\n\nAuthorization Independence is primarily achieved through the explicit segregation of administrative roles. Instead of embedding an 'isAdmin' flag within a UserProfile document and relying on a 'get()' call to verify it, a dedicated collection, '/admin_users/{userId}', is used. An authenticated user's administrative status is determined by checking for the *existence* of their UID within this collection (`exists(/admin_users/$(request.auth.uid))`). This completely eliminates hierarchical authorization dependencies and allows for atomic operations without needing to fetch parent data for authorization checks.\n\nFor the newly introduced 'Article' entity, which allows sharing projects, studies, and courses via Markdown links, the structure '/articles/{articleId}' is used. This entity includes an 'isPublished' boolean field. This field explicitly models the state of the article, ensuring that only articles with 'isPublished: true' are readable by the general public. This adheres to the 'Explicit State Modeling' principle. While a public 'list' operation on '/articles' would need to include a query filter for 'isPublished == true' to ensure QAPs (Rules are not Filters) are met for non-admin users, the admin user will have full read access to all articles regardless of their 'isPublished' status, allowing them to manage drafts. This design maintains clarity and debuggability in security rules, as the intent for public versus draft content is explicit within the document itself and the associated security rules.\n\nAll public data collections (UserProfile, Skills, Experiences, Projects, Education, Articles) are designed for Quality-Assured Queries (QAPs). They will be structured to allow efficient public `list` and `get` operations. For the 'Article' collection, public `list` operations will need to filter by `isPublished: true` to adhere to security rules, thus preventing non-admins from viewing drafts. The `admin_users` collection, on the other hand, is a specific use-case for DBAC where access is based purely on the authenticated user's UID matching the document ID, enabling simple existence checks for admin privileges."
+    "reasoning": "The firestore structure is built for authorization independence. Admin status is determined by checking for document existence in /admin_users/{uid}, separating public data access from role verification."
   }
 }
