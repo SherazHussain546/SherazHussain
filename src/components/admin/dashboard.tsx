@@ -1,4 +1,3 @@
-
 'use client';
 
 import { signOut } from 'firebase/auth';
@@ -6,7 +5,7 @@ import { auth } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
-import { LogOut, LayoutDashboard, FileText, Settings, LineChart, BookOpen, Briefcase, Award, FolderKanban, GraduationCap, Sparkles } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, Settings, LineChart, BookOpen, Briefcase, Award, FolderKanban, GraduationCap, Sparkles, Zap } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
@@ -17,6 +16,7 @@ import ManageCertifications from './manage-certifications';
 import ManageProjects from './manage-projects';
 import ManageEducation from './manage-education';
 import LinkedInPostGenerator from './linkedin-post-generator';
+import SystemStrategy from './system-strategy';
 
 export default function Dashboard() {
   const { toast } = useToast();
@@ -42,7 +42,7 @@ export default function Dashboard() {
     <div className="space-y-8">
       <div className="flex items-center justify-between border-b pb-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Admin Dashboard</h1>
           <p className="text-muted-foreground">Manage your portfolio and dynamic technical assets.</p>
         </div>
         <Button variant="ghost" onClick={handleLogout} className="text-destructive hover:bg-destructive/10">
@@ -52,10 +52,14 @@ export default function Dashboard() {
       </div>
 
       <Tabs defaultValue="analytics" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 md:grid-cols-10 h-auto p-1 bg-muted/50 border mb-8">
+        <TabsList className="grid w-full grid-cols-4 md:grid-cols-11 h-auto p-1 bg-muted/50 border mb-8">
           <TabsTrigger value="analytics" className="flex items-center gap-2 py-2">
             <LineChart className="h-4 w-4" />
             <span className="hidden sm:inline">Metrics</span>
+          </TabsTrigger>
+          <TabsTrigger value="strategy" className="flex items-center gap-2 py-2">
+            <Zap className="h-4 w-4 text-primary" />
+            <span className="hidden sm:inline">Strategy</span>
           </TabsTrigger>
           <TabsTrigger value="experience" className="flex items-center gap-2 py-2">
             <Briefcase className="h-4 w-4" />
@@ -97,6 +101,9 @@ export default function Dashboard() {
         <div className="mt-6">
           <TabsContent value="analytics">
             <AnalyticsDashboard />
+          </TabsContent>
+          <TabsContent value="strategy">
+            <SystemStrategy />
           </TabsContent>
           <TabsContent value="experience">
             <ManageExperience />

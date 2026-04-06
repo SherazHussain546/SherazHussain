@@ -1,41 +1,66 @@
 import { firebaseConfig } from '@/firebase/config';
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore';
+import { getRemoteConfig, RemoteConfig } from 'firebase/remote-config';
+import { getMessaging, Messaging, isSupported } from 'firebase/messaging';
 
 /**
  * initializeFirebase - High-Fidelity Multi-Environment Initializer.
- * Designed to work seamlessly in both browser (Client) and build-time (Server) contexts.
+ * Optimized for Remote Config and Messaging A/B Testing.
+ * Server-safe for static generation (sitemap).
  */
 export function initializeFirebase() {
   if (!getApps().length) {
-    // Important! initializeApp() is called without any arguments because Firebase App Hosting
-    // integrates with the initializeApp() function to provide the environment variables needed to
-    // populate the FirebaseOptions in production.
-    let firebaseApp;
+    let firebaseApp: FirebaseApp;
     try {
-      // Attempt to initialize via Firebase App Hosting environment variables
       firebaseApp = initializeApp();
     } catch (e) {
-      // Fallback to static config object for standard Netlify/Vercel deployments
-      if (process.env.NODE_ENV === "production") {
-        console.warn('Automatic initialization failed. Falling back to firebase config object.', e);
-      }
       firebaseApp = initializeApp(firebaseConfig);
     }
 
     return getSdks(firebaseApp);
   }
 
-  // If already initialized, return the SDKs with the already initialized App
   return getSdks(getApp());
 }
 
 export function getSdks(firebaseApp: FirebaseApp) {
+  const auth = getAuth(firebaseApp);
+  const firestore = getFirestore(firebaseApp);
+  
+  // High-Fidelity Guard: These services are client-side only and require window
+  let remoteConfig: RemoteConfig | null = null;
+  let messaging: Messaging | null = null;
+
+  if (typeof window !== 'undefined') {
+    try {
+      remoteConfig = getRemoteConfig(firebaseApp);
+      // Set minimal settings for high-performance updates
+      remoteConfig.settings.minimumFetchIntervalMillis = 3600000; // 1 hour
+      remoteConfig.defaultConfig = {
+        hero_narrative_style: 'supremacy',
+        cta_button_color: 'primary',
+        show_support_popup: true,
+      };
+
+      // Messaging is async supported check
+      isSupported().then(supported => {
+        if (supported) messaging = getMessaging(firebaseApp);
+      }).catch(() => {
+        console.warn('Firebase Messaging: Support check failed.');
+      });
+    } catch (e) {
+      console.warn('Firebase Strategy Services: Initialization deferred.');
+    }
+  }
+
   return {
     firebaseApp,
-    auth: getAuth(firebaseApp),
-    firestore: getFirestore(firebaseApp)
+    auth,
+    firestore,
+    remoteConfig,
+    messaging
   };
 }
 
