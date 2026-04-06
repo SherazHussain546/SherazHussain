@@ -1,6 +1,8 @@
 'use client';
 
 import { allCertificates } from '@/lib/data';
+import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 
 export default function CertificationsSection() {
   return (
@@ -13,14 +15,54 @@ export default function CertificationsSection() {
           Professional certifications represent more than resume entries — they are proof that I hold myself accountable to external standards of competence.
         </p>
 
-        <div className="grid grid-cols-1 gap-px bg-border border border-border mb-12">
+        <div className="space-y-8 mb-12">
           {allCertificates.map((cert, index) => (
-            <div key={index} className="bg-background p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-muted/5 transition-colors">
-              <span className="text-[15px] font-medium text-foreground/90">{cert.title}</span>
-              <span className="font-space-mono text-[10px] uppercase tracking-widest text-muted-foreground shrink-0">
-                {cert.issuer} · {cert.date}
-              </span>
-            </div>
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="group border border-border p-6 md:p-8 hover:bg-muted/5 transition-all shadow-sm hover:shadow-md"
+            >
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold font-playfair tracking-tight">{cert.title}</h3>
+                  <p className="font-space-mono text-[10px] uppercase tracking-widest text-primary font-bold">
+                    {cert.issuer} · {cert.date}
+                  </p>
+                </div>
+                {cert.icon && <cert.icon className="h-6 w-6 text-primary shrink-0 opacity-30 group-hover:opacity-100 transition-opacity duration-500" />}
+              </div>
+
+              {cert.points && cert.points.length > 0 && (
+                <ul className="mb-8 space-y-3">
+                  {cert.points.map((point, i) => (
+                    <li key={i} className="flex gap-3 text-sm font-light text-foreground/80 leading-relaxed">
+                      <span className="text-primary font-bold select-none">·</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {cert.skills && cert.skills.length > 0 && (
+                <div className="space-y-3">
+                  <p className="font-space-mono text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-bold">Core Competencies Earned</p>
+                  <div className="flex flex-wrap gap-2">
+                    {cert.skills.map((skill) => (
+                      <Badge 
+                        key={skill} 
+                        variant="outline" 
+                        className="text-[9px] uppercase tracking-wider font-bold border-primary/20 bg-primary/5 text-primary rounded-none px-2 py-0.5"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
           ))}
         </div>
 
