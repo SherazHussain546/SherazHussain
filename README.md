@@ -2,36 +2,27 @@
 
 This is the repository for the personal portfolio of Sheraz Hussain, a Freelancer working with SYNC TECH Solutions.
 
+## 🚀 High-Fidelity Operations
+For detailed instructions on managing the A/B Testing Matrix, AI Agents, and the Dynamic Registry, refer to the **[System Operations Guide](./docs/SYSTEM_OPERATIONS.md)**.
+
 ## Features
-- **AI Resume Analyzer**: Tailors your portfolio content to specific job descriptions using Gemini 2.0 Flash.
-- **Portfolio Analytics**: Private dashboard tracking visitor metrics via Firestore.
-- **Support Hub**: Multi-channel support (Open Collective, BuyMeACoffee, Web3, GoFundMe, GitHub Sponsors) for community-driven innovation.
-- **Stripe Global Checkout**: Secure, tax-compliant one-time contributions via Embedded Checkout.
-- **Responsive Design**: Built with Next.js 15, Tailwind CSS, and ShadCN UI.
+- **Dynamic Registry CMS**: Manage Experiences, Projects, Education, and Certifications via Firestore.
+- **A/B Testing Matrix**: Real-time narrative experimentation via Firebase Remote Config.
+- **AI Resume Analyzer**: Tailors portfolio content to job descriptions using Gemini 2.0 Flash.
+- **Portfolio Analytics**: Private dashboard tracking visitor metrics and experiment performance.
+- **Stripe Global Checkout**: Secure, tax-compliant one-time contributions.
+- **Climate Integrity**: 1% carbon removal contribution built into the payment pipeline.
 
 ## Tech Stack
 - Next.js 15 (App Router)
 - Google Genkit (Gemini 2.0 Flash)
-- Firebase (Auth, Firestore)
+- Firebase (Auth, Firestore, Remote Config, FCM)
 - Stripe (Payments, Automatic Tax)
-- Netlify (Hosting)
+- Tailwind CSS & ShadCN UI
 
 ## Production Deployment Checklist
 
-### 1. Stripe Production Configuration
-To enable live payments, follow these steps in your [Stripe Dashboard](https://dashboard.stripe.com):
-- **API Keys**: Copy your `Live Secret Key` and `Live Publishable Key`.
-- **Environment Variables**: Add them to your Netlify Environment:
-  - `STRIPE_SECRET_KEY`: Your live secret key (Keep private).
-  - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Your live publishable key.
-- **Domain Verification**: Add `sheraz.synctech.ie` to your "Allowed Domains" in Stripe → Settings → Checkout and Payment Links.
-
-### 2. Firebase Setup
-- Ensure your Firebase project is on the "Blaze" plan for production-grade scaling (GCP quotas).
-- Enable Email/Password Authentication.
-- Verify Firestore Security Rules are deployed (see `firestore.rules`).
-
-### 3. Netlify Environment Variables
+### 1. Environment Variables (Netlify)
 Ensure the following variables are set in your Netlify site settings:
 - `NEXT_PUBLIC_FIREBASE_API_KEY`
 - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
@@ -43,20 +34,10 @@ Ensure the following variables are set in your Netlify site settings:
 - `STRIPE_SECRET_KEY`
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 
-## Git Workflow
-To keep your repository secure, `.env` files are ignored. Use the following to sync:
-
-```bash
-# Pull latest changes
-git pull origin main
-
-# Add and commit your updates
-git add .
-git commit -m "Your description of changes"
-
-# Push to the cloud
-git push origin main
-```
+### 2. Firebase Setup
+- Enable **Email/Password** Authentication.
+- Deploy **Firestore Security Rules** (included in `firestore.rules`).
+- Initialize **Remote Config** parameters as defined in the Operations Guide.
 
 ## Security Note
-If your API keys have been leaked, rotate them immediately in the respective consoles. The `.gitignore` file and `netlify.toml` are configured to prevent exposure of sensitive keys.
+If your API keys have been leaked, rotate them immediately in the respective consoles. The `.gitignore` file is configured to prevent exposure of sensitive keys.
