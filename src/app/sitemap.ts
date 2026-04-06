@@ -1,5 +1,8 @@
+
 import { MetadataRoute } from 'next'
 import { projects } from '@/lib/data'
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Next.js sitemap configuration.
@@ -39,5 +42,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...projectEntries];
+  // Fetch all .md files from /docs to include in sitemap
+  const docsDir = path.join(process.cwd(), 'docs');
+  let archiveEntries: MetadataRoute.Sitemap = [];
+  
+  if (fs.existsSync(docsDir)) {
+    const files = fs.readdirSync(docsDir);
+    archiveEntries = files
+      .filter(file => file.endsWith('.md'))
+      .map(file => ({
+        url: `${baseUrl}/archives/${file.replace('.md', '')}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      }));
+  }
+
+  return [...staticEntries, ...projectEntries, ...archiveEntries];
 }
