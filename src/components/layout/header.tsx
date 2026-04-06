@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, ChevronDown, Rss, BookOpen, Cpu, GraduationCap, FileText } from 'lucide-react';
+import { Menu, ChevronDown, Rss, BookOpen, Cpu, GraduationCap, FileText, LayoutGrid } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {
   DropdownMenu,
@@ -87,7 +87,13 @@ export default function Header() {
                 <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-white border-border/50 shadow-2xl p-2 rounded-xl">
+            <DropdownMenuContent align="end" className="w-64 bg-white border-border/50 shadow-2xl p-2 rounded-xl">
+              <div className="px-3 py-2 mb-1">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                  <LayoutGrid className="h-3 w-3" />
+                  Registry & Insights
+                </p>
+              </div>
               {libraryLinks.map((link) => (
                 <DropdownMenuItem key={link.name} asChild className="rounded-lg">
                   <Link href={link.href} className="flex items-center gap-3 p-2 cursor-pointer transition-colors hover:bg-primary/5">

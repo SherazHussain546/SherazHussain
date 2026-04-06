@@ -1,11 +1,10 @@
-
 'use client';
 
 import { useMemo } from 'react';
 import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, Database, SearchX } from 'lucide-react';
+import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, Database, SearchX, FileStack } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -41,6 +40,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
   const articlesQuery = useMemoFirebase(() => {
     if (!articlesCollection) return null;
     
+    // Core filter: Only show published items
     if (categoryFilter) {
       return query(
         articlesCollection, 
@@ -62,24 +62,29 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
 
   const remoteDocs: ArchiveDoc[] = useMemo(() => {
     if (!remoteData) return [];
-    return remoteData.map(data => ({
-      slug: data.slug,
-      name: data.title,
-      updatedAt: data.publishDate && typeof data.publishDate.toDate === 'function' 
-        ? data.publishDate.toDate().toLocaleDateString('en-IE', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-          }) 
-        : 'Recently',
-      rawDate: data.publishDate?.toMillis() || Date.now(),
-      size: 'Remote Source',
-      type: 'Remote',
-      category: data.category === 'CaseStudy' ? 'Case Study' : data.category || 'Other'
-    }));
+    return remoteData.map(data => {
+      // Handle potential null/pending timestamps from Firestore
+      const dateObj = data.publishDate && typeof data.publishDate.toDate === 'function' 
+        ? data.publishDate.toDate() 
+        : new Date();
+
+      return {
+        slug: data.slug,
+        name: data.title,
+        updatedAt: dateObj.toLocaleDateString('en-IE', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }),
+        rawDate: data.publishDate?.toMillis() || Date.now(),
+        size: 'Remote Source',
+        type: 'Remote',
+        category: data.category === 'CaseStudy' ? 'Case Study' : data.category || 'Other'
+      };
+    });
   }, [remoteData]);
 
-  // 3. Chronological Merge-Sort
+  // 3. Chronological Merge-Sort (Newest on Top)
   const allDocuments = useMemo(() => {
     const filteredLocal = !categoryFilter 
       ? localDocs 
@@ -92,13 +97,17 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
     return [...remoteDocs, ...filteredLocal].sort((a, b) => b.rawDate - a.rawDate);
   }, [localDocs, remoteDocs, categoryFilter]);
 
+  const displayCategoryName = categoryFilter === 'CaseStudy' 
+    ? 'Case Studies' 
+    : (categoryFilter === 'Project' ? 'Engineering Projects' : categoryFilter);
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between border-b pb-4">
         <div className="flex items-center gap-3">
           <Archive className="h-5 w-5 text-primary" />
           <h2 className="font-playfair text-2xl font-bold">
-            {categoryFilter === 'CaseStudy' ? 'Case Studies' : (categoryFilter ? `${categoryFilter} Registry` : 'Document Index')}
+            {categoryFilter ? `${displayCategoryName} Registry` : 'Document Index'}
           </h2>
         </div>
         <div className="flex items-center gap-2">
@@ -129,10 +138,10 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
           <SearchX className="h-12 w-12 text-muted-foreground opacity-40" />
           <div className="space-y-1">
             <p className="font-space-mono text-[10px] uppercase tracking-widest font-bold">
-              Segment Empty
+              {displayCategoryName} Segment Empty
             </p>
             <p className="text-xs text-muted-foreground max-w-xs mx-auto">
-              No published assets were found matching this technical classification.
+              No published assets were found in the "{displayCategoryName}" classification. Check your Admin Portal visibility settings.
             </p>
           </div>
         </div>
