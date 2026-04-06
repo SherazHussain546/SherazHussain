@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useMemo } from 'react';
@@ -62,11 +63,13 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
     return remoteData.map(data => ({
       slug: data.slug,
       name: data.title,
-      updatedAt: data.publishDate?.toDate().toLocaleDateString('en-IE', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      }) || 'Syncing...',
+      updatedAt: data.publishDate && typeof data.publishDate.toDate === 'function' 
+        ? data.publishDate.toDate().toLocaleDateString('en-IE', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          }) 
+        : 'Recently',
       size: 'Remote Source',
       type: 'Remote',
       category: data.category || 'Study'
@@ -103,9 +106,19 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
       </div>
 
       {error && (
-        <div className="p-6 rounded-xl border border-destructive/20 bg-destructive/5 flex items-center gap-4 text-destructive">
-          <AlertCircle className="h-5 w-5 shrink-0" />
-          <p className="text-xs font-medium">Technical Registry Synchronization Error. A database index may be initializing.</p>
+        <div className="p-6 rounded-xl border border-destructive/20 bg-destructive/5 flex flex-col gap-2 text-destructive">
+          <div className="flex items-center gap-4">
+            <AlertCircle className="h-5 w-5 shrink-0" />
+            <p className="text-sm font-bold">Technical Registry Synchronization Error</p>
+          </div>
+          <p className="text-xs opacity-80 leading-relaxed font-mono whitespace-pre-wrap">
+            {error.message || 'A connection to the remote repository could not be established.'}
+          </p>
+          {error.message?.includes('index') && (
+            <p className="text-[10px] uppercase tracking-widest font-bold mt-2">
+              Note: A Firestore composite index may be required. Please follow the link in the error message if provided in your console.
+            </p>
+          )}
         </div>
       )}
 
