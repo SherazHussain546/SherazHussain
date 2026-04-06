@@ -45,6 +45,7 @@ export default function PostsPage() {
           <PostsSection 
             title="All Social Engagements" 
             subtitle="Explore the full historical registry of social updates and technical insights."
+            layout="grid"
           />
         </div>
       </main>
