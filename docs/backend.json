@@ -32,6 +32,19 @@
       },
       "required": ["role", "company", "period", "description"]
     },
+    "Education": {
+      "title": "Education",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "degree": { "type": "string" },
+        "university": { "type": "string" },
+        "graduationDate": { "type": "string" },
+        "awards": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["degree", "university", "graduationDate"]
+    },
     "Certification": {
       "title": "Certification",
       "type": "object",
@@ -108,6 +121,13 @@
         "definition": {
           "entityName": "Experience",
           "description": "Work history."
+        }
+      },
+      {
+        "path": "/education/{educationId}",
+        "definition": {
+          "entityName": "Education",
+          "description": "Academic records."
         }
       },
       {

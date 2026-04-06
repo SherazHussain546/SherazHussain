@@ -6,7 +6,7 @@ import { auth } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
-import { LogOut, LayoutDashboard, FileText, Settings, LineChart, BookOpen, Briefcase, Award, FolderKanban } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, Settings, LineChart, BookOpen, Briefcase, Award, FolderKanban, GraduationCap } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
@@ -15,6 +15,7 @@ import ManageArticles from './manage-articles';
 import ManageExperience from './manage-experience';
 import ManageCertifications from './manage-certifications';
 import ManageProjects from './manage-projects';
+import ManageEducation from './manage-education';
 
 export default function Dashboard() {
   const { toast } = useToast();
@@ -50,18 +51,22 @@ export default function Dashboard() {
       </div>
 
       <Tabs defaultValue="analytics" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 md:grid-cols-8 h-auto p-1 bg-muted/50 border mb-8">
+        <TabsList className="grid w-full grid-cols-4 md:grid-cols-9 h-auto p-1 bg-muted/50 border mb-8">
           <TabsTrigger value="analytics" className="flex items-center gap-2 py-2">
             <LineChart className="h-4 w-4" />
             <span className="hidden sm:inline">Metrics</span>
           </TabsTrigger>
           <TabsTrigger value="experience" className="flex items-center gap-2 py-2">
             <Briefcase className="h-4 w-4" />
-            <span className="hidden sm:inline">Experience</span>
+            <span className="hidden sm:inline">Exp</span>
+          </TabsTrigger>
+          <TabsTrigger value="education" className="flex items-center gap-2 py-2">
+            <GraduationCap className="h-4 w-4" />
+            <span className="hidden sm:inline">Edu</span>
           </TabsTrigger>
           <TabsTrigger value="projects" className="flex items-center gap-2 py-2">
             <FolderKanban className="h-4 w-4" />
-            <span className="hidden sm:inline">Projects</span>
+            <span className="hidden sm:inline">Proj</span>
           </TabsTrigger>
           <TabsTrigger value="certs" className="flex items-center gap-2 py-2">
             <Award className="h-4 w-4" />
@@ -81,7 +86,7 @@ export default function Dashboard() {
           </TabsTrigger>
           <TabsTrigger value="settings" className="flex items-center gap-2 py-2">
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">System</span>
+            <span className="hidden sm:inline">Sys</span>
           </TabsTrigger>
         </TabsList>
         <div className="mt-6">
@@ -90,6 +95,9 @@ export default function Dashboard() {
           </TabsContent>
           <TabsContent value="experience">
             <ManageExperience />
+          </TabsContent>
+          <TabsContent value="education">
+            <ManageEducation />
           </TabsContent>
           <TabsContent value="projects">
             <ManageProjects />

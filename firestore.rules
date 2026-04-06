@@ -30,6 +30,11 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /education/{eduId} {
+      allow get, list: if true;
+      allow write: if isAdmin();
+    }
+
     match /projects/{projectId} {
       allow get, list: if true;
       allow write: if isAdmin();

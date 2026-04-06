@@ -45,6 +45,15 @@ export interface Experience {
   createdAt: Timestamp;
 }
 
+export interface Education {
+  id: string;
+  degree: string;
+  university: string;
+  graduationDate: string;
+  awards: string[];
+  createdAt: Timestamp;
+}
+
 export interface Certification {
   id: string;
   title: string;
