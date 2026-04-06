@@ -1,10 +1,8 @@
-
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { projects as staticProjects } from '@/lib/data';
 import { Project } from '@/types/database';
 import Header from '@/components/layout/header';
@@ -15,16 +13,28 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Github, ExternalLink, Code2, ArrowLeft, Heart, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Skeleton } from '@/components/ui/skeleton';
 
+/**
+ * ProjectsGallery - Immersive Engineering Registry.
+ * Synchronizes static case studies with dynamic Firestore projects.
+ */
 export default function ProjectsGallery() {
-  const projCollection = firestore ? collection(firestore, 'projects') : null;
-  const projQuery = projCollection ? query(projCollection, orderBy('createdAt', 'desc')) : null;
-  const [snapshot] = useCollection(projQuery);
+  const firestore = useFirestore();
 
-  const dynamicProjects = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project)) || [];
+  const projCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'projects') as CollectionReference<DocumentData> : null;
+  }, [firestore]);
+
+  const projQuery = useMemoFirebase(() => {
+    return projCollection ? query(projCollection, orderBy('createdAt', 'desc')) : null;
+  }, [projCollection]);
+
+  const { data: dynamicProjects, isLoading } = useCollection<Project>(projQuery);
 
   const allProjects = useMemo(() => {
-    return [...dynamicProjects, ...staticProjects.map((p, i) => ({ ...p, id: `static-${i}` }))];
+    const formattedStatic = staticProjects.map((p, i) => ({ ...p, id: `static-${i}` }));
+    return [...(dynamicProjects || []), ...formattedStatic];
   }, [dynamicProjects]);
 
   return (
@@ -55,60 +65,64 @@ export default function ProjectsGallery() {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
-            {allProjects.map((project, idx) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.05 }}
-              >
-                <Card className="group flex flex-col h-full overflow-hidden bg-card/50 transition-all hover:shadow-primary/20 hover:shadow-xl border-border/50 hover:-translate-y-1">
-                  <CardHeader className="pb-0 pt-6 px-6">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                        <Code2 className="h-4 w-4" />
-                      </div>
-                      <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest border-primary/20 text-primary">
-                        Engineering Case Study
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex-1 space-y-4 p-6">
-                    <div className="space-y-2">
-                      <CardTitle className="text-2xl group-hover:text-primary transition-colors font-playfair">{project.name.split('–')[0]}</CardTitle>
-                      <p className="text-muted-foreground leading-relaxed text-sm font-light line-clamp-3">"{project.description}"</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((tech) => (
-                        <Badge key={tech} variant="secondary" className="bg-primary/10 text-primary border-none text-[10px] font-bold uppercase tracking-widest">
-                          {tech}
+            {isLoading ? (
+              [...Array(4)].map((_, i) => <Skeleton key={i} className="h-80 w-full" />)
+            ) : (
+              allProjects.map((project, idx) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: idx * 0.05 }}
+                >
+                  <Card className="group flex flex-col h-full overflow-hidden bg-card/50 transition-all hover:shadow-primary/20 hover:shadow-xl border-border/50 hover:-translate-y-1">
+                    <CardHeader className="pb-0 pt-6 px-6">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                          <Code2 className="h-4 w-4" />
+                        </div>
+                        <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest border-primary/20 text-primary">
+                          Engineering Case Study
                         </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="p-6 pt-0 gap-3 border-t bg-muted/5 mt-4 group-hover:bg-primary/5 transition-colors">
-                    <Button asChild variant="default" className="flex-1 shadow-md font-bold uppercase tracking-widest text-[10px]">
-                      <Link href={`/projects/${project.slug}`}>
-                        View Case Study
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" size="icon" title="View Source" className="hover:bg-primary hover:text-white transition-all">
-                      <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                    {project.liveLink && (
-                      <Button asChild variant="outline" size="icon" title="Live Demo" className="hover:bg-primary hover:text-white transition-all">
-                        <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4" />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="flex-1 space-y-4 p-6">
+                      <div className="space-y-2">
+                        <CardTitle className="text-2xl group-hover:text-primary transition-colors font-playfair">{project.name.split('–')[0]}</CardTitle>
+                        <p className="text-muted-foreground leading-relaxed text-sm font-light line-clamp-3">"{project.description}"</p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {project.stack.map((tech) => (
+                          <Badge key={tech} variant="secondary" className="bg-primary/10 text-primary border-none text-[10px] font-bold uppercase tracking-widest">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                    <CardFooter className="p-6 pt-0 gap-3 border-t bg-muted/5 mt-4 group-hover:bg-primary/5 transition-colors">
+                      <Button asChild variant="default" className="flex-1 shadow-md font-bold uppercase tracking-widest text-[10px]">
+                        <Link href={`/projects/${project.slug}`}>
+                          View Case Study
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </Button>
-                    )}
-                  </CardFooter>
-                </Card>
-              </motion.div>
-            ))}
+                      <Button asChild variant="outline" size="icon" title="View Source" className="hover:bg-primary hover:text-white transition-all">
+                        <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                      {project.liveLink && (
+                        <Button asChild variant="outline" size="icon" title="Live Demo" className="hover:bg-primary hover:text-white transition-all">
+                          <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4" />
+                          </Link>
+                        </Button>
+                      )}
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <motion.div 

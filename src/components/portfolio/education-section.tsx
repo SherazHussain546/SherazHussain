@@ -1,22 +1,31 @@
-
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { education as staticEdu } from '@/lib/data';
 import { Education } from '@/types/database';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Skeleton } from '@/components/ui/skeleton';
 
+/**
+ * EducationSection - Academic Foundations Component.
+ * Merges Firestore academic records with the primary system background.
+ */
 export default function EducationSection() {
-  const eduCollection = firestore ? collection(firestore, 'education') : null;
-  const eduQuery = eduCollection ? query(eduCollection, orderBy('createdAt', 'desc')) : null;
-  const [snapshot] = useCollection(eduQuery);
+  const firestore = useFirestore();
 
-  const dynamicEducations = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Education)) || [];
+  const eduCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'education') as CollectionReference<DocumentData> : null;
+  }, [firestore]);
+
+  const eduQuery = useMemoFirebase(() => {
+    return eduCollection ? query(eduCollection, orderBy('createdAt', 'desc')) : null;
+  }, [eduCollection]);
+
+  const { data: dynamicEducations, isLoading } = useCollection<Education>(eduQuery);
 
   const allEducations = useMemo(() => {
     const formattedStatic = [{
@@ -27,7 +36,7 @@ export default function EducationSection() {
       awards: staticEdu.awards,
       createdAt: null
     }];
-    return [...dynamicEducations, ...formattedStatic];
+    return [...(dynamicEducations || []), ...formattedStatic];
   }, [dynamicEducations]);
 
   return (
@@ -37,7 +46,14 @@ export default function EducationSection() {
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center md:text-left">Educational Pedigree</h2>
         
         <div className="space-y-12">
-          {allEducations.map((edu, index) => (
+          {isLoading && (
+            <div className="space-y-6">
+              <Skeleton className="h-48 w-full" />
+              <Skeleton className="h-48 w-full" />
+            </div>
+          )}
+
+          {!isLoading && allEducations.map((edu, index) => (
             <motion.div
               key={edu.id}
               initial={{ opacity: 0, y: 20 }}

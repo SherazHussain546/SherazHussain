@@ -1,28 +1,36 @@
-
 import { projects as staticProjects } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import ProjectCaseStudyContent from '@/components/portfolio/project-case-study-content';
 import { collection, getDocs, query, where, limit } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
+import { initializeFirebase } from '@/firebase';
 import { Project } from '@/types/database';
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
+/**
+ * getProject - Server-side high-fidelity registry resolver.
+ * Searches static FLAGSHIP records then falls back to Firestore dynamic showcases.
+ */
 async function getProject(slug: string): Promise<any> {
   // 1. Check static data first
   const staticProj = staticProjects.find((p) => p.slug === slug);
   if (staticProj) return staticProj;
 
-  // 2. Check Firestore (Wait for server-side initialization if needed)
-  if (firestore) {
-    const q = query(collection(firestore, 'projects'), where('slug', '==', slug), limit(1));
-    const snapshot = await getDocs(q);
-    if (!snapshot.empty) {
-      return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Project;
+  // 2. Check Firestore (Server-side initialization)
+  try {
+    const { firestore } = initializeFirebase();
+    if (firestore) {
+      const q = query(collection(firestore, 'projects'), where('slug', '==', slug), limit(1));
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Project;
+      }
     }
+  } catch (error) {
+    console.warn('Firestore server-side project resolution warning:', error);
   }
 
   return null;
