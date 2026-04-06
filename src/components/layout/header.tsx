@@ -5,8 +5,14 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown, Rss, BookOpen, Cpu, GraduationCap, Archive } from 'lucide-react';
 import { motion } from 'framer-motion';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = [
   { name: 'About', href: '/#about' },
@@ -14,9 +20,16 @@ const navLinks = [
   { name: 'Experience', href: '/#experience' },
   { name: 'Projects', href: '/#projects' },
   { name: 'Certifications', href: '/#certifications'},
-  { name: 'Posts', href: '/#posts' },
   { name: 'Support', href: '/support' },
   { name: 'Contact', href: '/contact' },
+];
+
+const libraryLinks = [
+  { name: 'Posts', href: '/posts', icon: Rss },
+  { name: 'Engineering Project', href: '/archives/category/Project', icon: Cpu },
+  { name: 'Technical Study', href: '/archives/category/Study', icon: BookOpen },
+  { name: 'Learning Course', href: '/archives/category/Course', icon: GraduationCap },
+  { name: 'Miscellaneous', href: '/archives/category/Other', icon: Archive },
 ];
 
 export default function Header() {
@@ -65,7 +78,30 @@ export default function Header() {
               )} />
             </Link>
           ))}
+
+          {/* Library Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-primary transition-colors group outline-none">
+                Library
+                <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-white border-border/50 shadow-2xl p-2 rounded-xl">
+              {libraryLinks.map((link) => (
+                <DropdownMenuItem key={link.name} asChild className="rounded-lg">
+                  <Link href={link.href} className="flex items-center gap-3 p-2 cursor-pointer transition-colors hover:bg-primary/5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10 text-primary">
+                      <link.icon className="h-4 w-4" />
+                    </div>
+                    <span className="text-xs font-semibold uppercase tracking-widest">{link.name}</span>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
+
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -90,6 +126,18 @@ export default function Header() {
                         : 'text-foreground/80 hover:text-primary'
                     )}
                   >
+                    {link.name}
+                  </Link>
+                ))}
+                <div className="h-px bg-border my-2" />
+                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-2">Registry & Insights</p>
+                {libraryLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="flex items-center gap-3 text-lg font-medium transition-all hover:translate-x-2 px-2"
+                  >
+                    <link.icon className="h-5 w-5 text-primary" />
                     {link.name}
                   </Link>
                 ))}

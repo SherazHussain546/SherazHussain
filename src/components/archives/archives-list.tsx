@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMemo } from 'react';
@@ -18,15 +17,25 @@ interface ArchiveDoc {
   category?: string;
 }
 
-export default function ArchivesList({ localDocs }: { localDocs: ArchiveDoc[] }) {
+interface ArchivesListProps {
+  localDocs: ArchiveDoc[];
+  categoryFilter?: string;
+}
+
+export default function ArchivesList({ localDocs, categoryFilter }: ArchivesListProps) {
   // Fetch remote articles from Firestore using the client SDK
   const articlesCollection = useMemo(() => {
     return firestore ? collection(firestore, 'articles') as CollectionReference<DocumentData> : null;
   }, []);
 
   const articlesQuery = useMemo(() => {
-    return articlesCollection ? query(articlesCollection, where('isPublished', '==', true), orderBy('publishDate', 'desc')) : null;
-  }, [articlesCollection]);
+    if (!articlesCollection) return null;
+    let q = query(articlesCollection, where('isPublished', '==', true), orderBy('publishDate', 'desc'));
+    if (categoryFilter) {
+      q = query(articlesCollection, where('isPublished', '==', true), where('category', '==', categoryFilter), orderBy('publishDate', 'desc'));
+    }
+    return q;
+  }, [articlesCollection, categoryFilter]);
 
   const [snapshot, loading] = useCollection(articlesQuery);
 
@@ -46,14 +55,25 @@ export default function ArchivesList({ localDocs }: { localDocs: ArchiveDoc[] })
     };
   }) || [];
 
-  const allDocuments = [...localDocs, ...remoteDocs];
+  // Filter local docs if categoryFilter is present
+  // For local docs, we assume a mapping or we just show them in the general view
+  const filteredLocalDocs = useMemo(() => {
+    if (!categoryFilter) return localDocs;
+    // Local docs in /docs are mostly 'System' or 'Study' by default. 
+    // We can add a mapping if needed, but for now we'll only filter remote ones strictly.
+    return localDocs.filter(d => d.category === categoryFilter || (categoryFilter === 'Study' && d.category === 'System'));
+  }, [localDocs, categoryFilter]);
+
+  const allDocuments = [...filteredLocalDocs, ...remoteDocs];
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b pb-4">
         <div className="flex items-center gap-3">
           <Archive className="h-5 w-5 text-primary" />
-          <h2 className="font-playfair text-2xl font-bold">Document Index</h2>
+          <h2 className="font-playfair text-2xl font-bold">
+            {categoryFilter ? `${categoryFilter} Registry` : 'Document Index'}
+          </h2>
         </div>
         <div className="flex items-center gap-2">
           {loading && <Sparkles className="h-3 w-3 text-primary animate-spin" />}
@@ -66,7 +86,9 @@ export default function ArchivesList({ localDocs }: { localDocs: ArchiveDoc[] })
       {allDocuments.length === 0 ? (
         <div className="p-20 text-center border-2 border-dashed rounded-[2rem] opacity-40">
           <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <p className="font-space-mono text-[10px] uppercase tracking-widest">Scanning Repository...</p>
+          <p className="font-space-mono text-[10px] uppercase tracking-widest">
+            {loading ? 'Scanning Repository...' : `No ${categoryFilter || ''} assets found.`}
+          </p>
         </div>
       ) : (
         <div className="grid gap-4">
