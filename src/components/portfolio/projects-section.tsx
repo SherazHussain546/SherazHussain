@@ -1,9 +1,25 @@
+
 'use client';
 
-import { projects } from '@/lib/data';
+import { useMemo } from 'react';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { firestore } from '@/firebase/client';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { projects as staticProjects } from '@/lib/data';
+import { Project } from '@/types/database';
 import Link from 'next/link';
 
 export default function ProjectsSection() {
+  const projCollection = firestore ? collection(firestore, 'projects') : null;
+  const projQuery = projCollection ? query(projCollection, orderBy('createdAt', 'desc')) : null;
+  const [snapshot] = useCollection(projQuery);
+
+  const dynamicProjects = snapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project)) || [];
+
+  const allProjects = useMemo(() => {
+    return [...dynamicProjects, ...staticProjects.map((p, i) => ({ ...p, id: `static-${i}` }))];
+  }, [dynamicProjects]);
+
   return (
     <section id="projects" className="bg-background py-12 md:py-20">
       <div className="max-w-[860px] mx-auto px-6">
@@ -15,8 +31,8 @@ export default function ProjectsSection() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border mb-16">
-          {projects.map((project) => (
-            <Link key={project.slug} href={`/projects/${project.slug}`} className="group">
+          {allProjects.slice(0, 4).map((project) => (
+            <Link key={project.id} href={`/projects/${project.slug}`} className="group">
               <div className="bg-background h-full p-8 transition-colors group-hover:bg-muted/5">
                 <p className="font-space-mono text-[9px] uppercase tracking-widest text-primary mb-3">
                   {project.stack[0]} · {project.stack[1] || 'AI'}

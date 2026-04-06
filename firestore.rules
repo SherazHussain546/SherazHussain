@@ -1,31 +1,12 @@
-/**
- * Portfolio & Article Management Security Rules
- *
- * Core Philosophy:
- * This ruleset implements a dual-access model designed for a professional portfolio website. 
- * Public content (skills, projects, experiences) is globally readable to maximize SEO and 
- * visibility. Administrative control is strictly decoupled from public data using a 
- * "Trusted Admin" pattern, where permissions are granted based on the existence of a 
- * record in a dedicated admin collection, with a verified email fallback for the owner.
- */
 
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // --- Helper Functions ---
-
-    /**
-     * @description Checks if the request is from an authenticated user.
-     */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    /**
-     * @description Checks if the authenticated user is registered as an administrator.
-     * Includes a verified email fallback and specific UID recognition for Sheraz.
-     */
     function isAdmin() {
       return isSignedIn() && (
         request.auth.token.email in ["me@sherazhussain546.com", "sheraz@synctech.ie", "admin@synctech.ie"] ||
@@ -34,118 +15,63 @@ service cloud.firestore {
       );
     }
 
-    /**
-     * @description Checks if the authenticated user's UID matches the provided ID.
-     */
-    function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
-    }
-
-    /**
-     * @description Ensures the document exists before performing updates or deletes.
-     */
-    function existsAndAdmin() {
-      return isAdmin() && resource != null;
-    }
-
-    // --- Collection Rules ---
-
-    /**
-     * @description Rules for the portfolio owner's profile information.
-     */
     match /user_profile/{profileId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
-    /**
-     * @description Rules for portfolio sections.
-     */
     match /skills/{skillId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
     match /experiences/{experienceId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
     match /projects/{projectId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
-    match /education/{educationId} {
+    match /certifications/{certId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
-    /**
-     * @description Rules for Articles (Project studies, courses, .md links).
-     */
     match /articles/{articleId} {
-      allow get, list: if isAdmin() || (resource != null && resource.data.isPublished == true);
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow get, list: if isAdmin() || (resource != null && resource.data.isPublished == true) || (resource == null);
+      allow write: if isAdmin();
     }
 
-    /**
-     * @description Rules for Analytics. Allow public create for logging; Admin only for viewing.
-     */
     match /analyticsEvents/{eventId} {
       allow create: if true;
       allow get, list: if isAdmin();
     }
 
-    /**
-     * @description Rules for Social Posts and Updates.
-     */
     match /posts/{postId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
-    /**
-     * @description Rules for Project Goals / Milestones.
-     */
     match /projectGoals/{goalId} {
       allow get, list: if true;
-      allow create: if isAdmin();
-      allow update, delete: if existsAndAdmin();
+      allow write: if isAdmin();
     }
 
-    /**
-     * @description Rules for Global Site Configuration.
-     */
     match /siteConfig/{configId} {
       allow get: if true;
-      allow list: if isAdmin();
-      allow create, update, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
-    /**
-     * @description Rules for Workflows. These are private to the admin.
-     */
     match /workflows/{workflowId} {
-      allow get, list, create, update, delete: if isAdmin();
+      allow read, write: if isAdmin();
     }
 
-    /**
-     * @description Rules for identifying users with administrative privileges.
-     * @path /admin_users/{userId}
-     */
     match /admin_users/{userId} {
-      allow get: if isOwner(userId) || isAdmin();
-      allow list: if isAdmin();
-      allow create: if isOwner(userId) || isAdmin();
-      allow update, delete: if (isOwner(userId) || isAdmin()) && resource != null;
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAdmin();
     }
   }
 }

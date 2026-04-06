@@ -1,9 +1,5 @@
-import { Timestamp } from 'firebase/firestore';
 
-/**
- * @fileOverview High-fidelity TypeScript definitions for the Firestore database schema.
- * Aligned with docs/backend.json for technical integrity.
- */
+import { Timestamp } from 'firebase/firestore';
 
 export interface Post {
   id: string;
@@ -37,6 +33,45 @@ export interface Article {
   publishDate: Timestamp;
   tagIds?: string[];
   isPublished: boolean;
+}
+
+export interface Experience {
+  id: string;
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  points: string[];
+  createdAt: Timestamp;
+}
+
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  credentialUrl?: string;
+  skills: string[];
+  points: string[];
+  iconName: string;
+  createdAt: Timestamp;
+}
+
+export interface Project {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  fullDescription: string;
+  challenges: string[];
+  solutions: { title: string; description: string }[];
+  results: string[];
+  stack: string[];
+  link: string;
+  liveLink?: string;
+  image: string;
+  imageHint: string;
+  createdAt: Timestamp;
 }
 
 export interface SiteConfig {

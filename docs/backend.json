@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "UserProfile": {
@@ -17,16 +18,65 @@
       },
       "required": ["id", "name", "professionalTitle", "summary", "contactEmail"]
     },
-    "Skill": {
-      "title": "Skill",
+    "Experience": {
+      "title": "Experience",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "company": { "type": "string" },
+        "period": { "type": "string" },
+        "description": { "type": "string" },
+        "points": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["role", "company", "period", "description"]
+    },
+    "Certification": {
+      "title": "Certification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "issuer": { "type": "string" },
+        "date": { "type": "string" },
+        "credentialUrl": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "points": { "type": "array", "items": { "type": "string" } },
+        "iconName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "issuer", "date"]
+    },
+    "Project": {
+      "title": "Project",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
         "name": { "type": "string" },
-        "category": { "type": "string" },
-        "description": { "type": "string" }
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "fullDescription": { "type": "string" },
+        "challenges": { "type": "array", "items": { "type": "string" } },
+        "solutions": { 
+          "type": "array", 
+          "items": { 
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          } 
+        },
+        "results": { "type": "array", "items": { "type": "string" } },
+        "stack": { "type": "array", "items": { "type": "string" } },
+        "link": { "type": "string" },
+        "liveLink": { "type": "string" },
+        "image": { "type": "string" },
+        "imageHint": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["id", "name", "category", "description"]
+      "required": ["name", "slug", "description", "fullDescription", "stack", "link"]
     },
     "AnalyticsEvent": {
       "title": "AnalyticsEvent",
@@ -50,19 +100,38 @@
         "path": "/user_profile/{profileId}",
         "definition": {
           "entityName": "UserProfile",
-          "schema": { "$ref": "#/backend/entities/UserProfile" },
           "description": "Owner metadata."
+        }
+      },
+      {
+        "path": "/experiences/{experienceId}",
+        "definition": {
+          "entityName": "Experience",
+          "description": "Work history."
+        }
+      },
+      {
+        "path": "/certifications/{certId}",
+        "definition": {
+          "entityName": "Certification",
+          "description": "Professional credentials."
+        }
+      },
+      {
+        "path": "/projects/{projectId}",
+        "definition": {
+          "entityName": "Project",
+          "description": "Engineering showcase items."
         }
       },
       {
         "path": "/analyticsEvents/{eventId}",
         "definition": {
           "entityName": "AnalyticsEvent",
-          "schema": { "$ref": "#/backend/entities/AnalyticsEvent" },
           "description": "Visitor analytics events."
         }
       }
     ],
-    "reasoning": "The firestore structure is built for authorization independence. Admin status is determined by checking for document existence in /admin_users/{uid}, separating public data access from role verification."
+    "reasoning": "Standard dynamic CMS structure for a professional portfolio."
   }
 }
