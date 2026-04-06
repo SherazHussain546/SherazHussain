@@ -31,6 +31,7 @@ export default async function ArchivesIndex() {
         month: 'short', 
         day: 'numeric' 
       }),
+      rawDate: stats.mtime.getTime(), // Pass raw timestamp for true sorting
       size: (stats.size / 1024).toFixed(1) + ' KB',
       type: 'Local' as const,
       category: 'System'

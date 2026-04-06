@@ -1,3 +1,4 @@
+
 import fs from 'fs';
 import path from 'path';
 import Header from '@/components/layout/header';
@@ -51,9 +52,10 @@ export default async function CategorizedArchives({ params }: { params: Promise<
         month: 'short', 
         day: 'numeric' 
       }),
+      rawDate: stats.mtime.getTime(), // Pass raw timestamp for true sorting
       size: (stats.size / 1024).toFixed(1) + ' KB',
       type: 'Local' as const,
-      category: 'System' // Default for local files (mapped to Study in ArchivesList)
+      category: 'System' // Default for local files
     };
   });
 

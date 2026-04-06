@@ -1,10 +1,11 @@
+
 'use client';
 
 import { useMemo } from 'react';
 import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, AlertCircle, Database, SearchX } from 'lucide-react';
+import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, Database, SearchX } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -13,6 +14,7 @@ interface ArchiveDoc {
   slug: string;
   name: string;
   updatedAt: string;
+  rawDate: number; // Raw timestamp for merging/sorting
   size: string;
   type: 'Local' | 'Remote';
   category?: string;
@@ -26,6 +28,7 @@ interface ArchivesListProps {
 /**
  * ArchivesList - High-Fidelity Registry Discovery Component.
  * Merges local file-system documents with real-time Firestore assets.
+ * Implements a unified chronological sort (newest to oldest).
  */
 export default function ArchivesList({ localDocs, categoryFilter }: ArchivesListProps) {
   const firestore = useFirestore();
@@ -38,7 +41,6 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
   const articlesQuery = useMemoFirebase(() => {
     if (!articlesCollection) return null;
     
-    // Core constraint: only published assets for the public registry
     if (categoryFilter) {
       return query(
         articlesCollection, 
@@ -70,23 +72,25 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
             day: 'numeric'
           }) 
         : 'Recently',
+      rawDate: data.publishDate?.toMillis() || Date.now(),
       size: 'Remote Source',
       type: 'Remote',
       category: data.category === 'CaseStudy' ? 'Case Study' : data.category || 'Other'
     }));
   }, [remoteData]);
 
-  // 3. Local Document Alignment
-  const filteredLocalDocs = useMemo(() => {
-    if (!categoryFilter) return localDocs;
-    // Align local 'System' documents with 'Study' or filter them out for other categories
-    return localDocs.filter(d => 
-      d.category === categoryFilter || 
-      (categoryFilter === 'Study' && d.category === 'System')
-    );
-  }, [localDocs, categoryFilter]);
+  // 3. Chronological Merge-Sort
+  const allDocuments = useMemo(() => {
+    const filteredLocal = !categoryFilter 
+      ? localDocs 
+      : localDocs.filter(d => 
+          d.category === categoryFilter || 
+          (categoryFilter === 'Study' && d.category === 'System')
+        );
 
-  const allDocuments = [...filteredLocalDocs, ...remoteDocs];
+    // Merge and sort by rawDate descending (Newest on Top)
+    return [...remoteDocs, ...filteredLocal].sort((a, b) => b.rawDate - a.rawDate);
+  }, [localDocs, remoteDocs, categoryFilter]);
 
   return (
     <div className="space-y-8">
@@ -111,14 +115,11 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
           <AlertTitle className="font-bold">Database Index Required</AlertTitle>
           <AlertDescription className="mt-2 space-y-4">
             <p className="text-xs leading-relaxed opacity-90">
-              The dynamic categorization engine requires a composite index to synchronize correctly. This is a standard security and performance requirement.
+              The dynamic categorization engine requires a composite index to synchronize correctly.
             </p>
             <div className="p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
               {error.message}
             </div>
-            <p className="text-[10px] uppercase font-bold tracking-widest">
-              Action Required: Please follow the link provided above in your Firebase Console to authorize this query.
-            </p>
           </AlertDescription>
         </Alert>
       )}
@@ -128,17 +129,17 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
           <SearchX className="h-12 w-12 text-muted-foreground opacity-40" />
           <div className="space-y-1">
             <p className="font-space-mono text-[10px] uppercase tracking-widest font-bold">
-              Segment Empty: {categoryFilter === 'CaseStudy' ? 'Case Studies' : (categoryFilter || 'Repository')}
+              Segment Empty
             </p>
             <p className="text-xs text-muted-foreground max-w-xs mx-auto">
-              No published assets were found matching this technical classification. Check the Admin Portal to verify document status and categories.
+              No published assets were found matching this technical classification.
             </p>
           </div>
         </div>
       ) : (
         <div className="grid gap-4">
           {allDocuments.map((doc) => (
-            <Link key={doc.slug} href={`/archives/${doc.slug}`}>
+            <Link key={`${doc.type}-${doc.slug}`} href={`/archives/${doc.slug}`}>
               <Card className="group hover:border-primary/30 transition-all hover:shadow-lg bg-white/50 backdrop-blur-sm border-border/40 overflow-hidden">
                 <CardHeader className="p-6 flex flex-row items-center justify-between space-y-0">
                   <div className="flex items-center gap-4">
