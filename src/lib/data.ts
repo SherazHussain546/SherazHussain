@@ -281,9 +281,10 @@ export const allCertificates: CertificateType[] = [
     ],
   },
   {
-    title: 'EA Software Engineering Virtual Experience',
+    title: 'Electronic Arts Software Engineering Virtual Experience',
     issuer: 'Forage',
-    date: 'Aug 31, 2025',
+    date: 'August 31, 2025',
+    credentialUrl: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/j43dGscQHtJJ57N54/a77WE3de8qrxWferQ_j43dGscQHtJJ57N54_uuJYSQRPzdEooqNQY_1756679570418_completion_certificate.pdf',
     icon: Award,
     skills: ['Code Quality', 'Code Review', 'Communication', 'Data Structures', 'Feature Development', 'Game Development', 'Object-Oriented Design', 'Object-Oriented Programming', 'Product Management'],
     points: [
@@ -295,7 +296,8 @@ export const allCertificates: CertificateType[] = [
   {
     title: 'Deloitte Australia Technology Job Simulation',
     issuer: 'Forage',
-    date: 'Aug 31, 2025',
+    date: 'August 31, 2025',
+    credentialUrl: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/udmxiyHeqYQLkTPvf_9PBTqmSxAf6zZTseP_uuJYSQRPzdEooqNQY_1756600268754_completion_certificate.pdf',
     icon: Code,
     skills: ['Computer Networking', 'Data Analysis', 'Data Modeling', 'Data Structures', 'Data Visualization Tools', 'Formal Communication', 'Log Analysis', 'Planning', 'Programming', 'Python Programming', 'Software Development', 'Spreadsheet Skills', 'Web Security'],
     points: [
@@ -306,7 +308,8 @@ export const allCertificates: CertificateType[] = [
   {
     title: 'Deloitte Australia Data Analytics Job Simulation',
     issuer: 'Forage',
-    date: 'Aug 31, 2025',
+    date: 'August 31, 2025',
+    credentialUrl: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_uuJYSQRPzdEooqNQY_1756596432652_completion_certificate.pdf',
     icon: Database,
     skills: ['Computer Networking', 'Data Analysis', 'Data Modeling', 'Data Structures', 'Data Visualization Tools', 'Formal Communication', 'Log Analysis', 'Planning', 'Programming', 'Python Programming', 'Software Development', 'Spreadsheet Skills', 'Web Security'],
     points: [
@@ -318,7 +321,8 @@ export const allCertificates: CertificateType[] = [
   {
     title: 'Deloitte Australia Cyber Job Simulation',
     issuer: 'Forage',
-    date: 'Aug 30, 2025',
+    date: 'August 30, 2025',
+    credentialUrl: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/E9pA6qsdbeyEkp3ti_9PBTqmSxAf6zZTseP_uuJYSQRPzdEooqNQY_1756591635335_completion_certificate.pdf',
     icon: ShieldCheck,
     skills: ['Computer Networking', 'Data Analysis', 'Data Modeling', 'Data Structures', 'Data Visualization Tools', 'Formal Communication', 'Log Analysis', 'Planning', 'Programming', 'Python Programming', 'Software Development', 'Spreadsheet Skills', 'Web Security'],
     points: [
