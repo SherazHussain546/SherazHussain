@@ -19,7 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil, AlertCircle, ExternalLink, BookOpen } from 'lucide-react';
+import { Trash2, Pencil, AlertCircle, ExternalLink, BookOpen, Globe } from 'lucide-react';
 import { Article } from '@/types/database';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -91,7 +91,7 @@ export default function ManageArticles() {
       });
       form.reset();
     } catch (e) {
-      // Permission errors are handled globally by useCollection listener
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -110,7 +110,7 @@ export default function ManageArticles() {
       setIsEditDialogOpen(false);
       setEditingArticle(null);
     } catch (e) {
-      // Errors handled globally
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -123,7 +123,7 @@ export default function ManageArticles() {
       await deleteDoc(articleRef);
       toast({ title: 'Article Removed' });
     } catch (e) {
-      // Errors handled globally
+      console.error(e);
     }
   }
   
@@ -152,13 +152,13 @@ export default function ManageArticles() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <Card>
+      <Card className="border-primary/20 shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <BookOpen className="text-primary h-5 w-5" />
-            Integrate GitHub Content
+            <Globe className="text-primary h-5 w-5" />
+            External Asset Integration
           </CardTitle>
-          <CardDescription>Share your projects, studies, and courses by linking raw Markdown URLs.</CardDescription>
+          <CardDescription>Link high-fidelity Markdown resources from GitHub or other verified repositories.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -171,7 +171,7 @@ export default function ManageArticles() {
                     <FormItem>
                       <FormLabel>Asset Title</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g. Next.js Architecture Study" {...field} />
+                        <Input placeholder="e.g. AI Strategy Brief" {...field} className="bg-muted/5" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -184,7 +184,7 @@ export default function ManageArticles() {
                     <FormItem>
                       <FormLabel>URL Slug</FormLabel>
                       <FormControl>
-                        <Input placeholder="nextjs-study" {...field} />
+                        <Input placeholder="ai-strategy" {...field} className="bg-muted/5" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -197,15 +197,15 @@ export default function ManageArticles() {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Content Classification</FormLabel>
+                    <FormLabel>Technical Classification</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-muted/5">
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Project">Project Write-up</SelectItem>
+                        <SelectItem value="Project">Engineering Project</SelectItem>
                         <SelectItem value="Study">Technical Study</SelectItem>
                         <SelectItem value="Course">Learning Course</SelectItem>
                         <SelectItem value="Other">Miscellaneous</SelectItem>
@@ -221,12 +221,12 @@ export default function ManageArticles() {
                 name="mdFileUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Raw Markdown (.md) URL</FormLabel>
+                    <FormLabel>Markdown Source URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://raw.githubusercontent.com/..." {...field} />
+                      <Input placeholder="https://github.com/..." {...field} className="bg-muted/5" />
                     </FormControl>
-                    <FormDescription className="text-[10px]">
-                      Use the "Raw" link from GitHub to ensure correct parsing.
+                    <FormDescription className="text-[10px] font-medium text-primary">
+                      Pro Tip: You can use standard GitHub links; our system will automatically resolve them to 'Raw' content.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -238,19 +238,19 @@ export default function ManageArticles() {
                 name="shortDescription"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Repository Excerpt</FormLabel>
+                    <FormLabel>Technical Excerpt</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="A brief summary for the archives list..." {...field} />
+                      <Textarea placeholder="A brief summary for the knowledge registry..." {...field} className="bg-muted/5 h-24" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <div className="flex items-center justify-between p-4 border rounded-lg bg-muted/5">
+              <div className="flex items-center justify-between p-4 border rounded-lg bg-primary/5">
                 <div className="space-y-0.5">
-                  <FormLabel className="text-base">Visibility State</FormLabel>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Publish instantly to repository</p>
+                  <FormLabel className="text-base">System Visibility</FormLabel>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Publish instantly to Knowledge Registry</p>
                 </div>
                 <FormField
                   control={form.control}
@@ -266,64 +266,64 @@ export default function ManageArticles() {
                 />
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full">
-                {loading ? 'Synchronizing...' : 'Add to Repository'}
+              <Button type="submit" disabled={loading} className="w-full h-11 font-bold">
+                {loading ? 'Synchronizing Pipeline...' : 'Register Asset'}
               </Button>
             </form>
           </Form>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-border/40 shadow-sm">
         <CardHeader>
-          <CardTitle>Library Index</CardTitle>
-          <CardDescription>Manage synced studies, projects, and courses.</CardDescription>
+          <CardTitle>Knowledge Registry Index</CardTitle>
+          <CardDescription>Manage active studies, projects, and learning modules.</CardDescription>
         </CardHeader>
         <CardContent>
-          {articlesLoading && <p className="text-sm text-muted-foreground animate-pulse">Scanning index...</p>}
-          {!articlesLoading && articles.length === 0 && <p className="text-muted-foreground italic">No assets indexed yet.</p>}
+          {articlesLoading && <p className="text-sm text-muted-foreground animate-pulse font-mono uppercase tracking-widest">Scanning Registry...</p>}
+          {!articlesLoading && articles.length === 0 && <p className="text-muted-foreground italic text-sm">Registry is currently empty.</p>}
           <div className="max-h-[600px] overflow-y-auto">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Asset</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="text-[10px] uppercase tracking-widest">Technical Asset</TableHead>
+                  <TableHead className="text-[10px] uppercase tracking-widest">Type</TableHead>
+                  <TableHead className="text-right text-[10px] uppercase tracking-widest">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {articles.map((article) => (
-                  <TableRow key={article.id}>
+                  <TableRow key={article.id} className="group transition-colors hover:bg-muted/30">
                     <TableCell className="font-medium max-w-[120px] truncate">
                       {article.title}
-                      {!article.isPublished && <span className="ml-2 text-[8px] uppercase text-amber-600 font-bold">Draft</span>}
+                      {!article.isPublished && <span className="ml-2 text-[8px] uppercase text-amber-600 font-bold border border-amber-600/20 px-1 rounded-sm bg-amber-50">Draft</span>}
                     </TableCell>
                     <TableCell>
-                      <span className="text-[9px] uppercase tracking-tighter bg-primary/5 px-1.5 py-0.5 border border-primary/10 text-primary font-bold">
+                      <span className="text-[9px] uppercase tracking-tighter bg-primary/10 px-1.5 py-0.5 rounded-sm text-primary font-bold">
                         {article.category}
                       </span>
                     </TableCell>
                     <TableCell className="text-right flex justify-end gap-1">
-                       <Button variant="ghost" size="icon" asChild>
+                       <Button variant="ghost" size="icon" asChild className="h-8 w-8 hover:text-primary">
                           <a href={`/archives/${article.slug}`} target="_blank"><ExternalLink className="h-4 w-4" /></a>
                        </Button>
-                       <Button variant="ghost" size="icon" onClick={() => openEditDialog(article)}>
+                       <Button variant="ghost" size="icon" onClick={() => openEditDialog(article)} className="h-8 w-8 hover:text-primary">
                           <Pencil className="h-4 w-4" />
                        </Button>
                        <AlertDialog>
                         <AlertDialogTrigger asChild>
-                           <Button variant="ghost" size="icon">
-                              <Trash2 className="h-4 w-4 text-destructive" />
+                           <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive/10">
+                              <Trash2 className="h-4 w-4" />
                            </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete this asset?</AlertDialogTitle>
-                            <AlertDialogDescription>This will remove it from the public repository index instantly.</AlertDialogDescription>
+                            <AlertDialogTitle>Delete Technical Asset?</AlertDialogTitle>
+                            <AlertDialogDescription>This will remove it from the Knowledge Registry instantly. This action is final.</AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => deleteArticle(article.id)}>Delete</AlertDialogAction>
+                            <AlertDialogAction onClick={() => deleteArticle(article.id)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
@@ -337,9 +337,9 @@ export default function ManageArticles() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-md bg-white">
+        <DialogContent className="sm:max-w-md bg-white border-primary/20 shadow-2xl">
           <DialogHeader>
-            <DialogTitle>Edit Technical Asset</DialogTitle>
+            <DialogTitle className="text-2xl font-bold font-playfair">Edit Asset Registry</DialogTitle>
           </DialogHeader>
           <Form {...editForm}>
             <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-4 py-4">
@@ -350,7 +350,7 @@ export default function ManageArticles() {
                   <FormItem>
                     <FormLabel>Asset Title</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="bg-muted/5" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -361,17 +361,17 @@ export default function ManageArticles() {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Classification</FormLabel>
+                    <FormLabel>System Classification</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-muted/5">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Project">Project</SelectItem>
-                        <SelectItem value="Study">Study</SelectItem>
-                        <SelectItem value="Course">Course</SelectItem>
+                        <SelectItem value="Project">Engineering Project</SelectItem>
+                        <SelectItem value="Study">Technical Study</SelectItem>
+                        <SelectItem value="Course">Learning Course</SelectItem>
                         <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
@@ -384,9 +384,9 @@ export default function ManageArticles() {
                 name="mdFileUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Markdown source URL</FormLabel>
+                    <FormLabel>Markdown Source URL</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="bg-muted/5" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -396,8 +396,11 @@ export default function ManageArticles() {
                 control={editForm.control}
                 name="isPublished"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between rounded-lg border p-3">
-                    <FormLabel>Live in Repository</FormLabel>
+                  <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-primary/5">
+                    <div>
+                      <FormLabel className="text-base">System Visibility</FormLabel>
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Live in Knowledge Registry</p>
+                    </div>
                     <FormControl>
                       <Switch
                         checked={field.value}
@@ -407,12 +410,12 @@ export default function ManageArticles() {
                   </FormItem>
                 )}
               />
-              <DialogFooter>
+              <DialogFooter className="gap-2 sm:gap-0">
                 <DialogClose asChild>
-                   <Button type="button" variant="secondary">Cancel</Button>
+                   <Button type="button" variant="secondary" className="font-bold">Cancel</Button>
                 </DialogClose>
-                <Button type="submit" disabled={loading}>
-                  {loading ? 'Saving...' : 'Save Changes'}
+                <Button type="submit" disabled={loading} className="font-bold">
+                  {loading ? 'Saving Pipeline...' : 'Confirm Changes'}
                 </Button>
               </DialogFooter>
             </form>

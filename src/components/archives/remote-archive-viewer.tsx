@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -11,7 +10,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, User, Calendar, Globe, BookOpen, Sparkles, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
+import { fetchRemoteMarkdown } from '@/app/actions/fetch-markdown';
 
+/**
+ * RemoteArchiveViewer - High-Fidelity Remote Document Renderer.
+ * Utilizes a Server Action to fetch Markdown content, bypassing CORS restrictions.
+ */
 export default function RemoteArchiveViewer({ slug }: { slug: string }) {
   const [content, setContent] = useState<string | null>(null);
   const [contentLoading, setContentLoading] = useState(false);
@@ -35,9 +39,8 @@ export default function RemoteArchiveViewer({ slug }: { slug: string }) {
         setContentLoading(true);
         setContentError(null);
         try {
-          const response = await fetch(articleData.mdFileUrl);
-          if (!response.ok) throw new Error("Failed to fetch Markdown content from external source.");
-          const text = await response.text();
+          // Use the Server Action instead of client-side fetch to resolve CORS/Network errors
+          const text = await fetchRemoteMarkdown(articleData.mdFileUrl);
           setContent(text);
         } catch (err: any) {
           setContentError(err.message);
@@ -93,7 +96,7 @@ export default function RemoteArchiveViewer({ slug }: { slug: string }) {
             <div className="flex items-center gap-6 font-space-mono text-[9px] tracking-widest uppercase text-white/40">
               <span className="flex items-center gap-2"><User className="h-3 w-3 text-primary" /> Sheraz Hussain</span>
               <span className="flex items-center gap-2"><Calendar className="h-3 w-3 text-primary" /> Indexed {lastModified}</span>
-              <span className="flex items-center gap-2 text-primary"><Globe className="h-3 w-3" /> GitHub Linked</span>
+              <span className="flex items-center gap-2 text-primary"><Globe className="h-3 w-3" /> External Repository</span>
             </div>
           </div>
         </div>
@@ -128,9 +131,13 @@ export default function RemoteArchiveViewer({ slug }: { slug: string }) {
                 <Skeleton className="h-[200px] w-full" />
               </div>
             ) : contentError ? (
-              <div className="bg-destructive/10 text-destructive p-6 rounded-lg flex items-center gap-4">
-                <AlertCircle className="h-6 w-6" />
-                <p className="text-sm font-medium">{contentError}</p>
+              <div className="bg-destructive/5 text-destructive p-8 rounded-xl border border-destructive/10 text-center">
+                <AlertCircle className="h-10 w-10 mx-auto mb-4" />
+                <h3 className="font-bold text-lg mb-2">Technical Resolution Error</h3>
+                <p className="text-sm opacity-80 mb-6">{contentError}</p>
+                <Button variant="outline" onClick={() => window.location.reload()} size="sm" className="font-mono text-[10px] uppercase tracking-widest">
+                  Retry Connection
+                </Button>
               </div>
             ) : (
               <article className="prose prose-slate lg:prose-lg max-w-none 
