@@ -271,6 +271,7 @@ export const allCertificates: CertificateType[] = [
     title: 'Mastercard Cybersecurity Virtual Experience Program',
     issuer: 'Forage',
     date: 'March 2026',
+    credentialUrl: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/mfxGwGDp6WkQmtmTf/vcKAB5yYAgvemepGQ_mfxGwGDp6WkQmtmTf_uuJYSQRPzdEooqNQY_1739812883226_completion_certificate.pdf',
     icon: ShieldCheck,
     skills: ['Communication', 'Cybersecurity', 'Data Analysis', 'Data Visualization', 'Design Thinking', 'Problem Solving', 'Security Awareness', 'Security Training', 'Strategy'],
     points: [

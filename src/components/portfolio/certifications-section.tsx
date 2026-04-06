@@ -3,6 +3,9 @@
 import { allCertificates } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 
 export default function CertificationsSection() {
   return (
@@ -47,7 +50,7 @@ export default function CertificationsSection() {
               )}
 
               {cert.skills && cert.skills.length > 0 && (
-                <div className="space-y-3">
+                <div className="space-y-3 mb-8">
                   <p className="font-space-mono text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-bold">Core Competencies Earned</p>
                   <div className="flex flex-wrap gap-2">
                     {cert.skills.map((skill) => (
@@ -60,6 +63,17 @@ export default function CertificationsSection() {
                       </Badge>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {cert.credentialUrl && (
+                <div className="pt-4 border-t border-border/50">
+                  <Button asChild variant="outline" size="sm" className="h-9 font-space-mono text-[10px] uppercase tracking-widest border-primary/20 hover:bg-primary hover:text-white transition-all rounded-none group/link">
+                    <Link href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">
+                      Verify Credential
+                      <ExternalLink className="ml-2 h-3 w-3 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                    </Link>
+                  </Button>
                 </div>
               )}
             </motion.div>
