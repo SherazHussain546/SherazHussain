@@ -1,9 +1,10 @@
+
 'use client';
 
-import { useState, useEffect, createContext, useContext } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/firebase/client';
+import { createContext, useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/firebase';
+import { User } from 'firebase/auth';
 
 interface AuthContextType {
   user: User | null;
@@ -17,27 +18,18 @@ const AuthContext = createContext<AuthContextType>({
   isConfigured: false,
 });
 
+/**
+ * AuthProvider - Compatibility layer for legacy authentication hooks.
+ * Consumes the central Firebase context to provide user state.
+ */
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const isConfigured = !!auth;
-
-  useEffect(() => {
-    if (!auth) {
-      setLoading(false);
-      return;
-    }
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const { user, isUserLoading } = useUser();
+  
+  // We assume configuration is valid if the FirebaseClientProvider mounted successfully
+  const isConfigured = true;
 
   return (
-    <AuthContext.Provider value={{ user, loading, isConfigured }}>
+    <AuthContext.Provider value={{ user, loading: isUserLoading, isConfigured }}>
       {children}
     </AuthContext.Provider>
   );

@@ -26,6 +26,18 @@ export interface ProjectGoal {
   createdAt: Timestamp;
 }
 
+export interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  mdFileUrl: string;
+  imageUrl?: string;
+  publishDate: Timestamp;
+  tagIds?: string[];
+  isPublished: boolean;
+}
+
 export interface SiteConfig {
   founderImageUrl: string;
 }

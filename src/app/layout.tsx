@@ -9,7 +9,7 @@ import { AuthProvider } from '@/hooks/use-auth';
 import AnalyticsTracker from '@/components/admin/analytics/analytics-tracker';
 import FloatingNav from '@/components/layout/floating-nav';
 import FeedbackPopup from '@/components/layout/feedback-popup';
-import FirebaseErrorListener from '@/components/FirebaseErrorListener';
+import { FirebaseClientProvider } from '@/firebase';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
@@ -169,13 +169,14 @@ export default function RootLayout({
             data-y_margin="18"
             strategy="afterInteractive"
           />
-          <AuthProvider>
-            <FirebaseErrorListener />
-            <FloatingNav />
-            <AnalyticsTracker />
-            {children}
-            <FeedbackPopup />
-          </AuthProvider>
+          <FirebaseClientProvider>
+            <AuthProvider>
+              <FloatingNav />
+              <AnalyticsTracker />
+              {children}
+              <FeedbackPopup />
+            </AuthProvider>
+          </FirebaseClientProvider>
           <Toaster />
       </body>
     </html>
