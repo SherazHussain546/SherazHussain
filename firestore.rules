@@ -1,39 +1,137 @@
+/**
+ * Portfolio & Article Management Security Rules
+ *
+ * Core Philosophy:
+ * This ruleset implements a dual-access model designed for a professional portfolio website. 
+ * Public content (skills, projects, experiences) is globally readable to maximize SEO and 
+ * visibility. Administrative control is strictly decoupled from public data using a 
+ * "Trusted Admin" pattern, where permissions are granted based on the existence of a 
+ * record in a dedicated admin collection.
+ *
+ * Data Structure:
+ * - /user_profile: Singular document containing owner metadata.
+ * - /skills, /experiences, /projects, /education: Top-level collections for portfolio content.
+ * - /articles: Metadata for long-form content, studies, and courses linked to external Markdown.
+ * - /admin_users: A private collection mapping Firebase UIDs to administrative privileges.
+ *
+ * Key Security Decisions:
+ * - Admin Bypass: Users verified in the /admin_users collection gain full write access to all content.
+ * - Public Visibility: Portfolio sections are readable by anyone (including anonymous users).
+ * - Draft Protection: Articles use an `isPublished` flag; non-admins can only see published articles.
+ * - Structural Integrity: Resource existence is strictly enforced for all destructive operations.
+ *
+ * Denormalization for Authorization:
+ * - Admin status is verified via the existence of a document in `/admin_users/{uid}`. This 
+ *   removes the need to fetch and check fields within the UserProfile, ensuring high performance 
+ *   and clear separation of concerns.
+ */
+
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // SECURITY RULES REVISION: 2024-06-05-V60-STABLE
-    
+
+    // --- Helper Functions ---
+
+    /**
+     * @description Checks if the request is from an authenticated user.
+     */
     function isSignedIn() {
       return request.auth != null;
     }
 
-    // projectGoals: Publicly readable, Auth required for all writes
-    match /projectGoals/{goalId} {
-      allow read: if true;
-      allow write: if isSignedIn();
+    /**
+     * @description Checks if the authenticated user is registered as an administrator.
+     * Uses a direct existence check for high performance and isolation.
+     */
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admin_users/$(request.auth.uid));
     }
 
-    // posts: Publicly readable, Auth required for all writes
-    match /posts/{postId} {
-      allow read: if true;
-      allow write: if isSignedIn();
+    /**
+     * @description Checks if the authenticated user's UID matches the provided ID.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
     }
 
-    // siteConfig: Publicly readable, Auth required for writes
-    match /siteConfig/{configId} {
-      allow read: if true;
-      allow write: if isSignedIn();
+    /**
+     * @description Ensures the document exists before performing updates or deletes.
+     */
+    function existsAndAdmin() {
+      return isAdmin() && resource != null;
     }
 
-    // analyticsEvents: Publicly creatable, Auth read access
-    match /analyticsEvents/{eventId} {
-      allow create: if true;
-      allow read: if isSignedIn();
+    // --- Collection Rules ---
+
+    /**
+     * @description Rules for the portfolio owner's profile information.
+     * @path /user_profile/{profileId}
+     * @allow Public read (get, list); Admin create/update/delete.
+     * @deny Non-admin writes.
+     * @principle Public consumption with administrative control.
+     */
+    match /user_profile/{profileId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
     }
 
-    // workflows: Admin-only access
-    match /workflows/{workflowId} {
-      allow read, write: if isSignedIn();
+    /**
+     * @description Rules for skills, experiences, projects, and education.
+     * @path /{collectionName}/{docId}
+     * @allow Public read (get, list); Admin create/update/delete.
+     * @deny Non-admin writes.
+     * @principle Global visibility for portfolio data; restricted modifications.
+     */
+    match /skills/{skillId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    match /experiences/{experienceId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    match /projects/{projectId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    match /education/{educationId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    /**
+     * @description Rules for Articles (Project studies, courses, .md links).
+     * @path /articles/{articleId}
+     * @allow Admin full access; Public read only if 'isPublished' is true.
+     * @deny Public read of drafts; Any non-admin writes.
+     * @principle Explicit state modeling for draft vs. published content.
+     */
+    match /articles/{articleId} {
+      allow get, list: if isAdmin() || resource.data.isPublished == true;
+      allow create: if isAdmin();
+      allow update, delete: if existsAndAdmin();
+    }
+
+    /**
+     * @description Rules for identifying users with administrative privileges.
+     * @path /admin_users/{userId}
+     * @allow User to manage their own admin record (Self-provisioning/Check).
+     * @deny Unauthorized users reading or modifying other users' admin status.
+     * @principle Authorization Independence via dedicated role collection.
+     */
+    match /admin_users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // Admin status listing is disallowed for privacy.
+      allow create: if isOwner(userId);
+      allow update, delete: if isOwner(userId) && resource != null;
     }
   }
 }
