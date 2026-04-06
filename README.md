@@ -5,7 +5,7 @@ This is the repository for the personal portfolio of Sheraz Hussain, a Freelance
 ## Features
 - **AI Resume Analyzer**: Tailors your portfolio content to specific job descriptions using Gemini 2.0 Flash.
 - **Portfolio Analytics**: Private dashboard tracking visitor metrics via Firestore.
-- **Support Hub**: Multi-channel support (BuyMeACoffee, Web3, GoFundMe, GitHub Sponsors) for community-driven innovation.
+- **Support Hub**: Multi-channel support (Open Collective, BuyMeACoffee, Web3, GoFundMe, GitHub Sponsors) for community-driven innovation.
 - **Stripe Global Checkout**: Secure, tax-compliant one-time contributions via Embedded Checkout.
 - **Responsive Design**: Built with Next.js 15, Tailwind CSS, and ShadCN UI.
 

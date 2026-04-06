@@ -23,7 +23,8 @@ import {
   ChevronRight,
   TrendingUp,
   Cpu,
-  Leaf
+  Leaf,
+  Users
 } from 'lucide-react';
 import { useState, useEffect, Suspense } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -78,6 +79,14 @@ function SupportPageContent() {
       actionLabel: 'Sponsor Profile',
       link: 'https://github.com/sponsors/SherazHussain546',
       color: 'bg-slate-900 text-slate-100', // GitHub Black
+    },
+    {
+      title: 'Open Collective',
+      description: 'Transparent funding for community-driven open-source projects.',
+      icon: Users,
+      actionLabel: 'Contribute',
+      link: 'https://opencollective.com/creativityandsheraz',
+      color: 'bg-blue-600 text-white', // OC Blue
     },
     {
       title: 'Buy Me a Coffee',
@@ -235,7 +244,7 @@ function SupportPageContent() {
             </CardContent>
           </Card>
 
-          {/* Other methods - Moved to a dedicated div to prevent overlap */}
+          {/* Other methods - Alternative Channels */}
           <div className="grid gap-6">
             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground mb-2 font-mono">Alternative Channels</p>
             {supportMethods.map((method, idx) => (
