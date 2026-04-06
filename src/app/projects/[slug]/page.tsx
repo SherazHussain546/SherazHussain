@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 import ProjectCaseStudyContent from '@/components/portfolio/project-case-study-content';
 import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 import { initializeFirebase } from '@/firebase';
-import { Project } from '@/types/database';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -13,6 +12,7 @@ type Props = {
 /**
  * getProject - Server-side high-fidelity registry resolver.
  * Searches static FLAGSHIP records then falls back to Firestore dynamic showcases.
+ * Ensures the returned object is a plain object for RSC serialization.
  */
 async function getProject(slug: string): Promise<any> {
   // 1. Check static data first
@@ -26,7 +26,29 @@ async function getProject(slug: string): Promise<any> {
       const q = query(collection(firestore, 'projects'), where('slug', '==', slug), limit(1));
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
-        return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Project;
+        const doc = snapshot.docs[0];
+        const data = doc.data();
+        
+        // Convert to plain object for RSC -> Client Component boundary.
+        // Specifically handles Firestore Timestamps which are not serializable across the boundary.
+        return {
+          id: doc.id,
+          name: data.name,
+          slug: data.slug,
+          description: data.description,
+          fullDescription: data.fullDescription,
+          challenges: data.challenges || [],
+          solutions: data.solutions || [],
+          results: data.results || [],
+          stack: data.stack || [],
+          link: data.link,
+          liveLink: data.liveLink || '',
+          image: data.image,
+          imageHint: data.imageHint,
+          isPublished: data.isPublished,
+          // Convert Timestamp to a simple milliseconds value
+          createdAt: data.createdAt?.toMillis?.() || Date.now(),
+        };
       }
     }
   } catch (error) {
@@ -62,5 +84,6 @@ export default async function ProjectCaseStudy({ params }: Props) {
     notFound();
   }
 
+  // Passing a plain, serialized object ensures no RSC boundary errors
   return <ProjectCaseStudyContent project={project} />;
 }
