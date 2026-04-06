@@ -43,7 +43,7 @@ export default function ManageArticles() {
 
   const articlesCollection = useMemo(() => {
     return firestore ? collection(firestore, 'articles') as CollectionReference<DocumentData> : null;
-  }, []);
+  }, [firestore]);
 
   const articlesQuery = useMemo(() => {
     return articlesCollection ? query(articlesCollection, orderBy('publishDate', 'desc')) : null;
@@ -92,6 +92,11 @@ export default function ManageArticles() {
       form.reset();
     } catch (e) {
       console.error(e);
+      toast({
+        variant: 'destructive',
+        title: 'Synchronization Failed',
+        description: 'Check your database permissions or connection.',
+      });
     } finally {
       setLoading(false);
     }
@@ -372,7 +377,7 @@ export default function ManageArticles() {
                         <SelectItem value="Project">Engineering Project</SelectItem>
                         <SelectItem value="Study">Technical Study</SelectItem>
                         <SelectItem value="Course">Learning Course</SelectItem>
-                        <SelectItem value="Other">Other</SelectItem>
+                        <SelectItem value="Other">Miscellaneous</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

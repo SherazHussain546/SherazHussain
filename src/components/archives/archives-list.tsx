@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, AlertCircle, Database } from 'lucide-react';
+import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, AlertCircle, Database, SearchX } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -72,7 +72,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
         : 'Recently',
       size: 'Remote Source',
       type: 'Remote',
-      category: data.category || 'Study'
+      category: data.category || 'Other'
     }));
   }, [remoteData]);
 
@@ -113,7 +113,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
             <p className="text-xs leading-relaxed opacity-90">
               The dynamic categorization engine requires a composite index to synchronize correctly. This is a standard security and performance requirement.
             </p>
-            <div className="p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap">
+            <div className="p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
               {error.message}
             </div>
             <p className="text-[10px] uppercase font-bold tracking-widest">
@@ -124,11 +124,16 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
       )}
 
       {allDocuments.length === 0 && !isLoading && !error ? (
-        <div className="p-20 text-center border-2 border-dashed rounded-[2rem] opacity-40">
-          <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <p className="font-space-mono text-[10px] uppercase tracking-widest">
-            No assets found in the {categoryFilter || 'repository'} registry segment.
-          </p>
+        <div className="p-20 text-center border-2 border-dashed rounded-[2rem] bg-muted/5 flex flex-col items-center justify-center space-y-4">
+          <SearchX className="h-12 w-12 text-muted-foreground opacity-40" />
+          <div className="space-y-1">
+            <p className="font-space-mono text-[10px] uppercase tracking-widest font-bold">
+              Segment Empty: {categoryFilter || 'Repository'}
+            </p>
+            <p className="text-xs text-muted-foreground max-w-xs mx-auto">
+              No published assets were found matching this technical classification. Check the Admin Portal to verify document status and categories.
+            </p>
+          </div>
         </div>
       ) : (
         <div className="grid gap-4">
