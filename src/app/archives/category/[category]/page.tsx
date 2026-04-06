@@ -31,7 +31,7 @@ const categoryDisplayMap: { [key: string]: { title: string; subtitle: string } }
  */
 export default async function CategorizedArchives({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
-  const meta = categoryDisplayMap[category] || { title: category, subtitle: 'Filtered technical registry.' };
+  const meta = categoryDisplayMap[category] || { title: category, subtitle: 'Filtered technical registry segment.' };
   
   // 1. Fetch Local Files (Filtering logic)
   const docsDir = path.join(process.cwd(), 'docs');
@@ -53,7 +53,7 @@ export default async function CategorizedArchives({ params }: { params: Promise<
       }),
       size: (stats.size / 1024).toFixed(1) + ' KB',
       type: 'Local' as const,
-      category: 'System' // Default for local files
+      category: 'System' // Default for local files (mapped to Study in ArchivesList)
     };
   });
 
