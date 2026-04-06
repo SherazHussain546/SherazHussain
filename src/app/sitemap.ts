@@ -1,4 +1,3 @@
-
 import { MetadataRoute } from 'next'
 import { projects as staticProjects } from '@/lib/data'
 import fs from 'fs';
@@ -9,11 +8,11 @@ import { initializeFirebase } from '@/firebase';
 /**
  * Next.js sitemap configuration.
  * Dynamically synchronizes static system routes with Firestore registry assets.
+ * Re-engineered for high-fidelity server-side execution during build.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://sheraz.synctech.ie';
-  const { firestore } = initializeFirebase();
-
+  
   // 1. Core Strategic Routes
   const staticRoutes = [
     '',
@@ -40,6 +39,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1.0 : (route === '/privacy' ? 0.5 : 0.8),
   }));
 
+  // Attempt to initialize Firestore for dynamic discovery
+  let firestore;
+  try {
+    const sdk = initializeFirebase();
+    firestore = sdk.firestore;
+  } catch (e) {
+    console.warn('Sitemap Discovery: Firestore initialization deferred.');
+  }
+
   // 2. Resolve Dynamic Projects (Static + Firestore)
   let projectEntries: MetadataRoute.Sitemap = staticProjects.map((project) => ({
     url: `${baseUrl}/projects/${project.slug}`,
@@ -59,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
       projectEntries = [...projectEntries, ...dynamicProjEntries];
     } catch (e) {
-      console.warn('Sitemap Project Resolution Failed:', e);
+      console.warn('Sitemap: Dynamic Project resolution skipped.');
     }
   }
 
@@ -69,16 +77,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Local .md files
   const docsDir = path.join(process.cwd(), 'docs');
   if (fs.existsSync(docsDir)) {
-    const files = fs.readdirSync(docsDir);
-    const localEntries = files
-      .filter(file => file.endsWith('.md'))
-      .map(file => ({
-        url: `${baseUrl}/archives/${file.replace('.md', '')}`,
-        lastModified: fs.statSync(path.join(docsDir, file)).mtime,
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-      }));
-    archiveEntries = [...archiveEntries, ...localEntries];
+    try {
+      const files = fs.readdirSync(docsDir);
+      const localEntries = files
+        .filter(file => file.endsWith('.md'))
+        .map(file => ({
+          url: `${baseUrl}/archives/${file.replace('.md', '')}`,
+          lastModified: fs.statSync(path.join(docsDir, file)).mtime,
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        }));
+      archiveEntries = [...archiveEntries, ...localEntries];
+    } catch (e) {
+      console.warn('Sitemap: Local archive resolution failed.');
+    }
   }
 
   // Firestore Articles
@@ -93,7 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
       archiveEntries = [...archiveEntries, ...dynamicArtEntries];
     } catch (e) {
-      console.warn('Sitemap Article Resolution Failed:', e);
+      console.warn('Sitemap: Remote article resolution skipped.');
     }
   }
 
