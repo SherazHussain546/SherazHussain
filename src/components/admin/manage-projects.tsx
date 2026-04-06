@@ -10,7 +10,7 @@ import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { FolderKanban, Trash2, Pencil, Eye, EyeOff, Code2 } from 'lucide-react';
+import { FolderKanban, Trash2, Pencil, Eye, EyeOff, Code2, ListChecks, Target, Cpu, TrendingUp } from 'lucide-react';
 import { Project } from '@/types/database';
 
 const projectSchema = z.object({
@@ -32,6 +32,9 @@ const projectSchema = z.object({
   liveLink: z.string().url('Invalid Live URL').optional().or(z.literal('')),
   image: z.string().url('Invalid Image URL'),
   imageHint: z.string().min(1, 'Image hint required for AI.'),
+  challenges: z.string().optional(),
+  solutions: z.string().optional(),
+  results: z.string().optional(),
   isPublished: z.boolean().default(true),
 });
 
@@ -55,24 +58,66 @@ export default function ManageProjects() {
 
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
-    defaultValues: { name: '', slug: '', description: '', fullDescription: '', stack: '', link: '', liveLink: '', image: '', imageHint: '', isPublished: true },
+    defaultValues: { 
+      name: '', 
+      slug: '', 
+      description: '', 
+      fullDescription: '', 
+      stack: '', 
+      link: '', 
+      liveLink: '', 
+      image: '', 
+      imageHint: '', 
+      challenges: '', 
+      solutions: '', 
+      results: '', 
+      isPublished: true 
+    },
   });
 
   const editForm = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
-    defaultValues: { name: '', slug: '', description: '', fullDescription: '', stack: '', link: '', liveLink: '', image: '', imageHint: '', isPublished: true },
+    defaultValues: { 
+      name: '', 
+      slug: '', 
+      description: '', 
+      fullDescription: '', 
+      stack: '', 
+      link: '', 
+      liveLink: '', 
+      image: '', 
+      imageHint: '', 
+      challenges: '', 
+      solutions: '', 
+      results: '', 
+      isPublished: true 
+    },
   });
+
+  const parseArrays = (data: ProjectFormValues) => {
+    const challengesArray = data.challenges ? data.challenges.split('\n').filter(c => c.trim() !== '') : [];
+    const resultsArray = data.results ? data.results.split('\n').filter(r => r.trim() !== '') : [];
+    const solutionsArray = data.solutions ? data.solutions.split('\n').filter(s => s.includes('|')).map(s => {
+      const [title, desc] = s.split('|');
+      return { title: title.trim(), description: desc.trim() };
+    }) : [];
+    
+    return {
+      ...data,
+      stack: data.stack.split(',').map(s => s.trim()),
+      challenges: challengesArray,
+      solutions: solutionsArray,
+      results: resultsArray,
+    };
+  };
 
   const onSubmit: SubmitHandler<ProjectFormValues> = async (data) => {
     if (!projCollection) return;
     setLoading(true);
     try {
+      const formattedData = parseArrays(data);
       await addDoc(projCollection, {
-        ...data,
-        stack: data.stack.split(',').map(s => s.trim()),
-        challenges: [],
-        solutions: [],
-        results: [],
+        ...formattedData,
         createdAt: serverTimestamp(),
       });
       toast({ title: 'Project Deployed to Registry!' });
@@ -89,10 +134,8 @@ export default function ManageProjects() {
     setLoading(true);
     const projRef = doc(firestore, 'projects', editingProj.id);
     try {
-      await updateDoc(projRef, {
-        ...data,
-        stack: data.stack.split(',').map(s => s.trim()),
-      });
+      const formattedData = parseArrays(data);
+      await updateDoc(projRef, formattedData);
       toast({ title: 'Case Study Updated!' });
       setIsEditDialogOpen(false);
       setEditingProj(null);
@@ -125,6 +168,9 @@ export default function ManageProjects() {
     editForm.reset({
       ...proj,
       stack: proj.stack?.join(', ') || '',
+      challenges: proj.challenges?.join('\n') || '',
+      results: proj.results?.join('\n') || '',
+      solutions: proj.solutions?.map(s => `${s.title} | ${s.description}`).join('\n') || '',
     });
     setIsEditDialogOpen(true);
   };
@@ -140,21 +186,53 @@ export default function ManageProjects() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <FormField control={form.control} name="name" render={({ field }) => (
-                  <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input placeholder="Market Genius" {...field} className="bg-muted/5" /></FormControl></FormItem>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <FormField control={form.control} name="name" render={({ field }) => (
+                    <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input placeholder="Market Genius" {...field} className="bg-muted/5" /></FormControl></FormItem>
+                  )} />
+                  <FormField control={form.control} name="slug" render={({ field }) => (
+                    <FormItem><FormLabel>URL Slug</FormLabel><FormControl><Input placeholder="market-genius" {...field} className="bg-muted/5" /></FormControl></FormItem>
+                  )} />
+                </div>
+                <FormField control={form.control} name="description" render={({ field }) => (
+                  <FormItem><FormLabel>One-Line Excerpt</FormLabel><FormControl><Input placeholder="AI-powered financial signal generator..." {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
-                <FormField control={form.control} name="slug" render={({ field }) => (
-                  <FormItem><FormLabel>URL Slug</FormLabel><FormControl><Input placeholder="market-genius" {...field} className="bg-muted/5" /></FormControl></FormItem>
+                <FormField control={form.control} name="fullDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Case Study Narrative</FormLabel><FormControl><Textarea className="h-40 bg-muted/5" placeholder="Describe the problem, approach, and engineering impact..." {...field} /></FormControl></FormItem>
                 )} />
               </div>
-              <FormField control={form.control} name="description" render={({ field }) => (
-                <FormItem><FormLabel>One-Line Excerpt</FormLabel><FormControl><Input placeholder="AI-powered financial signal generator..." {...field} className="bg-muted/5" /></FormControl></FormItem>
-              )} />
-              <FormField control={form.control} name="fullDescription" render={({ field }) => (
-                <FormItem><FormLabel>Case Study Narrative</FormLabel><FormControl><Textarea className="h-40 bg-muted/5" placeholder="Describe the problem, approach, and engineering impact..." {...field} /></FormControl></FormItem>
-              )} />
+
+              <div className="grid gap-8 p-6 bg-muted/5 border rounded-xl">
+                <h3 className="font-bold text-sm uppercase tracking-widest text-primary flex items-center gap-2">
+                  <ListChecks className="h-4 w-4" />
+                  Technical Deep Dive
+                </h3>
+                
+                <FormField control={form.control} name="challenges" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2"><Target className="h-3 w-3" /> Challenges (One per line)</FormLabel>
+                    <FormControl><Textarea className="h-32 bg-white" placeholder="Integrating custom AI reasoning engines...\nScaling cloud infrastructure..." {...field} /></FormControl>
+                  </FormItem>
+                )} />
+
+                <FormField control={form.control} name="solutions" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2"><Cpu className="h-3 w-3" /> Solutions (Format: Title | Description)</FormLabel>
+                    <FormControl><Textarea className="h-32 bg-white" placeholder="Intelligent Automation | Developed bespoke Gemini-powered agents...\nElastic Infrastructure | Leveraged serverless architectures..." {...field} /></FormControl>
+                    <FormDescription className="text-[10px]">Use the vertical bar | to separate the solution title from its description.</FormDescription>
+                  </FormItem>
+                )} />
+
+                <FormField control={form.control} name="results" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2"><TrendingUp className="h-3 w-3" /> Measured Results (One per line)</FormLabel>
+                    <FormControl><Textarea className="h-32 bg-white" placeholder="Achieved a 40% reduction in operational bottlenecks...\nPropelled client domains to the #1 spot..." {...field} /></FormControl>
+                  </FormItem>
+                )} />
+              </div>
+
               <div className="grid md:grid-cols-3 gap-4">
                 <FormField control={form.control} name="stack" render={({ field }) => (
                   <FormItem><FormLabel>Stack (CSV)</FormLabel><FormControl><Input placeholder="Next.js, Genkit, AWS" {...field} className="bg-muted/5" /></FormControl></FormItem>
@@ -166,6 +244,7 @@ export default function ManageProjects() {
                   <FormItem><FormLabel>Deployment URL</FormLabel><FormControl><Input placeholder="https://..." {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
               </div>
+              
               <div className="grid md:grid-cols-2 gap-4">
                 <FormField control={form.control} name="image" render={({ field }) => (
                   <FormItem><FormLabel>Cover Image URL</FormLabel><FormControl><Input placeholder="https://picsum.photos/..." {...field} className="bg-muted/5" /></FormControl></FormItem>
@@ -174,7 +253,7 @@ export default function ManageProjects() {
                   <FormItem><FormLabel>AI Accessibility Hint</FormLabel><FormControl><Input placeholder="financial dashboard" {...field} className="bg-muted/5" /></FormControl></FormItem>
                 )} />
               </div>
-              <Button type="submit" disabled={loading} className="w-full h-12 font-bold">Synchronize Project</Button>
+              <Button type="submit" disabled={loading} className="w-full h-14 font-bold text-md uppercase tracking-widest">Deploy to Project Registry</Button>
             </form>
           </Form>
         </CardContent>
@@ -225,10 +304,10 @@ export default function ManageProjects() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-2xl bg-white border-primary/20 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-3xl bg-white border-primary/20 shadow-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle className="text-2xl font-bold font-playfair">Edit Case Study</DialogTitle></DialogHeader>
           <Form {...editForm}>
-            <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-4 py-4">
+            <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-6 py-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <FormField control={editForm.control} name="name" render={({ field }) => (
                   <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
@@ -241,8 +320,21 @@ export default function ManageProjects() {
                 <FormItem><FormLabel>Short Description</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
               )} />
               <FormField control={editForm.control} name="fullDescription" render={({ field }) => (
-                <FormItem><FormLabel>Case Study Narrative</FormLabel><FormControl><Textarea className="h-40 bg-muted/5" {...field} /></FormControl></FormItem>
+                <FormItem><FormLabel>Narrative</FormLabel><FormControl><Textarea className="h-40 bg-muted/5" {...field} /></FormControl></FormItem>
               )} />
+
+              <div className="grid gap-6 p-4 bg-muted/5 border rounded-lg">
+                <FormField control={editForm.control} name="challenges" render={({ field }) => (
+                  <FormItem><FormLabel>Challenges</FormLabel><FormControl><Textarea className="h-32 bg-white" {...field} /></FormControl></FormItem>
+                )} />
+                <FormField control={editForm.control} name="solutions" render={({ field }) => (
+                  <FormItem><FormLabel>Solutions (Title | Desc)</FormLabel><FormControl><Textarea className="h-32 bg-white" {...field} /></FormControl></FormItem>
+                )} />
+                <FormField control={editForm.control} name="results" render={({ field }) => (
+                  <FormItem><FormLabel>Results</FormLabel><FormControl><Textarea className="h-32 bg-white" {...field} /></FormControl></FormItem>
+                )} />
+              </div>
+
               <div className="grid md:grid-cols-3 gap-4">
                 <FormField control={editForm.control} name="stack" render={({ field }) => (
                   <FormItem><FormLabel>Stack</FormLabel><FormControl><Input {...field} className="bg-muted/5" /></FormControl></FormItem>
