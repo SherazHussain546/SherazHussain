@@ -6,7 +6,7 @@ import { auth } from '@/firebase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ResumeAnalyzer from './resume-analyzer';
-import { LogOut, LayoutDashboard, FileText, Settings, LineChart, BookOpen, Briefcase, Award, FolderKanban, GraduationCap } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, Settings, LineChart, BookOpen, Briefcase, Award, FolderKanban, GraduationCap, Sparkles } from 'lucide-react';
 import AnalyticsDashboard from './analytics/analytics-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ManagePosts from './manage-posts';
@@ -16,6 +16,7 @@ import ManageExperience from './manage-experience';
 import ManageCertifications from './manage-certifications';
 import ManageProjects from './manage-projects';
 import ManageEducation from './manage-education';
+import LinkedInPostGenerator from './linkedin-post-generator';
 
 export default function Dashboard() {
   const { toast } = useToast();
@@ -51,7 +52,7 @@ export default function Dashboard() {
       </div>
 
       <Tabs defaultValue="analytics" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 md:grid-cols-9 h-auto p-1 bg-muted/50 border mb-8">
+        <TabsList className="grid w-full grid-cols-4 md:grid-cols-10 h-auto p-1 bg-muted/50 border mb-8">
           <TabsTrigger value="analytics" className="flex items-center gap-2 py-2">
             <LineChart className="h-4 w-4" />
             <span className="hidden sm:inline">Metrics</span>
@@ -75,6 +76,10 @@ export default function Dashboard() {
           <TabsTrigger value="posts" className="flex items-center gap-2 py-2">
             <LayoutDashboard className="h-4 w-4" />
             <span className="hidden sm:inline">Social</span>
+          </TabsTrigger>
+          <TabsTrigger value="linkedin" className="flex items-center gap-2 py-2">
+            <Sparkles className="h-4 w-4 text-blue-500" />
+            <span className="hidden sm:inline">Agent</span>
           </TabsTrigger>
           <TabsTrigger value="library" className="flex items-center gap-2 py-2">
             <BookOpen className="h-4 w-4" />
@@ -107,6 +112,9 @@ export default function Dashboard() {
           </TabsContent>
           <TabsContent value="posts">
             <ManagePosts />
+          </TabsContent>
+          <TabsContent value="linkedin">
+            <LinkedInPostGenerator />
           </TabsContent>
           <TabsContent value="library">
             <ManageArticles />

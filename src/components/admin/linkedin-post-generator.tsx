@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -15,7 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const formSchema = z.object({
-  postDescription: z.string().min(10, 'Description must be at least 100 characters.'),
+  postDescription: z.string().min(10, 'Description must be at least 10 characters.'),
   instructions: z.string().min(5, 'Instructions are required.'),
 });
 
@@ -157,9 +158,9 @@ export default function LinkedInPostGenerator() {
 
       <Alert>
         <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Automation Note</AlertTitle>
+        <AlertTitle>Reachability Strategy</AlertTitle>
         <AlertDescription>
-          To run this daily as requested in your workflow, you can trigger the <code>generateLinkedInPost</code> flow via a serverless cron job.
+          Regularly sharing your technical breakthroughs on LinkedIn is the most effective way to drive high-fidelity traffic to your portfolio.
         </AlertDescription>
       </Alert>
     </div>
