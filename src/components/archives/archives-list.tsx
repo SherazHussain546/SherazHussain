@@ -72,7 +72,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
         : 'Recently',
       size: 'Remote Source',
       type: 'Remote',
-      category: data.category || 'Other'
+      category: data.category === 'CaseStudy' ? 'Case Study' : data.category || 'Other'
     }));
   }, [remoteData]);
 
@@ -94,7 +94,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
         <div className="flex items-center gap-3">
           <Archive className="h-5 w-5 text-primary" />
           <h2 className="font-playfair text-2xl font-bold">
-            {categoryFilter ? `${categoryFilter} Registry` : 'Document Index'}
+            {categoryFilter === 'CaseStudy' ? 'Case Studies' : (categoryFilter ? `${categoryFilter} Registry` : 'Document Index')}
           </h2>
         </div>
         <div className="flex items-center gap-2">
@@ -128,7 +128,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
           <SearchX className="h-12 w-12 text-muted-foreground opacity-40" />
           <div className="space-y-1">
             <p className="font-space-mono text-[10px] uppercase tracking-widest font-bold">
-              Segment Empty: {categoryFilter || 'Repository'}
+              Segment Empty: {categoryFilter === 'CaseStudy' ? 'Case Studies' : (categoryFilter || 'Repository')}
             </p>
             <p className="text-xs text-muted-foreground max-w-xs mx-auto">
               No published assets were found matching this technical classification. Check the Admin Portal to verify document status and categories.

@@ -26,7 +26,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 const articleSchema = z.object({
   title: z.string().min(1, 'Title is required.'),
   slug: z.string().min(1, 'Slug is required.').regex(/^[a-z0-9-]+$/, 'Slugs must be lowercase, numbers, and hyphens only.'),
-  category: z.enum(['Project', 'Study', 'Course', 'Other']),
+  category: z.enum(['Project', 'Study', 'Course', 'CaseStudy']),
   shortDescription: z.string().min(10, 'Description must be at least 10 characters.'),
   mdFileUrl: z.string().url('Please enter a valid URL to a raw .md file.'),
   imageUrl: z.string().url('Optional image URL must be valid.').optional().or(z.literal('')),
@@ -213,7 +213,7 @@ export default function ManageArticles() {
                         <SelectItem value="Project">Engineering Project</SelectItem>
                         <SelectItem value="Study">Technical Study</SelectItem>
                         <SelectItem value="Course">Learning Course</SelectItem>
-                        <SelectItem value="Other">Miscellaneous</SelectItem>
+                        <SelectItem value="CaseStudy">Strategic Case Study</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -305,7 +305,7 @@ export default function ManageArticles() {
                     </TableCell>
                     <TableCell>
                       <span className="text-[9px] uppercase tracking-tighter bg-primary/10 px-1.5 py-0.5 rounded-sm text-primary font-bold">
-                        {article.category}
+                        {article.category === 'CaseStudy' ? 'Case Study' : article.category}
                       </span>
                     </TableCell>
                     <TableCell className="text-right flex justify-end gap-1">
@@ -377,7 +377,7 @@ export default function ManageArticles() {
                         <SelectItem value="Project">Engineering Project</SelectItem>
                         <SelectItem value="Study">Technical Study</SelectItem>
                         <SelectItem value="Course">Learning Course</SelectItem>
-                        <SelectItem value="Other">Miscellaneous</SelectItem>
+                        <SelectItem value="CaseStudy">Strategic Case Study</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

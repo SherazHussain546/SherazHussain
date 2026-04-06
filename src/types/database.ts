@@ -30,7 +30,7 @@ export interface Article {
   id: string;
   title: string;
   slug: string;
-  category: 'Project' | 'Study' | 'Course' | 'Other';
+  category: 'Project' | 'Study' | 'Course' | 'CaseStudy';
   shortDescription: string;
   mdFileUrl: string;
   imageUrl?: string;

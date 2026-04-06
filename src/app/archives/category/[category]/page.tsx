@@ -20,9 +20,9 @@ const categoryDisplayMap: { [key: string]: { title: string; subtitle: string } }
     title: 'Learning Courses',
     subtitle: 'Curated technical modules and educational assets designed to empower the next generation of engineers.'
   },
-  Other: {
-    title: 'Miscellaneous',
-    subtitle: 'Uncategorized technical briefings, system updates, and architectural notes.'
+  CaseStudy: {
+    title: 'Strategic Case Studies',
+    subtitle: 'High-fidelity technical analysis and outcome-driven engineering reports exploring complex digital transformations.'
   }
 };
 
@@ -65,7 +65,7 @@ export default async function CategorizedArchives({ params }: { params: Promise<
         <header className="bg-[#071739] text-white py-16 md:py-24 px-6 text-center relative overflow-hidden">
           <div className="container mx-auto max-w-4xl relative z-10">
             <p className="font-space-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-              Categorized Registry &nbsp;·&nbsp; {category}
+              Categorized Registry &nbsp;·&nbsp; {meta.title}
             </p>
             <h1 className="font-playfair text-[clamp(2.5rem,6vw,4rem)] font-black leading-[1.1] tracking-tight mb-6">
               The <span className="italic text-primary font-normal">{meta.title}</span> Archives
