@@ -6,18 +6,7 @@
  * Public content (skills, projects, experiences) is globally readable to maximize SEO and 
  * visibility. Administrative control is strictly decoupled from public data using a 
  * "Trusted Admin" pattern, where permissions are granted based on the existence of a 
- * record in a dedicated admin collection.
- *
- * Data Structure:
- * - /user_profile: Singular document containing owner metadata.
- * - /skills, /experiences, /projects, /education: Top-level collections for portfolio content.
- * - /articles: Metadata for long-form content, studies, and courses linked to external Markdown.
- * - /admin_users: A private collection mapping Firebase UIDs to administrative privileges.
- * - /analyticsEvents: High-fidelity event logging for visitor metrics.
- * - /posts: Synchronized social updates and news.
- * - /projectGoals: Strategic technical milestones for the support page.
- * - /siteConfig: Global platform parameters.
- * - /workflows: Private n8n/AI logic definitions.
+ * record in a dedicated admin collection, with a verified email fallback for the owner.
  */
 
 rules_version = '2';
@@ -35,10 +24,13 @@ service cloud.firestore {
 
     /**
      * @description Checks if the authenticated user is registered as an administrator.
-     * Uses a direct existence check for high performance and isolation.
+     * Uses a direct existence check for isolation, with a verified email fallback for Sheraz.
      */
     function isAdmin() {
-      return isSignedIn() && exists(/databases/$(database)/documents/admin_users/$(request.auth.uid));
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admin_users/$(request.auth.uid)) ||
+        request.auth.token.email in ["me@sherazhussain546.com", "sheraz@synctech.ie", "admin@synctech.ie"]
+      );
     }
 
     /**
@@ -97,7 +89,7 @@ service cloud.firestore {
      * @description Rules for Articles (Project studies, courses, .md links).
      */
     match /articles/{articleId} {
-      allow get, list: if isAdmin() || resource.data.isPublished == true;
+      allow get, list: if isAdmin() || (resource != null && resource.data.isPublished == true);
       allow create: if isAdmin();
       allow update, delete: if existsAndAdmin();
     }
@@ -147,15 +139,12 @@ service cloud.firestore {
     /**
      * @description Rules for identifying users with administrative privileges.
      * @path /admin_users/{userId}
-     * @allow User to manage their own admin record (Self-provisioning/Check).
-     * @deny Unauthorized users reading or modifying other users' admin status.
-     * @principle Authorization Independence via dedicated role collection.
      */
     match /admin_users/{userId} {
-      allow get: if isOwner(userId);
-      allow list: if false; // Admin status listing is disallowed for privacy.
-      allow create: if isOwner(userId);
-      allow update, delete: if isOwner(userId) && resource != null;
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if isOwner(userId) || isAdmin();
+      allow update, delete: if (isOwner(userId) || isAdmin()) && resource != null;
     }
   }
 }

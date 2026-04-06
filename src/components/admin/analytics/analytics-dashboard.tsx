@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, query, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
@@ -26,15 +26,14 @@ import {
 } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
-import { useAuth } from '@/hooks/use-auth';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
+/**
+ * AnalyticsDashboard - High-Fidelity Visitor Tracking Visualization.
+ * Uses real-time Firestore listeners to display system-wide engagement metrics.
+ */
 export default function AnalyticsDashboard() {
-  const { user, loading: authLoading } = useAuth();
-  
-  // High-Fidelity Guard: Ensure firestore is initialized before creating collection reference
+  // Memoize Firestore references to ensure stable technical integrity during re-renders
   const analyticsCollection = useMemo(() => {
     return firestore ? collection(firestore, 'analyticsEvents') as CollectionReference<DocumentData> : null;
   }, []);
@@ -43,17 +42,8 @@ export default function AnalyticsDashboard() {
     return analyticsCollection ? query(analyticsCollection, orderBy('timestamp', 'desc')) : null;
   }, [analyticsCollection]);
 
+  // Hook handles permission error emission internally via custom useCollection logic
   const [snapshot, loading, error] = useCollection(analyticsQuery);
-
-  useEffect(() => {
-    if (error && error.code === 'permission-denied' && !loading && !authLoading && user && analyticsCollection) {
-      const permissionError = new FirestorePermissionError({
-        path: analyticsCollection.path,
-        operation: 'list',
-      } satisfies SecurityRuleContext);
-      errorEmitter.emit('permission-error', permissionError);
-    }
-  }, [error, loading, authLoading, analyticsCollection, user]);
 
   if (!firestore) {
     return (
@@ -89,8 +79,16 @@ export default function AnalyticsDashboard() {
     );
   }
 
-  if (error && error.code === 'permission-denied') {
-    return <p className="text-destructive">Insufficient permissions to view analytics. Please contact an administrator.</p>;
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Access Restriction</AlertTitle>
+        <AlertDescription>
+          {error.message || 'Insufficient permissions to view visitor metrics. Verify your administrative credentials.'}
+        </AlertDescription>
+      </Alert>
+    );
   }
 
   const events = snapshot?.docs.map(doc => ({

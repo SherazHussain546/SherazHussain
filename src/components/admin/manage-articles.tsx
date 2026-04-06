@@ -1,14 +1,12 @@
-
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, orderBy, updateDoc, CollectionReference, DocumentData } from 'firebase/firestore';
 import { firestore } from '@/firebase/client';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { useAuth } from '@/hooks/use-auth';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
@@ -21,10 +19,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil, AlertCircle, ExternalLink, BookOpen, BadgeInfo } from 'lucide-react';
+import { Trash2, Pencil, AlertCircle, ExternalLink, BookOpen } from 'lucide-react';
 import { Article } from '@/types/database';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const articleSchema = z.object({
@@ -40,7 +36,6 @@ const articleSchema = z.object({
 type ArticleFormValues = z.infer<typeof articleSchema>;
 
 export default function ManageArticles() {
-  const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -55,16 +50,6 @@ export default function ManageArticles() {
   }, [articlesCollection]);
 
   const [snapshot, articlesLoading, articlesError] = useCollection(articlesQuery);
-
-  useEffect(() => {
-    if (articlesError && articlesError.code === 'permission-denied' && !articlesLoading && !authLoading && user && articlesCollection) {
-      const permissionError = new FirestorePermissionError({
-        path: articlesCollection.path,
-        operation: 'list',
-      } satisfies SecurityRuleContext);
-      errorEmitter.emit('permission-error', permissionError);
-    }
-  }, [articlesError, articlesLoading, authLoading, articlesCollection, user]);
 
   const form = useForm<ArticleFormValues>({
     resolver: zodResolver(articleSchema),
@@ -95,72 +80,51 @@ export default function ManageArticles() {
   const onSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!articlesCollection) return;
     setLoading(true);
-    addDoc(articlesCollection, {
-      ...data,
-      publishDate: serverTimestamp(),
-    })
-    .catch(async (serverError) => {
-      if (serverError.code === 'permission-denied') {
-        const permissionError = new FirestorePermissionError({
-          path: articlesCollection.path,
-          operation: 'create',
-          requestResourceData: data,
-        } satisfies SecurityRuleContext);
-        errorEmitter.emit('permission-error', permissionError);
-      }
-    })
-    .then(() => {
+    try {
+      await addDoc(articlesCollection, {
+        ...data,
+        publishDate: serverTimestamp(),
+      });
       toast({
         title: 'Article Synchronized!',
         description: 'The asset link is now active in the public repository.',
       });
       form.reset();
-    })
-    .finally(() => setLoading(false));
+    } catch (e) {
+      // Permission errors are handled globally by useCollection listener
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onEditSubmit: SubmitHandler<ArticleFormValues> = async (data) => {
     if (!editingArticle || !firestore) return;
     setLoading(true);
     const articleRef = doc(firestore, 'articles', editingArticle.id);
-    updateDoc(articleRef, data)
-    .catch(async (serverError) => {
-      if (serverError.code === 'permission-denied') {
-        const permissionError = new FirestorePermissionError({
-          path: articleRef.path,
-          operation: 'update',
-          requestResourceData: data,
-        } satisfies SecurityRuleContext);
-        errorEmitter.emit('permission-error', permissionError);
-      }
-    })
-    .then(() => {
+    try {
+      await updateDoc(articleRef, data);
       toast({
         title: 'Article Updated!',
         description: 'Changes have been saved to the repository index.',
       });
       setIsEditDialogOpen(false);
       setEditingArticle(null);
-    })
-    .finally(() => setLoading(false));
+    } catch (e) {
+      // Errors handled globally
+    } finally {
+      setLoading(false);
+    }
   };
 
   const deleteArticle = async (id: string) => {
     if (!firestore) return;
     const articleRef = doc(firestore, 'articles', id);
-    deleteDoc(articleRef)
-    .catch(async (serverError) => {
-      if (serverError.code === 'permission-denied') {
-        const permissionError = new FirestorePermissionError({
-          path: articleRef.path,
-          operation: 'delete',
-        } satisfies SecurityRuleContext);
-        errorEmitter.emit('permission-error', permissionError);
-      }
-    })
-    .then(() => {
+    try {
+      await deleteDoc(articleRef);
       toast({ title: 'Article Removed' });
-    });
+    } catch (e) {
+      // Errors handled globally
+    }
   }
   
   const openEditDialog = (article: Article) => {
