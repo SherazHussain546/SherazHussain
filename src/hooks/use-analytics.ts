@@ -8,12 +8,14 @@ import { firestore } from '@/firebase/client';
 import { v4 as uuidv4 } from 'uuid';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
+import { useABTest } from './use-ab-test';
 
 const SESSION_KEY = 'portfolio_session_id';
 
 export function useAnalytics() {
   const pathname = usePathname();
   const [sessionId, setSessionId] = useState('');
+  const testGroup = useABTest();
 
   useEffect(() => {
     let storedSessionId = sessionStorage.getItem(SESSION_KEY);
@@ -25,13 +27,14 @@ export function useAnalytics() {
   }, []);
 
   useEffect(() => {
-    if (sessionId && pathname && process.env.NODE_ENV === 'production') {
+    if (sessionId && pathname && process.env.NODE_ENV === 'production' && firestore) {
       const logPageView = async () => {
         const eventsRef = collection(firestore, 'analyticsEvents');
         const data = {
           type: 'page_view',
           path: pathname,
           sessionId: sessionId,
+          testGroup: testGroup,
           timestamp: serverTimestamp(),
         };
 
@@ -51,5 +54,5 @@ export function useAnalytics() {
         logPageView();
       }
     }
-  }, [pathname, sessionId]);
+  }, [pathname, sessionId, testGroup]);
 }

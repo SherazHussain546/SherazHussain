@@ -96,5 +96,6 @@ export interface AnalyticsEvent {
   type: 'page_view';
   path: string;
   sessionId: string;
+  testGroup?: 'A' | 'B';
   timestamp: Timestamp;
 }

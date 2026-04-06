@@ -12,7 +12,9 @@ import {
   TrendingUp, 
   Globe,
   ArrowUpRight,
-  AlertCircle
+  AlertCircle,
+  Zap,
+  Target
 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { 
@@ -22,7 +24,9 @@ import {
   XAxis, 
   YAxis, 
   Tooltip as RechartsTooltip,
-  Cell
+  Cell,
+  PieChart,
+  Pie
 } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
@@ -85,6 +89,18 @@ export default function AnalyticsDashboard() {
   const sessions = new Set(allEvents.map(e => e.sessionId)).size;
   const viewsPerSession = sessions > 0 ? (totalViews / sessions).toFixed(1) : 0;
 
+  // A/B Test Processing
+  const abStats = allEvents.reduce((acc: { A: number, B: number }, event) => {
+    if (event.testGroup === 'A') acc.A++;
+    if (event.testGroup === 'B') acc.B++;
+    return acc;
+  }, { A: 0, B: 0 });
+
+  const abData = [
+    { name: 'Group A (Frontier)', value: abStats.A, fill: 'hsl(var(--primary))' },
+    { name: 'Group B (Supremacy)', value: abStats.B, fill: 'hsl(var(--secondary))' }
+  ];
+
   const pathCounts = allEvents.reduce((acc: { [key: string]: number }, event: AnalyticsEvent) => {
     const path = event.path || '/';
     acc[path] = (acc[path] || 0) + 1;
@@ -101,7 +117,7 @@ export default function AnalyticsDashboard() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="bg-card shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Page Views</CardTitle>
             <Activity className="h-4 w-4 text-primary" />
@@ -115,7 +131,7 @@ export default function AnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="bg-card shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Unique Sessions</CardTitle>
             <Users className="h-4 w-4 text-primary" />
@@ -129,7 +145,22 @@ export default function AnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="bg-card shadow-sm border-primary/20 bg-primary/5">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Group B Conversion</CardTitle>
+            <Target className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {totalViews > 0 ? ((abStats.B / totalViews) * 100).toFixed(1) : 0}%
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Relative engagement rate
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Views per Session</CardTitle>
             <MousePointer2 className="h-4 w-4 text-primary" />
@@ -137,22 +168,7 @@ export default function AnalyticsDashboard() {
           <CardContent>
             <div className="text-2xl font-bold">{viewsPerSession}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              User engagement depth
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Most Active Route</CardTitle>
-            <ArrowUpRight className="h-4 w-4 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-xl font-bold truncate">
-              {chartData[0]?.name || '/'}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {chartData[0]?.value || 0} views total
+              Engagement depth
             </p>
           </CardContent>
         </Card>
@@ -192,33 +208,80 @@ export default function AnalyticsDashboard() {
 
         <Card className="lg:col-span-3">
           <CardHeader>
-            <CardTitle>Real-time Feed</CardTitle>
-            <CardDescription>Most recent user activity</CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-primary" />
+              Strategy Performance
+            </CardTitle>
+            <CardDescription>A/B Test Group Distribution</CardDescription>
           </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-[10px] uppercase tracking-wider">Path</TableHead>
-                  <TableHead className="text-right text-[10px] uppercase tracking-wider">Time</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {recentEvents.map((event: AnalyticsEvent) => (
-                  <TableRow key={event.id} className="hover:bg-muted/30 transition-colors">
-                    <TableCell className="font-mono text-[11px] max-w-[150px] truncate">
-                      {event.path}
-                    </TableCell>
-                    <TableCell className="text-right text-[11px] text-muted-foreground whitespace-nowrap">
-                      {event.timestamp ? formatDistanceToNow(event.timestamp.toDate(), { addSuffix: true }) : 'Just now'}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <CardContent className="h-[300px] flex flex-col justify-center">
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={abData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {abData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+                <RechartsTooltip />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="space-y-2 mt-4">
+              {abData.map(group => (
+                <div key={group.name} className="flex items-center justify-between text-xs">
+                  <span className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full" style={{ backgroundColor: group.fill }} />
+                    {group.name}
+                  </span>
+                  <span className="font-bold">{group.value} views</span>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Real-time Feed</CardTitle>
+          <CardDescription>Most recent user activity</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-[10px] uppercase tracking-wider">Path</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">Group</TableHead>
+                <TableHead className="text-right text-[10px] uppercase tracking-wider">Time</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {recentEvents.map((event: AnalyticsEvent) => (
+                <TableRow key={event.id} className="hover:bg-muted/30 transition-colors">
+                  <TableCell className="font-mono text-[11px] max-w-[150px] truncate">
+                    {event.path}
+                  </TableCell>
+                  <TableCell>
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${event.testGroup === 'B' ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}`}>
+                      {event.testGroup || 'N/A'}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right text-[11px] text-muted-foreground whitespace-nowrap">
+                    {event.timestamp ? formatDistanceToNow(event.timestamp.toDate(), { addSuffix: true }) : 'Just now'}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 }

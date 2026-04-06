@@ -1,9 +1,13 @@
+
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { useABTest } from '@/hooks/use-ab-test';
 
 export default function AboutSection() {
+  const testGroup = useABTest();
+
   return (
     <section id="about" className="overflow-hidden">
       {/* ──────────────── MASTHEAD ──────────────── */}
@@ -15,14 +19,26 @@ export default function AboutSection() {
           className="container mx-auto max-w-4xl relative z-10"
         >
           <p className="font-space-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-            Professional Profile &nbsp;·&nbsp; Technology & Engineering
+            Professional Profile &nbsp;·&nbsp; {testGroup === 'A' ? 'Technical Strategy' : 'Engineering Authority'}
           </p>
-          <h1 className="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
-            From Dublin to the <br />
-            <em className="italic text-primary font-normal">Frontier</em> of AI Engineering
-          </h1>
+          
+          {testGroup === 'A' ? (
+            <h1 className="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
+              From Dublin to the <br />
+              <em className="italic text-primary font-normal">Frontier</em> of AI Engineering
+            </h1>
+          ) : (
+            <h1 className="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
+              Engineering Technical <br />
+              <em className="italic text-primary font-normal">Supremacy</em> via AI & Cloud
+            </h1>
+          )}
+
           <p className="font-playfair italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10">
-            How one First-Class Honours graduate is redefining what a software engineer can build — one AI-powered platform at a time.
+            {testGroup === 'A' 
+              ? "How one First-Class Honours graduate is redefining what a software engineer can build — one AI-powered platform at a time."
+              : "Architecting high-performance digital ecosystems that dismantle complexity through high-fidelity, open-source engineering."
+            }
           </p>
           <div className="flex items-center justify-center gap-6 flex-wrap font-space-mono text-[10px] tracking-widest uppercase text-background/55">
             <span>By Sheraz Hussain</span>
@@ -65,7 +81,6 @@ export default function AboutSection() {
               className="space-y-4"
             >
               <div className="relative aspect-[3/4] w-full border-4 border-double border-foreground p-1 bg-background shadow-2xl overflow-hidden group cursor-crosshair">
-                {/* Primary Identity Image */}
                 <Image 
                   src={placeholderImages.about.src} 
                   alt={placeholderImages.about.alt} 
@@ -74,7 +89,6 @@ export default function AboutSection() {
                   data-ai-hint={placeholderImages.about.hint}
                   priority
                 />
-                {/* AI Transformation Image (Hover) */}
                 <Image 
                   src={placeholderImages.about.hoverSrc || '/sherazcyborg.png'} 
                   alt="Sheraz Hussain - AI Cyborg Transformation" 
