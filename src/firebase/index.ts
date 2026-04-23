@@ -2,6 +2,7 @@ import { firebaseConfig } from '@/firebase/config';
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
 import { getRemoteConfig, RemoteConfig } from 'firebase/remote-config';
 import { getMessaging, Messaging, isSupported } from 'firebase/messaging';
 
@@ -28,6 +29,7 @@ export function initializeFirebase() {
 export function getSdks(firebaseApp: FirebaseApp) {
   const auth = getAuth(firebaseApp);
   const firestore = getFirestore(firebaseApp);
+  const storage = getStorage(firebaseApp);
   
   // High-Fidelity Guard: These services are client-side only and require window
   let remoteConfig: RemoteConfig | null = null;
@@ -59,6 +61,7 @@ export function getSdks(firebaseApp: FirebaseApp) {
     firebaseApp,
     auth,
     firestore,
+    storage,
     remoteConfig,
     messaging
   };

@@ -10,3 +10,4 @@ const services = initializeFirebase();
 export const app = services.firebaseApp;
 export const auth = services.auth;
 export const firestore = services.firestore;
+export const storage = services.storage;

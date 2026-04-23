@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { useForm, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, where, updateDoc, CollectionReference, DocumentData } from 'firebase/firestore';
-import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useFirestore, useMemoFirebase, useCollection, useFirebase } from '@/firebase';
 import { useAuth } from '@/hooks/use-auth';
 import Image from 'next/image';
 
@@ -19,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil, AlertCircle, LayoutDashboard, Globe, Image as ImageIcon } from 'lucide-react';
+import { Trash2, Pencil, AlertCircle, LayoutDashboard, Globe, Image as ImageIcon, Upload, Loader2 } from 'lucide-react';
 import { Post } from '@/types/database';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
@@ -37,6 +38,71 @@ const postSchema = z.object({
 
 type PostFormValues = z.infer<typeof postSchema>;
 
+interface ImageUploaderProps {
+  form: UseFormReturn<PostFormValues>;
+  name: "image";
+}
+
+function ImageUploader({ form, name }: ImageUploaderProps) {
+  const { storage } = useFirebase();
+  const { toast } = useToast();
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast({ variant: 'destructive', title: 'Invalid File', description: 'Please select an image.' });
+      return;
+    }
+
+    setUploading(true);
+    const storageRef = ref(storage, `posts/${Date.now()}-${file.name}`);
+
+    try {
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      form.setValue(name, url);
+      toast({ title: 'Upload Successful', description: 'The image has been stored in your registry.' });
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: 'Upload Failed', description: error.message });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="flex gap-2">
+      <FormControl>
+        <Input 
+          placeholder="Paste URL or upload image..." 
+          {...form.register(name)} 
+          className="bg-muted/5" 
+        />
+      </FormControl>
+      <Button 
+        type="button" 
+        variant="outline" 
+        size="icon" 
+        onClick={() => fileInputRef.current?.click()}
+        disabled={uploading}
+        className="shrink-0"
+      >
+        {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+      </Button>
+      <input 
+        type="file" 
+        ref={fileInputRef} 
+        onChange={handleUpload} 
+        className="hidden" 
+        accept="image/*" 
+      />
+    </div>
+  );
+}
+
 export default function ManagePosts() {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
@@ -44,14 +110,13 @@ export default function ManagePosts() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
-  const firestore = useFirestore();
+  const { firestore } = useFirebase();
 
   const postsCollection = useMemo(() => {
     return firestore ? collection(firestore, 'posts') as CollectionReference<DocumentData> : null;
   }, [firestore]);
 
   const postsQuery = useMemoFirebase(() => {
-    // Optimized for retrieving ALL records for management
     return postsCollection ? query(postsCollection) : null;
   }, [postsCollection]);
 
@@ -257,14 +322,12 @@ export default function ManagePosts() {
               <FormField
                 control={form.control}
                 name="image"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
-                    <FormLabel>Featured Image URL (Optional)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Paste image address from social platform..." {...field} className="bg-muted/5" />
-                    </FormControl>
+                    <FormLabel>Featured Image (URL or Upload)</FormLabel>
+                    <ImageUploader form={form} name="image" />
                     <FormDescription className="text-[10px] font-medium text-primary">
-                      Paste direct links from LinkedIn, FB, IG, or GitHub.
+                      Upload from your machine or paste a direct CDN link.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -454,12 +517,10 @@ export default function ManagePosts() {
               <FormField
                 control={editForm.control}
                 name="image"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
-                    <FormLabel>Image URL</FormLabel>
-                    <FormControl>
-                      <Input {...field} className="bg-muted/5" />
-                    </FormControl>
+                    <FormLabel>Image (URL or Upload)</FormLabel>
+                    <ImageUploader form={editForm} name="image" />
                     <FormMessage />
                   </FormItem>
                 )}
