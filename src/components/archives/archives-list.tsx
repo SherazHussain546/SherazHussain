@@ -1,10 +1,10 @@
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, Database, SearchX, FileStack } from 'lucide-react';
+import { FileText, Globe, Archive, ChevronRight, Clock, Sparkles, Database, SearchX } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -27,7 +27,7 @@ interface ArchivesListProps {
 /**
  * ArchivesList - High-Fidelity Registry Discovery Component.
  * Merges local file-system documents with real-time Firestore assets.
- * Implements a unified chronological sort (newest to oldest).
+ * Implements client-side sorting to bypass manual composite index requirements.
  */
 export default function ArchivesList({ localDocs, categoryFilter }: ArchivesListProps) {
   const firestore = useFirestore();
@@ -40,20 +40,18 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
   const articlesQuery = useMemoFirebase(() => {
     if (!articlesCollection) return null;
     
-    // Core filter: Only show published items
+    // Core filter: Only show published items. Removed orderBy to avoid index errors.
     if (categoryFilter) {
       return query(
         articlesCollection, 
         where('isPublished', '==', true), 
-        where('category', '==', categoryFilter),
-        orderBy('publishDate', 'desc')
+        where('category', '==', categoryFilter)
       );
     }
     
     return query(
       articlesCollection, 
-      where('isPublished', '==', true), 
-      orderBy('publishDate', 'desc')
+      where('isPublished', '==', true)
     );
   }, [articlesCollection, categoryFilter]);
 
@@ -63,7 +61,6 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
   const remoteDocs: ArchiveDoc[] = useMemo(() => {
     if (!remoteData) return [];
     return remoteData.map(data => {
-      // Handle potential null/pending timestamps from Firestore
       const dateObj = data.publishDate && typeof data.publishDate.toDate === 'function' 
         ? data.publishDate.toDate() 
         : new Date();
@@ -84,7 +81,7 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
     });
   }, [remoteData]);
 
-  // 3. Chronological Merge-Sort (Newest on Top)
+  // 3. Unified Chronological Sort (Newest on Top)
   const allDocuments = useMemo(() => {
     const filteredLocal = !categoryFilter 
       ? localDocs 
@@ -121,10 +118,10 @@ export default function ArchivesList({ localDocs, categoryFilter }: ArchivesList
       {error && (
         <Alert variant="destructive" className="bg-destructive/5 border-destructive/20 text-destructive">
           <Database className="h-4 w-4" />
-          <AlertTitle className="font-bold">Database Index Required</AlertTitle>
+          <AlertTitle className="font-bold">Sync Resolution Warning</AlertTitle>
           <AlertDescription className="mt-2 space-y-4">
             <p className="text-xs leading-relaxed opacity-90">
-              The dynamic categorization engine requires a composite index to synchronize correctly.
+              The dynamic categorization engine encountered a technical restriction.
             </p>
             <div className="p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
               {error.message}

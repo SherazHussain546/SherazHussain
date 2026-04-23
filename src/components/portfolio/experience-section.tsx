@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { experiences as staticExps } from '@/lib/data';
 import { Experience } from '@/types/database';
@@ -12,6 +12,7 @@ import { DatabaseIcon } from 'lucide-react';
 /**
  * ExperienceSection - High-Fidelity Journey Component.
  * Synchronizes real-time Firestore records with static system defaults.
+ * Uses client-side sorting to avoid manual composite index requirements.
  */
 export default function ExperienceSection() {
   const firestore = useFirestore();
@@ -21,8 +22,8 @@ export default function ExperienceSection() {
   }, [firestore]);
 
   const expQuery = useMemoFirebase(() => {
-    // Only show published entries to public visitors, newest first
-    return expCollection ? query(expCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
+    // Simplified query to avoid composite index requirements
+    return expCollection ? query(expCollection, where('isPublished', '==', true)) : null;
   }, [expCollection]);
 
   const { data: dynamicExps, isLoading, error } = useCollection<Experience>(expQuery);
@@ -32,7 +33,7 @@ export default function ExperienceSection() {
         ...e, 
         id: `static-${i}`, 
         isPublished: true,
-        createdAtMillis: 0 // Static bottom
+        createdAtMillis: 0 // Static items go to the bottom relative to dynamic ones
     }));
     
     const formattedDynamic = (dynamicExps || []).map(exp => ({
@@ -40,7 +41,7 @@ export default function ExperienceSection() {
         createdAtMillis: exp.createdAt?.toMillis() || Date.now()
     }));
 
-    // Merge dynamic with static, prioritizing newest entries if they exist
+    // Perform a unified sort: Newest on Top
     return [...formattedDynamic, ...formattedStatic].sort((a, b) => b.createdAtMillis - a.createdAtMillis);
   }, [dynamicExps]);
 
@@ -59,7 +60,7 @@ export default function ExperienceSection() {
                 <DatabaseIcon className="h-4 w-4" />
                 <AlertTitle className="font-bold">Experience Sync Interrupted</AlertTitle>
                 <AlertDescription className="mt-2 text-xs opacity-90 leading-relaxed">
-                    A composite index is required to synchronize your dynamic professional records.
+                    The database synchronization engine encountered a restriction.
                     <div className="mt-4 p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
                         {error.message}
                     </div>

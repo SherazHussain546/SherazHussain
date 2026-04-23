@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { collection, query, where, orderBy, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, where, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { allCertificates as staticCerts } from '@/lib/data';
 import { Certification } from '@/types/database';
@@ -28,6 +28,7 @@ const iconMap: { [key: string]: any } = {
 /**
  * CertificationsSection - Credential Registry Component.
  * Merges high-fidelity Firestore certifications with existing flagship achievements.
+ * Optimized with client-side sorting to bypass manual index creation.
  */
 export default function CertificationsSection() {
   const firestore = useFirestore();
@@ -37,8 +38,8 @@ export default function CertificationsSection() {
   }, [firestore]);
 
   const certsQuery = useMemoFirebase(() => {
-    // Only show published entries to public visitors, newest first
-    return certsCollection ? query(certsCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
+    // Simplified query for index-free operation
+    return certsCollection ? query(certsCollection, where('isPublished', '==', true)) : null;
   }, [certsCollection]);
 
   const { data: dynamicCerts, isLoading, error } = useCollection<Certification>(certsQuery);
@@ -52,7 +53,6 @@ export default function CertificationsSection() {
       skills: c.skills || [],
       points: c.points || [],
       isPublished: true,
-      // Assign a high default timestamp for static sorting if needed
       createdAtMillis: 0 
     }));
 
@@ -62,12 +62,8 @@ export default function CertificationsSection() {
         createdAtMillis: c.createdAt?.toMillis() || Date.now()
     }));
 
-    // 3. Merge and Sort (Dynamic first, then Static)
-    return [...formattedDynamic, ...formattedStatic].sort((a, b) => {
-        const dateA = (a as any).createdAtMillis || 0;
-        const dateB = (b as any).createdAtMillis || 0;
-        return dateB - dateA;
-    });
+    // 3. Unified Chronological Sort (Newest on Top)
+    return [...formattedDynamic, ...formattedStatic].sort((a, b) => b.createdAtMillis - a.createdAtMillis);
   }, [dynamicCerts]);
 
   return (
@@ -85,7 +81,7 @@ export default function CertificationsSection() {
                 <DatabaseIcon className="h-4 w-4" />
                 <AlertTitle className="font-bold">Registry Sync Interrupted</AlertTitle>
                 <AlertDescription className="mt-2 text-xs opacity-90 leading-relaxed">
-                    A composite index is required to synchronize your dynamic credentials.
+                    The database synchronization engine encountered a restriction.
                     <div className="mt-4 p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
                         {error.message}
                     </div>
