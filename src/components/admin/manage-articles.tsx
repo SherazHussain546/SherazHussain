@@ -342,7 +342,7 @@ export default function ManageArticles() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-md bg-white border-primary/20 shadow-2xl">
+        <DialogContent className="sm:max-w-md bg-white border-primary/20 shadow-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold font-playfair">Edit Asset Registry</DialogTitle>
           </DialogHeader>

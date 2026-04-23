@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -182,8 +181,7 @@ export default function ManageExperience() {
                   <TableCell className="font-bold max-w-[150px] truncate">{exp.role}</TableCell>
                   <TableCell>
                     <Button 
-                      variant="ghost" 
-                      size="sm" 
+                      variant="ghost" size="sm" 
                       onClick={() => toggleVisibility(exp)}
                       className={exp.isPublished ? "text-emerald-600" : "text-amber-600"}
                     >
@@ -215,7 +213,7 @@ export default function ManageExperience() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-lg bg-white border-primary/20 shadow-2xl">
+        <DialogContent className="sm:max-w-lg bg-white border-primary/20 shadow-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle className="text-2xl font-bold font-playfair">Edit Experience</DialogTitle></DialogHeader>
           <Form {...editForm}>
             <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-4 py-4">

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -204,7 +203,7 @@ export default function ManageEducation() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-lg bg-white border-primary/20 shadow-2xl">
+        <DialogContent className="sm:max-w-lg bg-white border-primary/20 shadow-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle className="text-2xl font-bold font-playfair">Update Academic Record</DialogTitle></DialogHeader>
           <Form {...editForm}>
             <form onSubmit={editForm.handleSubmit(onEditSubmit)} className="space-y-4 py-4">
