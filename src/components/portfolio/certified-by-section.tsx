@@ -10,7 +10,7 @@ const logos = [
   { name: 'Dublin Business School', src: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flookaside.fbsbx.com%2Flookaside%2Fcrawler%2Fmedia%2F%3Fmedia_id%3D100064563767021&f=1&nofb=1&ipt=b658e80383e3d5a77bfe1608fcc9cd60686fb1400eb3591d615e18870dec319d' },
   { name: 'Google', src: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogos-world.net%2Fwp-content%2Fuploads%2F2020%2F09%2FGoogle-Logo.png&f=1&nofb=1&ipt=5d0006785e6eb0c4fb3332743434e051c94e8681def5b7dead3439e6ae8118cf' },
   { name: 'Crypto.com', src: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.1V-ny0uCga2pZX_TdQ44hgHaE8%3Fpid%3DApi&f=1&ipt=4ec84e1b2b8ec25dce1afc304a5c8ef2a99c4b9abc0d0f5b131bf32aec800004' },
-  { name: 'Duolingo', src: 'https://logos-world.net/wp-content/uploads/2021/08/Duolingo-Logo.png'},
+  { name: 'Duolingo', src: 'https://picsum.photos/seed/duolingo-logo/200/200' },
 ];
 
 const duplicatedLogos = [...logos, ...logos, ...logos];
@@ -44,6 +44,7 @@ export default function CertifiedBySection() {
                             fill
                             sizes="(max-width: 768px) 144px, 144px"
                             className="object-contain"
+                            data-ai-hint="company logo"
                         />
                    </div>
                 </div>
