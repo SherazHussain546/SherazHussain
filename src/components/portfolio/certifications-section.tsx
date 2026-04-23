@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMemo } from 'react';
@@ -9,9 +8,10 @@ import { Certification } from '@/types/database';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Award, ShieldCheck, Code, Database, BrainCircuit, Bitcoin } from 'lucide-react';
+import { ExternalLink, Award, ShieldCheck, Code, Database, BrainCircuit, Bitcoin, Star, School, LucideIcon, DatabaseIcon, ShieldAlert, Cpu } from 'lucide-react';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const iconMap: { [key: string]: any } = {
   Award,
@@ -19,7 +19,10 @@ const iconMap: { [key: string]: any } = {
   Code,
   Database,
   BrainCircuit,
-  Bitcoin
+  Bitcoin,
+  Star,
+  School,
+  Cpu
 };
 
 /**
@@ -38,18 +41,33 @@ export default function CertificationsSection() {
     return certsCollection ? query(certsCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [certsCollection]);
 
-  const { data: dynamicCerts, isLoading } = useCollection<Certification>(certsQuery);
+  const { data: dynamicCerts, isLoading, error } = useCollection<Certification>(certsQuery);
 
   const allCerts = useMemo(() => {
+    // 1. Process Static
     const formattedStatic = staticCerts.map((c, i) => ({ 
       ...c, 
       id: `static-${i}`, 
-      iconName: (c.icon as any).name || 'Award',
+      iconName: (c.icon as any)?.name || 'Award',
       skills: c.skills || [],
       points: c.points || [],
-      isPublished: true
+      isPublished: true,
+      // Assign a high default timestamp for static sorting if needed
+      createdAtMillis: 0 
     }));
-    return [...(dynamicCerts || []), ...formattedStatic];
+
+    // 2. Process Dynamic
+    const formattedDynamic = (dynamicCerts || []).map(c => ({
+        ...c,
+        createdAtMillis: c.createdAt?.toMillis() || Date.now()
+    }));
+
+    // 3. Merge and Sort (Dynamic first, then Static)
+    return [...formattedDynamic, ...formattedStatic].sort((a, b) => {
+        const dateA = (a as any).createdAtMillis || 0;
+        const dateB = (b as any).createdAtMillis || 0;
+        return dateB - dateA;
+    });
   }, [dynamicCerts]);
 
   return (
@@ -61,6 +79,19 @@ export default function CertificationsSection() {
         <p className="text-lg font-light text-foreground/80 mb-12">
           Professional certifications represent more than resume entries — they are proof that I hold myself accountable to external standards of competence.
         </p>
+
+        {error && (
+            <Alert variant="destructive" className="mb-12 bg-destructive/5 border-destructive/20 text-destructive">
+                <DatabaseIcon className="h-4 w-4" />
+                <AlertTitle className="font-bold">Registry Sync Interrupted</AlertTitle>
+                <AlertDescription className="mt-2 text-xs opacity-90 leading-relaxed">
+                    A composite index is required to synchronize your dynamic credentials.
+                    <div className="mt-4 p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
+                        {error.message}
+                    </div>
+                </AlertDescription>
+            </Alert>
+        )}
 
         {isLoading ? (
           <div className="space-y-6">

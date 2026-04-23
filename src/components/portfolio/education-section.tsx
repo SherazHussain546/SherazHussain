@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMemo } from 'react';
@@ -7,9 +6,10 @@ import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { education as staticEdu } from '@/lib/data';
 import { Education } from '@/types/database';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, GraduationCap } from 'lucide-react';
+import { Award, GraduationCap, DatabaseIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 /**
  * EducationSection - Academic Foundations Component.
@@ -27,19 +27,25 @@ export default function EducationSection() {
     return eduCollection ? query(eduCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [eduCollection]);
 
-  const { data: dynamicEducations, isLoading } = useCollection<Education>(eduQuery);
+  const { data: dynamicEducations, isLoading, error } = useCollection<Education>(eduQuery);
 
   const allEducations = useMemo(() => {
-    const formattedStatic = [{
+    const formattedStatic = {
       id: 'static-edu',
       degree: staticEdu.degree,
       university: staticEdu.university,
       graduationDate: staticEdu.graduationDate,
       awards: staticEdu.awards,
       isPublished: true,
-      createdAt: null
-    }];
-    return [...(dynamicEducations || []), ...formattedStatic];
+      createdAtMillis: 0
+    };
+
+    const formattedDynamic = (dynamicEducations || []).map(edu => ({
+        ...edu,
+        createdAtMillis: edu.createdAt?.toMillis() || Date.now()
+    }));
+
+    return [...formattedDynamic, formattedStatic].sort((a, b) => b.createdAtMillis - a.createdAtMillis);
   }, [dynamicEducations]);
 
   return (
@@ -48,6 +54,19 @@ export default function EducationSection() {
         <p className="section-label">Academic Foundations</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center md:text-left">Educational Pedigree</h2>
         
+        {error && (
+            <Alert variant="destructive" className="mb-12 bg-destructive/5 border-destructive/20 text-destructive">
+                <DatabaseIcon className="h-4 w-4" />
+                <AlertTitle className="font-bold">Academic Sync Interrupted</AlertTitle>
+                <AlertDescription className="mt-2 text-xs opacity-90 leading-relaxed">
+                    A composite index is required to synchronize your dynamic education records.
+                    <div className="mt-4 p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
+                        {error.message}
+                    </div>
+                </AlertDescription>
+            </Alert>
+        )}
+
         <div className="space-y-12">
           {isLoading ? (
             <div className="space-y-6">
@@ -67,7 +86,7 @@ export default function EducationSection() {
                   <CardHeader className="border-b bg-muted/5">
                     <div className="flex items-center gap-4">
                       <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
-                        <GraduationCap className="h-6 w-6" />
+                        < GraduationCap className="h-6 w-6" />
                       </div>
                       <div>
                         <CardTitle className="text-xl font-bold font-playfair">{edu.degree}</CardTitle>

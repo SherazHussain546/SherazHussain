@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMemo } from 'react';
@@ -7,6 +6,8 @@ import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { experiences as staticExps } from '@/lib/data';
 import { Experience } from '@/types/database';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { DatabaseIcon } from 'lucide-react';
 
 /**
  * ExperienceSection - High-Fidelity Journey Component.
@@ -24,12 +25,23 @@ export default function ExperienceSection() {
     return expCollection ? query(expCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [expCollection]);
 
-  const { data: dynamicExps, isLoading } = useCollection<Experience>(expQuery);
+  const { data: dynamicExps, isLoading, error } = useCollection<Experience>(expQuery);
   
   const allExperiences = useMemo(() => {
-    const formattedStatic = staticExps.map((e, i) => ({ ...e, id: `static-${i}`, isPublished: true }));
+    const formattedStatic = staticExps.map((e, i) => ({ 
+        ...e, 
+        id: `static-${i}`, 
+        isPublished: true,
+        createdAtMillis: 0 // Static bottom
+    }));
+    
+    const formattedDynamic = (dynamicExps || []).map(exp => ({
+        ...exp,
+        createdAtMillis: exp.createdAt?.toMillis() || Date.now()
+    }));
+
     // Merge dynamic with static, prioritizing newest entries if they exist
-    return [...(dynamicExps || []), ...formattedStatic];
+    return [...formattedDynamic, ...formattedStatic].sort((a, b) => b.createdAtMillis - a.createdAtMillis);
   }, [dynamicExps]);
 
   return (
@@ -41,6 +53,19 @@ export default function ExperienceSection() {
         <p className="text-lg font-light text-foreground/80 mb-12">
           My professional experience spans technical consulting, product architecture, and enterprise mentorship — reflecting the breadth of application a modern software engineer must navigate.
         </p>
+
+        {error && (
+            <Alert variant="destructive" className="mb-12 bg-destructive/5 border-destructive/20 text-destructive">
+                <DatabaseIcon className="h-4 w-4" />
+                <AlertTitle className="font-bold">Experience Sync Interrupted</AlertTitle>
+                <AlertDescription className="mt-2 text-xs opacity-90 leading-relaxed">
+                    A composite index is required to synchronize your dynamic professional records.
+                    <div className="mt-4 p-3 bg-white/50 rounded border border-destructive/10 font-mono text-[10px] break-all whitespace-pre-wrap overflow-x-auto">
+                        {error.message}
+                    </div>
+                </AlertDescription>
+            </Alert>
+        )}
 
         {isLoading ? (
           <div className="space-y-8 pl-8 border-l border-border/30">
