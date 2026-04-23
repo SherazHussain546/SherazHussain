@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, ChevronDown, Rss, BookOpen, Cpu, GraduationCap, FileText, LayoutGrid } from 'lucide-react';
+import { Menu, ChevronDown, Rss, BookOpen, Cpu, GraduationCap, FileText, LayoutGrid, HelpCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {
   DropdownMenu,
@@ -30,6 +30,7 @@ const libraryLinks = [
   { name: 'Technical Study', href: '/archives/category/Study', icon: BookOpen },
   { name: 'Learning Course', href: '/archives/category/Course', icon: GraduationCap },
   { name: 'Case Study', href: '/archives/category/CaseStudy', icon: FileText },
+  { name: 'FAQ', href: '/faq', icon: HelpCircle },
 ];
 
 export default function Header() {

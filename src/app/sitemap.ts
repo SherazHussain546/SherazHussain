@@ -26,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/ai-architect',
     '/contact',
     '/privacy',
+    '/faq',
     '/archives/category/Project',
     '/archives/category/Study',
     '/archives/category/Course',
