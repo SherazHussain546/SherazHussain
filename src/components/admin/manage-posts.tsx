@@ -5,9 +5,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { addDoc, collection, serverTimestamp, deleteDoc, doc, query, where, updateDoc, CollectionReference, DocumentData } from 'firebase/firestore';
-import { firestore } from '@/firebase/client';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { useAuth } from '@/hooks/use-auth';
+import Image from 'next/image';
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
@@ -19,7 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { Trash2, Pencil, AlertCircle, LayoutDashboard, Globe } from 'lucide-react';
+import { Trash2, Pencil, AlertCircle, LayoutDashboard, Globe, Image as ImageIcon } from 'lucide-react';
 import { Post } from '@/types/database';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
@@ -44,19 +44,21 @@ export default function ManagePosts() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
+  const firestore = useFirestore();
+
   const postsCollection = useMemo(() => {
     return firestore ? collection(firestore, 'posts') as CollectionReference<DocumentData> : null;
-  }, []);
+  }, [firestore]);
 
-  const postsQuery = useMemo(() => {
-    // Simplified query for index-free operation, sorting client-side
+  const postsQuery = useMemoFirebase(() => {
+    // Optimized for retrieving ALL records for management
     return postsCollection ? query(postsCollection) : null;
   }, [postsCollection]);
 
-  const [postsSnapshot, postsLoading, postsError] = useCollection(postsQuery);
+  const { data: postsData, isLoading: postsLoading, error: postsError } = useCollection<Post>(postsQuery);
 
   useEffect(() => {
-    if (postsError && postsError.code === 'permission-denied' && !postsLoading && !authLoading && user && postsCollection) {
+    if (postsError && (postsError as any).code === 'permission-denied' && !postsLoading && !authLoading && user && postsCollection) {
       const permissionError = new FirestorePermissionError({
         path: postsCollection.path,
         operation: 'list',
@@ -155,6 +157,11 @@ export default function ManagePosts() {
     setIsEditDialogOpen(true);
   }
 
+  const posts = useMemo(() => {
+    return (postsData || [])
+      .sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+  }, [postsData]);
+
   if (!firestore) {
     return (
       <Alert variant="destructive">
@@ -166,11 +173,6 @@ export default function ManagePosts() {
       </Alert>
     );
   }
-
-  const posts = useMemo(() => {
-    return (postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [])
-      .sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
-  }, [postsSnapshot]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -262,7 +264,7 @@ export default function ManagePosts() {
                       <Input placeholder="Paste image address from social platform..." {...field} className="bg-muted/5" />
                     </FormControl>
                     <FormDescription className="text-[10px] font-medium text-primary">
-                      Supports direct links from LinkedIn, FB, IG, and GitHub.
+                      Paste direct links from LinkedIn, FB, IG, or GitHub.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -302,21 +304,22 @@ export default function ManagePosts() {
         </CardContent>
       </Card>
 
-      <Card className="border-border/40 shadow-sm overflow-hidden">
+      <Card className="border-border/40 shadow-sm overflow-hidden flex flex-col">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <LayoutDashboard className="h-5 w-5" />
             Social Registry Index
           </CardTitle>
-          <CardDescription>Manage all active social engagements.</CardDescription>
+          <CardDescription>Manage and monitor all active social engagements.</CardDescription>
         </CardHeader>
-        <CardContent>
-          {postsLoading && <p className="text-sm text-muted-foreground animate-pulse font-mono uppercase tracking-widest">Scanning Feed...</p>}
-          {!postsLoading && posts.length === 0 && <p className="text-muted-foreground italic text-sm">No social posts registered.</p>}
-          <div className="max-h-[800px] overflow-y-auto">
+        <CardContent className="flex-1 overflow-hidden p-0">
+          {postsLoading && <p className="text-sm text-muted-foreground animate-pulse font-mono uppercase tracking-widest p-6">Scanning Feed...</p>}
+          {!postsLoading && posts.length === 0 && <p className="text-muted-foreground italic text-sm p-6">No social posts registered.</p>}
+          <div className="h-[calc(100vh-400px)] min-h-[500px] overflow-y-auto px-6">
             <Table>
-              <TableHeader className="bg-muted/30">
+              <TableHeader className="bg-muted/30 sticky top-0 z-10">
                 <TableRow>
+                  <TableHead className="text-[10px] uppercase tracking-widest w-[60px]">Image</TableHead>
                   <TableHead className="text-[10px] uppercase tracking-widest">Title</TableHead>
                   <TableHead className="text-[10px] uppercase tracking-widest">Platform</TableHead>
                   <TableHead className="text-right text-[10px] uppercase tracking-widest">Action</TableHead>
@@ -325,13 +328,30 @@ export default function ManagePosts() {
               <TableBody>
                 {posts.map((post) => (
                   <TableRow key={post.id} className="group hover:bg-muted/30 transition-colors">
+                    <TableCell>
+                      {post.image ? (
+                        <div className="relative h-8 w-8 rounded overflow-hidden bg-muted border">
+                           <Image 
+                            src={post.image} 
+                            alt={post.title} 
+                            fill 
+                            className="object-cover" 
+                            unoptimized 
+                          />
+                        </div>
+                      ) : (
+                        <div className="h-8 w-8 rounded bg-muted flex items-center justify-center text-muted-foreground">
+                          <ImageIcon className="h-3 w-3" />
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell className="font-bold max-w-[150px] truncate">{post.title}</TableCell>
                     <TableCell>
                       <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-sm bg-primary/10 text-primary">
                         {post.platform}
                       </span>
                     </TableCell>
-                    <TableCell className="text-right flex justify-end gap-1">
+                    <TableCell className="text-right flex justify-end gap-1 items-center h-[53px]">
                        <Button variant="ghost" size="icon" onClick={() => openEditDialog(post)} className="h-8 w-8 hover:text-primary">
                           <Pencil className="h-4 w-4" />
                        </Button>
@@ -470,7 +490,7 @@ export default function ManagePosts() {
                   </FormItem>
                 )}
               />
-              <DialogFooter className="gap-2 sm:gap-0">
+              <DialogFooter className="gap-2 sm:gap-0 sticky bottom-0 bg-white pt-2 border-t mt-4">
                 <DialogClose asChild>
                    <Button type="button" variant="secondary" className="font-bold">Cancel</Button>
                 </DialogClose>
