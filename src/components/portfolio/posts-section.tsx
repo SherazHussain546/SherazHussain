@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
@@ -14,7 +13,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Linkedin, ArrowRight, Rss, Instagram, Facebook, Github } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
-import { collection, query, orderBy, Timestamp, CollectionReference, DocumentData } from 'firebase/firestore';
+import { collection, query, Timestamp, CollectionReference, DocumentData } from 'firebase/firestore';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -39,20 +38,23 @@ interface PostsSectionProps {
 
 function PostCard({ post, showImages, className }: { post: Post; showImages: boolean; className?: string }) {
   const Icon = platformIcons[post.platform] || Rss;
+  const imageUrl = post.image || `https://picsum.photos/seed/${post.id}/600/400`;
+  
   return (
     <Card className={cn(
-      "group flex flex-col overflow-hidden border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20",
+      "group flex flex-col overflow-hidden border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary/20 h-full",
       className
     )}>
       {showImages && (
         <CardHeader className="p-0">
-          <div className="relative aspect-video w-full overflow-hidden">
+          <div className="relative aspect-video w-full overflow-hidden bg-muted/20">
             <Image
-              src={post.image || 'https://picsum.photos/seed/1/600/400'}
+              src={imageUrl}
               alt={post.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
-              data-ai-hint={post.imageHint || "social post"}
+              data-ai-hint={post.imageHint || "professional post"}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <div className="absolute top-4 right-4 rounded-full bg-background/80 p-2 shadow-sm backdrop-blur-sm">
               <Icon className="h-5 w-5 text-primary" />
@@ -74,7 +76,7 @@ function PostCard({ post, showImages, className }: { post: Post; showImages: boo
           <div className="flex flex-wrap justify-center gap-1.5 pt-2">
             {post.hashtags.split(',').map(tag => (
               <Badge key={tag.trim()} variant="secondary" className="text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary border-none">
-                {tag.trim()}
+                {tag.trim().startsWith('#') ? tag.trim() : `#${tag.trim()}`}
               </Badge>
             ))}
           </div>
@@ -88,7 +90,7 @@ function PostCard({ post, showImages, className }: { post: Post; showImages: boo
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full"
           >
-            <span className="font-mono text-[10px] uppercase tracking-widest">Read on {post.platform}</span>
+            <span className="font-mono text-[10px] uppercase tracking-widest">View on {post.platform}</span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </Button>
@@ -111,7 +113,8 @@ export default function PostsSection({
   }, [firestore]);
 
   const postsQuery = useMemoFirebase(() => {
-    return postsCollection ? query(postsCollection, orderBy('createdAt', 'desc')) : null;
+    // Simplified query for index-free operation
+    return postsCollection ? query(postsCollection) : null;
   }, [postsCollection]);
 
   const { data: firestorePosts, isLoading: loading } = useCollection<Post>(postsQuery);
@@ -130,7 +133,7 @@ export default function PostsSection({
     };
 
     const combined = [githubPost, ...(firestorePosts || [])];
-    return combined.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+    return combined.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
   }, [firestorePosts]);
 
   useEffect(() => {
@@ -138,7 +141,7 @@ export default function PostsSection({
 
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [api, layout, allPosts]);
@@ -173,7 +176,7 @@ export default function PostsSection({
         </div>
 
         {layout === 'carousel' ? (
-          <div className="mx-auto max-w-md mt-12">
+          <div className="mx-auto max-w-lg mt-12 relative">
             <Carousel
               setApi={setApi}
               opts={{
@@ -185,7 +188,7 @@ export default function PostsSection({
               <CarouselContent>
                 {allPosts.map((post) => (
                   <CarouselItem key={post.id} className="basis-full">
-                    <div className="p-1">
+                    <div className="p-1 h-full">
                       <PostCard post={post} showImages={showImages} className="mx-auto max-w-md" />
                     </div>
                   </CarouselItem>

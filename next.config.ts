@@ -77,7 +77,25 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'scontent-dub4-1.xx.fbcdn.net',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.fbcdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'scontent-*.xx.fbcdn.net',
+        port: '',
+        pathname: '/**',
+      },
+       {
+        protocol: 'https',
+        hostname: '*.cdninstagram.com',
         port: '',
         pathname: '/**',
       },
