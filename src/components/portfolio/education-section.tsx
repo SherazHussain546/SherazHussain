@@ -23,7 +23,7 @@ export default function EducationSection() {
   }, [firestore]);
 
   const eduQuery = useMemoFirebase(() => {
-    // Only show published entries to public visitors
+    // Only show published entries to public visitors, newest first
     return eduCollection ? query(eduCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [eduCollection]);
 
@@ -49,57 +49,57 @@ export default function EducationSection() {
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center md:text-left">Educational Pedigree</h2>
         
         <div className="space-y-12">
-          {isLoading && (
+          {isLoading ? (
             <div className="space-y-6">
               <Skeleton className="h-48 w-full" />
               <Skeleton className="h-48 w-full" />
             </div>
-          )}
-
-          {!isLoading && allEducations.map((edu, index) => (
-            <motion.div
-              key={edu.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className="bg-card shadow-lg border-primary/10 overflow-hidden rounded-none">
-                <CardHeader className="border-b bg-muted/5">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
-                      <GraduationCap className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-xl font-bold font-playfair">{edu.degree}</CardTitle>
-                      <p className="text-sm font-space-mono uppercase tracking-widest text-muted-foreground">{edu.university}</p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-6 space-y-6">
-                  <p className="font-space-mono text-[10px] uppercase tracking-widest text-primary font-bold">
-                    Conferred: {edu.graduationDate}
-                  </p>
-                  
-                  {edu.awards && edu.awards.length > 0 && (
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-primary">
-                        <Award className="h-4 w-4" />
-                        <h4 className="text-xs font-bold uppercase tracking-widest font-space-mono">Awards & Honors</h4>
+          ) : (
+            allEducations.map((edu, index) => (
+              <motion.div
+                key={edu.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="bg-card shadow-lg border-primary/10 overflow-hidden rounded-none">
+                  <CardHeader className="border-b bg-muted/5">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
+                        <GraduationCap className="h-6 w-6" />
                       </div>
-                      <ul className="space-y-3 pl-6 border-l-2 border-primary/20">
-                        {edu.awards.map((award, i) => (
-                          <li key={i} className="text-sm font-light leading-relaxed text-foreground/80 italic">
-                            "{award}"
-                          </li>
-                        ))}
-                      </ul>
+                      <div>
+                        <CardTitle className="text-xl font-bold font-playfair">{edu.degree}</CardTitle>
+                        <p className="text-sm font-space-mono uppercase tracking-widest text-muted-foreground">{edu.university}</p>
+                      </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  </CardHeader>
+                  <CardContent className="pt-6 space-y-6">
+                    <p className="font-space-mono text-[10px] uppercase tracking-widest text-primary font-bold">
+                      Conferred: {edu.graduationDate}
+                    </p>
+                    
+                    {edu.awards && edu.awards.length > 0 && (
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-primary">
+                          <Award className="h-4 w-4" />
+                          <h4 className="text-xs font-bold uppercase tracking-widest font-space-mono">Awards & Honors</h4>
+                        </div>
+                        <ul className="space-y-3 pl-6 border-l-2 border-primary/20">
+                          {edu.awards.map((award, i) => (
+                            <li key={i} className="text-sm font-light leading-relaxed text-foreground/80 italic">
+                              "{award}"
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))
+          )}
         </div>
 
         <hr className="thick-rule" />

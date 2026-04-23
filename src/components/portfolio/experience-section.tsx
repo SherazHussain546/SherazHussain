@@ -20,7 +20,7 @@ export default function ExperienceSection() {
   }, [firestore]);
 
   const expQuery = useMemoFirebase(() => {
-    // Only show published entries to public visitors
+    // Only show published entries to public visitors, newest first
     return expCollection ? query(expCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [expCollection]);
 
@@ -28,6 +28,7 @@ export default function ExperienceSection() {
   
   const allExperiences = useMemo(() => {
     const formattedStatic = staticExps.map((e, i) => ({ ...e, id: `static-${i}`, isPublished: true }));
+    // Merge dynamic with static, prioritizing newest entries if they exist
     return [...(dynamicExps || []), ...formattedStatic];
   }, [dynamicExps]);
 
@@ -41,7 +42,7 @@ export default function ExperienceSection() {
           My professional experience spans technical consulting, product architecture, and enterprise mentorship — reflecting the breadth of application a modern software engineer must navigate.
         </p>
 
-        {isLoading && (
+        {isLoading ? (
           <div className="space-y-8 pl-8 border-l border-border/30">
             {[...Array(2)].map((_, i) => (
               <div key={i} className="space-y-3">
@@ -51,9 +52,7 @@ export default function ExperienceSection() {
               </div>
             ))}
           </div>
-        )}
-
-        {!isLoading && (
+        ) : (
           <div className="relative pl-8 border-l border-border space-y-12 mb-16">
             {allExperiences.map((exp, index) => (
               <div key={exp.id || index} className="relative">

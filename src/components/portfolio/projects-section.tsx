@@ -9,7 +9,7 @@ import { Project } from '@/types/database';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Code2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 /**
@@ -24,7 +24,7 @@ export default function ProjectsSection() {
   }, [firestore]);
 
   const projQuery = useMemoFirebase(() => {
-    // Only show published entries to public visitors
+    // Only show published entries to public visitors, newest first
     return projCollection ? query(projCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [projCollection]);
 
@@ -32,6 +32,7 @@ export default function ProjectsSection() {
 
   const allProjects = useMemo(() => {
     const formattedStatic = staticProjects.map((p, i) => ({ ...p, id: `static-${i}`, isPublished: true }));
+    // Merge dynamic with static, prioritizing the 4 most recent for the homepage
     return [...(dynamicProjects || []), ...formattedStatic];
   }, [dynamicProjects]);
 

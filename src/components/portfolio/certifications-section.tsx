@@ -34,7 +34,7 @@ export default function CertificationsSection() {
   }, [firestore]);
 
   const certsQuery = useMemoFirebase(() => {
-    // Only show published entries to public visitors
+    // Only show published entries to public visitors, newest first
     return certsCollection ? query(certsCollection, where('isPublished', '==', true), orderBy('createdAt', 'desc')) : null;
   }, [certsCollection]);
 

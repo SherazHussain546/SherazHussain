@@ -1,6 +1,7 @@
+
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Carousel,
   CarouselContent,
@@ -13,9 +14,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Linkedin, ArrowRight, Rss, Instagram, Facebook, Github } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
-import { collection, query, orderBy, Timestamp } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { firestore } from '@/firebase/client';
+import { collection, query, orderBy, Timestamp, CollectionReference, DocumentData } from 'firebase/firestore';
+import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -104,37 +104,44 @@ export default function PostsSection({
   layout = 'carousel'
 }: PostsSectionProps) {
   const [api, setApi] = useState<CarouselApi>();
-  
-  const postsCollection = firestore ? collection(firestore, 'posts') : null;
-  const postsQuery = postsCollection ? query(postsCollection, orderBy('createdAt', 'desc')) : null;
-  const [postsSnapshot, loading, error] = useCollection(postsQuery);
+  const firestore = useFirestore();
 
-  const firestorePosts = postsSnapshot?.docs.map(doc => ({ id: doc.id, ...doc.data() } as Post)) || [];
+  const postsCollection = useMemo(() => {
+    return firestore ? collection(firestore, 'posts') as CollectionReference<DocumentData> : null;
+  }, [firestore]);
 
-  const githubPost: Post = {
-    id: 'static-github-post',
-    platform: 'GitHub',
-    title: 'Explore My Code on GitHub!',
-    description: "Curious about how I build things? Dive into my GitHub profile to see my latest projects, contributions to open-source, and the code behind my portfolio. It's the best place to see my passion for clean, efficient code in action. Follow me for updates and feel free to explore the repositories!",
-    link: 'https://github.com/SherazHussain546',
-    image: 'https://picsum.photos/seed/github-post/600/400',
-    imageHint: 'github code',
-    hashtags: '#OpenSource, #Developer, #Coding, #Portfolio, #NextJS, #React, #SherazHussain546',
-    createdAt: Timestamp.now(),
-  };
+  const postsQuery = useMemoFirebase(() => {
+    return postsCollection ? query(postsCollection, orderBy('createdAt', 'desc')) : null;
+  }, [postsCollection]);
 
-  const allPosts = [githubPost, ...firestorePosts];
-  allPosts.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+  const { data: firestorePosts, isLoading: loading } = useCollection<Post>(postsQuery);
+
+  const allPosts = useMemo(() => {
+    const githubPost: Post = {
+      id: 'static-github-post',
+      platform: 'GitHub',
+      title: 'Explore My Code on GitHub!',
+      description: "Curious about how I build things? Dive into my GitHub profile to see my latest projects, contributions to open-source, and the code behind my portfolio.",
+      link: 'https://github.com/SherazHussain546',
+      image: 'https://picsum.photos/seed/github-post/600/400',
+      imageHint: 'github code',
+      hashtags: '#OpenSource, #Developer, #SherazHussain546',
+      createdAt: Timestamp.now(),
+    };
+
+    const combined = [githubPost, ...(firestorePosts || [])];
+    return combined.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+  }, [firestorePosts]);
 
   useEffect(() => {
-    if (!api || layout !== 'carousel') return;
+    if (!api || layout !== 'carousel' || allPosts.length <= 1) return;
 
     const interval = setInterval(() => {
       api.scrollNext();
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [api, layout]);
+  }, [api, layout, allPosts]);
 
   if (loading) {
     return (
@@ -157,19 +164,13 @@ export default function PostsSection({
     <section id="posts" className={cn("py-20 md:py-32", layout === 'carousel' ? 'bg-card' : 'bg-background')}>
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground text-balance">
+          <div className="text-3xl font-bold tracking-tight md:text-4xl text-foreground text-balance">
             {title}
-          </h2>
+          </div>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-balance">
             {subtitle}
           </p>
         </div>
-        
-        {error && !firestore && (
-            <div className="max-w-md mx-auto p-6 rounded-xl border border-primary/10 bg-primary/5 text-center">
-              <p className="text-sm text-muted-foreground italic">Connect Firebase to synchronize your dynamic global updates.</p>
-            </div>
-        )}
 
         {layout === 'carousel' ? (
           <div className="mx-auto max-w-md mt-12">
@@ -190,10 +191,12 @@ export default function PostsSection({
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <div className="flex justify-center gap-4 mt-8">
-                <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
-                <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
-              </div>
+              {allPosts.length > 1 && (
+                <div className="flex justify-center gap-4 mt-8">
+                  <CarouselPrevious className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
+                  <CarouselNext className="static translate-y-0 h-10 w-10 border-primary/20 hover:bg-primary/10 text-primary" />
+                </div>
+              )}
             </Carousel>
           </div>
         ) : (

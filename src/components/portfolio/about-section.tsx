@@ -1,12 +1,29 @@
 
 'use client';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { useABTest } from '@/hooks/use-ab-test';
+import { doc, DocumentReference, DocumentData } from 'firebase/firestore';
+import { useFirestore, useDoc } from '@/firebase';
+import { SiteConfig } from '@/types/database';
 
+/**
+ * AboutSection - Strategic Identity Component.
+ * Incorporates A/B testing narratives and dynamic site configuration for branding.
+ */
 export default function AboutSection() {
   const testGroup = useABTest();
+  const firestore = useFirestore();
+
+  const settingsRef = useMemo(() => {
+    return firestore ? doc(firestore, 'siteConfig', 'main') as DocumentReference<DocumentData> : null;
+  }, [firestore]);
+
+  const { data: settings } = useDoc<SiteConfig>(settingsRef);
+
+  const profileImage = settings?.founderImageUrl || placeholderImages.about.src;
 
   return (
     <section id="about" className="overflow-hidden">
@@ -82,7 +99,7 @@ export default function AboutSection() {
             >
               <div className="relative aspect-[3/4] w-full border-4 border-double border-foreground p-1 bg-background shadow-2xl overflow-hidden group cursor-crosshair">
                 <Image 
-                  src={placeholderImages.about.src} 
+                  src={profileImage} 
                   alt={placeholderImages.about.alt} 
                   fill 
                   className="object-cover grayscale transition-all duration-700 ease-in-out group-hover:opacity-0" 
