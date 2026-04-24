@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Playfair_Display, DM_Sans, Space_Mono } from 'next/font/google';
@@ -45,17 +44,18 @@ export const metadata: Metadata = {
   category: 'Technology',
   keywords: [
     'Sheraz Hussain',
-    'AI Architect Dublin',
-    'Software Architect Ireland',
+    'AI architect Dublin',
+    'software architect Ireland',
     'Next.js 15 Expert',
-    'Google Genkit Developer',
-    'Generative AI Implementation',
-    'Cloud Systems Architect Dublin',
-    'Full-Stack Developer Dublin',
-    'Enterprise AI Solutions',
-    'Technical SEO Consulting',
-    'Software Engineering Dublin',
-    'SaaS Architect',
+    'Next.js consulting',
+    'generative AI consultant',
+    'Generative AI implementation',
+    'Cloud systems architect Dublin',
+    'Full-stack developer Ireland',
+    'Technical SEO for SaaS',
+    'Multi-tenant SaaS scaling',
+    'Enterprise AI solutions',
+    'Software engineering Dublin',
     'SYNC TECH Solutions'
   ],
   openGraph: {
