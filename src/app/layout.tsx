@@ -16,7 +16,7 @@ const dmSans = DM_Sans({ subsets: ['latin'], weight: ['300', '400', '500'], vari
 const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-space-mono' });
 
 const siteConfig = {
-  name: 'Sheraz Hussain | AI Architect & Principal Software Engineer Dublin',
+  name: 'Sheraz Hussain | Principal AI Architect & Software Engineer Dublin',
   shortName: 'Sheraz Hussain Portfolio',
   url: 'https://sheraz.synctech.ie',
   description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Expert in Next.js 15, Generative AI implementation, and high-performance Cloud Systems with SYNC TECH Solutions.',
@@ -82,7 +82,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
-  const usercentricsId = process.env.NEXT_PUBLIC_USERCENTRICS_ID;
 
   const jsonLd = {
       '@context': 'https://schema.org',
@@ -128,14 +127,6 @@ export default function RootLayout({
         spaceMono.variable,
         'font-sans bg-background text-foreground'
       )}>
-          {usercentricsId && (
-            <Script 
-              id="usercentrics-cmp"
-              src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
-              data-settings-id={usercentricsId}
-              strategy="afterInteractive"
-            />
-          )}
           {gaId && (
             <>
               <Script 

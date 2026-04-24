@@ -25,12 +25,12 @@ const faqCategories = [
     icon: Cpu,
     questions: [
       {
-        q: "What is your primary engineering focus?",
-        a: "I specialize in architecting high-performance, AI-driven digital ecosystems. This includes Next.js 15, Google Genkit integration, and scalable cloud infrastructure on AWS and Google Cloud Platform. My goal is to build systems that prioritize technical integrity and sub-second user experiences."
+        q: "What does an AI solutions architect do?",
+        a: "An AI Solutions Architect bridge the gap between business objectives and technical implementation. I design cloud-native systems that treat AI as a first-class citizen, ensuring that LLM integrations like Gemini or OpenAI are scalable, secure, and integrated deeply into existing workflows to drive quantifiable growth."
       },
       {
-        q: "What does 'First-Class Honours' signify in your background?",
-        a: "It represents the highest level of academic achievement in my B.Sc. in Computing from Dublin Business School. This foundation ensures that the high-fidelity systems I build are grounded in rigorous software engineering principles, from data structures to security protocols."
+        q: "What is your primary engineering focus?",
+        a: "I specialize in architecting high-performance, AI-driven digital ecosystems. This includes Next.js 15, Google Genkit integration, and scalable cloud infrastructure on AWS and Google Cloud Platform. My goal is to build systems that prioritize technical integrity and sub-second user experiences."
       },
       {
         q: "How do you handle technical SEO and site performance?",
