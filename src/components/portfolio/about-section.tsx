@@ -11,7 +11,7 @@ import { SiteConfig } from '@/types/database';
 
 /**
  * AboutSection - Strategic Identity Component.
- * Incorporates A/B testing narratives and dynamic site configuration for branding.
+ * Optimized for SEO Dominance and Professional Authority.
  */
 export default function AboutSection() {
   const testGroup = useABTest();
@@ -36,33 +36,23 @@ export default function AboutSection() {
           className="container mx-auto max-w-4xl relative z-10"
         >
           <p className="font-space-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-            Professional Profile &nbsp;·&nbsp; {testGroup === 'A' ? 'Technical Strategy' : 'Engineering Authority'}
+            Principal Portfolio &nbsp;·&nbsp; AI Solutions Architect
           </p>
           
-          {testGroup === 'A' ? (
-            <h1 className="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
-              From Dublin to the <br />
-              <em className="italic text-primary font-normal">Frontier</em> of AI Engineering
-            </h1>
-          ) : (
-            <h1 className="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
-              Engineering Technical <br />
-              <em className="italic text-primary font-normal">Supremacy</em> via AI & Cloud
-            </h1>
-          )}
+          <h1 className="font-playfair text-[clamp(2.5rem,6vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
+            Engineer Your <span className="italic text-primary font-normal">Dominance</span> <br />
+            <em className="italic text-primary font-normal">Through AI & Cloud</em>
+          </h1>
 
-          <p className="font-playfair italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10">
-            {testGroup === 'A' 
-              ? "How one First-Class Honours graduate is redefining what a software engineer can build — one AI-powered platform at a time."
-              : "Architecting high-performance digital ecosystems that dismantle complexity through high-fidelity, open-source engineering."
-            }
+          <p className="font-playfair italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10 text-balance">
+            Sheraz Hussain is a First-Class Honours Software Engineer and **AI Architect in Dublin**, Ireland, specializing in Next.js 15, Generative AI, and high-fidelity cloud architectures.
           </p>
           <div className="flex items-center justify-center gap-6 flex-wrap font-space-mono text-[10px] tracking-widest uppercase text-background/55">
             <span>By Sheraz Hussain</span>
             <span className="text-primary">·</span>
-            <span>Dublin, Ireland</span>
+            <span>Software Architect Dublin</span>
             <span className="text-primary">·</span>
-            <span>March 2026 Edition</span>
+            <span>Next.js Consulting</span>
           </div>
         </motion.div>
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
@@ -76,18 +66,18 @@ export default function AboutSection() {
       {/* ──────────────── OPENING NARRATIVE ──────────────── */}
       <div className="max-w-[860px] mx-auto px-6 py-12 md:py-20">
         <section className="opening">
-          <p className="location-tag">Dublin, Ireland</p>
+          <p className="location-tag">Dublin, Ireland (Global Delivery)</p>
 
           <div className="grid md:grid-cols-[1fr_300px] gap-12 items-start">
             <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
               <p>
-                I never set out to be a builder of financial intelligence systems or AI recruitment platforms. I simply followed a question that refused to leave me alone: <em>what if software could think alongside us, not just execute for us?</em> That question led me from the lecture halls of Dublin Business School to the bleeding edge of generative AI, cloud architecture, and full-stack product engineering — and it continues to drive every line of code I write today.
+                As an **AI Solutions Engineer** and full-stack specialist, I bridge the gap between technical complexity and business growth. I don't just build websites; I architect intelligent, cloud-native ecosystems that utilize **Next.js 15**, **Google Genkit**, and **AWS/GCP** to dismantle bottlenecks and drive quantifiable results.
               </p>
               <p>
-                My name is Sheraz Hussain. I am an elite Software Architect and AI Solutions Engineer based in Dublin, Ireland — a graduate with First-Class Honours who turned technical curiosity into deployable, production-grade realities. My mission is to engineer intelligent, cloud-native systems that solve real problems for real people.
+                Based in Dublin, Ireland, my mission is to deliver high-fidelity engineering that prioritizes technical integrity, zero-latency user experiences, and **Technical SEO dominance**. Whether it's scaling AI financial engines or optimizing enterprise recruitment platforms, I focus on building software that thinks alongside the user.
               </p>
               <p>
-                This is not a CV. It is a story about curiosity, craft, and the relentless drive to turn abstract ideas into scalable systems. It is about what I have built, why I built it, and where I am taking it next.
+                My name is Sheraz Hussain. This registry is a narrative of elite software engineering, high-performance product strategy, and the pursuit of digital supremacy.
               </p>
             </div>
 
@@ -100,22 +90,22 @@ export default function AboutSection() {
               <div className="relative aspect-[3/4] w-full border-4 border-double border-foreground p-1 bg-background shadow-2xl overflow-hidden group cursor-crosshair">
                 <Image 
                   src={profileImage} 
-                  alt={placeholderImages.about.alt} 
+                  alt="Sheraz Hussain - AI Architect and Software Engineer Dublin" 
                   fill 
                   className="object-cover grayscale transition-all duration-700 ease-in-out group-hover:opacity-0" 
-                  data-ai-hint={placeholderImages.about.hint}
+                  data-ai-hint="AI architect portrait"
                   priority
                 />
                 <Image 
                   src={placeholderImages.about.hoverSrc || '/sherazcyborg.png'} 
-                  alt="Sheraz Hussain - AI Cyborg Transformation" 
+                  alt="Sheraz Hussain - Principal Engineer at SYNC TECH" 
                   fill 
                   className="object-cover opacity-0 transition-all duration-700 ease-in-out group-hover:opacity-100 scale-110 group-hover:scale-100" 
                 />
               </div>
               <div className="text-center space-y-1">
                 <p className="font-space-mono text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Sheraz Hussain</p>
-                <p className="font-space-mono text-[8px] uppercase tracking-widest text-muted-foreground">Principal AI Architect · SYNC TECH</p>
+                <p className="font-space-mono text-[8px] uppercase tracking-widest text-muted-foreground">Principal Software Architect · SYNC TECH</p>
               </div>
             </motion.div>
           </div>

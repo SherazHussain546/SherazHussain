@@ -17,10 +17,10 @@ const dmSans = DM_Sans({ subsets: ['latin'], weight: ['300', '400', '500'], vari
 const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-space-mono' });
 
 const siteConfig = {
-  name: 'Sheraz Hussain | Elite Software Architect & AI Solutions Engineer',
+  name: 'Sheraz Hussain | AI Architect & Principal Software Engineer Dublin',
   shortName: 'Sheraz Hussain Portfolio',
   url: 'https://sheraz.synctech.ie',
-  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Specializing in Next.js 15, Google Genkit, and high-performance Cloud Systems with Zero Trust Security.',
+  description: 'Sheraz Hussain is a First-Class Honors Software Engineer and AI Architect based in Dublin, Ireland. Expert in Next.js 15, Generative AI implementation, and high-performance Cloud Systems with SYNC TECH Solutions.',
   author: 'Sheraz Hussain',
   ogImage: 'https://sheraz.synctech.ie/founder.jpg',
   links: {
@@ -45,20 +45,18 @@ export const metadata: Metadata = {
   category: 'Technology',
   keywords: [
     'Sheraz Hussain',
-    'Software Architect Dublin',
-    'AI Solutions Engineer',
+    'AI Architect Dublin',
+    'Software Architect Ireland',
     'Next.js 15 Expert',
     'Google Genkit Developer',
-    'Cloud Systems Architect',
-    'Secure Stripe Payments',
-    'Zero Trust Architecture',
-    'Privacy First AI',
-    'Revolut Pay Ireland',
-    'High-Fidelity Engineering',
-    'Enterprise AI Solutions',
+    'Generative AI Implementation',
+    'Cloud Systems Architect Dublin',
     'Full-Stack Developer Dublin',
-    'Cloud-Native Systems',
-    'SaaS Architect'
+    'Enterprise AI Solutions',
+    'Technical SEO Consulting',
+    'Software Engineering Dublin',
+    'SaaS Architect',
+    'SYNC TECH Solutions'
   ],
   openGraph: {
     type: 'website',
@@ -95,26 +93,29 @@ export default function RootLayout({
         siteConfig.links.github,
         siteConfig.links.linkedin,
       ],
-      'jobTitle': 'Principal Software Architect & AI Solutions Engineer',
-      'knowsAbout': [
-        'Artificial Intelligence',
-        'Cloud Computing',
-        'Software Architecture',
-        'Next.js 15',
-        'React',
-        'Google Genkit',
-        'Cybersecurity',
-        'Stripe Integration',
-        'Machine Learning',
-        'Data Sovereignty'
-      ],
+      'jobTitle': 'Principal AI Architect & Software Engineer',
+      'description': siteConfig.description,
+      'image': 'https://sheraz.synctech.ie/founder.jpg',
+      'address': {
+        '@type': 'PostalAddress',
+        'addressLocality': 'Dublin',
+        'addressCountry': 'Ireland'
+      },
       'worksFor': {
         '@type': 'Organization',
         'name': 'SYNC TECH Solutions',
         'url': 'https://synctech.ie'
       },
-      'description': siteConfig.description,
-      'image': 'https://sheraz.synctech.ie/founder.jpg'
+      'knowsAbout': [
+        'Artificial Intelligence',
+        'Generative AI',
+        'Cloud Computing',
+        'Next.js 15',
+        'React',
+        'Software Architecture',
+        'Technical SEO',
+        'Cybersecurity'
+      ]
   };
 
   return (
@@ -155,19 +156,6 @@ export default function RootLayout({
             id="json-ld"
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
-          <Script 
-            data-name="BMC-Widget" 
-            data-cfasync="false" 
-            src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
-            data-id="sherazhussain546" 
-            data-description="Support Sheraz's Open Source Mission" 
-            data-message="Thank you for visiting. Your support directly fuels the development of free AI tools designed for universal accessibility." 
-            data-color="#FF813F" 
-            data-position="Right" 
-            data-x_margin="18" 
-            data-y_margin="18"
-            strategy="afterInteractive"
           />
           <FirebaseClientProvider>
             <AuthProvider>
