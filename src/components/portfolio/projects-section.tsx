@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMemo } from 'react';
@@ -11,6 +10,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useABTest } from '@/hooks/use-ab-test';
+import { cn } from '@/lib/utils';
 
 /**
  * ProjectsSection - Engineering Showcase Component.
@@ -18,6 +19,7 @@ import { motion } from 'framer-motion';
  */
 export default function ProjectsSection() {
   const firestore = useFirestore();
+  const testGroup = useABTest();
 
   const projCollection = useMemo(() => {
     return firestore ? collection(firestore, 'projects') as CollectionReference<DocumentData> : null;
@@ -83,7 +85,17 @@ export default function ProjectsSection() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button asChild variant="outline" size="lg" className="h-14 px-10 font-space-mono text-[10px] uppercase tracking-[0.25em] border-foreground text-foreground hover:bg-foreground hover:text-background transition-all rounded-none group">
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className={cn(
+                    "h-14 px-10 font-space-mono text-[10px] uppercase tracking-[0.25em] transition-all rounded-none group",
+                    testGroup === 'B' 
+                      ? "border-primary text-primary hover:bg-primary hover:text-white" 
+                      : "border-foreground text-foreground hover:bg-foreground hover:text-background"
+                  )}
+                >
                   <Link href="/projects">
                     Explore Full Project Gallery
                     <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />

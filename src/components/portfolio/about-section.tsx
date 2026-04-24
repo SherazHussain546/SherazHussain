@@ -1,4 +1,3 @@
-
 'use client';
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
@@ -12,6 +11,7 @@ import { SiteConfig } from '@/types/database';
 /**
  * AboutSection - Strategic Identity Component.
  * Optimized for SEO Dominance and Professional Authority.
+ * Implements A/B Testing for high-fidelity narrative experimentation.
  */
 export default function AboutSection() {
   const testGroup = useABTest();
@@ -36,12 +36,21 @@ export default function AboutSection() {
           className="container mx-auto max-w-4xl relative z-10"
         >
           <p className="font-space-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-            Principal Portfolio &nbsp;·&nbsp; AI Solutions Architect
+            Principal Portfolio &nbsp;·&nbsp; {testGroup === 'B' ? 'Strategic Supremacy' : 'Technical Frontier'}
           </p>
           
           <h1 className="font-playfair text-[clamp(2.5rem,6vw,4rem)] font-black leading-[1.05] tracking-tight mb-6">
-            Engineer Your <span className="italic text-primary font-normal">Dominance</span> <br />
-            <em className="italic text-primary font-normal">Through AI & Cloud</em>
+            {testGroup === 'B' ? (
+              <>
+                Engineer Your <span className="italic text-primary font-normal">Dominance</span> <br />
+                <em className="italic text-primary font-normal">Through AI & Cloud</em>
+              </>
+            ) : (
+              <>
+                Building the <span className="italic text-primary font-normal">Frontier</span> <br />
+                <em className="italic text-primary font-normal">of Intelligent Systems</em>
+              </>
+            )}
           </h1>
 
           <p className="font-playfair italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10 text-balance">

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useMemo } from 'react';
@@ -97,8 +96,8 @@ export default function AnalyticsDashboard() {
   }, { A: 0, B: 0 });
 
   const abData = [
-    { name: 'Group A (Frontier)', value: abStats.A, fill: 'hsl(var(--primary))' },
-    { name: 'Group B (Supremacy)', value: abStats.B, fill: 'hsl(var(--secondary))' }
+    { name: 'Group A (Frontier)', value: abStats.A, fill: 'hsl(var(--secondary))' },
+    { name: 'Group B (Supremacy)', value: abStats.B, fill: 'hsl(var(--primary))' }
   ];
 
   const pathCounts = allEvents.reduce((acc: { [key: string]: number }, event: AnalyticsEvent) => {
@@ -147,7 +146,7 @@ export default function AnalyticsDashboard() {
 
         <Card className="bg-card shadow-sm border-primary/20 bg-primary/5">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Group B Conversion</CardTitle>
+            <CardTitle className="text-sm font-medium">Supremacy Delta</CardTitle>
             <Target className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
@@ -212,7 +211,7 @@ export default function AnalyticsDashboard() {
               <Zap className="h-4 w-4 text-primary" />
               Strategy Performance
             </CardTitle>
-            <CardDescription>A/B Test Group Distribution</CardDescription>
+            <CardDescription>Experimental Group Distribution</CardDescription>
           </CardHeader>
           <CardContent className="h-[300px] flex flex-col justify-center">
             <ResponsiveContainer width="100%" height={200}>
@@ -258,7 +257,7 @@ export default function AnalyticsDashboard() {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-[10px] uppercase tracking-wider">Path</TableHead>
-                <TableHead className="text-[10px] uppercase tracking-wider">Group</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">Experimental Group</TableHead>
                 <TableHead className="text-right text-[10px] uppercase tracking-wider">Time</TableHead>
               </TableRow>
             </TableHeader>
@@ -269,8 +268,8 @@ export default function AnalyticsDashboard() {
                     {event.path}
                   </TableCell>
                   <TableCell>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${event.testGroup === 'B' ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}`}>
-                      {event.testGroup || 'N/A'}
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${event.testGroup === 'B' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'}`}>
+                      {event.testGroup === 'B' ? 'Group B (Supremacy)' : (event.testGroup === 'A' ? 'Group A (Frontier)' : 'Control')}
                     </span>
                   </TableCell>
                   <TableCell className="text-right text-[11px] text-muted-foreground whitespace-nowrap">
