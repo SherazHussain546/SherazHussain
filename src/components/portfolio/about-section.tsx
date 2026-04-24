@@ -39,13 +39,13 @@ export default function AboutSection() {
             Principal Portfolio &nbsp;·&nbsp; AI Solutions Architect
           </p>
           
-          <h1 className="font-playfair text-[clamp(2.5rem,6vw,5rem)] font-black leading-[1.05] tracking-tight mb-6">
+          <h1 className="font-playfair text-[clamp(2.5rem,6vw,4rem)] font-black leading-[1.05] tracking-tight mb-6">
             Engineer Your <span className="italic text-primary font-normal">Dominance</span> <br />
             <em className="italic text-primary font-normal">Through AI & Cloud</em>
           </h1>
 
           <p className="font-playfair italic text-lg md:text-2xl text-background/70 max-w-2xl mx-auto leading-relaxed mb-10 text-balance">
-            Sheraz Hussain is a First-Class Honours Software Engineer and **AI Architect in Dublin**, Ireland, specializing in Next.js 15, Generative AI, and high-fidelity cloud architectures.
+            Sheraz Hussain is a First-Class Honours Software Engineer and <strong>AI Architect in Dublin</strong>, Ireland, specializing in Next.js 15, Generative AI, and high-fidelity cloud architectures.
           </p>
           <div className="flex items-center justify-center gap-6 flex-wrap font-space-mono text-[10px] tracking-widest uppercase text-background/55">
             <span>By Sheraz Hussain</span>
@@ -71,10 +71,10 @@ export default function AboutSection() {
           <div className="grid md:grid-cols-[1fr_300px] gap-12 items-start">
             <div className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-6">
               <p>
-                As an **AI Solutions Engineer** and full-stack specialist, I bridge the gap between technical complexity and business growth. I don't just build websites; I architect intelligent, cloud-native ecosystems that utilize **Next.js 15**, **Google Genkit**, and **AWS/GCP** to dismantle bottlenecks and drive quantifiable results.
+                As an <strong>AI Solutions Engineer</strong> and full-stack specialist, I bridge the gap between technical complexity and business growth. I don't just build websites; I architect intelligent, cloud-native ecosystems that utilize <strong>Next.js 15</strong>, <strong>Google Genkit</strong>, and <strong>AWS/GCP</strong> to dismantle bottlenecks and drive quantifiable results.
               </p>
               <p>
-                Based in Dublin, Ireland, my mission is to deliver high-fidelity engineering that prioritizes technical integrity, zero-latency user experiences, and **Technical SEO dominance**. Whether it's scaling AI financial engines or optimizing enterprise recruitment platforms, I focus on building software that thinks alongside the user.
+                Based in Dublin, Ireland, my mission is to deliver high-fidelity engineering that prioritizes technical integrity, zero-latency user experiences, and <strong>Technical SEO dominance</strong>. Whether it's scaling AI financial engines or optimizing enterprise recruitment platforms, I focus on building software that thinks alongside the user.
               </p>
               <p>
                 My name is Sheraz Hussain. This registry is a narrative of elite software engineering, high-performance product strategy, and the pursuit of digital supremacy.

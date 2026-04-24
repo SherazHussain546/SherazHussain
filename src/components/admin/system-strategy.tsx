@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useRemoteConfig } from '@/firebase';
@@ -116,7 +117,7 @@ export default function SystemStrategy() {
           <CardContent className="space-y-6">
             <div className="space-y-4">
               <p className="text-xs text-muted-foreground leading-relaxed">
-                The **Unified Experience** allows you to manage Messaging and Remote Config from one tab. Register this device to receive test notifications.
+                The <strong>Unified Experience</strong> allows you to manage Messaging and Remote Config from one tab. Register this device to receive test notifications.
               </p>
               <Button onClick={requestNotificationPermission} size="sm" className="w-full h-10 font-bold bg-blue-600 hover:bg-blue-700 text-white uppercase tracking-widest text-[10px]">
                 Authorize Test Device
@@ -143,7 +144,7 @@ export default function SystemStrategy() {
             <h3 className="text-xl font-bold font-playfair">Operational Insight</h3>
           </div>
           <p className="text-white/60 text-sm font-light leading-relaxed max-w-2xl">
-            To start a new campaign, navigate to **Firebase Console > Engage > Messaging**. From there, you can target specific **User Segments** defined by your A/B test groups (Group A or B) to measure conversion at scale.
+            To start a new campaign, navigate to <strong>Firebase Console &gt; Engage &gt; Messaging</strong>. From there, you can target specific <strong>User Segments</strong> defined by your A/B test groups (Group A or B) to measure conversion at scale.
           </p>
           <div className="pt-2">
             <a href="https://console.firebase.google.com" target="_blank" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:underline">

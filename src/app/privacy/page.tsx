@@ -86,10 +86,10 @@ export default function PrivacyPolicyPage() {
 
           <section className="drop-cap font-sans font-light text-lg md:text-xl leading-relaxed text-foreground/90 space-y-8">
             <p>
-              I believe that digital privacy is not a luxury—it is a fundamental engineering requirement. As an elite AI Solutions Engineer, I architect systems that prioritize **Data Sovereignty** and **Zero Trust Architecture**. This policy outlines how your information is handled with the highest standards of technical integrity.
+              I believe that digital privacy is not a luxury—it is a fundamental engineering requirement. As an elite AI Solutions Engineer, I architect systems that prioritize <strong>Data Sovereignty</strong> and <strong>Zero Trust Architecture</strong>. This policy outlines how your information is handled with the highest standards of technical integrity.
             </p>
             <p>
-              Every transaction processed through this platform is powered by **Stripe**, ensuring that your sensitive financial data never touches our local servers. We leverage industry-leading encryption and decentralized authentication to protect your identity while you support our mission of inclusive innovation.
+              Every transaction processed through this platform is powered by <strong>Stripe</strong>, ensuring that your sensitive financial data never touches our local servers. We leverage industry-leading encryption and decentralized authentication to protect your identity while you support our mission of inclusive innovation.
             </p>
           </section>
 
@@ -167,13 +167,13 @@ export default function PrivacyPolicyPage() {
                   <div className="space-y-2">
                     <h4 className="font-mono text-[10px] uppercase font-bold text-primary tracking-widest">Does it cost extra to use Stripe?</h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      No. We absorb all standard transaction fees. Our Stripe integration includes **Automatic Tax Calculation** and **Tax ID Collection** at no additional cost to our supporters.
+                      No. We absorb all standard transaction fees. Our Stripe integration includes <strong>Automatic Tax Calculation</strong> and <strong>Tax ID Collection</strong> at no additional cost to our supporters.
                     </p>
                   </div>
                   <div className="space-y-2">
                     <h4 className="font-mono text-[10px] uppercase font-bold text-primary tracking-widest">How can we accept these methods?</h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      We utilize Stripe's **Managed Payments** and **Global Payment Configurations**. This allows us to dynamically enable the most secure local methods like Revolut Pay and Klarna based on your region.
+                      We utilize Stripe's <strong>Managed Payments</strong> and <strong>Global Payment Configurations</strong>. This allows us to dynamically enable the most secure local methods like Revolut Pay and Klarna based on your region.
                     </p>
                   </div>
                 </AccordionContent>
